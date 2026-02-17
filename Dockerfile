@@ -25,7 +25,7 @@ WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 
 ENV NODE_ENV=production \
-    PORT=80 \
+    PORT=3000 \
     HOSTNAME="0.0.0.0"
 
 RUN groupadd --system --gid 1001 nodejs && \
@@ -38,6 +38,6 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
-EXPOSE 80
+EXPOSE 3000
 
 CMD ["bun", "./server.js"]
