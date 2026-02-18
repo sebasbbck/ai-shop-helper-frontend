@@ -1,7 +1,19 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import { healthHealthGet } from "../client";
+import { wrappedClient } from "../lib/api-client";
 
 export default function Home() {
+
+  function getHealth() {
+    const health = healthHealthGet({ client: wrappedClient })
+    return health.then((response) => {
+      console.log(response.data)
+    }).catch((error) => {
+      console.error(error)
+    })
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -61,6 +73,8 @@ export default function Home() {
           Powered by{" "}
           <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
         </a>
+
+        <button onClick={getHealth}>Get Health</button>
       </footer>
     </div>
   );

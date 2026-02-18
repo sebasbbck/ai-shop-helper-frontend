@@ -5,6 +5,9 @@
     "build": "next build"
   },
   "dependencies": {
+    "@hey-api/openapi-ts": "^0.92.4",
+    "@tanstack/react-query": "^5.90.21",
+    "@tanstack/react-router": "^1.161.1",
     "next": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
