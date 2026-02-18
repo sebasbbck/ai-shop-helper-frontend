@@ -3,7 +3,7 @@ import type { ClientOptions } from '../client/types.gen';
 
 export const wrappedClient = createClient(
   createConfig<ClientOptions>({
-    baseUrl: '/api/proxy',
+    baseUrl: process.env.BACKEND_URL,
   })
 );
 
