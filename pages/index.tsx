@@ -5,13 +5,14 @@ import { wrappedClient } from "../lib/api-client";
 
 export default function Home() {
 
-  function getHealth() {
-    const health = healthHealthGet({ client: wrappedClient })
-    return health.then((response) => {
-      console.log(response.data)
-    }).catch((error) => {
-      console.error(error)
-    })
+  async function getHealth() {
+    const health = healthHealthGet()
+    try {
+      const response = await health;
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
