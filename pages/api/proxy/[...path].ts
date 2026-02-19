@@ -11,9 +11,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { path } = req.query;
   const pathString = Array.isArray(path) ? path.join('/') : path || '';
   
+  const backend = process.env.BACKEND_URL;
+
+  if (!backend) {
+    return res.status(502).json({ 
+      error: 'Proxy Configuration Error', 
+      message: 'BACKEND_URL is not set on the server.' 
+    });
+  }
+  
   // Build URL with proper slash handling
-  const baseUrl = process.env.BACKEND_URL?.replace(/\/$/, '') || 'http://localhost:8000';
-  const targetUrl = new URL(`${baseUrl}/${pathString}`);
+  const targetUrl = new URL(`${backend.replace(/\/$/, '')}/${pathString}`);
+  console.log("Proxying to:", targetUrl.toString());
   
   // Forward query parameters
   Object.entries(req.query).forEach(([key, value]) => {
