@@ -5,7 +5,7 @@ export default defineConfig({
   output: {
     format: 'prettier',
     lint: 'eslint',
-    path: './client',
+    path: './api',
   },
   plugins: [
     '@hey-api/schemas',
@@ -20,24 +20,8 @@ export default defineConfig({
     {
       name: '@hey-api/sdk',
       transformer: true,
-      /*
-      asClass: true,
-      operationId: true,
-      classNameBuilder: "{{name}}Service",
-      methodNameBuilder: (operation) => {
-        // @ts-expect-error
-        let name: string = operation.name
-        // @ts-expect-error
-        const service: string = operation.service
-
-        if (service && name.toLowerCase().startsWith(service.toLowerCase())) {
-          name = name.slice(service.length)
-        }
-
-        return name.charAt(0).toLowerCase() + name.slice(1)
-      },
-      */
     },
     '@tanstack/react-query',
+    '@hey-api/client-axios'
   ],
 });

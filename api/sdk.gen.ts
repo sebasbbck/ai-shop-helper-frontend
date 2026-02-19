@@ -21,14 +21,26 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 /**
  * Read Root
  */
-export const readRootGet = <ThrowOnError extends boolean = false>(options?: Options<ReadRootGetData, ThrowOnError>) => (options?.client ?? client).get<ReadRootGetResponses, unknown, ThrowOnError>({ url: '/', ...options });
+export const readRootGet = <ThrowOnError extends boolean = false>(options?: Options<ReadRootGetData, ThrowOnError>) => (options?.client ?? client).get<ReadRootGetResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/',
+    ...options
+});
 
 /**
  * Health
  */
-export const healthHealthGet = <ThrowOnError extends boolean = false>(options?: Options<HealthHealthGetData, ThrowOnError>) => (options?.client ?? client).get<HealthHealthGetResponses, unknown, ThrowOnError>({ url: '/health', ...options });
+export const healthHealthGet = <ThrowOnError extends boolean = false>(options?: Options<HealthHealthGetData, ThrowOnError>) => (options?.client ?? client).get<HealthHealthGetResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/health',
+    ...options
+});
 
 /**
  * Read Item
  */
-export const readItemItemsItemIdGet = <ThrowOnError extends boolean = false>(options: Options<ReadItemItemsItemIdGetData, ThrowOnError>) => (options.client ?? client).get<ReadItemItemsItemIdGetResponses, ReadItemItemsItemIdGetErrors, ThrowOnError>({ url: '/items/{item_id}', ...options });
+export const readItemItemsItemIdGet = <ThrowOnError extends boolean = false>(options: Options<ReadItemItemsItemIdGetData, ThrowOnError>) => (options.client ?? client).get<ReadItemItemsItemIdGetResponses, ReadItemItemsItemIdGetErrors, ThrowOnError>({
+    responseType: 'json',
+    url: '/items/{item_id}',
+    ...options
+});

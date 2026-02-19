@@ -1,7 +1,6 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { healthHealthGet } from "../client";
-import { wrappedClient } from "../lib/api-client";
+import { healthHealthGet } from "../api";
 
 export default function Home() {
 
