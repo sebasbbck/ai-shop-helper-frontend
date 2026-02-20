@@ -1,6 +1,6 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { healthHealthGet } from "../api";
+import { healthHealthGet } from "../api/default/default";
 
 export default function Home() {
 
