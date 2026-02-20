@@ -21,10 +21,10 @@ import type {
 
 import type {
   HTTPValidationError,
-  HealthHealthGet200,
-  ReadItemItemsItemIdGet200,
-  ReadItemItemsItemIdGetParams,
-  ReadRootGet200
+  Health200,
+  ReadItem200,
+  ReadItemParams,
+  ReadRoot200
 } from '.././model';
 
 import { customInstance } from '.././mutator/custom-instance';
@@ -38,13 +38,13 @@ type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 /**
  * @summary Read Root
  */
-export const readRootGet = (
+export const readRoot = (
     
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
       
       
-      return customInstance<ReadRootGet200>(
+      return customInstance<ReadRoot200>(
       {url: `/`, method: 'GET', signal
     },
       options);
@@ -53,69 +53,69 @@ export const readRootGet = (
 
 
 
-export const getReadRootGetQueryKey = () => {
+export const getReadRootQueryKey = () => {
     return [
     `/`
     ] as const;
     }
 
     
-export const getReadRootGetQueryOptions = <TData = Awaited<ReturnType<typeof readRootGet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof readRootGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getReadRootQueryOptions = <TData = Awaited<ReturnType<typeof readRoot>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof readRoot>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getReadRootGetQueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getReadRootQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof readRootGet>>> = ({ signal }) => readRootGet(requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof readRoot>>> = ({ signal }) => readRoot(requestOptions, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof readRootGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof readRoot>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type ReadRootGetQueryResult = NonNullable<Awaited<ReturnType<typeof readRootGet>>>
-export type ReadRootGetQueryError = ErrorType<unknown>
+export type ReadRootQueryResult = NonNullable<Awaited<ReturnType<typeof readRoot>>>
+export type ReadRootQueryError = ErrorType<unknown>
 
 
-export function useReadRootGet<TData = Awaited<ReturnType<typeof readRootGet>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof readRootGet>>, TError, TData>> & Pick<
+export function useReadRoot<TData = Awaited<ReturnType<typeof readRoot>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof readRoot>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof readRootGet>>,
+          Awaited<ReturnType<typeof readRoot>>,
           TError,
-          Awaited<ReturnType<typeof readRootGet>>
+          Awaited<ReturnType<typeof readRoot>>
         > , 'initialData'
       >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useReadRootGet<TData = Awaited<ReturnType<typeof readRootGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof readRootGet>>, TError, TData>> & Pick<
+export function useReadRoot<TData = Awaited<ReturnType<typeof readRoot>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof readRoot>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof readRootGet>>,
+          Awaited<ReturnType<typeof readRoot>>,
           TError,
-          Awaited<ReturnType<typeof readRootGet>>
+          Awaited<ReturnType<typeof readRoot>>
         > , 'initialData'
       >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useReadRootGet<TData = Awaited<ReturnType<typeof readRootGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof readRootGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export function useReadRoot<TData = Awaited<ReturnType<typeof readRoot>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof readRoot>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Read Root
  */
 
-export function useReadRootGet<TData = Awaited<ReturnType<typeof readRootGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof readRootGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export function useReadRoot<TData = Awaited<ReturnType<typeof readRoot>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof readRoot>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getReadRootGetQueryOptions(options)
+  const queryOptions = getReadRootQueryOptions(options)
 
   const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
@@ -128,13 +128,13 @@ export function useReadRootGet<TData = Awaited<ReturnType<typeof readRootGet>>, 
 /**
  * @summary Health
  */
-export const healthHealthGet = (
+export const health = (
     
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
       
       
-      return customInstance<HealthHealthGet200>(
+      return customInstance<Health200>(
       {url: `/health`, method: 'GET', signal
     },
       options);
@@ -143,69 +143,69 @@ export const healthHealthGet = (
 
 
 
-export const getHealthHealthGetQueryKey = () => {
+export const getHealthQueryKey = () => {
     return [
     `/health`
     ] as const;
     }
 
     
-export const getHealthHealthGetQueryOptions = <TData = Awaited<ReturnType<typeof healthHealthGet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthHealthGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getHealthQueryOptions = <TData = Awaited<ReturnType<typeof health>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof health>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getHealthHealthGetQueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getHealthQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof healthHealthGet>>> = ({ signal }) => healthHealthGet(requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof health>>> = ({ signal }) => health(requestOptions, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof healthHealthGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof health>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type HealthHealthGetQueryResult = NonNullable<Awaited<ReturnType<typeof healthHealthGet>>>
-export type HealthHealthGetQueryError = ErrorType<unknown>
+export type HealthQueryResult = NonNullable<Awaited<ReturnType<typeof health>>>
+export type HealthQueryError = ErrorType<unknown>
 
 
-export function useHealthHealthGet<TData = Awaited<ReturnType<typeof healthHealthGet>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthHealthGet>>, TError, TData>> & Pick<
+export function useHealth<TData = Awaited<ReturnType<typeof health>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof health>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof healthHealthGet>>,
+          Awaited<ReturnType<typeof health>>,
           TError,
-          Awaited<ReturnType<typeof healthHealthGet>>
+          Awaited<ReturnType<typeof health>>
         > , 'initialData'
       >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useHealthHealthGet<TData = Awaited<ReturnType<typeof healthHealthGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthHealthGet>>, TError, TData>> & Pick<
+export function useHealth<TData = Awaited<ReturnType<typeof health>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof health>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof healthHealthGet>>,
+          Awaited<ReturnType<typeof health>>,
           TError,
-          Awaited<ReturnType<typeof healthHealthGet>>
+          Awaited<ReturnType<typeof health>>
         > , 'initialData'
       >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useHealthHealthGet<TData = Awaited<ReturnType<typeof healthHealthGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthHealthGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export function useHealth<TData = Awaited<ReturnType<typeof health>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof health>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Health
  */
 
-export function useHealthHealthGet<TData = Awaited<ReturnType<typeof healthHealthGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthHealthGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export function useHealth<TData = Awaited<ReturnType<typeof health>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof health>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getHealthHealthGetQueryOptions(options)
+  const queryOptions = getHealthQueryOptions(options)
 
   const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
@@ -218,14 +218,14 @@ export function useHealthHealthGet<TData = Awaited<ReturnType<typeof healthHealt
 /**
  * @summary Read Item
  */
-export const readItemItemsItemIdGet = (
+export const readItem = (
     itemId: number,
-    params?: ReadItemItemsItemIdGetParams,
+    params?: ReadItemParams,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
       
       
-      return customInstance<ReadItemItemsItemIdGet200>(
+      return customInstance<ReadItem200>(
       {url: `/items/${itemId}`, method: 'GET',
         params, signal
     },
@@ -235,75 +235,75 @@ export const readItemItemsItemIdGet = (
 
 
 
-export const getReadItemItemsItemIdGetQueryKey = (itemId: number,
-    params?: ReadItemItemsItemIdGetParams,) => {
+export const getReadItemQueryKey = (itemId: number,
+    params?: ReadItemParams,) => {
     return [
     `/items/${itemId}`, ...(params ? [params] : [])
     ] as const;
     }
 
     
-export const getReadItemItemsItemIdGetQueryOptions = <TData = Awaited<ReturnType<typeof readItemItemsItemIdGet>>, TError = ErrorType<HTTPValidationError>>(itemId: number,
-    params?: ReadItemItemsItemIdGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof readItemItemsItemIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getReadItemQueryOptions = <TData = Awaited<ReturnType<typeof readItem>>, TError = ErrorType<HTTPValidationError>>(itemId: number,
+    params?: ReadItemParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof readItem>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getReadItemItemsItemIdGetQueryKey(itemId,params);
+  const queryKey =  queryOptions?.queryKey ?? getReadItemQueryKey(itemId,params);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof readItemItemsItemIdGet>>> = ({ signal }) => readItemItemsItemIdGet(itemId,params, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof readItem>>> = ({ signal }) => readItem(itemId,params, requestOptions, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(itemId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof readItemItemsItemIdGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+   return  { queryKey, queryFn, enabled: !!(itemId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof readItem>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type ReadItemItemsItemIdGetQueryResult = NonNullable<Awaited<ReturnType<typeof readItemItemsItemIdGet>>>
-export type ReadItemItemsItemIdGetQueryError = ErrorType<HTTPValidationError>
+export type ReadItemQueryResult = NonNullable<Awaited<ReturnType<typeof readItem>>>
+export type ReadItemQueryError = ErrorType<HTTPValidationError>
 
 
-export function useReadItemItemsItemIdGet<TData = Awaited<ReturnType<typeof readItemItemsItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
+export function useReadItem<TData = Awaited<ReturnType<typeof readItem>>, TError = ErrorType<HTTPValidationError>>(
  itemId: number,
-    params: undefined |  ReadItemItemsItemIdGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof readItemItemsItemIdGet>>, TError, TData>> & Pick<
+    params: undefined |  ReadItemParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof readItem>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof readItemItemsItemIdGet>>,
+          Awaited<ReturnType<typeof readItem>>,
           TError,
-          Awaited<ReturnType<typeof readItemItemsItemIdGet>>
+          Awaited<ReturnType<typeof readItem>>
         > , 'initialData'
       >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useReadItemItemsItemIdGet<TData = Awaited<ReturnType<typeof readItemItemsItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
+export function useReadItem<TData = Awaited<ReturnType<typeof readItem>>, TError = ErrorType<HTTPValidationError>>(
  itemId: number,
-    params?: ReadItemItemsItemIdGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof readItemItemsItemIdGet>>, TError, TData>> & Pick<
+    params?: ReadItemParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof readItem>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof readItemItemsItemIdGet>>,
+          Awaited<ReturnType<typeof readItem>>,
           TError,
-          Awaited<ReturnType<typeof readItemItemsItemIdGet>>
+          Awaited<ReturnType<typeof readItem>>
         > , 'initialData'
       >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useReadItemItemsItemIdGet<TData = Awaited<ReturnType<typeof readItemItemsItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
+export function useReadItem<TData = Awaited<ReturnType<typeof readItem>>, TError = ErrorType<HTTPValidationError>>(
  itemId: number,
-    params?: ReadItemItemsItemIdGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof readItemItemsItemIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+    params?: ReadItemParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof readItem>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Read Item
  */
 
-export function useReadItemItemsItemIdGet<TData = Awaited<ReturnType<typeof readItemItemsItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
+export function useReadItem<TData = Awaited<ReturnType<typeof readItem>>, TError = ErrorType<HTTPValidationError>>(
  itemId: number,
-    params?: ReadItemItemsItemIdGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof readItemItemsItemIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+    params?: ReadItemParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof readItem>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getReadItemItemsItemIdGetQueryOptions(itemId,params,options)
+  const queryOptions = getReadItemQueryOptions(itemId,params,options)
 
   const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

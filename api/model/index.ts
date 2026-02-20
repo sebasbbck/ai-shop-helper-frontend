@@ -5,9 +5,9 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export * from './healthHealthGet200';
+export * from './health200';
 export * from './hTTPValidationError';
-export * from './readItemItemsItemIdGet200';
-export * from './readItemItemsItemIdGetParams';
-export * from './readRootGet200';
+export * from './readItem200';
+export * from './readItemParams';
+export * from './readRoot200';
 export * from './validationError';
