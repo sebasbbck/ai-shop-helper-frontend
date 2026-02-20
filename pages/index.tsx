@@ -1,13 +1,12 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { healthHealthGet } from "../api";
+import { health } from "../api/default/default";
 
 export default function Home() {
 
   async function getHealth() {
-    const health = healthHealthGet()
     try {
-      const response = await health;
+      const response = await health();
       console.log(response.data);
     } catch (error) {
       console.error(error);
