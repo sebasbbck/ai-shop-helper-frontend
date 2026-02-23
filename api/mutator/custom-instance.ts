@@ -1,8 +1,27 @@
-import Axios, { AxiosRequestConfig, AxiosError } from 'axios';
+import Axios, { AxiosRequestConfig, AxiosError, InternalAxiosRequestConfig } from 'axios';
 
 export const AXIOS_INSTANCE = Axios.create({
-  baseURL: process.env.BACKEND_URL || "https://dev.aishophelper.ai/api",
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || "https://dev.aishophelper.ai/api",
 });
+
+// Auth and i18n handler
+AXIOS_INSTANCE.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    
+    if (token && config.headers) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    const lang = typeof window !== 'undefined' ? document.documentElement.lang : 'es';
+    if (config.headers) {
+      config.headers['Accept-Language'] = lang;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 // Add a second `options` argument to pass extra options to each query
 export const customInstance = <T>(

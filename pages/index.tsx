@@ -2,7 +2,19 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { health } from "../api/default/default";
 
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['translation'])),
+    },
+  };
+}
+
 export default function Home() {
+  const { t } = useTranslation('translation');
 
   async function getHealth() {
     try {
@@ -29,6 +41,10 @@ export default function Home() {
           Get started by editing{" "}
           <code className={styles.code}>pages/index.js</code>
         </p>
+
+        <i>
+          {t("translation:onboarding.start")}
+        </i>
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>

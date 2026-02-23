@@ -17,6 +17,7 @@
     "axios": "^1.13.5",
     "minimal-shared": "^1.1.5",
     "next": "latest",
+    "next-i18next": "^15.4.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
