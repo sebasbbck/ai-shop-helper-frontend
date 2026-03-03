@@ -47,4 +47,15 @@ export default defineConfig({
       target: './openapi.json',
     },
   },
+  ai_shop_helper_zod: {
+    input: {
+      target: './openapi.json',
+    },
+    output: {
+      mode: 'tags-split',
+      client: 'zod',
+      target: 'api/',
+      fileExtension: '.zod.ts',
+    },
+  },
 });
