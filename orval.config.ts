@@ -4,7 +4,7 @@ const toCamelCase = (str: string) =>
   str.toLowerCase().replace(/[-_ ](\w)/g, (_, c) => c.toUpperCase());
 
 export default defineConfig({
-  petstore: {
+  ai_shop_helper: {
     output: {
       httpClient: 'axios',
       mode: 'tags-split',
