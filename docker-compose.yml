@@ -1,0 +1,16 @@
+services:
+
+  frontend:
+    image: '${DOCKER_IMAGE_FRONTEND?Variable not set}:${TAG-latest}'
+    restart: always
+    ports:
+      - "3000:3000"
+    build:
+      context: .
+      args:
+        - OPENAPI_DOWNLOAD=${OPENAPI_DOWNLOAD?Variable not set}
+        - NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL?Variable not set}
+        - NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL?Variable not set}
+        - NEXT_SERVER_URL=${NEXT_SERVER_URL?Variable not set}
+        - NEXT_ASSETS_DIR=${NEXT_ASSETS_DIR?Variable not set}
+        - NODE_ENV=production
