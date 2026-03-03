@@ -1,7 +1,7 @@
 import Axios, { AxiosRequestConfig, AxiosError, InternalAxiosRequestConfig } from 'axios';
 
 export const AXIOS_INSTANCE = Axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || "https://dev.aishophelper.ai/api",
+  baseURL: process.env.NODE_ENV === "development" ? "/api/proxy" : process.env.NEXT_PUBLIC_BACKEND_URL,
 });
 
 // Auth and i18n handler
@@ -28,9 +28,14 @@ export const customInstance = <T>(
   config: AxiosRequestConfig,
   options?: AxiosRequestConfig,
 ): Promise<T> => {
+  const data = config.data instanceof URLSearchParams 
+    ? config.data.toString() 
+    : config.data;
+  
   const promise = AXIOS_INSTANCE({
     ...config,
     ...options,
+    data,
   }).then(({ data }) => data);
 
   return promise;

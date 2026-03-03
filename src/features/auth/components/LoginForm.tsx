@@ -25,6 +25,8 @@ import { useTranslation } from "next-i18next"
 import CircularProgress from "@mui/material/CircularProgress"
 import { useRouter } from "next/router"
 import NextLink from "next/link"
+import { login } from "../../../../api/auth/auth"
+import { getMe } from "../../../../api/users/users"
 
 // SignInSchema moved into the field-level validation via schemaUtils where needed
 
@@ -38,12 +40,12 @@ export default function LoginForm() {
   // const params = useParams({ from: '/$lang' })
 
   const defaultValues = {
-    email: "", // usuario@multiplicalia.com
+    username: "", // usuario@example.com
     password: "", // multiplicalia
   }
 
   const SignInSchema = z.object({
-    email: schemaUtils.email(),
+    username: z.email(),
     password: z
       .string()
       .min(8, { message: t("translation:forms.password_minimum_characters") }),
@@ -56,29 +58,28 @@ export default function LoginForm() {
 
   const onSubmit = async (data: any) => {
     console.log("Login submitted: ", data)
-    /* TODO: uncomment when login is ready on the API
     try {
       setIsSubmitting(true)
-      await signInWithPassword({ email: data.email, password: data.password })
+
+      await login({ username: data.username, password: data.password, grant_type: "password" })
       // optionally refresh user
       try {
-        await UsersService.readUserMe()
+        await getMe()
       } catch {
         // ignore
       }
       router.replace("/")
     } catch (err) {
       console.error(err)
-      setErrorMessage(getErrorMessage(err as any))
+      // setErrorMessage(getErrorMessage(err as any))
     }
     setIsSubmitting(false)
-    */
   }
 
   const renderForm = () => (
     <Box sx={{ gap: 3, display: "flex", flexDirection: "column" }}>
       <Field.Text
-        name="email"
+        name="username"
         label={t("translation:forms.email")}
         slotProps={{ inputLabel: { shrink: true } }}
       />
