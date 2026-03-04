@@ -10,15 +10,10 @@ export interface ErrorHandleResult {
   shouldRedirectToBilling: boolean
 }
 
-export const handleError = (err: any): ErrorHandleResult => {
-  let errorMessage = ""
-  let shouldRedirectToBilling = false
-  
-  if (err instanceof AxiosError) {
-    if (err.status === 402) {
-      shouldRedirectToBilling = true
-    }
-    
+export function getErrorMessage(err: any) {
+  let errorMessage: string
+
+  if (err instanceof AxiosError) {    
     errorMessage = err.message
     
     const errDetail = err.response?.data
@@ -42,8 +37,18 @@ export const handleError = (err: any): ErrorHandleResult => {
   } else {
     errorMessage = t("translation:errors.fallbacks.default")
   }
+
+  return errorMessage
+}
+
+export const handleError = (err: any): ErrorHandleResult => {
+  const errorMessage = getErrorMessage(err)
+
+  if (err instanceof AxiosError && err.status === 402) {
+    return { message: errorMessage, shouldRedirectToBilling: true }
+  }
   
-  return { message: errorMessage, shouldRedirectToBilling }
+  return { message: errorMessage, shouldRedirectToBilling: false }
 }
 
 export default function useHandleError() {

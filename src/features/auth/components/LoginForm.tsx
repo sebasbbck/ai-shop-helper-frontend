@@ -27,6 +27,7 @@ import { useRouter } from "next/router"
 import NextLink from "next/link"
 import { login } from "../../../../api/auth/auth"
 import { getMe } from "../../../../api/users/users"
+import { getErrorMessage } from "../../../hooks/useHandleError"
 
 // SignInSchema moved into the field-level validation via schemaUtils where needed
 
@@ -62,6 +63,8 @@ export default function LoginForm() {
       setIsSubmitting(true)
 
       await login({ username: data.username, password: data.password, grant_type: "password" })
+          .then(( data ) => localStorage.setItem("token", data.access_token))
+          
       // optionally refresh user
       try {
         await getMe()
@@ -71,7 +74,7 @@ export default function LoginForm() {
       router.replace("/")
     } catch (err) {
       console.error(err)
-      // setErrorMessage(getErrorMessage(err as any))
+      setErrorMessage(getErrorMessage(err as any))
     }
     setIsSubmitting(false)
   }
