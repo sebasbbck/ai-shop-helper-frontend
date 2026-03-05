@@ -1,22 +1,22 @@
-import { formLabelClasses } from "@mui/material/FormLabel"
-import { inputLabelClasses } from "@mui/material/InputLabel"
+import { formLabelClasses } from '@mui/material/FormLabel'
+import { inputLabelClasses } from '@mui/material/InputLabel'
 
-import { getInputTypography } from "./text-field"
-import { Components, Theme } from "@mui/material/styles"
+import { getInputTypography } from './text-field'
+import { Components, Theme } from '@mui/material/styles'
 
 // ----------------------------------------------------------------------
 
 const MuiFormControl = {
   // ▼▼▼▼▼▼▼▼ ⚙️ PROPS ▼▼▼▼▼▼▼▼
   defaultProps: {
-    variant: "outlined",
+    variant: 'outlined',
   },
 }
 
 /**
  * Applies label styles to TextField and Select.
  */
-const MuiInputLabel: Components<Theme>["MuiInputLabel"] = {
+const MuiInputLabel: Components<Theme>['MuiInputLabel'] = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     root: ({ theme }) => ({
@@ -24,7 +24,7 @@ const MuiInputLabel: Components<Theme>["MuiInputLabel"] = {
         {
           props: (props) => !props.shrink,
           style: {
-            ...getInputTypography(theme, ["fontSize", "lineHeight"]),
+            ...getInputTypography(theme, ['fontSize', 'lineHeight']),
             color: theme.vars.palette.text.disabled,
           },
         },
@@ -34,17 +34,17 @@ const MuiInputLabel: Components<Theme>["MuiInputLabel"] = {
             fontWeight: theme.typography.fontWeightBold,
             [`&.${inputLabelClasses.focused}:not(.${inputLabelClasses.error})`]:
               {
-                color: "inherit",
+                color: 'inherit',
               },
           },
         },
         {
           props: (props) =>
             !!props.shrink &&
-            props.variant === "filled" &&
-            props.size === "medium",
+            props.variant === 'filled' &&
+            props.size === 'medium',
           style: {
-            transform: "translate(12px, 6px) scale(0.75)",
+            transform: 'translate(12px, 6px) scale(0.75)',
           },
         },
       ],
@@ -55,7 +55,7 @@ const MuiInputLabel: Components<Theme>["MuiInputLabel"] = {
 /**
  * Applies label styles to Checkbox, RadioGroup, Switch.
  */
-const MuiFormLabel: Components<Theme>["MuiFormLabel"] = {
+const MuiFormLabel: Components<Theme>['MuiFormLabel'] = {
   //   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     root: ({ theme }) => ({
@@ -76,7 +76,7 @@ const MuiFormLabel: Components<Theme>["MuiFormLabel"] = {
   },
 }
 
-const MuiFormControlLabel: Components<Theme>["MuiFormControlLabel"] = {
+const MuiFormControlLabel: Components<Theme>['MuiFormControlLabel'] = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     label: ({ theme }) => ({
@@ -85,19 +85,19 @@ const MuiFormControlLabel: Components<Theme>["MuiFormControlLabel"] = {
   },
 }
 
-const MuiFormHelperText: Components<Theme>["MuiFormHelperText"] = {
+const MuiFormHelperText: Components<Theme>['MuiFormHelperText'] = {
   // ▼▼▼▼▼▼▼▼ ⚙️ PROPS ▼▼▼▼▼▼▼▼
   defaultProps: {
-    component: "div",
+    component: 'div',
   },
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     root: ({ theme }) => ({
-      display: "flex",
-      alignItems: "center",
+      display: 'flex',
+      alignItems: 'center',
       gap: theme.spacing(0.5),
       margin: theme.spacing(0.75, 1.5, 0, 1.5),
-      "& > svg": { width: 16, height: 16 },
+      '& > svg': { width: 16, height: 16 },
     }),
   },
 }

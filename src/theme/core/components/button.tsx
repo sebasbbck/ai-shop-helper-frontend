@@ -1,19 +1,23 @@
-import { buttonClasses } from "@mui/material/Button"
-import { varAlpha } from "minimal-shared/utils"
+import { buttonClasses } from '@mui/material/Button'
+import { varAlpha } from 'minimal-shared/utils'
 
-import { colorKeys } from "../palette"
-import { Components, ComponentsVariants, Theme } from "@mui/material/styles"
-import { CSSObject } from "@mui/material/styles"
-import { ButtonProps } from "@mui/material/Button"
+import { colorKeys } from '../palette'
+import { Components, ComponentsVariants, Theme } from '@mui/material/styles'
+import { CSSObject } from '@mui/material/styles'
+import { ButtonProps } from '@mui/material/Button'
 
 // ----------------------------------------------------------------------
 
-const baseColors = ["inherit"] as const
-const allColors = [...baseColors, ...colorKeys.palette, ...colorKeys.common] as const
+const baseColors = ['inherit'] as const
+const allColors = [
+  ...baseColors,
+  ...colorKeys.palette,
+  ...colorKeys.common,
+] as const
 
 interface DimensionValue {
-  "--padding-y": string
-  "--padding-x": string
+  '--padding-y': string
+  '--padding-x': string
   minHeight: number
   lineHeight: number
 }
@@ -24,20 +28,20 @@ interface DimensionValueXLarge {
 
 const DIMENSIONS: Record<string, DimensionValue | DimensionValueXLarge> = {
   small: {
-    "--padding-y": "4px",
-    "--padding-x": "8px",
+    '--padding-y': '4px',
+    '--padding-x': '8px',
     minHeight: 30,
     lineHeight: 22 / 13,
   },
   medium: {
-    "--padding-y": "6px",
-    "--padding-x": "12px",
+    '--padding-y': '6px',
+    '--padding-x': '12px',
     minHeight: 36,
     lineHeight: 24 / 14,
   },
   large: {
-    "--padding-y": "8px",
-    "--padding-x": "16px",
+    '--padding-y': '8px',
+    '--padding-x': '16px',
     minHeight: 48,
     lineHeight: 26 / 15,
   },
@@ -50,9 +54,9 @@ const DIMENSIONS: Record<string, DimensionValue | DimensionValueXLarge> = {
 const containedVariants: ComponentsVariants<Theme>['MuiButton'] = [
   {
     props: (props: ButtonProps): boolean =>
-      props.variant === "contained" && props.color === "inherit",
+      props.variant === 'contained' && props.color === 'inherit',
     style: ({ theme }: { theme: Theme }): CSSObject => ({
-      ...theme.mixins.filledStyles(theme, "inherit", {
+      ...theme.mixins.filledStyles(theme, 'inherit', {
         hover: {
           boxShadow: theme.vars.customShadows.z8,
         },
@@ -60,7 +64,8 @@ const containedVariants: ComponentsVariants<Theme>['MuiButton'] = [
     }),
   },
   ...colorKeys.common.map((colorKey: string) => ({
-    props: (props: ButtonProps): boolean => props.variant === "contained" && props.color === colorKey,
+    props: (props: ButtonProps): boolean =>
+      props.variant === 'contained' && props.color === colorKey,
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       ...theme.mixins.filledStyles(theme, colorKey, {
         hover: {
@@ -70,9 +75,10 @@ const containedVariants: ComponentsVariants<Theme>['MuiButton'] = [
     }),
   })),
   ...colorKeys.palette.map((colorKey: string) => ({
-    props: (props: ButtonProps): boolean => props.variant === "contained" && props.color === colorKey,
+    props: (props: ButtonProps): boolean =>
+      props.variant === 'contained' && props.color === colorKey,
     style: ({ theme }: { theme: Theme }): CSSObject => ({
-      "&:hover": {
+      '&:hover': {
         boxShadow: theme.vars.customShadows[colorKey],
       },
     }),
@@ -81,30 +87,32 @@ const containedVariants: ComponentsVariants<Theme>['MuiButton'] = [
 
 const outlinedVariants: ComponentsVariants<Theme>['MuiButton'] = [
   {
-    props: (props: ButtonProps): boolean => props.variant === "outlined",
+    props: (props: ButtonProps): boolean => props.variant === 'outlined',
     style: ({ theme }: { theme: Theme }): CSSObject => ({
-      borderColor: varAlpha("currentColor", theme.vars.opacity.outlined.border),
-      "&:hover": {
-        borderColor: "currentColor",
-        boxShadow: "0 0 0 0.75px currentColor",
+      borderColor: varAlpha('currentColor', theme.vars.opacity.outlined.border),
+      '&:hover': {
+        borderColor: 'currentColor',
+        boxShadow: '0 0 0 0.75px currentColor',
         backgroundColor: varAlpha(
-          "currentColor",
+          'currentColor',
           theme.vars.palette.action.hoverOpacity,
         ),
       },
     }),
   },
   {
-    props: (props: ButtonProps): boolean => props.variant === "outlined" && props.color === "inherit",
+    props: (props: ButtonProps): boolean =>
+      props.variant === 'outlined' && props.color === 'inherit',
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       borderColor: theme.vars.palette.shared.buttonOutlined,
-      "&:hover": {
+      '&:hover': {
         backgroundColor: theme.vars.palette.action.hover,
       },
     }),
   },
   ...colorKeys.common.map((colorKey: string) => ({
-    props: (props: ButtonProps): boolean => props.variant === "outlined" && props.color === colorKey,
+    props: (props: ButtonProps): boolean =>
+      props.variant === 'outlined' && props.color === colorKey,
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       color: theme.vars.palette.common[colorKey],
     }),
@@ -113,26 +121,28 @@ const outlinedVariants: ComponentsVariants<Theme>['MuiButton'] = [
 
 const textVariants: ComponentsVariants<Theme>['MuiButton'] = [
   {
-    props: (props: ButtonProps): boolean => props.variant === "text",
+    props: (props: ButtonProps): boolean => props.variant === 'text',
     style: ({ theme }: { theme: Theme }): CSSObject => ({
-      "&:hover": {
+      '&:hover': {
         backgroundColor: varAlpha(
-          "currentColor",
+          'currentColor',
           theme.vars.palette.action.hoverOpacity,
         ),
       },
     }),
   },
   {
-    props: (props: ButtonProps): boolean => props.variant === "text" && props.color === "inherit",
+    props: (props: ButtonProps): boolean =>
+      props.variant === 'text' && props.color === 'inherit',
     style: ({ theme }: { theme: Theme }): CSSObject => ({
-      "&:hover": {
+      '&:hover': {
         backgroundColor: theme.vars.palette.action.hover,
       },
     }),
   },
   ...colorKeys.common.map((colorKey: string) => ({
-    props: (props: ButtonProps): boolean => props.variant === "text" && props.color === colorKey,
+    props: (props: ButtonProps): boolean =>
+      props.variant === 'text' && props.color === colorKey,
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       color: theme.vars.palette.common[colorKey],
     }),
@@ -141,7 +151,8 @@ const textVariants: ComponentsVariants<Theme>['MuiButton'] = [
 
 const softVariants: ComponentsVariants<Theme>['MuiButton'] = [
   ...allColors.map((colorKey: string) => ({
-    props: (props: ButtonProps): boolean => props.variant === "soft" && props.color === colorKey,
+    props: (props: ButtonProps): boolean =>
+      props.variant === 'soft' && props.color === colorKey,
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       ...theme.mixins.softStyles(theme, colorKey, { hover: true }),
     }),
@@ -151,46 +162,47 @@ const softVariants: ComponentsVariants<Theme>['MuiButton'] = [
 const sizeVariants: ComponentsVariants<Theme>['MuiButton'] = [
   {
     props: (): boolean => true,
-    style: { padding: "var(--padding-y) var(--padding-x)" },
+    style: { padding: 'var(--padding-y) var(--padding-x)' },
   },
   {
-    props: (props: ButtonProps): boolean => props.size === "small",
+    props: (props: ButtonProps): boolean => props.size === 'small',
     style: { ...DIMENSIONS.small },
   },
   {
-    props: (props: ButtonProps): boolean => props.size === "medium",
+    props: (props: ButtonProps): boolean => props.size === 'medium',
     style: { ...DIMENSIONS.medium },
   },
   {
-    props: (props: ButtonProps): boolean => props.size === "large" || props.size === "xLarge",
+    props: (props: ButtonProps): boolean =>
+      props.size === 'large' || props.size === 'xLarge',
     style: { ...DIMENSIONS.large },
   },
   {
-    props: (props: ButtonProps): boolean => props.size === "xLarge",
+    props: (props: ButtonProps): boolean => props.size === 'xLarge',
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       ...DIMENSIONS.xLarge,
       fontSize: theme.typography.pxToRem(15),
     }),
   },
   {
-    props: (props: ButtonProps): boolean => props.variant === "outlined",
+    props: (props: ButtonProps): boolean => props.variant === 'outlined',
     style: {
-      paddingTop: "calc(var(--padding-y) - 4px)",
-      paddingBottom: "calc(var(--padding-y) - 4px)",
+      paddingTop: 'calc(var(--padding-y) - 4px)',
+      paddingBottom: 'calc(var(--padding-y) - 4px)',
     },
   },
   {
-    props: (props: ButtonProps): boolean => props.variant === "text",
+    props: (props: ButtonProps): boolean => props.variant === 'text',
     style: {
-      paddingLeft: "calc(var(--padding-x) - 4px)",
-      paddingRight: "calc(var(--padding-x) - 4px)",
+      paddingLeft: 'calc(var(--padding-x) - 4px)',
+      paddingRight: 'calc(var(--padding-x) - 4px)',
     },
   },
 ]
 
 const disabledVariants: ComponentsVariants<Theme>['MuiButton'] = [
   {
-    props: (props: ButtonProps): boolean => props.variant === "soft",
+    props: (props: ButtonProps): boolean => props.variant === 'soft',
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       [`&.${buttonClasses.disabled}`]: {
         backgroundColor: theme.vars.palette.action.disabledBackground,
@@ -214,13 +226,11 @@ const MuiButtonBase: Components<Theme>['MuiButton'] = {
 const MuiButton: Components<Theme>['MuiButton'] = {
   // ▼▼▼▼▼▼▼▼ ⚙️ PROPS ▼▼▼▼▼▼▼▼
   defaultProps: {
-    color: "inherit",
+    color: 'inherit',
     disableElevation: true,
   },
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
-  styleOverrides: {
-    
-  },
+  styleOverrides: {},
   variants: [
     ...containedVariants,
     ...outlinedVariants,

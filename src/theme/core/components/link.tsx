@@ -3,7 +3,7 @@
 const MuiLink = {
   // ▼▼▼▼▼▼▼▼ ⚙️ PROPS ▼▼▼▼▼▼▼▼
   defaultProps: {
-    underline: "hover",
+    underline: 'hover',
   },
 }
 

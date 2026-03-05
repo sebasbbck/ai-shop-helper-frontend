@@ -1,6 +1,6 @@
-import dayjs from "dayjs"
-import duration from "dayjs/plugin/duration"
-import relativeTime from "dayjs/plugin/relativeTime"
+import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
+import relativeTime from 'dayjs/plugin/relativeTime'
 
 // ----------------------------------------------------------------------
 
@@ -29,25 +29,25 @@ dayjs.extend(relativeTime)
 // ----------------------------------------------------------------------
 
 export const FORMAT_PATTERNS = {
-  dateTime: "DD MMM YYYY h:mm a", // 17 Apr 2022 12:00 am
-  date: "DD MMM YYYY", // 17 Apr 2022
-  time: "h:mm a", // 12:00 am
+  dateTime: 'DD MMM YYYY h:mm a', // 17 Apr 2022 12:00 am
+  date: 'DD MMM YYYY', // 17 Apr 2022
+  time: 'h:mm a', // 12:00 am
   split: {
-    dateTime: "DD/MM/YYYY h:mm a", // 17/04/2022 12:00 am
-    date: "DD/MM/YYYY", // 17/04/2022
+    dateTime: 'DD/MM/YYYY h:mm a', // 17/04/2022 12:00 am
+    date: 'DD/MM/YYYY', // 17/04/2022
   },
   paramCase: {
-    dateTime: "DD-MM-YYYY h:mm a", // 17-04-2022 12:00 am
-    date: "DD-MM-YYYY", // 17-04-2022
+    dateTime: 'DD-MM-YYYY h:mm a', // 17-04-2022 12:00 am
+    date: 'DD-MM-YYYY', // 17-04-2022
   },
 }
 
-const INVALID_DATE = "Invalid"
+const INVALID_DATE = 'Invalid'
 
 // ----------------------------------------------------------------------
 
 export function today(template?: string | undefined) {
-  return dayjs(new Date()).startOf("day").format(template)
+  return dayjs(new Date()).startOf('day').format(template)
 }
 
 // ----------------------------------------------------------------------
@@ -58,8 +58,11 @@ export function today(template?: string | undefined) {
  * @example
  * fDateTime('17-04-2022') // '17 Apr 2022 12:00 am'
  */
-export function fDateTime(input: string | number | Date | dayjs.Dayjs | null | undefined, template = FORMAT_PATTERNS.dateTime) {
-  if (!input) return ""
+export function fDateTime(
+  input: string | number | Date | dayjs.Dayjs | null | undefined,
+  template = FORMAT_PATTERNS.dateTime,
+) {
+  if (!input) return ''
 
   const date = dayjs(input)
   if (!date.isValid()) return INVALID_DATE
@@ -75,8 +78,11 @@ export function fDateTime(input: string | number | Date | dayjs.Dayjs | null | u
  * @example
  * fDate('17-04-2022') // '17 Apr 2022'
  */
-export function fDate(input: string | number | Date | dayjs.Dayjs | null | undefined, template = FORMAT_PATTERNS.date) {
-  if (!input) return ""
+export function fDate(
+  input: string | number | Date | dayjs.Dayjs | null | undefined,
+  template = FORMAT_PATTERNS.date,
+) {
+  if (!input) return ''
 
   const date = dayjs(input)
   if (!date.isValid()) return INVALID_DATE
@@ -92,8 +98,11 @@ export function fDate(input: string | number | Date | dayjs.Dayjs | null | undef
  * @example
  * fTime('2022-04-17T00:00:00') // '12:00 am'
  */
-export function fTime(input: string | number | Date | dayjs.Dayjs | null | undefined, template = FORMAT_PATTERNS.time) {
-  if (!input) return ""
+export function fTime(
+  input: string | number | Date | dayjs.Dayjs | null | undefined,
+  template = FORMAT_PATTERNS.time,
+) {
+  if (!input) return ''
 
   const date = dayjs(input)
   if (!date.isValid()) return INVALID_DATE
@@ -109,8 +118,10 @@ export function fTime(input: string | number | Date | dayjs.Dayjs | null | undef
  * @example
  * fTimestamp('2022-04-17') // 1650153600000
  */
-export function fTimestamp(input: string | number | Date | dayjs.Dayjs | null | undefined) {
-  if (!input) return ""
+export function fTimestamp(
+  input: string | number | Date | dayjs.Dayjs | null | undefined,
+) {
+  if (!input) return ''
 
   const date = dayjs(input)
   if (!date.isValid()) return INVALID_DATE
@@ -126,8 +137,10 @@ export function fTimestamp(input: string | number | Date | dayjs.Dayjs | null | 
  * @example
  * fToNow(dayjs().subtract(2, 'days')) // '2 days'
  */
-export function fToNow(input: string | number | Date | dayjs.Dayjs | null | undefined) {
-  if (!input) return ""
+export function fToNow(
+  input: string | number | Date | dayjs.Dayjs | null | undefined,
+) {
+  if (!input) return ''
 
   const date = dayjs(input)
   if (!date.isValid()) return INVALID_DATE
@@ -146,7 +159,7 @@ export function fToNow(input: string | number | Date | dayjs.Dayjs | null | unde
 export function fIsBetween(
   input: string | number | dayjs.Dayjs | Date | null | undefined,
   start: string | number | dayjs.Dayjs | Date | null | undefined,
-  end: string | number | dayjs.Dayjs | Date | null | undefined
+  end: string | number | dayjs.Dayjs | Date | null | undefined,
 ) {
   if (!input || !start || !end) return false
 
@@ -178,7 +191,7 @@ export function fIsBetween(
  */
 export function fIsAfter(
   start: string | number | Date | dayjs.Dayjs | null | undefined,
-  end: string | number | Date | dayjs.Dayjs | null | undefined
+  end: string | number | Date | dayjs.Dayjs | null | undefined,
 ) {
   if (!start || !end) return false
 
@@ -204,7 +217,7 @@ export function fIsAfter(
 export function fIsSame(
   start: string | number | Date | dayjs.Dayjs | null | undefined,
   end: string | number | Date | dayjs.Dayjs | null | undefined,
-  unit = "year"
+  unit = 'year',
 ) {
   if (!start || !end) return false
 
@@ -232,9 +245,9 @@ export function fIsSame(
 export function fDateRangeShortLabel(
   start: string | number | Date | dayjs.Dayjs | null | undefined,
   end: string | number | Date | dayjs.Dayjs | null | undefined,
-  initial: any
+  initial: any,
 ) {
-  if (!start || !end) return ""
+  if (!start || !end) return ''
 
   const startDate = dayjs(start)
   const endDate = dayjs(end)
@@ -251,20 +264,20 @@ export function fDateRangeShortLabel(
     return `${fDate(startDate)} - ${fDate(endDate)}`
   }
 
-  const isSameDay = startDate.isSame(endDate, "day")
-  const isSameMonth = startDate.isSame(endDate, "month")
-  const isSameYear = startDate.isSame(endDate, "year")
+  const isSameDay = startDate.isSame(endDate, 'day')
+  const isSameMonth = startDate.isSame(endDate, 'month')
+  const isSameYear = startDate.isSame(endDate, 'year')
 
   if (isSameDay) {
     return fDate(endDate)
   }
 
   if (isSameMonth) {
-    return `${fDate(startDate, "DD")} - ${fDate(endDate)}`
+    return `${fDate(startDate, 'DD')} - ${fDate(endDate)}`
   }
 
   if (isSameYear) {
-    return `${fDate(startDate, "DD MMM")} - ${fDate(endDate)}`
+    return `${fDate(startDate, 'DD MMM')} - ${fDate(endDate)}`
   }
 
   return `${fDate(startDate)} - ${fDate(endDate)}`

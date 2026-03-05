@@ -1,12 +1,12 @@
-import { SxProps, Theme } from "@mui/material/styles"
-import FormHelperText from "@mui/material/FormHelperText"
+import { SxProps, Theme } from '@mui/material/styles'
+import FormHelperText from '@mui/material/FormHelperText'
 
 // ----------------------------------------------------------------------
 
 interface HelperTextProps {
-  sx?: SxProps<Theme>,
-  helperText?: string,
-  errorMessage?: string,
+  sx?: SxProps<Theme>
+  helperText?: string
+  errorMessage?: string
   disableGutters?: boolean
 }
 

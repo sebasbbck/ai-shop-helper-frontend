@@ -1,27 +1,36 @@
-import { varAlpha, mergeClasses } from 'minimal-shared/utils';
+import { varAlpha, mergeClasses } from 'minimal-shared/utils'
 
-import { styled, SxProps, Theme } from '@mui/material/styles';
+import { styled, SxProps, Theme } from '@mui/material/styles'
 
-import { fData } from '../../../utils/format-number';
+import { fData } from '../../../utils/format-number'
 
-import { uploadClasses } from '../classes';
-import { getFileMeta } from '../../file-thumbnail';
-import { FileRejection } from 'react-dropzone';
+import { uploadClasses } from '../classes'
+import { getFileMeta } from '../../file-thumbnail'
+import { FileRejection } from 'react-dropzone'
 
 // ----------------------------------------------------------------------
 interface RejectedFilesProps {
   // Use 'readonly' here to match the type coming from useDropzone
-  files?: readonly FileRejection[];
-  sx?: SxProps<Theme>;
-  className?: string;
-  [key: string]: any;
+  files?: readonly FileRejection[]
+  sx?: SxProps<Theme>
+  className?: string
+  [key: string]: any
 }
 
-export function RejectedFiles({ files = [], sx, className, ...other }: RejectedFilesProps) {
+export function RejectedFiles({
+  files = [],
+  sx,
+  className,
+  ...other
+}: RejectedFilesProps) {
   return (
-    <RejectedList className={mergeClasses([uploadClasses.rejected, className])} sx={sx} {...other}>
+    <RejectedList
+      className={mergeClasses([uploadClasses.rejected, className])}
+      sx={sx}
+      {...other}
+    >
       {files.map(({ file, errors }) => {
-        const fileMeta = getFileMeta(file);
+        const fileMeta = getFileMeta(file)
 
         return (
           <RejectedItem key={fileMeta.key}>
@@ -32,10 +41,10 @@ export function RejectedFiles({ files = [], sx, className, ...other }: RejectedF
               <RejectedMsg key={error.code}>- {error.message}</RejectedMsg>
             ))}
           </RejectedItem>
-        );
+        )
       })}
     </RejectedList>
-  );
+  )
 }
 
 // ----------------------------------------------------------------------
@@ -49,17 +58,17 @@ const RejectedList = styled('ul')(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   border: `dashed 1px ${theme.vars.palette.error.main}`,
   backgroundColor: varAlpha(theme.vars.palette.error.mainChannel, 0.08),
-}));
+}))
 
 const RejectedItem = styled('li')({
   display: 'flex',
   flexDirection: 'column',
-});
+})
 
 const RejectedTitle = styled('span')(({ theme }) => ({
   ...theme.typography.subtitle2,
-}));
+}))
 
 const RejectedMsg = styled('span')(({ theme }) => ({
   ...theme.typography.caption,
-}));
+}))

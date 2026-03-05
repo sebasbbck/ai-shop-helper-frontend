@@ -1,7 +1,7 @@
-import { colorKeys } from "../palette"
-import { Components, ComponentsVariants, Theme } from "@mui/material/styles"
-import { CSSObject } from "@mui/material/styles"
-import { IconButtonProps } from "@mui/material/IconButton"
+import { colorKeys } from '../palette'
+import { Components, ComponentsVariants, Theme } from '@mui/material/styles'
+import { CSSObject } from '@mui/material/styles'
+import { IconButtonProps } from '@mui/material/IconButton'
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ const colorVariants: ComponentsVariants<Theme>['MuiIconButton'] = [
  * **********************************************************************/
 const MuiIconButton: Components<Theme>['MuiIconButton'] = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
-  variants: [...colorVariants]
+  variants: [...colorVariants],
 }
 
 /* **********************************************************************

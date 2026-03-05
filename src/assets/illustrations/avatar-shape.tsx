@@ -1,10 +1,10 @@
-import { SxProps, Theme } from "@mui/material"
-import SvgIcon from "@mui/material/SvgIcon"
-import { memo } from "react"
+import { SxProps, Theme } from '@mui/material'
+import SvgIcon from '@mui/material/SvgIcon'
+import { memo } from 'react'
 
 // ----------------------------------------------------------------------
 
-function AvatarShape({ sx, ...other }: { sx?: SxProps<Theme>}) {
+function AvatarShape({ sx, ...other }: { sx?: SxProps<Theme> }) {
   return (
     <SvgIcon
       fill="none"
@@ -14,7 +14,7 @@ function AvatarShape({ sx, ...other }: { sx?: SxProps<Theme>}) {
         {
           width: 144,
           height: 62,
-          color: "background.paper",
+          color: 'background.paper',
         },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}

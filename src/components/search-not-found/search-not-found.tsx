@@ -1,6 +1,6 @@
-import { SxProps, Theme } from "@mui/material"
-import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography"
+import { SxProps, Theme } from '@mui/material'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 
 // ----------------------------------------------------------------------
 // TODO: i18n
@@ -15,7 +15,12 @@ interface SearchNotFoundProps {
   [key: string]: any
 }
 
-export function SearchNotFound({ query, sx, slotProps, ...other }: SearchNotFoundProps) {
+export function SearchNotFound({
+  query,
+  sx,
+  slotProps,
+  ...other
+}: SearchNotFoundProps) {
   if (!query) {
     return (
       <Typography variant="body2" {...slotProps?.description}>
@@ -29,10 +34,10 @@ export function SearchNotFound({ query, sx, slotProps, ...other }: SearchNotFoun
       sx={[
         {
           gap: 1,
-          display: "flex",
+          display: 'flex',
           borderRadius: 1.5,
-          textAlign: "center",
-          flexDirection: "column",
+          textAlign: 'center',
+          flexDirection: 'column',
         },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
@@ -42,7 +47,7 @@ export function SearchNotFound({ query, sx, slotProps, ...other }: SearchNotFoun
         variant="h6"
         {...slotProps?.title}
         sx={[
-          { color: "text.primary" },
+          { color: 'text.primary' },
           ...(Array.isArray(slotProps?.title?.sx)
             ? slotProps.title.sx
             : [slotProps?.title?.sx]),

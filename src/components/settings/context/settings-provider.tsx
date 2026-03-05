@@ -1,10 +1,10 @@
-import { isEqual } from "es-toolkit"
-import { useLocalStorage } from "minimal-shared/hooks"
-import { getStorage as getStorageValue } from "minimal-shared/utils"
-import { ReactNode, useCallback, useEffect, useMemo, useState } from "react"
-import { SETTINGS_STORAGE_KEY } from "../settings-config"
-import { SettingsContext } from "./settings-context"
-import { defaultSettings as df } from "../settings-config"
+import { isEqual } from 'es-toolkit'
+import { useLocalStorage } from 'minimal-shared/hooks'
+import { getStorage as getStorageValue } from 'minimal-shared/utils'
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import { SETTINGS_STORAGE_KEY } from '../settings-config'
+import { SettingsContext } from './settings-context'
+import { defaultSettings as df } from '../settings-config'
 
 // ----------------------------------------------------------------------
 
@@ -40,7 +40,9 @@ export function SettingsProvider({
 
   // Version check and reset handling
   useEffect(() => {
-    const storedValue = getStorageValue(storageKey) as typeof defaultSettings | null
+    const storedValue = getStorageValue(storageKey) as
+      | typeof defaultSettings
+      | null
 
     if (storedValue) {
       try {

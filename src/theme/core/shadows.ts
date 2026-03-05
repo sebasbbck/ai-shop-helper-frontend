@@ -1,7 +1,7 @@
-import { createTheme } from "@mui/material/styles"
-import { varAlpha } from "minimal-shared/utils"
+import { createTheme } from '@mui/material/styles'
+import { varAlpha } from 'minimal-shared/utils'
 
-import { common, grey } from "./palette"
+import { common, grey } from './palette'
 
 // ----------------------------------------------------------------------
 
@@ -22,6 +22,6 @@ function createShadows(colorChannel: string) {
  * 📦 Final
  * **********************************************************************/
 export const shadows = {
-  light: createShadows(grey["500Channel"]),
+  light: createShadows(grey['500Channel']),
   dark: createShadows(common.blackChannel),
 }

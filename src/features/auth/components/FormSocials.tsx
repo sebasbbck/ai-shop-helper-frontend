@@ -1,16 +1,16 @@
-import Box from "@mui/material/Box"
-import IconButton from "@mui/material/IconButton"
+import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
 
-import { Iconify } from "../../../components/iconify"
-import { SxProps, Theme } from "@mui/material"
+import { Iconify } from '../../../components/iconify'
+import { SxProps, Theme } from '@mui/material'
 
 // ----------------------------------------------------------------------
 
 interface FormSocialsProps {
-  sx?: SxProps<Theme>,
-  signInWithGoogle?: () => any,
-  signInWithFacebook?: () => any,
-  signInWithTwitter?: () => any,
+  sx?: SxProps<Theme>
+  signInWithGoogle?: () => any
+  signInWithFacebook?: () => any
+  signInWithTwitter?: () => any
   [key: string]: any
 }
 
@@ -26,8 +26,8 @@ export function FormSocials({
       sx={[
         {
           gap: 1.5,
-          display: "flex",
-          justifyContent: "center",
+          display: 'flex',
+          justifyContent: 'center',
         },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}

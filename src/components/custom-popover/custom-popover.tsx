@@ -1,25 +1,33 @@
-import { listClasses } from "@mui/material/List"
-import { menuItemClasses } from "@mui/material/MenuItem"
+import { listClasses } from '@mui/material/List'
+import { menuItemClasses } from '@mui/material/MenuItem'
 
-import Popover from "@mui/material/Popover"
-import { SxProps, Theme, useTheme } from "@mui/material/styles"
-import { mergeRefs } from "minimal-shared/utils"
-import { useRef } from "react"
+import Popover from '@mui/material/Popover'
+import { SxProps, Theme, useTheme } from '@mui/material/styles'
+import { mergeRefs } from 'minimal-shared/utils'
+import { useRef } from 'react'
 
-import { useElementRect } from "./hooks"
-import { Arrow, getPaperOffsetStyles } from "./styles"
-import { getPopoverOrigin } from "./utils"
+import { useElementRect } from './hooks'
+import { Arrow, getPaperOffsetStyles } from './styles'
+import { getPopoverOrigin } from './utils'
 
 // ----------------------------------------------------------------------
 
-type PopoverPlacement = 
-  | "top-left" | "top-center" | "top-right"
-  | "bottom-left" | "bottom-center" | "bottom-right"
-  | "left-top" | "left-center" | "left-bottom"
-  | "right-top" | "right-center" | "right-bottom"
+type PopoverPlacement =
+  | 'top-left'
+  | 'top-center'
+  | 'top-right'
+  | 'bottom-left'
+  | 'bottom-center'
+  | 'bottom-right'
+  | 'left-top'
+  | 'left-center'
+  | 'left-bottom'
+  | 'right-top'
+  | 'right-center'
+  | 'right-bottom'
 
 const DEFAULT_ARROW_SIZE = 14
-const DEFAULT_ARROW_PLACEMENT = "top-right"
+const DEFAULT_ARROW_PLACEMENT = 'top-right'
 const DEFAULT_PAPER_OFFSET = [8, 2] as const
 
 interface CustomPopoverProps {
@@ -53,7 +61,7 @@ export function CustomPopover({
   ...other
 }: CustomPopoverProps) {
   const theme = useTheme()
-  const isRtl = theme.direction === "rtl"
+  const isRtl = theme.direction === 'rtl'
 
   const {
     arrow: arrowProps,
@@ -65,17 +73,20 @@ export function CustomPopover({
   const arrowPlacement = arrowProps?.placement ?? DEFAULT_ARROW_PLACEMENT
   const paperOffset = paperProps?.offset ?? DEFAULT_PAPER_OFFSET
 
-  const { anchorOrigin, transformOrigin } = getPopoverOrigin(arrowPlacement, isRtl)
+  const { anchorOrigin, transformOrigin } = getPopoverOrigin(
+    arrowPlacement,
+    isRtl,
+  )
 
   const paperRef = useRef(null)
-  const paperRect = useElementRect(paperRef.current, "popoverPaper", open)
-  const anchorRect = useElementRect(anchorEl, "anchor", open)
+  const paperRect = useElementRect(paperRef.current, 'popoverPaper', open)
+  const anchorRect = useElementRect(anchorEl, 'anchor', open)
 
   const isArrowVisible = !arrowProps?.hide && !!paperRect && !!anchorRect
 
   const paperStyles = {
     ...getPaperOffsetStyles(arrowPlacement, paperOffset, isRtl),
-    overflow: "inherit",
+    overflow: 'inherit',
     [`& .${listClasses.root}`]: { minWidth: 140 },
     [`& .${menuItemClasses.root}`]: { gap: 2 },
   }

@@ -1,16 +1,20 @@
-import { createTheme as createMuiTheme, ThemeOptions, Direction } from "@mui/material/styles"
-import { components } from "./core/components"
-import { customShadows } from "./core/custom-shadows"
-import { mixins } from "./core/mixins"
-import { opacity } from "./core/opacity"
-import { palette } from "./core/palette"
-import { shadows } from "./core/shadows"
-import { typography } from "./core/typography"
-import { themeConfig } from "./theme-config"
+import {
+  createTheme as createMuiTheme,
+  ThemeOptions,
+  Direction,
+} from '@mui/material/styles'
+import { components } from './core/components'
+import { customShadows } from './core/custom-shadows'
+import { mixins } from './core/mixins'
+import { opacity } from './core/opacity'
+import { palette } from './core/palette'
+import { shadows } from './core/shadows'
+import { typography } from './core/typography'
+import { themeConfig } from './theme-config'
 import {
   applySettingsToComponents,
   applySettingsToTheme,
-} from "./with-settings"
+} from './with-settings'
 
 // ----------------------------------------------------------------------
 
@@ -65,7 +69,7 @@ export function createTheme({
     updatedCore as ThemeOptions,
     updatedComponents as ThemeOptions,
     localeComponents as ThemeOptions,
-    themeOverrides
+    themeOverrides,
   )
 
   return theme

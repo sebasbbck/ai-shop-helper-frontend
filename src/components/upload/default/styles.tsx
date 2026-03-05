@@ -1,16 +1,16 @@
-import { varAlpha } from 'minimal-shared/utils';
+import { varAlpha } from 'minimal-shared/utils'
 
-import { styled } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
+import { styled } from '@mui/material/styles'
+import IconButton from '@mui/material/IconButton'
 
-import { uploadClasses } from '../classes';
+import { uploadClasses } from '../classes'
 
 // ----------------------------------------------------------------------
 
 export const UploadWrapper = styled('div')({
   width: '100%',
   position: 'relative',
-});
+})
 
 export const UploadArea = styled('div')(({ theme }) => ({
   minHeight: 280,
@@ -41,7 +41,7 @@ export const UploadArea = styled('div')(({ theme }) => ({
     borderColor: theme.vars.palette.error.main,
     backgroundColor: varAlpha(theme.vars.palette.error.mainChannel, 0.08),
   },
-}));
+}))
 
 export const PlaceholderContainer = styled('div')(({ theme }) => ({
   width: '100%',
@@ -66,7 +66,7 @@ export const PlaceholderContainer = styled('div')(({ theme }) => ({
       color: theme.vars.palette.primary.main,
     },
   },
-}));
+}))
 
 export const DeleteButton = styled(IconButton)(({ theme }) => ({
   top: 16,
@@ -78,4 +78,4 @@ export const DeleteButton = styled(IconButton)(({ theme }) => ({
   '&:hover': {
     backgroundColor: varAlpha(theme.vars.palette.grey['900Channel'], 0.48),
   },
-}));
+}))

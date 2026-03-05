@@ -1,17 +1,17 @@
-import Tooltip, { TooltipProps } from "@mui/material/Tooltip"
-import { mergeClasses } from "minimal-shared/utils"
+import Tooltip, { TooltipProps } from '@mui/material/Tooltip'
+import { mergeClasses } from 'minimal-shared/utils'
 
-import { Iconify } from "../iconify"
-import { fileThumbnailClasses } from "./classes"
+import { Iconify } from '../iconify'
+import { fileThumbnailClasses } from './classes'
 import {
   DownloadButton,
   RemoveButton,
   ThumbnailImage,
   ThumbnailRoot,
-} from "./styles"
-import { useFilePreview } from "./use-file-preview"
-import { getFileIcon, getFileMeta } from "./utils"
-import { SxProps, Theme } from "@mui/material"
+} from './styles'
+import { useFilePreview } from './use-file-preview'
+import { getFileIcon, getFileMeta } from './utils'
+import { SxProps, Theme } from '@mui/material'
 
 // ----------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ export function FileThumbnail({
   const { previewUrl } = useFilePreview(previewEnabled ? file : null)
 
   const imageSrc = previewUrlProp ?? previewUrl
-  const canShowImage = fileMeta.format === "image" && !!showImage && imageSrc
+  const canShowImage = fileMeta.format === 'image' && !!showImage && imageSrc
 
   const tooltipProps = slotProps?.tooltip
 
@@ -122,7 +122,7 @@ export function FileThumbnail({
       slotProps={{
         ...tooltipProps?.slotProps,
         popper: {
-          modifiers: [{ name: "offset", options: { offset: [0, -12] } }],
+          modifiers: [{ name: 'offset', options: { offset: [0, -12] } }],
           ...tooltipProps?.slotProps?.popper,
         },
       }}

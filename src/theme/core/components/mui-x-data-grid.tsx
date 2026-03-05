@@ -1,15 +1,15 @@
-import { circularProgressClasses } from "@mui/material/CircularProgress"
-import { iconButtonClasses } from "@mui/material/IconButton"
-import { linearProgressClasses } from "@mui/material/LinearProgress"
-import { listClasses } from "@mui/material/List"
-import { listItemIconClasses } from "@mui/material/ListItemIcon"
-import { paperClasses } from "@mui/material/Paper"
-import SvgIcon, { svgIconClasses, SvgIconProps } from "@mui/material/SvgIcon"
-import { gridClasses } from "@mui/x-data-grid"
-import { varAlpha } from "minimal-shared/utils"
-import { Theme } from "@mui/material/styles"
-import { CSSObject } from "@mui/material/styles"
-import { JSX } from "react"
+import { circularProgressClasses } from '@mui/material/CircularProgress'
+import { iconButtonClasses } from '@mui/material/IconButton'
+import { linearProgressClasses } from '@mui/material/LinearProgress'
+import { listClasses } from '@mui/material/List'
+import { listItemIconClasses } from '@mui/material/ListItemIcon'
+import { paperClasses } from '@mui/material/Paper'
+import SvgIcon, { svgIconClasses, SvgIconProps } from '@mui/material/SvgIcon'
+import { gridClasses } from '@mui/x-data-grid'
+import { varAlpha } from 'minimal-shared/utils'
+import { Theme } from '@mui/material/styles'
+import { CSSObject } from '@mui/material/styles'
+import { JSX } from 'react'
 
 // ----------------------------------------------------------------------
 
@@ -237,11 +237,11 @@ const MuiDataGrid = {
         native: true,
       },
       loadingOverlay: {
-        variant: "skeleton",
+        variant: 'skeleton',
       },
       columnsManagement: {
         searchInputProps: {
-          size: "medium",
+          size: 'medium',
         },
       },
     },
@@ -251,21 +251,21 @@ const MuiDataGrid = {
     root: ({ theme }: { theme: Theme }): CSSObject => {
       const baseStyles = {
         borderWidth: 0,
-        backgroundColor: "transparent",
+        backgroundColor: 'transparent',
       }
 
       return {
-        "--unstable_DataGrid-radius": 0,
-        "--unstable_DataGrid-headWeight": theme.typography.fontWeightBold,
+        '--unstable_DataGrid-radius': 0,
+        '--unstable_DataGrid-headWeight': theme.typography.fontWeightBold,
         ...theme.mixins.scrollbarStyles(theme),
         ...baseStyles,
       }
     },
     footerContainer: {
-      minHeight: "auto",
-      borderTopStyle: "dashed",
+      minHeight: 'auto',
+      borderTopStyle: 'dashed',
       [`& .${gridClasses.selectedRowCount}`]: {
-        whiteSpace: "nowrap",
+        whiteSpace: 'nowrap',
       },
     },
     /**
@@ -290,7 +290,7 @@ const MuiDataGrid = {
     columnHeader: ({ theme }: { theme: Theme }): CSSObject => ({
       color: theme.vars.palette.text.secondary,
       backgroundColor: theme.vars.palette.background.neutral,
-      [`&.${gridClasses["columnHeader--sorted"]}, &.${gridClasses["columnHeader--sorted"]} .${gridClasses.sortIcon}`]:
+      [`&.${gridClasses['columnHeader--sorted']}, &.${gridClasses['columnHeader--sorted']} .${gridClasses.sortIcon}`]:
         {
           color: theme.vars.palette.text.primary,
         },
@@ -299,31 +299,31 @@ const MuiDataGrid = {
      * @cell
      */
     cell: ({ theme }: { theme: Theme }): CSSObject => ({
-      borderTopStyle: "dashed",
-      "&:hover": {
+      borderTopStyle: 'dashed',
+      '&:hover': {
         color: theme.vars.palette.primary.main,
       },
-      [`&.${gridClasses["cell--editing"]}`]: {
-        boxShadow: "none",
+      [`&.${gridClasses['cell--editing']}`]: {
+        boxShadow: 'none',
         backgroundColor: varAlpha(theme.vars.palette.primary.mainChannel, 0.08),
       },
-      [`&.${gridClasses["cell--withLeftBorder"]}`]: {
-        borderLeftStyle: "dashed",
+      [`&.${gridClasses['cell--withLeftBorder']}`]: {
+        borderLeftStyle: 'dashed',
       },
-      [`&.${gridClasses["cell--withRightBorder"]}`]: {
-        borderRightStyle: "dashed",
+      [`&.${gridClasses['cell--withRightBorder']}`]: {
+        borderRightStyle: 'dashed',
       },
     }),
     /**
      * @toolbar
      */
     toolbar: ({ theme }: { theme: Theme }): CSSObject => ({
-      minHeight: "auto",
-      borderBottom: "none",
+      minHeight: 'auto',
+      borderBottom: 'none',
       padding: theme.spacing(2),
     }),
     toolbarDivider: {
-      display: "none",
+      display: 'none',
     },
     /**
      * @panel
@@ -362,7 +362,7 @@ const MuiDataGrid = {
       gap: theme.spacing(0.5),
     }),
     columnsManagementFooter: ({ theme }: { theme: Theme }): CSSObject => ({
-      borderTopStyle: "dashed",
+      borderTopStyle: 'dashed',
       paddingTop: theme.spacing(1.5),
       paddingBottom: theme.spacing(1.5),
     }),
@@ -371,8 +371,8 @@ const MuiDataGrid = {
      */
     filterFormDeleteIcon: ({ theme }: { theme: Theme }): CSSObject => ({
       [`& .${iconButtonClasses.root}`]: {
-        padding: "5px",
-        backgroundColor: varAlpha(theme.vars.palette.grey["500Channel"], 0.16),
+        padding: '5px',
+        backgroundColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.16),
         [`& .${svgIconClasses.root}`]: { width: 16, height: 16 },
       },
     }),

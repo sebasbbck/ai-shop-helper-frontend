@@ -1,39 +1,39 @@
-import { useMemo } from 'react';
-import { usePopover } from 'minimal-shared/hooks';
+import { useMemo } from 'react'
+import { usePopover } from 'minimal-shared/hooks'
 
-import Box from '@mui/material/Box';
-import Popover from '@mui/material/Popover';
-import SvgIcon from '@mui/material/SvgIcon';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-import TextField from '@mui/material/TextField';
-import ButtonBase from '@mui/material/ButtonBase';
-import IconButton from '@mui/material/IconButton';
-import ListItemText from '@mui/material/ListItemText';
-import InputAdornment from '@mui/material/InputAdornment';
-import { SxProps, Theme } from '@mui/material/styles';
+import Box from '@mui/material/Box'
+import Popover from '@mui/material/Popover'
+import SvgIcon from '@mui/material/SvgIcon'
+import MenuList from '@mui/material/MenuList'
+import MenuItem from '@mui/material/MenuItem'
+import TextField from '@mui/material/TextField'
+import ButtonBase from '@mui/material/ButtonBase'
+import IconButton from '@mui/material/IconButton'
+import ListItemText from '@mui/material/ListItemText'
+import InputAdornment from '@mui/material/InputAdornment'
+import { SxProps, Theme } from '@mui/material/styles'
 
-import { Iconify } from '../iconify';
-import { FlagIcon } from '../flag-icon';
-import { SearchNotFound } from '../search-not-found';
+import { Iconify } from '../iconify'
+import { FlagIcon } from '../flag-icon'
+import { SearchNotFound } from '../search-not-found'
 
 // ----------------------------------------------------------------------
 
 export type CountryOption = {
-  label: string;
-  code: string;
-  phone: string;
-};
+  label: string
+  code: string
+  phone: string
+}
 
 interface CountryListPopoverProps {
-  sx?: SxProps<Theme>;
-  options: CountryOption[];
-  disabled?: boolean;
-  searchCountry: string;
-  selectedCountry?: string;
-  onSearchCountry: (query: string) => void;
-  onSelectedCountry: (code: string) => void;
-  [key: string]: any;
+  sx?: SxProps<Theme>
+  options: CountryOption[]
+  disabled?: boolean
+  searchCountry: string
+  selectedCountry?: string
+  onSearchCountry: (query: string) => void
+  onSelectedCountry: (code: string) => void
+  [key: string]: any
 }
 
 export function CountryListPopover({
@@ -46,7 +46,7 @@ export function CountryListPopover({
   onSelectedCountry,
   ...other
 }: CountryListPopoverProps) {
-  const { open, onClose, onOpen, anchorEl } = usePopover();
+  const { open, onClose, onOpen, anchorEl } = usePopover()
 
   const dataFiltered = useMemo(
     () =>
@@ -54,13 +54,13 @@ export function CountryListPopover({
         inputData: options,
         query: searchCountry,
       }),
-    [options, searchCountry]
-  );
+    [options, searchCountry],
+  )
 
-  const notFound = dataFiltered.length === 0 && !!searchCountry;
+  const notFound = dataFiltered.length === 0 && !!searchCountry
 
-  const btnId = 'country-list-button';
-  const menuId = 'country-list-menu';
+  const btnId = 'country-list-button'
+  const menuId = 'country-list-menu'
 
   const renderFlag = () =>
     selectedCountry ? (
@@ -86,7 +86,7 @@ export function CountryListPopover({
           clipRule="evenodd"
         />
       </SvgIcon>
-    );
+    )
 
   const renderButton = () => (
     <ButtonBase
@@ -134,7 +134,7 @@ export function CountryListPopover({
         })}
       />
     </ButtonBase>
-  );
+  )
 
   const renderList = () => (
     <MenuList>
@@ -144,9 +144,9 @@ export function CountryListPopover({
           selected={open && selectedCountry === country.code}
           autoFocus={open && selectedCountry === country.code}
           onClick={() => {
-            onClose();
-            onSearchCountry('');
-            onSelectedCountry(country.code);
+            onClose()
+            onSearchCountry('')
+            onSelectedCountry(country.code)
           }}
         >
           <FlagIcon
@@ -165,7 +165,7 @@ export function CountryListPopover({
         </MenuItem>
       ))}
     </MenuList>
-  );
+  )
 
   const renderPopover = () => (
     <Popover
@@ -174,8 +174,8 @@ export function CountryListPopover({
       open={open}
       anchorEl={anchorEl as HTMLElement}
       onClose={() => {
-        onClose();
-        onSearchCountry('');
+        onClose()
+        onSearchCountry('')
       }}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
       transformOrigin={{ vertical: 'top', horizontal: 'left' }}
@@ -202,12 +202,19 @@ export function CountryListPopover({
             input: {
               startAdornment: (
                 <InputAdornment position="start">
-                  <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+                  <Iconify
+                    icon="eva:search-fill"
+                    sx={{ color: 'text.disabled' }}
+                  />
                 </InputAdornment>
               ),
               endAdornment: searchCountry && (
                 <InputAdornment position="end">
-                  <IconButton size="small" edge="end" onClick={() => onSearchCountry('')}>
+                  <IconButton
+                    size="small"
+                    edge="end"
+                    onClick={() => onSearchCountry('')}
+                  >
                     <Iconify width={16} icon="mingcute:close-line" />
                   </IconButton>
                 </InputAdornment>
@@ -218,32 +225,38 @@ export function CountryListPopover({
       </Box>
 
       <Box sx={{ flex: '1 1 auto', overflowX: 'hidden' }}>
-        {notFound ? <SearchNotFound query={searchCountry} sx={{ px: 2, pt: 5 }} /> : renderList()}
+        {notFound ? (
+          <SearchNotFound query={searchCountry} sx={{ px: 2, pt: 5 }} />
+        ) : (
+          renderList()
+        )}
       </Box>
     </Popover>
-  );
+  )
 
   return (
     <>
       {renderButton()}
       {renderPopover()}
     </>
-  );
+  )
 }
 
 // ----------------------------------------------------------------------
 
 type FilterArgs = {
-  inputData: CountryOption[];
-  query: string;
-};
+  inputData: CountryOption[]
+  query: string
+}
 
 function applyFilter({ inputData, query }: FilterArgs) {
-  if (!query) return inputData;
+  if (!query) return inputData
 
-  const lowerQuery = query.toLowerCase();
+  const lowerQuery = query.toLowerCase()
 
   return inputData.filter(({ label, code, phone }) =>
-    [label, code, phone].some((field) => field?.toLowerCase().includes(lowerQuery))
-  );
+    [label, code, phone].some((field) =>
+      field?.toLowerCase().includes(lowerQuery),
+    ),
+  )
 }

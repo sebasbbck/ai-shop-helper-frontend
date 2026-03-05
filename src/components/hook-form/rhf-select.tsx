@@ -1,16 +1,16 @@
-import Box from "@mui/material/Box"
-import Checkbox from "@mui/material/Checkbox"
-import Chip from "@mui/material/Chip"
-import FormControl from "@mui/material/FormControl"
-import InputLabel from "@mui/material/InputLabel"
-import MenuItem from "@mui/material/MenuItem"
-import Select from "@mui/material/Select"
-import TextField from "@mui/material/TextField"
-import { merge } from "es-toolkit"
-import { Controller, useFormContext } from "react-hook-form"
+import Box from '@mui/material/Box'
+import Checkbox from '@mui/material/Checkbox'
+import Chip from '@mui/material/Chip'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import TextField from '@mui/material/TextField'
+import { merge } from 'es-toolkit'
+import { Controller, useFormContext } from 'react-hook-form'
 
-import { HelperText } from "./help-text"
-import { RHFProps } from "."
+import { HelperText } from './help-text'
+import { RHFProps } from '.'
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +27,7 @@ export function RHFSelect({
 
   const baseSlotProps = {
     select: {
-      sx: { textTransform: "capitalize" },
+      sx: { textTransform: 'capitalize' },
       MenuProps: {
         slotProps: {
           paper: {
@@ -121,13 +121,13 @@ export function RHFMultiSelect({
 
                 if (!selectedItems.length && placeholder) {
                   return (
-                    <Box sx={{ color: "text.disabled" }}>{placeholder}</Box>
+                    <Box sx={{ color: 'text.disabled' }}>{placeholder}</Box>
                   )
                 }
 
                 if (chip) {
                   return (
-                    <Box sx={{ gap: 0.5, display: "flex", flexWrap: "wrap" }}>
+                    <Box sx={{ gap: 0.5, display: 'flex', flexWrap: 'wrap' }}>
                       {selectedItems.map((item) => (
                         <Chip
                           key={item.value}
@@ -141,7 +141,7 @@ export function RHFMultiSelect({
                   )
                 }
 
-                return selectedItems.map((item) => item.label).join(", ")
+                return selectedItems.map((item) => item.label).join(', ')
               }}
               {...slotProps?.select}
               inputProps={{

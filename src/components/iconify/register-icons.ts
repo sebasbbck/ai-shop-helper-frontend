@@ -1,27 +1,30 @@
-import { addCollection } from "@iconify/react"
+import { addCollection } from '@iconify/react'
 
-import allIcons from "./icon-sets"
+import allIcons from './icon-sets'
 
 // TODO: type properly
 // ----------------------------------------------------------------------
 
-export const iconSets = Object.entries(allIcons).reduce((acc: any[], [key, value]) => {
-  const [prefix, iconName] = key.split(":")
-  const existingPrefix = acc.find((item: any) => item.prefix === prefix)
+export const iconSets = Object.entries(allIcons).reduce(
+  (acc: any[], [key, value]) => {
+    const [prefix, iconName] = key.split(':')
+    const existingPrefix = acc.find((item: any) => item.prefix === prefix)
 
-  if (existingPrefix) {
-    existingPrefix.icons[iconName] = value
-  } else {
-    acc.push({
-      prefix,
-      icons: {
-        [iconName]: value,
-      },
-    })
-  }
+    if (existingPrefix) {
+      existingPrefix.icons[iconName] = value
+    } else {
+      acc.push({
+        prefix,
+        icons: {
+          [iconName]: value,
+        },
+      })
+    }
 
-  return acc
-}, [])
+    return acc
+  },
+  [],
+)
 
 export const allIconNames = Object.keys(allIcons)
 
@@ -37,8 +40,8 @@ export function registerIcons() {
   iconSets.forEach((iconSet: any) => {
     const iconSetConfig = {
       ...iconSet,
-      width: (iconSet.prefix === "carbon" && 32) || 24,
-      height: (iconSet.prefix === "carbon" && 32) || 24,
+      width: (iconSet.prefix === 'carbon' && 32) || 24,
+      height: (iconSet.prefix === 'carbon' && 32) || 24,
     }
 
     addCollection(iconSetConfig)

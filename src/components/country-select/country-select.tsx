@@ -1,50 +1,60 @@
-import { useId, useMemo, useCallback, HTMLAttributes } from 'react';
+import { useId, useMemo, useCallback, HTMLAttributes } from 'react'
 
-import Chip from '@mui/material/Chip';
-import TextField, { TextFieldProps } from '@mui/material/TextField';
-import { filledInputClasses } from '@mui/material/FilledInput';
-import { outlinedInputClasses } from '@mui/material/OutlinedInput';
-import Autocomplete, { autocompleteClasses, AutocompleteProps } from '@mui/material/Autocomplete';
-import InputAdornment, { inputAdornmentClasses } from '@mui/material/InputAdornment';
-import { SxProps, Theme } from '@mui/material/styles';
+import Chip from '@mui/material/Chip'
+import TextField, { TextFieldProps } from '@mui/material/TextField'
+import { filledInputClasses } from '@mui/material/FilledInput'
+import { outlinedInputClasses } from '@mui/material/OutlinedInput'
+import Autocomplete, {
+  autocompleteClasses,
+  AutocompleteProps,
+} from '@mui/material/Autocomplete'
+import InputAdornment, {
+  inputAdornmentClasses,
+} from '@mui/material/InputAdornment'
+import { SxProps, Theme } from '@mui/material/styles'
 
-import { countries } from '../../assets/data';
-import { FlagIcon } from '../flag-icon';
+import { countries } from '../../assets/data'
+import { FlagIcon } from '../flag-icon'
 
 // ----------------------------------------------------------------------
 
 export type CountryType = {
-  code: string;
-  label: string;
-  phone: string;
-};
+  code: string
+  label: string
+  phone: string
+}
 
 const getCountry = (inputValue: string | CountryType | null): CountryType => {
-  if (!inputValue) return { code: '', label: '', phone: '' };
+  if (!inputValue) return { code: '', label: '', phone: '' }
 
-  const query = typeof inputValue === 'object' ? inputValue.label : inputValue;
+  const query = typeof inputValue === 'object' ? inputValue.label : inputValue
 
   return (
     (countries as CountryType[]).find(
       (country) =>
-        country.label === query || country.code === query || country.phone === query
+        country.label === query ||
+        country.code === query ||
+        country.phone === query,
     ) ?? {
       code: '',
       label: '',
       phone: '',
     }
-  );
-};
+  )
+}
 
-interface CountrySelectProps extends Omit<AutocompleteProps<string, boolean, false, false>, 'options' | 'renderInput'> {
-  label?: string;
-  error?: boolean;
-  variant?: TextFieldProps['variant'];
-  helperText?: React.ReactNode;
-  hiddenLabel?: boolean;
-  placeholder?: string;
-  displayValue?: 'label' | 'code';
-  slotProps?: any; // You can refine this further based on your custom theme
+interface CountrySelectProps extends Omit<
+  AutocompleteProps<string, boolean, false, false>,
+  'options' | 'renderInput'
+> {
+  label?: string
+  error?: boolean
+  variant?: TextFieldProps['variant']
+  helperText?: React.ReactNode
+  hiddenLabel?: boolean
+  placeholder?: string
+  displayValue?: 'label' | 'code'
+  slotProps?: any // You can refine this further based on your custom theme
 }
 
 // ----------------------------------------------------------------------
@@ -62,46 +72,50 @@ export function CountrySelect({
   displayValue = 'label',
   ...other
 }: CountrySelectProps) {
-  const uniqueId = useId();
+  const uniqueId = useId()
 
   const options = useMemo(
-    () => (countries as CountryType[]).map((country) => 
-      String(displayValue === 'code' ? country.code : country.label)
-    ),
-    [displayValue]
-  );
+    () =>
+      (countries as CountryType[]).map((country) =>
+        String(displayValue === 'code' ? country.code : country.label),
+      ),
+    [displayValue],
+  )
 
   const getOptionLabel = useCallback(
     (option: string | CountryType) => {
-      const country = getCountry(option);
-      return displayValue === 'code' ? country.code : country.label;
+      const country = getCountry(option)
+      return displayValue === 'code' ? country.code : country.label
     },
-    [displayValue]
-  );
+    [displayValue],
+  )
 
-  const renderOption = useCallback((props: HTMLAttributes<HTMLLIElement>, option: string) => {
-    const country = getCountry(option);
+  const renderOption = useCallback(
+    (props: HTMLAttributes<HTMLLIElement>, option: string) => {
+      const country = getCountry(option)
 
-    return (
-      <li {...props} key={country.code || option}>
-        <FlagIcon
-          code={country.code}
-          sx={{
-            mr: 1,
-            width: 22,
-            height: 22,
-            borderRadius: '50%',
-          }}
-        />
-        {country.label} ({country.code}) +{country.phone}
-      </li>
-    );
-  }, []);
+      return (
+        <li {...props} key={country.code || option}>
+          <FlagIcon
+            code={country.code}
+            sx={{
+              mr: 1,
+              width: 22,
+              height: 22,
+              borderRadius: '50%',
+            }}
+          />
+          {country.label} ({country.code}) +{country.phone}
+        </li>
+      )
+    },
+    [],
+  )
 
   const renderInput = useCallback(
     (params: any) => {
-      const country = getCountry(params.inputProps.value as string);
-      const hasAdornment = !multiple && !!country.code;
+      const country = getCountry(params.inputProps.value as string)
+      const hasAdornment = !multiple && !!country.code
 
       const textFieldStyles: SxProps<Theme> = {
         [`& .${inputAdornmentClasses.root}`]: {
@@ -118,7 +132,7 @@ export function CountrySelect({
             transform: hiddenLabel ? 'unset' : 'translateY(-8px)',
           },
         },
-      };
+      }
 
       const textFieldSlotProps = {
         ...slotProps?.textField?.slotProps,
@@ -133,12 +147,15 @@ export function CountrySelect({
           ...(hasAdornment && {
             startAdornment: (
               <InputAdornment position="start">
-                <FlagIcon code={country.code} sx={{ width: 22, height: 22, borderRadius: '50%' }} />
+                <FlagIcon
+                  code={country.code}
+                  sx={{ width: 22, height: 22, borderRadius: '50%' }}
+                />
               </InputAdornment>
             ),
           }),
         },
-      };
+      }
 
       return (
         <TextField
@@ -158,15 +175,24 @@ export function CountrySelect({
               : [slotProps?.textField?.sx]),
           ]}
         />
-      );
+      )
     },
-    [error, helperText, hiddenLabel, label, multiple, placeholder, slotProps?.textField, variant]
-  );
+    [
+      error,
+      helperText,
+      hiddenLabel,
+      label,
+      multiple,
+      placeholder,
+      slotProps?.textField,
+      variant,
+    ],
+  )
 
   const renderValue = useCallback(
     (selected: string[], getItemProps: any) =>
       selected.map((option, index) => {
-        const country = getCountry(option);
+        const country = getCountry(option)
 
         return (
           <Chip
@@ -176,14 +202,17 @@ export function CountrySelect({
             size="small"
             variant="soft"
             icon={
-              <FlagIcon code={country.code} sx={[{ width: 16, height: 16, borderRadius: '50%' }]} />
+              <FlagIcon
+                code={country.code}
+                sx={[{ width: 16, height: 16, borderRadius: '50%' }]}
+              />
             }
             {...slotProps?.chip}
           />
-        );
+        )
       }),
-    [slotProps?.chip]
-  );
+    [slotProps?.chip],
+  )
 
   return (
     <Autocomplete
@@ -199,5 +228,5 @@ export function CountrySelect({
       {...slotProps}
       {...(other as any)}
     />
-  );
+  )
 }

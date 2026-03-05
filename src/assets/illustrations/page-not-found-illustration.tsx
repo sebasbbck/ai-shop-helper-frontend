@@ -1,14 +1,21 @@
-import { SxProps, Theme } from "@mui/material"
-import SvgIcon from "@mui/material/SvgIcon"
-import { memo } from "react"
+import { SxProps, Theme } from '@mui/material'
+import SvgIcon from '@mui/material/SvgIcon'
+import { memo } from 'react'
 
-import { CONFIG } from "../../global-config"
+import { CONFIG } from '../../global-config'
 
-import { BackgroundShape } from "./background-shape"
+import { BackgroundShape } from './background-shape'
 
 // ----------------------------------------------------------------------
 
-function PageNotFoundIllustration({ hideBackground, sx, ...other }: { hideBackground: boolean, sx?: SxProps<Theme>}) {
+function PageNotFoundIllustration({
+  hideBackground,
+  sx,
+  ...other
+}: {
+  hideBackground: boolean
+  sx?: SxProps<Theme>
+}) {
   const renderCharacterImage = () => (
     <image
       href={`${CONFIG.assetsDir}/assets/illustrations/characters/character-question.webp`}
@@ -24,14 +31,14 @@ function PageNotFoundIllustration({ hideBackground, sx, ...other }: { hideBackgr
       xmlns="http://www.w3.org/2000/svg"
       sx={[
         (theme) => ({
-          "--primary-light": theme.vars.palette.primary.light,
-          "--primary-main": theme.vars.palette.primary.main,
-          "--primary-dark": theme.vars.palette.primary.dark,
-          "--primary-darker": theme.vars.palette.primary.darker,
+          '--primary-light': theme.vars.palette.primary.light,
+          '--primary-main': theme.vars.palette.primary.main,
+          '--primary-dark': theme.vars.palette.primary.dark,
+          '--primary-darker': theme.vars.palette.primary.darker,
           width: 320,
           maxWidth: 1,
           flexShrink: 0,
-          height: "auto",
+          height: 'auto',
         }),
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}

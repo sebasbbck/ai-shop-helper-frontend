@@ -1,42 +1,45 @@
-import { paginationItemClasses, PaginationItemProps } from "@mui/material/PaginationItem"
-import { varAlpha } from "minimal-shared/utils"
+import {
+  paginationItemClasses,
+  PaginationItemProps,
+} from '@mui/material/PaginationItem'
+import { varAlpha } from 'minimal-shared/utils'
 
-import { colorKeys } from "../palette"
-import { Components, ComponentsVariants, Theme } from "@mui/material/styles"
+import { colorKeys } from '../palette'
+import { Components, ComponentsVariants, Theme } from '@mui/material/styles'
 
 // ----------------------------------------------------------------------
 
-const baseColors = ["standard"]
+const baseColors = ['standard']
 const allColors = [...baseColors, ...colorKeys.palette]
 
 /* **********************************************************************
  * 🗳️ Variants
  * **********************************************************************/
-const textVariants: ComponentsVariants<Theme>["MuiPaginationItem"] = [
+const textVariants: ComponentsVariants<Theme>['MuiPaginationItem'] = [
   {
-    props: (props) => props.variant === "text" && props.color === "standard",
+    props: (props) => props.variant === 'text' && props.color === 'standard',
     style: ({ theme }) => ({
       [`&.${paginationItemClasses.selected}`]: {
-        ...theme.mixins.filledStyles(theme, "inherit", { hover: true }),
+        ...theme.mixins.filledStyles(theme, 'inherit', { hover: true }),
       },
     }),
   },
 ]
 
-const outlinedVariants: ComponentsVariants<Theme>["MuiPaginationItem"] = [
+const outlinedVariants: ComponentsVariants<Theme>['MuiPaginationItem'] = [
   {
-    props: (props) => props.variant === "outlined",
+    props: (props) => props.variant === 'outlined',
     style: ({ theme }) => ({
       borderColor: theme.vars.palette.shared.buttonOutlined,
       [`&.${paginationItemClasses.selected}`]: {
-        borderColor: "currentColor",
+        borderColor: 'currentColor',
         backgroundColor: varAlpha(
-          "currentColor",
+          'currentColor',
           theme.vars.palette.action.selectedOpacity,
         ),
-        "&:hover": {
+        '&:hover': {
           backgroundColor: varAlpha(
-            "currentColor",
+            'currentColor',
             `calc(${theme.vars.palette.action.selectedOpacity} * 2)`,
           ),
         },
@@ -45,13 +48,13 @@ const outlinedVariants: ComponentsVariants<Theme>["MuiPaginationItem"] = [
   },
   {
     props: (props) =>
-      props.variant === "outlined" && props.color === "standard",
+      props.variant === 'outlined' && props.color === 'standard',
     style: ({ theme }) => ({
       [`&.${paginationItemClasses.selected}`]: {
-        backgroundColor: varAlpha(theme.vars.palette.grey["500Channel"], 0.08),
-        "&:hover": {
+        backgroundColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.08),
+        '&:hover': {
           backgroundColor: varAlpha(
-            theme.vars.palette.grey["500Channel"],
+            theme.vars.palette.grey['500Channel'],
             0.16,
           ),
         },
@@ -60,11 +63,12 @@ const outlinedVariants: ComponentsVariants<Theme>["MuiPaginationItem"] = [
   },
 ]
 
-const softVariants: ComponentsVariants<Theme>["MuiPaginationItem"] = [
+const softVariants: ComponentsVariants<Theme>['MuiPaginationItem'] = [
   ...allColors.map((colorKey) => ({
-    props: (props: PaginationItemProps) => props.variant === "soft" as any && props.color === colorKey,
+    props: (props: PaginationItemProps) =>
+      props.variant === ('soft' as any) && props.color === colorKey,
     style: ({ theme }: { theme: Theme }) => {
-      const currentColor = colorKey === "standard" ? "inherit" : colorKey
+      const currentColor = colorKey === 'standard' ? 'inherit' : colorKey
 
       return {
         [`&.${paginationItemClasses.selected}`]: {
@@ -75,7 +79,7 @@ const softVariants: ComponentsVariants<Theme>["MuiPaginationItem"] = [
   })),
 ]
 
-const disabledVariants: ComponentsVariants<Theme>["MuiPaginationItem"] = [
+const disabledVariants: ComponentsVariants<Theme>['MuiPaginationItem'] = [
   {
     props: {},
     style: ({ theme }) => ({
@@ -91,7 +95,7 @@ const disabledVariants: ComponentsVariants<Theme>["MuiPaginationItem"] = [
 /* **********************************************************************
  * 🧩 Components
  * **********************************************************************/
-const MuiPaginationItem: Components<Theme>["MuiPaginationItem"] = {
+const MuiPaginationItem: Components<Theme>['MuiPaginationItem'] = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     root: ({ theme }: { theme: Theme }) => ({

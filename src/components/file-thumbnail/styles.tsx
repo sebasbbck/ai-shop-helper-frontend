@@ -1,32 +1,32 @@
-import ButtonBase from "@mui/material/ButtonBase"
-import IconButton from "@mui/material/IconButton"
-import { styled } from "@mui/material/styles"
-import { varAlpha } from "minimal-shared/utils"
+import ButtonBase from '@mui/material/ButtonBase'
+import IconButton from '@mui/material/IconButton'
+import { styled } from '@mui/material/styles'
+import { varAlpha } from 'minimal-shared/utils'
 
 // ----------------------------------------------------------------------
 
-export const ThumbnailRoot = styled("span")(({ theme }) => ({
+export const ThumbnailRoot = styled('span')(({ theme }) => ({
   width: 36,
   height: 36,
   flexShrink: 0,
-  alignItems: "center",
-  position: "relative",
-  display: "inline-flex",
-  justifyContent: "center",
+  alignItems: 'center',
+  position: 'relative',
+  display: 'inline-flex',
+  justifyContent: 'center',
   borderRadius: Number(theme.shape.borderRadius) * 1.25,
 }))
 
-export const ThumbnailImage = styled("img", {
-  shouldForwardProp: (prop) => !["showImage", "sx"].includes(prop as string),
+export const ThumbnailImage = styled('img', {
+  shouldForwardProp: (prop) => !['showImage', 'sx'].includes(prop as string),
 })({
-  width: "100%",
-  height: "100%",
+  width: '100%',
+  height: '100%',
   variants: [
     {
       props: (props: { showImage?: boolean }) => !!props.showImage,
       style: {
-        objectFit: "cover",
-        borderRadius: "inherit",
+        objectFit: 'cover',
+        borderRadius: 'inherit',
       },
     },
   ],
@@ -35,12 +35,12 @@ export const ThumbnailImage = styled("img", {
 export const RemoveButton = styled(IconButton)(({ theme }) => ({
   top: 4,
   right: 4,
-  position: "absolute",
+  position: 'absolute',
   padding: theme.spacing(0.5),
   color: theme.vars.palette.common.white,
-  backgroundColor: varAlpha(theme.vars.palette.grey["900Channel"], 0.48),
-  "&:hover": {
-    backgroundColor: varAlpha(theme.vars.palette.grey["900Channel"], 0.72),
+  backgroundColor: varAlpha(theme.vars.palette.grey['900Channel'], 0.48),
+  '&:hover': {
+    backgroundColor: varAlpha(theme.vars.palette.grey['900Channel'], 0.72),
   },
 }))
 
@@ -50,15 +50,15 @@ export const DownloadButton = styled(ButtonBase)(({ theme }) => ({
   zIndex: 9,
   padding: 0,
   opacity: 0,
-  width: "100%",
-  height: "100%",
-  position: "absolute",
-  borderRadius: "inherit",
+  width: '100%',
+  height: '100%',
+  position: 'absolute',
+  borderRadius: 'inherit',
   color: theme.vars.palette.common.white,
-  transition: theme.transitions.create(["opacity"]),
-  "&:hover": {
+  transition: theme.transitions.create(['opacity']),
+  '&:hover': {
     ...(theme as any).mixins.bgBlur({
-      color: varAlpha(theme.vars.palette.grey["900Channel"], 0.64),
+      color: varAlpha(theme.vars.palette.grey['900Channel'], 0.64),
     }),
     opacity: 1,
   },

@@ -215,7 +215,7 @@
             "save": "Enregistrer les modifications",
             "update_success": "Mot de passe mis à jour avec succès"
         },
-        
+
         "profile": "Paramètres du profil",
         "security": "Paramètres de sécurité",
         "billing": {
@@ -400,7 +400,7 @@
         "chip": "PROGRAMME D'AMBASSADEURS",
         "card_title": "Gagnez des crédits en invitant d'autres entreprises",
         "description": "Partagez votre lien et recevez un pack de crédits supplémentaire pour chaque ami qui automatise sa boutique.",
-        
+
         "your_code": "Votre lien",
         "copy": "Copier",
         "share_directly": "Partager directement",
@@ -414,7 +414,7 @@
         "monthly_limit": "Limite mensuelle",
         "referrals_this_month": "Parrainés ce mois-ci",
         "limit_reset": "La limite est réinitialisée le premier jour de chaque mois. Seuls les parrainages réussis sont comptabilisés.",
-        
+
         "how_does_it_work": "Comment ça marche ?",
         "step_1": "Partagez votre lien",
         "step_1_description": "Envoyez-le aux propriétaires de boutiques e-commerce ou aux agences susceptibles d'être intéressés par AI Shop Helper.",
@@ -423,7 +423,7 @@
         "step_3": "Première action réelle",
         "step_3_description": "Le crédit est débloqué lorsqu'il lance son premier flux de travail.",
         "required": "REQUIS",
-        
+
         "copy_success_toast": "Lien de parrainage copié dans le presse-papiers",
         "share_message": "Je gagne un temps fou chaque semaine avec {{appName}}. Inscris-toi ici 👉 https://app.aishophelper.com/signup?ref={{code}} et nous recevrons tous les deux {{credits}} crédits gratuits !",
         "share_on_twitter": "Partager sur X/Twitter",

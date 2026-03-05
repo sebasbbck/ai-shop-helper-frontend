@@ -1,10 +1,10 @@
-import { SxProps, Theme } from "@mui/material"
-import SvgIcon from "@mui/material/SvgIcon"
-import { memo } from "react"
+import { SxProps, Theme } from '@mui/material'
+import SvgIcon from '@mui/material/SvgIcon'
+import { memo } from 'react'
 
 // ----------------------------------------------------------------------
 
-function SentIcon({ sx, ...other }: { sx?: SxProps<Theme>}) {
+function SentIcon({ sx, ...other }: { sx?: SxProps<Theme> }) {
   return (
     <SvgIcon
       fill="none"
@@ -12,11 +12,11 @@ function SentIcon({ sx, ...other }: { sx?: SxProps<Theme>}) {
       xmlns="http://www.w3.org/2000/svg"
       sx={[
         (theme) => ({
-          "--primary-main": theme.vars.palette.primary.main,
-          "--primary-dark": theme.vars.palette.primary.dark,
+          '--primary-main': theme.vars.palette.primary.main,
+          '--primary-dark': theme.vars.palette.primary.dark,
           width: 96,
           flexShrink: 0,
-          height: "auto",
+          height: 'auto',
         }),
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
@@ -33,7 +33,7 @@ function SentIcon({ sx, ...other }: { sx?: SxProps<Theme>}) {
       />
 
       <g
-        style={{ mixBlendMode: "overlay" }}
+        style={{ mixBlendMode: 'overlay' }}
         fill="#fff"
         fillOpacity="0.04"
         filter="url(#filter0_i_1870_134242)"

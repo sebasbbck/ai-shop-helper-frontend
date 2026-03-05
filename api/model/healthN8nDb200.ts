@@ -5,4 +5,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type HealthN8nDb200 = {[key: string]: string};
+export type HealthN8nDb200 = { [key: string]: string }

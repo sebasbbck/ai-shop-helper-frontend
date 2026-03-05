@@ -1,6 +1,6 @@
-import { createPaletteChannel, varAlpha } from "minimal-shared/utils"
-import { themeConfig } from "../theme-config"
-import { opacity } from "./opacity"
+import { createPaletteChannel, varAlpha } from 'minimal-shared/utils'
+import { themeConfig } from '../theme-config'
+import { opacity } from './opacity'
 
 // ----------------------------------------------------------------------
 
@@ -15,7 +15,9 @@ export const info = createPaletteChannel(themeConfig.palette.info)
 export const success = createPaletteChannel(themeConfig.palette.success)
 export const warning = createPaletteChannel(themeConfig.palette.warning)
 export const error = createPaletteChannel(themeConfig.palette.error)
-export const aishophelper = createPaletteChannel(themeConfig.palette.aishophelper)
+export const aishophelper = createPaletteChannel(
+  themeConfig.palette.aishophelper,
+)
 export const common = createPaletteChannel(themeConfig.palette.common)
 export const grey = createPaletteChannel(themeConfig.palette.grey)
 
@@ -31,7 +33,7 @@ export const text = {
     disabled: grey[500],
   }),
   dark: createPaletteChannel({
-    primary: "#FFFFFF",
+    primary: '#FFFFFF',
     secondary: grey[500],
     disabled: grey[600],
   }),
@@ -39,24 +41,24 @@ export const text = {
 
 export const background = {
   light: createPaletteChannel({
-    paper: "#FFFFFF",
-    default: "#FFFFFF",
+    paper: '#FFFFFF',
+    default: '#FFFFFF',
     neutral: grey[200],
   }),
   dark: createPaletteChannel({
     paper: grey[800],
     default: grey[900],
-    neutral: "#28323D",
+    neutral: '#28323D',
   }),
 }
 
 export const action = (mode: string) => ({
-  active: mode === "light" ? grey[600] : grey[500],
-  hover: varAlpha(grey["500Channel"], 0.08),
-  selected: varAlpha(grey["500Channel"], 0.16),
-  focus: varAlpha(grey["500Channel"], 0.24),
-  disabled: varAlpha(grey["500Channel"], 0.8),
-  disabledBackground: varAlpha(grey["500Channel"], 0.24),
+  active: mode === 'light' ? grey[600] : grey[500],
+  hover: varAlpha(grey['500Channel'], 0.08),
+  selected: varAlpha(grey['500Channel'], 0.16),
+  focus: varAlpha(grey['500Channel'], 0.24),
+  disabled: varAlpha(grey['500Channel'], 0.8),
+  disabledBackground: varAlpha(grey['500Channel'], 0.24),
   hoverOpacity: 0.08,
   selectedOpacity: 0.08,
   focusOpacity: 0.12,
@@ -71,10 +73,10 @@ export const action = (mode: string) => ({
  */
 export const extendPalette = {
   shared: {
-    inputUnderline: varAlpha(grey["500Channel"], opacity.inputUnderline),
-    inputOutlined: varAlpha(grey["500Channel"], 0.2),
-    paperOutlined: varAlpha(grey["500Channel"], 0.16),
-    buttonOutlined: varAlpha(grey["500Channel"], 0.32),
+    inputUnderline: varAlpha(grey['500Channel'], opacity.inputUnderline),
+    inputOutlined: varAlpha(grey['500Channel'], 0.2),
+    paperOutlined: varAlpha(grey['500Channel'], 0.16),
+    buttonOutlined: varAlpha(grey['500Channel'], 0.32),
   },
 }
 
@@ -93,8 +95,8 @@ const basePalette = {
   aishophelper,
   common,
   grey,
-  divider: varAlpha(grey["500Channel"], 0.2),
-  TableCell: { border: varAlpha(grey["500Channel"], 0.2) },
+  divider: varAlpha(grey['500Channel'], 0.2),
+  TableCell: { border: varAlpha(grey['500Channel'], 0.2) },
   ...extendPalette,
 }
 
@@ -106,17 +108,25 @@ export const palette = {
     ...basePalette,
     text: text.light,
     background: background.light,
-    action: action("light"),
+    action: action('light'),
   },
   dark: {
     ...basePalette,
     text: text.dark,
     background: background.dark,
-    action: action("dark"),
+    action: action('dark'),
   },
 }
 
 export const colorKeys = {
-  palette: ["primary", "secondary", "info", "success", "warning", "error", "aishophelper"],
-  common: ["black", "white"],
+  palette: [
+    'primary',
+    'secondary',
+    'info',
+    'success',
+    'warning',
+    'error',
+    'aishophelper',
+  ],
+  common: ['black', 'white'],
 }

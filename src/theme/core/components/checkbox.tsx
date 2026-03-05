@@ -1,6 +1,6 @@
-import { checkboxClasses, CheckboxProps } from "@mui/material/Checkbox"
-import { Components, Theme } from "@mui/material/styles"
-import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon"
+import { checkboxClasses, CheckboxProps } from '@mui/material/Checkbox'
+import { Components, Theme } from '@mui/material/styles'
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
 
 // ----------------------------------------------------------------------
 
@@ -31,7 +31,7 @@ const IndeterminateIcon = (props: SvgIconProps) => (
 const MuiCheckbox: Components<Theme>['MuiCheckbox'] = {
   // ▼▼▼▼▼▼▼▼ ⚙️ PROPS ▼▼▼▼▼▼▼▼
   defaultProps: {
-    size: "small",
+    size: 'small',
     icon: <Icon />,
     checkedIcon: <CheckedIcon />,
     indeterminateIcon: <IndeterminateIcon />,
@@ -42,7 +42,7 @@ const MuiCheckbox: Components<Theme>['MuiCheckbox'] = {
       padding: theme.spacing(1),
       variants: [
         {
-          props: (props: CheckboxProps) => props.color === "default",
+          props: (props: CheckboxProps) => props.color === 'default',
           style: {
             [`&.${checkboxClasses.checked}`]: {
               color: theme.vars.palette.text.primary,

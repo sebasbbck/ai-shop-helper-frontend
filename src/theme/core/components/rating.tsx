@@ -1,10 +1,10 @@
-import { Components, Theme } from "@mui/material"
-import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon"
-import { varAlpha } from "minimal-shared/utils"
+import { Components, Theme } from '@mui/material'
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
+import { varAlpha } from 'minimal-shared/utils'
 
 // ----------------------------------------------------------------------
 
-const SIZES = ["xxSmall", "xSmall", "small", "medium", "large"]
+const SIZES = ['xxSmall', 'xSmall', 'small', 'medium', 'large']
 const DIMENSIONS = {
   xxSmall: 12,
   xSmall: 16,
@@ -25,7 +25,7 @@ const Icon = (props: SvgIconProps) => (
 /* **********************************************************************
  * 🧩 Components
  * **********************************************************************/
-const MuiRating: Components<Theme>["MuiRating"] = {
+const MuiRating: Components<Theme>['MuiRating'] = {
   defaultProps: {
     icon: <Icon fontSize="inherit" />,
     emptyIcon: <Icon fontSize="inherit" />,
@@ -34,7 +34,7 @@ const MuiRating: Components<Theme>["MuiRating"] = {
     // Keep standard slot overrides here
     iconEmpty: ({ theme }) => ({
       color: varAlpha(
-        theme.vars.palette.grey["500Channel"],
+        theme.vars.palette.grey['500Channel'],
         theme.vars.palette.action.disabledOpacity,
       ),
     }),
@@ -46,7 +46,7 @@ const MuiRating: Components<Theme>["MuiRating"] = {
         fontSize: DIMENSIONS[size as keyof typeof DIMENSIONS],
         [`& .MuiRating-icon`]: {
           fontSize: DIMENSIONS[size as keyof typeof DIMENSIONS],
-        }
+        },
       },
     })),
   ],

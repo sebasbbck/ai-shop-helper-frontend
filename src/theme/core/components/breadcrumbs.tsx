@@ -1,8 +1,8 @@
 // ----------------------------------------------------------------------
 
-import { Components, Theme } from "@mui/material/styles"
+import { Components, Theme } from '@mui/material/styles'
 
-const MuiBreadcrumbs: Components<Theme>["MuiBreadcrumbs"] = {
+const MuiBreadcrumbs: Components<Theme>['MuiBreadcrumbs'] = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     ol: ({ theme }) => ({
@@ -10,8 +10,8 @@ const MuiBreadcrumbs: Components<Theme>["MuiBreadcrumbs"] = {
       columnGap: theme.spacing(2),
     }),
     li: ({ theme }) => ({
-      display: "inline-flex",
-      "& > *": { ...theme.typography.body2 },
+      display: 'inline-flex',
+      '& > *': { ...theme.typography.body2 },
     }),
     separator: { margin: 0 },
   },

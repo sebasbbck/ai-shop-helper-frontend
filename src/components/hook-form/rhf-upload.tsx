@@ -1,16 +1,16 @@
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form'
 
-import Box from '@mui/material/Box';
+import Box from '@mui/material/Box'
 
-import { HelperText } from './help-text';
-import { Upload, UploadBox, UploadAvatar } from '../upload';
-import { RHFProps } from '.';
-import { SxProps, Theme } from '@mui/material/styles';
+import { HelperText } from './help-text'
+import { Upload, UploadBox, UploadAvatar } from '../upload'
+import { RHFProps } from '.'
+import { SxProps, Theme } from '@mui/material/styles'
 
 // ----------------------------------------------------------------------
 
 export function RHFUploadAvatar({ name, slotProps, ...other }: RHFProps) {
-  const { control, setValue } = useFormContext();
+  const { control, setValue } = useFormContext()
 
   return (
     <Controller
@@ -18,26 +18,34 @@ export function RHFUploadAvatar({ name, slotProps, ...other }: RHFProps) {
       control={control}
       render={({ field, fieldState: { error } }) => {
         const onDrop = (acceptedFiles: File[]) => {
-          const value = acceptedFiles[0];
+          const value = acceptedFiles[0]
 
-          setValue(name, value, { shouldValidate: true });
-        };
+          setValue(name, value, { shouldValidate: true })
+        }
 
         return (
           <Box {...slotProps?.wrapper}>
-            <UploadAvatar value={field.value} error={!!error} onDrop={onDrop} {...other} />
-            <HelperText errorMessage={error?.message} sx={{ justifyContent: 'center' }} />
+            <UploadAvatar
+              value={field.value}
+              error={!!error}
+              onDrop={onDrop}
+              {...other}
+            />
+            <HelperText
+              errorMessage={error?.message}
+              sx={{ justifyContent: 'center' }}
+            />
           </Box>
-        );
+        )
       }}
     />
-  );
+  )
 }
 
 // ----------------------------------------------------------------------
 
 export function RHFUploadBox({ name, ...other }: RHFProps) {
-  const { control } = useFormContext();
+  const { control } = useFormContext()
 
   return (
     <Controller
@@ -47,25 +55,30 @@ export function RHFUploadBox({ name, ...other }: RHFProps) {
         <UploadBox value={field.value} error={!!error} {...other} />
       )}
     />
-  );
+  )
 }
 
 // ----------------------------------------------------------------------
 
 interface UploadSlotProps {
-  wrapper?: React.HTMLAttributes<HTMLDivElement> & { sx?: SxProps<Theme> };
-  multiPreview?: object;
-  rejectedFiles?: object;
+  wrapper?: React.HTMLAttributes<HTMLDivElement> & { sx?: SxProps<Theme> }
+  multiPreview?: object
+  rejectedFiles?: object
 }
 
 interface RHFUploadProps extends Omit<RHFProps, 'slotProps'> {
-  slotProps?: UploadSlotProps;
-  multiple?: boolean;
-  helperText?: React.ReactNode;
+  slotProps?: UploadSlotProps
+  multiple?: boolean
+  helperText?: React.ReactNode
 }
 
-export function RHFUpload({ name, multiple, helperText, ...other }: RHFUploadProps) {
-  const { control, setValue } = useFormContext();
+export function RHFUpload({
+  name,
+  multiple,
+  helperText,
+  ...other
+}: RHFUploadProps) {
+  const { control, setValue } = useFormContext()
 
   return (
     <Controller
@@ -77,16 +90,25 @@ export function RHFUpload({ name, multiple, helperText, ...other }: RHFUploadPro
           accept: { 'image/*': [] },
           error: !!error,
           helperText: error?.message ?? helperText,
-        };
+        }
 
         const onDrop = (acceptedFiles: File[]) => {
-          const value = multiple ? [...field.value, ...acceptedFiles] : acceptedFiles[0];
+          const value = multiple
+            ? [...field.value, ...acceptedFiles]
+            : acceptedFiles[0]
 
-          setValue(name, value, { shouldValidate: true });
-        };
+          setValue(name, value, { shouldValidate: true })
+        }
 
-        return <Upload {...uploadProps} value={field.value} onDrop={onDrop} {...other} />;
+        return (
+          <Upload
+            {...uploadProps}
+            value={field.value}
+            onDrop={onDrop}
+            {...other}
+          />
+        )
       }}
     />
-  );
+  )
 }

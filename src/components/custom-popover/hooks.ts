@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from 'react'
 
 // ----------------------------------------------------------------------
 
@@ -15,10 +15,10 @@ function toNumber(value: string) {
  * Extracts translate values from a CSS transform string.
  */
 function extractTranslate(translate: string) {
-  if (!translate || translate === "none")
+  if (!translate || translate === 'none')
     return { translateX: 0, translateY: 0 }
 
-  const [x, y] = translate.split(" ")
+  const [x, y] = translate.split(' ')
 
   return {
     translateX: toNumber(x),
@@ -43,7 +43,7 @@ export function useElementRect(element: any, context: string, open: boolean) {
 
     let nextRect
 
-    if (context === "popoverPaper") {
+    if (context === 'popoverPaper') {
       const { top, left, width, height, marginTop, marginLeft, translate } =
         getComputedStyle(element)
       const { translateX, translateY } = extractTranslate(translate)
@@ -76,14 +76,14 @@ export function useElementRect(element: any, context: string, open: boolean) {
     const resizeObserver = new ResizeObserver(updateRect)
     resizeObserver.observe(element)
 
-    window.addEventListener("resize", updateRect, { passive: true })
-    window.addEventListener("scroll", updateRect, { capture: true })
+    window.addEventListener('resize', updateRect, { passive: true })
+    window.addEventListener('scroll', updateRect, { capture: true })
 
     // eslint-disable-next-line consistent-return
     return () => {
       resizeObserver.disconnect()
-      window.removeEventListener("resize", updateRect)
-      window.removeEventListener("scroll", updateRect)
+      window.removeEventListener('resize', updateRect)
+      window.removeEventListener('scroll', updateRect)
     }
   }, [element, open, updateRect])
 

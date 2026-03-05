@@ -1,15 +1,15 @@
-import { varAlpha } from 'minimal-shared/utils';
+import { varAlpha } from 'minimal-shared/utils'
 
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles'
 
-import { uploadClasses } from '../classes';
+import { uploadClasses } from '../classes'
 
 // ----------------------------------------------------------------------
 
 export const UploadWrapper = styled('div')({
   width: '100%',
   position: 'relative',
-});
+})
 
 export const UploadArea = styled('div')(({ theme }) => ({
   width: 144,
@@ -47,21 +47,21 @@ export const UploadArea = styled('div')(({ theme }) => ({
       opacity: 1,
     },
   },
-}));
+}))
 
 export const UploadContent = styled('div')({
   width: '100%',
   height: '100%',
   position: 'relative',
   borderRadius: 'inherit',
-});
+})
 
 export const PreviewImage = styled('img')({
   width: '100%',
   height: '100%',
   objectFit: 'cover',
   borderRadius: 'inherit',
-});
+})
 
 export const PlaceholderContainer = styled('div')(({ theme }) => ({
   top: 0,
@@ -84,4 +84,4 @@ export const PlaceholderContainer = styled('div')(({ theme }) => ({
   '&:hover': {
     opacity: 0.72,
   },
-}));
+}))

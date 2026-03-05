@@ -1,4 +1,4 @@
-import { createClasses } from '../../theme/create-classes';
+import { createClasses } from '../../theme/create-classes'
 
 // ----------------------------------------------------------------------
 
@@ -28,4 +28,4 @@ export const uploadClasses = {
     hasFile: '--has-file',
     hasFiles: '--has-files',
   },
-};
+}

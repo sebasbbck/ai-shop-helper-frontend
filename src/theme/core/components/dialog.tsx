@@ -1,8 +1,8 @@
 // ----------------------------------------------------------------------
 
-import { Components, Theme } from "@mui/material/styles"
+import { Components, Theme } from '@mui/material/styles'
 
-const MuiDialog: Components<Theme>["MuiDialog"] = {
+const MuiDialog: Components<Theme>['MuiDialog'] = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     paper: {
@@ -37,7 +37,7 @@ const MuiDialogContent = {
     }),
     dividers: ({ theme }: { theme: Theme }) => ({
       borderTop: 0,
-      borderBottomStyle: "dashed",
+      borderBottomStyle: 'dashed',
       paddingBottom: theme.spacing(3),
     }),
   },
@@ -52,7 +52,7 @@ const MuiDialogActions = {
   styleOverrides: {
     root: ({ theme }: { theme: Theme }) => ({
       padding: theme.spacing(3),
-      "& > :not(:first-of-type)": {
+      '& > :not(:first-of-type)': {
         marginLeft: theme.spacing(1.5),
       },
     }),

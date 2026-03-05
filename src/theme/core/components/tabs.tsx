@@ -1,18 +1,23 @@
-import { Components, ComponentsVariants, tabsClasses, Theme } from "@mui/material"
-import { tabClasses } from "@mui/material/Tab"
+import {
+  Components,
+  ComponentsVariants,
+  tabsClasses,
+  Theme,
+} from '@mui/material'
+import { tabClasses } from '@mui/material/Tab'
 
 // ----------------------------------------------------------------------
 
 const customTabsIndicatorStyles = {
   root: (theme: Theme) => {
     const cssVars = {
-      "--item-padding-x": "16px",
-      "--list-padding-x": "8px",
-      "--indicator-radius": "8px",
-      "--indicator-shadow": theme.vars.customShadows.z1,
-      "--indicator-bg": theme.vars.palette.common.white,
-      ...theme.applyStyles("dark", {
-        "--indicator-bg": theme.vars.palette.grey[900],
+      '--item-padding-x': '16px',
+      '--list-padding-x': '8px',
+      '--indicator-radius': '8px',
+      '--indicator-shadow': theme.vars.customShadows.z1,
+      '--indicator-bg': theme.vars.palette.common.white,
+      ...theme.applyStyles('dark', {
+        '--indicator-bg': theme.vars.palette.grey[900],
       }),
     }
 
@@ -22,40 +27,40 @@ const customTabsIndicatorStyles = {
       [`& .${tabClasses.root}`]: {
         zIndex: 1,
         minHeight: 52,
-        paddingLeft: "var(--item-padding-x)",
-        paddingRight: "var(--item-padding-x)",
+        paddingLeft: 'var(--item-padding-x)',
+        paddingRight: 'var(--item-padding-x)',
       },
     }
   },
   listHorizontal: {
-    height: "100%",
-    paddingLeft: "var(--list-padding-x)",
-    paddingRight: "var(--list-padding-x)",
+    height: '100%',
+    paddingLeft: 'var(--list-padding-x)',
+    paddingRight: 'var(--list-padding-x)',
   },
   listVertical: {
-    paddingTop: "var(--list-padding-x)",
-    paddingBottom: "var(--list-padding-x)",
+    paddingTop: 'var(--list-padding-x)',
+    paddingBottom: 'var(--list-padding-x)',
   },
   indicator: {
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "transparent",
-    "&::before": {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    '&::before': {
       content: '""',
-      width: "100%",
-      boxShadow: "var(--indicator-shadow)",
-      backgroundColor: "var(--indicator-bg)",
-      borderRadius: "var(--indicator-radius)",
-      height: "calc(100% - calc(var(--list-padding-x) * 2))",
+      width: '100%',
+      boxShadow: 'var(--indicator-shadow)',
+      backgroundColor: 'var(--indicator-bg)',
+      borderRadius: 'var(--indicator-radius)',
+      height: 'calc(100% - calc(var(--list-padding-x) * 2))',
     },
   },
   indicatorVertical: {
-    width: "100%",
-    "&::before": {
-      height: "100%",
-      width: "calc(100% - calc(var(--list-padding-x) * 2))",
+    width: '100%',
+    '&::before': {
+      height: '100%',
+      width: 'calc(100% - calc(var(--list-padding-x) * 2))',
     },
   },
 }
@@ -67,45 +72,53 @@ const customTabsIndicatorStyles = {
 const MuiTabsVariants: ComponentsVariants<Theme>['MuiTabs'] = [
   // --- Root & Text Color ---
   {
-    props: (props) => props.textColor === "inherit",
+    props: (props) => props.textColor === 'inherit',
     style: {
       [`& .${tabClasses.root}.${tabClasses.selected}`]: {
-        color: "inherit",
+        color: 'inherit',
       },
     },
   },
   // --- Custom Indicator Logic ---
   {
-    props: (props) => props.indicatorColor === "custom",
+    props: (props) => props.indicatorColor === 'custom',
     style: ({ theme }) => ({ ...customTabsIndicatorStyles.root(theme) }),
   },
   // --- List/FlexContainer Styles ---
   {
     props: (props) =>
-      props.indicatorColor !== "custom" &&
-      props.variant !== "fullWidth" &&
-      props.orientation !== "vertical",
+      props.indicatorColor !== 'custom' &&
+      props.variant !== 'fullWidth' &&
+      props.orientation !== 'vertical',
     style: ({ theme }) => ({
       [`& .${tabsClasses.flexContainer}`]: {
         gap: theme.spacing(5),
-        [theme.breakpoints.down("sm")]: { gap: theme.spacing(3) },
+        [theme.breakpoints.down('sm')]: { gap: theme.spacing(3) },
       },
     }),
   },
   {
-    props: (props) => props.indicatorColor === "custom" && props.orientation === "horizontal",
-    style: { [`& .${tabsClasses.flexContainer}`]: customTabsIndicatorStyles.listHorizontal },
+    props: (props) =>
+      props.indicatorColor === 'custom' && props.orientation === 'horizontal',
+    style: {
+      [`& .${tabsClasses.flexContainer}`]:
+        customTabsIndicatorStyles.listHorizontal,
+    },
   },
   // --- Indicator Color Styles ---
   {
-    props: (props) => props.indicatorColor === "inherit",
-    style: { [`& .${tabsClasses.indicator}`]: { backgroundColor: "currentColor" } },
+    props: (props) => props.indicatorColor === 'inherit',
+    style: {
+      [`& .${tabsClasses.indicator}`]: { backgroundColor: 'currentColor' },
+    },
   },
   {
-    props: (props) => props.indicatorColor === "custom",
-    style: { [`& .${tabsClasses.indicator}`]: customTabsIndicatorStyles.indicator },
+    props: (props) => props.indicatorColor === 'custom',
+    style: {
+      [`& .${tabsClasses.indicator}`]: customTabsIndicatorStyles.indicator,
+    },
   },
-];
+]
 
 // Define this clearly to avoid "Cannot find name"
 const MuiTabVariants: ComponentsVariants<Theme>['MuiTab'] = [
@@ -119,29 +132,29 @@ const MuiTabVariants: ComponentsVariants<Theme>['MuiTab'] = [
   },
   {
     props: (props) => !!props.icon && !!props.label,
-    style: { minHeight: "auto" },
+    style: { minHeight: 'auto' },
   },
-];
+]
 
 /* **********************************************************************
  * 🧩 Components
  * **********************************************************************/
 
-export const MuiTabs: Components<Theme>["MuiTabs"] = {
+export const MuiTabs: Components<Theme>['MuiTabs'] = {
   defaultProps: {
-    variant: "scrollable",
-    textColor: "inherit",
-    indicatorColor: "inherit",
+    variant: 'scrollable',
+    textColor: 'inherit',
+    indicatorColor: 'inherit',
     allowScrollButtonsMobile: true,
   },
-  styleOverrides: {}, 
+  styleOverrides: {},
   variants: MuiTabsVariants,
-};
+}
 
-export const MuiTab: Components<Theme>["MuiTab"] = {
+export const MuiTab: Components<Theme>['MuiTab'] = {
   defaultProps: {
     disableRipple: true,
-    iconPosition: "start",
+    iconPosition: 'start',
   },
   styleOverrides: {
     root: ({ theme }) => ({

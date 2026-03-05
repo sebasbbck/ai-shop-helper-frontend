@@ -1,11 +1,18 @@
-import { AlertProps } from "@mui/material"
-import { Components, ComponentsVariants, CSSObject, Theme } from "@mui/material/styles"
-import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon"
-import { parseCssVar, varAlpha } from "minimal-shared/utils"
+import { AlertProps } from '@mui/material'
+import {
+  Components,
+  ComponentsVariants,
+  CSSObject,
+  Theme,
+} from '@mui/material/styles'
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
+import { parseCssVar, varAlpha } from 'minimal-shared/utils'
 
 // ----------------------------------------------------------------------
 
-type AlertVariantProps = Partial<AlertProps> & { ownerState: Partial<AlertProps> }
+type AlertVariantProps = Partial<AlertProps> & {
+  ownerState: Partial<AlertProps>
+}
 type Severity = 'info' | 'success' | 'warning' | 'error'
 
 const SEVERITIES: Severity[] = ['info', 'success', 'warning', 'error']
@@ -68,11 +75,11 @@ const ErrorIcon = (props: SvgIconProps) => (
 const standardVariants: ComponentsVariants<Theme>['MuiAlert'] = [
   ...SEVERITIES.map((colorKey) => ({
     props: (props: AlertVariantProps) =>
-      props.variant === "standard" && props.severity === colorKey,
+      props.variant === 'standard' && props.severity === colorKey,
     style: ({ theme }: { theme: Theme }) => ({
       color: theme.vars.palette[colorKey].darker,
       backgroundColor: theme.vars.palette[colorKey].lighter,
-      ...theme.applyStyles("dark", {
+      ...theme.applyStyles('dark', {
         color: theme.vars.palette[colorKey].lighter,
         backgroundColor: theme.vars.palette[colorKey].darker,
       }),
@@ -82,7 +89,8 @@ const standardVariants: ComponentsVariants<Theme>['MuiAlert'] = [
 
 const filledVariants: ComponentsVariants<Theme>['MuiAlert'] = [
   ...SEVERITIES.map((colorKey) => ({
-    props: (props: AlertVariantProps) => props.variant === "filled" && props.severity === colorKey,
+    props: (props: AlertVariantProps) =>
+      props.variant === 'filled' && props.severity === colorKey,
     style: ({ theme }: { theme: Theme }) => ({
       color: theme.vars.palette[colorKey].contrastText,
     }),
@@ -92,12 +100,12 @@ const filledVariants: ComponentsVariants<Theme>['MuiAlert'] = [
 const outlinedVariants: ComponentsVariants<Theme>['MuiAlert'] = [
   ...SEVERITIES.map((colorKey) => ({
     props: (props: AlertVariantProps) =>
-      props.variant === "outlined" && props.severity === colorKey,
+      props.variant === 'outlined' && props.severity === colorKey,
     style: ({ theme }: { theme: Theme }) => ({
       color: theme.vars.palette[colorKey].dark,
       backgroundColor: varAlpha(theme.vars.palette[colorKey].mainChannel, 0.08),
       border: `solid 1px ${varAlpha(theme.vars.palette[colorKey].mainChannel, 0.16)}`,
-      ...theme.applyStyles("dark", {
+      ...theme.applyStyles('dark', {
         color: theme.vars.palette[colorKey].light,
       }),
     }),
@@ -124,7 +132,7 @@ const MuiAlert: Components<Theme>['MuiAlert'] = {
     } as CSSObject,
     icon: ({ theme }) => ({
       opacity: 1,
-      ...theme.applyStyles("dark", {
+      ...theme.applyStyles('dark', {
         [parseCssVar(theme.vars.palette.Alert.infoIconColor)]:
           theme.vars.palette.info.light,
         [parseCssVar(theme.vars.palette.Alert.errorIconColor)]:

@@ -1,7 +1,7 @@
-import { createTheme } from "@mui/material/styles"
-import { pxToRem, setFont } from "minimal-shared/utils"
+import { createTheme } from '@mui/material/styles'
+import { pxToRem, setFont } from 'minimal-shared/utils'
 
-import { themeConfig } from "../theme-config"
+import { themeConfig } from '../theme-config'
 
 // ----------------------------------------------------------------------
 
@@ -11,7 +11,12 @@ import { themeConfig } from "../theme-config"
  * @returns CSS media query styles for responsive font sizes
  */
 
-function responsiveFontSizes(sizes: { [x: string]: any; sm?: number; md?: number; lg?: number }) {
+function responsiveFontSizes(sizes: {
+  [x: string]: any
+  sm?: number
+  md?: number
+  lg?: number
+}) {
   const {
     breakpoints: { keys, up },
   } = createTheme()
@@ -121,12 +126,12 @@ export const typography = {
     fontWeight: baseTypography.fontWeightBold,
     lineHeight: 1.5,
     fontSize: pxToRem(12),
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
   },
   button: {
     fontWeight: baseTypography.fontWeightBold,
     lineHeight: 24 / 14,
     fontSize: pxToRem(14),
-    textTransform: "unset",
+    textTransform: 'unset',
   },
 }

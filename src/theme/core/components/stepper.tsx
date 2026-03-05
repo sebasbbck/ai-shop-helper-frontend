@@ -1,5 +1,5 @@
-import { Theme } from "@mui/material/styles"
-import { parseCssVar } from "minimal-shared/utils"
+import { Theme } from '@mui/material/styles'
+import { parseCssVar } from 'minimal-shared/utils'
 
 // ----------------------------------------------------------------------
 

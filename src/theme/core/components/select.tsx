@@ -1,4 +1,4 @@
-import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon"
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ const arrowStyles = {
   right: 10,
   width: 18,
   height: 18,
-  top: "calc(50% - 9px)",
+  top: 'calc(50% - 9px)',
 }
 
 /* **********************************************************************

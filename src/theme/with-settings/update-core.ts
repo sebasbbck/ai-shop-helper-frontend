@@ -3,10 +3,10 @@ import {
   hexToRgbChannel,
   InputPalette,
   setFont,
-} from "minimal-shared/utils"
-import { createShadowColor } from "../core/custom-shadows"
-import { primaryColorPresets } from "./color-presets"
-import { ThemeOptions } from "@mui/material/styles"
+} from 'minimal-shared/utils'
+import { createShadowColor } from '../core/custom-shadows'
+import { primaryColorPresets } from './color-presets'
+import { ThemeOptions } from '@mui/material/styles'
 
 // ----------------------------------------------------------------------
 
@@ -21,22 +21,22 @@ type PrimaryPresets = Record<string, InputPalette>
 
 export function applySettingsToTheme(
   theme: ThemeOptions,
-  settingsState: { 
+  settingsState: {
     direction: 'rtl' | 'ltr'
     fontFamily: string
     contrast?: string
-    primaryColor?: string 
-  }
+    primaryColor?: string
+  },
 ) {
   const {
     direction,
     fontFamily,
-    contrast = "default",
-    primaryColor = "default",
+    contrast = 'default',
+    primaryColor = 'default',
   } = settingsState ?? {}
 
-  const isDefaultContrast = contrast === "default"
-  const isDefaultPrimaryColor = primaryColor === "default"
+  const isDefaultContrast = contrast === 'default'
+  const isDefaultPrimaryColor = primaryColor === 'default'
 
   const lightPalette = (theme.colorSchemes?.light as any)?.palette
 
@@ -45,7 +45,7 @@ export function applySettingsToTheme(
   )
   // const secondaryColorPalette = createPaletteChannel(secondaryColorPresets[primaryColor]);
 
-  const updateColorScheme = (schemeName: "light" | "dark") => {
+  const updateColorScheme = (schemeName: 'light' | 'dark') => {
     const currentScheme = theme.colorSchemes?.[schemeName]
 
     if (!currentScheme || typeof currentScheme === 'boolean') {
@@ -58,7 +58,7 @@ export function applySettingsToTheme(
         primary: primaryColorPalette,
         // secondary: secondaryColorPalette,
       }),
-      ...(schemeName === "light" && {
+      ...(schemeName === 'light' && {
         background: {
           ...lightPalette?.background,
           ...(!isDefaultContrast && {
@@ -88,8 +88,8 @@ export function applySettingsToTheme(
     ...theme,
     direction,
     colorSchemes: {
-      light: updateColorScheme("light"),
-      dark: updateColorScheme("dark"),
+      light: updateColorScheme('light'),
+      dark: updateColorScheme('dark'),
     },
     typography: {
       ...theme.typography,

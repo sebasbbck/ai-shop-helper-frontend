@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from 'react'
 
 // ----------------------------------------------------------------------
 
 export function useFilePreview(file: File | string | null) {
   const objectUrlRef = useRef<string | null>(null)
-  const [previewUrl, setPreviewUrl] = useState("")
+  const [previewUrl, setPreviewUrl] = useState('')
 
   useEffect(() => {
     // Cleanup old object URL
@@ -17,10 +17,10 @@ export function useFilePreview(file: File | string | null) {
       const objectUrl = URL.createObjectURL(file)
       objectUrlRef.current = objectUrl
       setPreviewUrl(objectUrl)
-    } else if (typeof file === "string") {
+    } else if (typeof file === 'string') {
       setPreviewUrl(file)
     } else {
-      setPreviewUrl("")
+      setPreviewUrl('')
     }
 
     return () => {
@@ -45,7 +45,9 @@ export function revokeObjectUrls(urls: string[]) {
 
 export function useFilesPreview(files: (File | string)[]) {
   const objectUrlsRef = useRef<string[]>([])
-  const [filesPreview, setFilesPreview] = useState<{ file: File | string; previewUrl: string }[]>([])
+  const [filesPreview, setFilesPreview] = useState<
+    { file: File | string; previewUrl: string }[]
+  >([])
 
   useEffect(() => {
     // Cleanup old object URLs

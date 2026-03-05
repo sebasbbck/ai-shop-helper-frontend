@@ -1,8 +1,8 @@
-import Autocomplete from "@mui/material/Autocomplete"
+import Autocomplete from '@mui/material/Autocomplete'
 
-import TextField from "@mui/material/TextField"
-import { Controller, useFormContext } from "react-hook-form"
-import { RHFProps } from "."
+import TextField from '@mui/material/TextField'
+import { Controller, useFormContext } from 'react-hook-form'
+import { RHFProps } from '.'
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +26,9 @@ export function RHFAutocomplete({
         <Autocomplete
           {...field}
           id={`${name}-rhf-autocomplete`}
-          onChange={(_event, newValue) => setValue(name, newValue, { shouldValidate: true })}
+          onChange={(_event, newValue) =>
+            setValue(name, newValue, { shouldValidate: true })
+          }
           options={undefined}
           renderInput={(params) => (
             <TextField
@@ -41,20 +43,22 @@ export function RHFAutocomplete({
                 htmlInput: {
                   ...params.inputProps,
                   ...textField?.slotProps?.htmlInput,
-                  autoComplete: "new-password", // Disable autocomplete and autofill
+                  autoComplete: 'new-password', // Disable autocomplete and autofill
                 },
-              }} />
+              }}
+            />
           )}
           slotProps={{
             ...otherSlotProps,
             chip: {
-              size: "small",
-              variant: "soft",
+              size: 'small',
+              variant: 'soft',
               ...otherSlotProps?.chip,
             },
           }}
-          {...other}        />
-        )}
-      />
+          {...other}
+        />
+      )}
+    />
   )
 }

@@ -1,29 +1,31 @@
-import { debounce } from 'es-toolkit';
-import { useMemo, useState, useCallback } from 'react';
-import PhoneNumberInput, { parsePhoneNumber } from 'react-phone-number-input/input';
+import { debounce } from 'es-toolkit'
+import { useMemo, useState, useCallback } from 'react'
+import PhoneNumberInput, {
+  parsePhoneNumber,
+} from 'react-phone-number-input/input'
 
-import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
-import TextField, { TextFieldProps } from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import { inputBaseClasses } from '@mui/material/InputBase';
-import { SxProps, Theme } from '@mui/material/styles';
+import Box from '@mui/material/Box'
+import { useTheme } from '@mui/material/styles'
+import TextField, { TextFieldProps } from '@mui/material/TextField'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import { inputBaseClasses } from '@mui/material/InputBase'
+import { SxProps, Theme } from '@mui/material/styles'
 
-import { countries } from '../../assets/data/countries';
-import { Iconify } from '../iconify';
-import { CountryListPopover } from './list-popover';
+import { countries } from '../../assets/data/countries'
+import { Iconify } from '../iconify'
+import { CountryListPopover } from './list-popover'
 
 // ----------------------------------------------------------------------
 
 export type PhoneInputProps = Omit<TextFieldProps, 'onChange' | 'value'> & {
-  value?: string;
-  country?: string;
-  defaultCountry?: any; // Using 'any' as react-phone-number-input types can be strict
-  onChange: (value: string) => void;
-  hideSelect?: boolean;
-  sx?: SxProps<Theme>;
-};
+  value?: string
+  country?: string
+  defaultCountry?: any // Using 'any' as react-phone-number-input types can be strict
+  onChange: (value: string) => void
+  hideSelect?: boolean
+  sx?: SxProps<Theme>
+}
 
 export function PhoneInput({
   sx,
@@ -39,55 +41,55 @@ export function PhoneInput({
   hideSelect,
   ...other
 }: PhoneInputProps) {
-  const theme = useTheme();
-  
-  const variant = (variantProp ?? 
-    theme.components?.MuiTextField?.defaultProps?.variant ?? 
-    'outlined') as TextFieldProps['variant'];
+  const theme = useTheme()
 
-  const normalizedValue = value ? value.trim().replace(/[\s-]+/g, '') : '';
+  const variant = (variantProp ??
+    theme.components?.MuiTextField?.defaultProps?.variant ??
+    'outlined') as TextFieldProps['variant']
 
-  const [searchCountry, setSearchCountry] = useState('');
+  const normalizedValue = value ? value.trim().replace(/[\s-]+/g, '') : ''
+
+  const [searchCountry, setSearchCountry] = useState('')
   const [selectedCountry, setSelectedCountry] = useState(
-    parseCountryFromPhone(normalizedValue) ?? country ?? defaultCountry
-  );
+    parseCountryFromPhone(normalizedValue) ?? country ?? defaultCountry,
+  )
 
-  const hasLabel = !!label;
-  const isCountryLocked = !!country;
+  const hasLabel = !!label
+  const isCountryLocked = !!country
 
   const activeCountry = useMemo(() => {
-    const parsedCountry = parseCountryFromPhone(normalizedValue);
-    return parsedCountry ?? country ?? selectedCountry ?? defaultCountry;
-  }, [country, selectedCountry, normalizedValue, defaultCountry]);
+    const parsedCountry = parseCountryFromPhone(normalizedValue)
+    return parsedCountry ?? country ?? selectedCountry ?? defaultCountry
+  }, [country, selectedCountry, normalizedValue, defaultCountry])
 
   const debouncedChange = useMemo(
     () => debounce((inputValue: string) => onChange(inputValue), 200),
-    [onChange]
-  );
+    [onChange],
+  )
 
   const handleChangeInput = useCallback(
     (inputValue?: string) => {
-      debouncedChange(inputValue ?? '');
+      debouncedChange(inputValue ?? '')
     },
-    [debouncedChange]
-  );
+    [debouncedChange],
+  )
 
   const handleClearInput = useCallback(() => {
-    handleChangeInput('');
-  }, [handleChangeInput]);
+    handleChangeInput('')
+  }, [handleChangeInput])
 
   const handleSearchCountry = useCallback((inputQuery: string) => {
-    setSearchCountry(inputQuery);
-  }, []);
+    setSearchCountry(inputQuery)
+  }, [])
 
   const handleSelectedCountry = useCallback(
     (countryCode: string) => {
-      setSearchCountry('');
-      handleClearInput();
-      setSelectedCountry(countryCode);
+      setSearchCountry('')
+      handleClearInput()
+      setSelectedCountry(countryCode)
     },
-    [handleClearInput]
-  );
+    [handleClearInput],
+  )
 
   const renderSelect = () => (
     <CountryListPopover
@@ -99,14 +101,16 @@ export function PhoneInput({
       disabled={isCountryLocked}
       sx={{
         pl: variant === 'standard' ? 0 : 1.5,
-        ...(variant === 'standard' && hasLabel && { mt: size === 'small' ? '16px' : '20px' }),
+        ...(variant === 'standard' &&
+          hasLabel && { mt: size === 'small' ? '16px' : '20px' }),
         ...((variant === 'filled' || variant === 'outlined') && {
           mt: size === 'small' ? '8px' : '16px',
         }),
-        ...(variant === 'filled' && hasLabel && { mt: size === 'small' ? '21px' : '25px' }),
+        ...(variant === 'filled' &&
+          hasLabel && { mt: size === 'small' ? '21px' : '25px' }),
       }}
     />
-  );
+  )
 
   const renderInput = () => {
     const textFieldProps = {
@@ -128,59 +132,69 @@ export function PhoneInput({
           ),
         },
       },
-    };
+    }
 
     const phoneInputProps = {
       value: normalizedValue,
       onChange: handleChangeInput,
       inputComponent: CustomInput,
-      ...(isCountryLocked ? { country: activeCountry } : { defaultCountry: activeCountry }),
-    };
+      ...(isCountryLocked
+        ? { country: activeCountry }
+        : { defaultCountry: activeCountry }),
+    }
 
-    return <PhoneNumberInput {...textFieldProps} {...phoneInputProps} {...(other as any)} />;
-  };
+    return (
+      <PhoneNumberInput
+        {...textFieldProps}
+        {...phoneInputProps}
+        {...(other as any)}
+      />
+    )
+  }
 
-  const baseButtonWidth = variant === 'standard' ? '48px' : '60px';
-  const disabledButtonWidth = `calc(${baseButtonWidth} - 16px)`;
-  const buttonWidth = isCountryLocked ? disabledButtonWidth : baseButtonWidth;
+  const baseButtonWidth = variant === 'standard' ? '48px' : '60px'
+  const disabledButtonWidth = `calc(${baseButtonWidth} - 16px)`
+  const buttonWidth = isCountryLocked ? disabledButtonWidth : baseButtonWidth
 
   return (
     <Box
-      sx={[
-        {
-          '--popover-button-mr': '12px',
-          '--popover-button-height': '22px',
-          '--popover-button-width': buttonWidth,
-          position: 'relative',
-          ...(fullWidth && { width: 1 }),
-          ...(!hideSelect && {
-            [`& .${inputBaseClasses.input}`]: {
-              pl: 'calc(var(--popover-button-width) + var(--popover-button-mr))',
-            },
-          }),
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ] as SxProps<Theme>}
+      sx={
+        [
+          {
+            '--popover-button-mr': '12px',
+            '--popover-button-height': '22px',
+            '--popover-button-width': buttonWidth,
+            position: 'relative',
+            ...(fullWidth && { width: 1 }),
+            ...(!hideSelect && {
+              [`& .${inputBaseClasses.input}`]: {
+                pl: 'calc(var(--popover-button-width) + var(--popover-button-mr))',
+              },
+            }),
+          },
+          ...(Array.isArray(sx) ? sx : [sx]),
+        ] as SxProps<Theme>
+      }
     >
       {!hideSelect && renderSelect()}
       {renderInput()}
     </Box>
-  );
+  )
 }
 
 // ----------------------------------------------------------------------
 
 interface CustomInputProps {
-  ref?: React.Ref<any>;
+  ref?: React.Ref<any>
 }
 
 function CustomInput({ ref, ...other }: CustomInputProps) {
-  return <TextField inputRef={ref} {...other} />;
+  return <TextField inputRef={ref} {...other} />
 }
 
 // ----------------------------------------------------------------------
 
 function parseCountryFromPhone(inputValue?: string): any {
-  const parsed = inputValue ? parsePhoneNumber(inputValue) : undefined;
-  return parsed?.country ?? undefined;
+  const parsed = inputValue ? parsePhoneNumber(inputValue) : undefined
+  return parsed?.country ?? undefined
 }

@@ -1,27 +1,27 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import { health } from "../api/default/default";
+import Head from 'next/head'
+import styles from '../styles/Home.module.css'
+import { health } from '../api/default/default'
 
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ['translation'])),
     },
-  };
+  }
 }
 
 export default function Home() {
-  const { t } = useTranslation('translation');
+  const { t } = useTranslation('translation')
 
   async function getHealth() {
     try {
-      const response = await health();
-      console.log(response.data);
+      const response = await health()
+      console.log(response.data)
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   }
 
@@ -38,13 +38,11 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{" "}
+          Get started by editing{' '}
           <code className={styles.code}>pages/index.js</code>
         </p>
 
-        <i>
-          {t("translation:onboarding.start")}
-        </i>
+        <i>{t('translation:onboarding.start')}</i>
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
@@ -85,12 +83,12 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{" "}
+          Powered by{' '}
           <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
         </a>
 
         <button onClick={getHealth}>Get Health</button>
       </footer>
     </div>
-  );
+  )
 }

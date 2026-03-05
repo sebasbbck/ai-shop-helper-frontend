@@ -1,14 +1,21 @@
-import { SxProps, Theme } from "@mui/material"
-import SvgIcon from "@mui/material/SvgIcon"
-import { memo } from "react"
+import { SxProps, Theme } from '@mui/material'
+import SvgIcon from '@mui/material/SvgIcon'
+import { memo } from 'react'
 
-import { CONFIG } from "../../global-config"
+import { CONFIG } from '../../global-config'
 
-import { BackgroundShape } from "./background-shape"
+import { BackgroundShape } from './background-shape'
 
 // ----------------------------------------------------------------------
 
-function SeoIllustration({ hideBackground, sx, ...other }: { hideBackground: boolean, sx?: SxProps<Theme>}) {
+function SeoIllustration({
+  hideBackground,
+  sx,
+  ...other
+}: {
+  hideBackground: boolean
+  sx?: SxProps<Theme>
+}) {
   const renderCharacterImage = () => (
     <image
       href={`${CONFIG.assetsDir}/assets/illustrations/characters/character-present.webp`}
@@ -24,12 +31,12 @@ function SeoIllustration({ hideBackground, sx, ...other }: { hideBackground: boo
       xmlns="http://www.w3.org/2000/svg"
       sx={[
         (theme) => ({
-          "--primary-light": theme.vars.palette.primary.light,
-          "--primary-dark": theme.vars.palette.primary.dark,
+          '--primary-light': theme.vars.palette.primary.light,
+          '--primary-dark': theme.vars.palette.primary.dark,
           width: 320,
           maxWidth: 1,
           flexShrink: 0,
-          height: "auto",
+          height: 'auto',
         }),
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}

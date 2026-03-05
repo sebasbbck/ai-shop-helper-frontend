@@ -1,12 +1,12 @@
 // ----------------------------------------------------------------------
 
-import { Theme } from "@mui/material/styles"
+import { Theme } from '@mui/material/styles'
 
 const MuiCard = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     root: ({ theme }: { theme: Theme }) => ({
-      position: "relative",
+      position: 'relative',
       boxShadow: `var(--card-shadow, ${theme.vars.customShadows.card})`,
       borderRadius: `var(--card-radius, ${Number(theme.shape.borderRadius) * 2}px)`,
       zIndex: 0, // Fix Safari overflow: hidden with border radius
@@ -17,8 +17,8 @@ const MuiCard = {
 const MuiCardHeader = {
   // ▼▼▼▼▼▼▼▼ ⚙️ PROPS ▼▼▼▼▼▼▼▼
   defaultProps: {
-    titleTypographyProps: { variant: "h6" },
-    subheaderTypographyProps: { variant: "body2", marginTop: "4px" },
+    titleTypographyProps: { variant: 'h6' },
+    subheaderTypographyProps: { variant: 'body2', marginTop: '4px' },
   },
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {

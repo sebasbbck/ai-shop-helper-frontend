@@ -1,9 +1,9 @@
-import Box from "@mui/material/Box"
-import Slider from "@mui/material/Slider"
-import { Controller, useFormContext } from "react-hook-form"
+import Box from '@mui/material/Box'
+import Slider from '@mui/material/Slider'
+import { Controller, useFormContext } from 'react-hook-form'
 
-import { HelperText } from "./help-text"
-import { RHFProps } from "."
+import { HelperText } from './help-text'
+import { RHFProps } from '.'
 
 // ----------------------------------------------------------------------
 

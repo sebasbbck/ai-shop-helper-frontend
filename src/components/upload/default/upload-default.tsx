@@ -1,44 +1,49 @@
-import { useDropzone } from 'react-dropzone';
-import { mergeClasses } from 'minimal-shared/utils';
+import { useDropzone } from 'react-dropzone'
+import { mergeClasses } from 'minimal-shared/utils'
 
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import FormHelperText from '@mui/material/FormHelperText';
-import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import FormHelperText from '@mui/material/FormHelperText'
+import CircularProgress from '@mui/material/CircularProgress'
 
-import { UploadIllustration } from '../../../assets/illustrations';
+import { UploadIllustration } from '../../../assets/illustrations'
 
-import { Iconify } from '../../iconify';
-import { uploadClasses } from '../classes';
-import { RejectedFiles } from '../components/rejected-files';
-import { MultiFilePreview } from '../components/multi-file-preview';
-import { SingleFilePreview } from '../components/single-file-preview';
-import { UploadArea, DeleteButton, UploadWrapper, PlaceholderContainer } from './styles';
-import { SxProps, Theme } from '@mui/material';
+import { Iconify } from '../../iconify'
+import { uploadClasses } from '../classes'
+import { RejectedFiles } from '../components/rejected-files'
+import { MultiFilePreview } from '../components/multi-file-preview'
+import { SingleFilePreview } from '../components/single-file-preview'
+import {
+  UploadArea,
+  DeleteButton,
+  UploadWrapper,
+  PlaceholderContainer,
+} from './styles'
+import { SxProps, Theme } from '@mui/material'
 
 // ----------------------------------------------------------------------
 
 interface UploadProps {
-  sx?: SxProps<Theme>;
-  value?: File | string | (File | string)[];
-  error?: boolean | string;
-  disabled?: boolean;
-  onDelete?: () => void;
-  onUpload?: () => void;
-  onRemove?: (file: File | string) => void;
-  onRemoveAll?: () => void;
-  className?: string;
-  helperText?: React.ReactNode;
+  sx?: SxProps<Theme>
+  value?: File | string | (File | string)[]
+  error?: boolean | string
+  disabled?: boolean
+  onDelete?: () => void
+  onUpload?: () => void
+  onRemove?: (file: File | string) => void
+  onRemoveAll?: () => void
+  className?: string
+  helperText?: React.ReactNode
   slotProps?: {
-    wrapper?: React.ComponentProps<typeof UploadWrapper>;
-    multiPreview?: object;
-    rejectedFiles?: object;
-  };
-  loading?: boolean;
-  multiple?: boolean;
-  hideFilesRejected?: boolean;
-  previewOrientation?: 'horizontal' | 'vertical';
-  [key: string]: any;
+    wrapper?: React.ComponentProps<typeof UploadWrapper>
+    multiPreview?: object
+    rejectedFiles?: object
+  }
+  loading?: boolean
+  multiple?: boolean
+  hideFilesRejected?: boolean
+  previewOrientation?: 'horizontal' | 'vertical'
+  [key: string]: any
 }
 
 export function Upload({
@@ -59,16 +64,23 @@ export function Upload({
   previewOrientation = 'horizontal',
   ...dropzoneOptions
 }: UploadProps) {
-  const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections } = useDropzone({
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragReject,
+    fileRejections,
+  } = useDropzone({
     multiple,
     disabled,
     ...dropzoneOptions,
-  });
+  })
 
-  const isSingleFileSelected = !multiple && !!value && !Array.isArray(value);
-  const hasMultiFilesSelected = multiple && Array.isArray(value) && value.length > 0;
-  const hasError = isDragReject || !!error;
-  const showFilesRejected = !hideFilesRejected && fileRejections.length > 0;
+  const isSingleFileSelected = !multiple && !!value && !Array.isArray(value)
+  const hasMultiFilesSelected =
+    multiple && Array.isArray(value) && value.length > 0
+  const hasError = isDragReject || !!error
+  const showFilesRejected = !hideFilesRejected && fileRejections.length > 0
 
   const renderPlaceholder = () => (
     <PlaceholderContainer className={uploadClasses.placeholder.root}>
@@ -78,11 +90,12 @@ export function Upload({
           {multiple ? 'Drop or select files' : 'Drop or select a file'}
         </div>
         <div className={uploadClasses.placeholder.description}>
-          {multiple ? 'Drag files here' : 'Drag a file here'}, or <span>browse</span> your device.
+          {multiple ? 'Drag files here' : 'Drag a file here'}, or{' '}
+          <span>browse</span> your device.
         </div>
       </div>
     </PlaceholderContainer>
-  );
+  )
 
   const renderSingleFileLoading = () =>
     loading &&
@@ -92,9 +105,10 @@ export function Upload({
         color="primary"
         sx={{ zIndex: 9, right: 16, bottom: 16, position: 'absolute' }}
       />
-    );
+    )
 
-  const renderSingleFilePreview = () => isSingleFileSelected && <SingleFilePreview file={value} />;
+  const renderSingleFilePreview = () =>
+    isSingleFileSelected && <SingleFilePreview file={value} />
 
   const renderMultiFilesPreview = () =>
     hasMultiFilesSelected && (
@@ -111,7 +125,12 @@ export function Upload({
         {(onRemoveAll || onUpload) && (
           <Box sx={{ gap: 1.5, display: 'flex', justifyContent: 'flex-end' }}>
             {onRemoveAll && (
-              <Button size="small" variant="outlined" color="inherit" onClick={onRemoveAll}>
+              <Button
+                size="small"
+                variant="outlined"
+                color="inherit"
+                onClick={onRemoveAll}
+              >
                 Remove All
               </Button>
             )}
@@ -130,7 +149,7 @@ export function Upload({
           </Box>
         )}
       </>
-    );
+    )
 
   return (
     <UploadWrapper {...slotProps?.wrapper} className={uploadClasses.wrapper}>
@@ -153,10 +172,17 @@ export function Upload({
         </DeleteButton>
       )}
 
-      {helperText && <FormHelperText error={!!error}>{helperText}</FormHelperText>}
-      {showFilesRejected && <RejectedFiles files={[...fileRejections]} {...slotProps?.rejectedFiles} />}
+      {helperText && (
+        <FormHelperText error={!!error}>{helperText}</FormHelperText>
+      )}
+      {showFilesRejected && (
+        <RejectedFiles
+          files={[...fileRejections]}
+          {...slotProps?.rejectedFiles}
+        />
+      )}
       {renderSingleFileLoading()}
       {renderMultiFilesPreview()}
     </UploadWrapper>
-  );
+  )
 }

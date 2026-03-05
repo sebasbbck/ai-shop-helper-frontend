@@ -3,11 +3,11 @@
 const MuiAppBar = {
   // ▼▼▼▼▼▼▼▼ ⚙️ PROPS ▼▼▼▼▼▼▼▼
   defaultProps: {
-    color: "transparent",
+    color: 'transparent',
   },
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
-    root: { boxShadow: "none" },
+    root: { boxShadow: 'none' },
   },
 }
 

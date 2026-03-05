@@ -1,68 +1,68 @@
-import { uuidv4 } from "minimal-shared/utils"
+import { uuidv4 } from 'minimal-shared/utils'
 
-import { CONFIG } from "../../global-config"
+import { CONFIG } from '../../global-config'
 
 // ----------------------------------------------------------------------
 
 export const FILE_FORMATS = {
-  txt: ["txt", "md", "rtf", "csv", "log"],
-  zip: ["zip", "rar", "7z", "tar", "gz", "bz2", "xz", "iso"],
-  audio: ["wav", "aif", "aiff", "mp3", "aac", "flac", "ogg", "m4a", "wma"],
+  txt: ['txt', 'md', 'rtf', 'csv', 'log'],
+  zip: ['zip', 'rar', '7z', 'tar', 'gz', 'bz2', 'xz', 'iso'],
+  audio: ['wav', 'aif', 'aiff', 'mp3', 'aac', 'flac', 'ogg', 'm4a', 'wma'],
   image: [
-    "jpg",
-    "jpeg",
-    "png",
-    "gif",
-    "webp",
-    "bmp",
-    "tif",
-    "tiff",
-    "heic",
-    "heif",
-    "ico",
-    "jfif",
-    "raw",
-    "svg",
-    "svg+xml",
-    "indd",
+    'jpg',
+    'jpeg',
+    'png',
+    'gif',
+    'webp',
+    'bmp',
+    'tif',
+    'tiff',
+    'heic',
+    'heif',
+    'ico',
+    'jfif',
+    'raw',
+    'svg',
+    'svg+xml',
+    'indd',
   ],
   video: [
-    "m4v",
-    "avi",
-    "mpg",
-    "mpeg",
-    "mp4",
-    "webm",
-    "mov",
-    "flv",
-    "mkv",
-    "wmv",
-    "3gp",
+    'm4v',
+    'avi',
+    'mpg',
+    'mpeg',
+    'mp4',
+    'webm',
+    'mov',
+    'flv',
+    'mkv',
+    'wmv',
+    '3gp',
   ],
-  word: ["doc", "docx", "odt"],
-  excel: ["xls", "xlsx", "ods", "csv"],
-  powerpoint: ["ppt", "pptx", "odp"],
-  pdf: ["pdf", "xps"],
-  photoshop: ["psd"],
-  illustrator: ["ai", "eps"],
+  word: ['doc', 'docx', 'odt'],
+  excel: ['xls', 'xlsx', 'ods', 'csv'],
+  powerpoint: ['ppt', 'pptx', 'odp'],
+  pdf: ['pdf', 'xps'],
+  photoshop: ['psd'],
+  illustrator: ['ai', 'eps'],
 }
 
-export const EXTRA_EXTENSIONS = ["folder"]
+export const EXTRA_EXTENSIONS = ['folder']
 
 export const FILE_ICONS: Record<string, string> = {
-  txt: "ic-txt",
-  zip: "ic-zip",
-  pdf: "ic-pdf",
-  word: "ic-word",
-  image: "ic-img",
-  audio: "ic-audio",
-  video: "ic-video",
-  excel: "ic-excel",
-  unknown: "ic-file",
-  folder: "ic-folder",
-  photoshop: "ic-pts",
-  illustrator: "ic-ai",
-  powerpoint: "ic-power-point",
+  txt: 'ic-txt',
+  zip: 'ic-zip',
+  pdf: 'ic-pdf',
+  word: 'ic-word',
+  image: 'ic-img',
+  audio: 'ic-audio',
+  video: 'ic-video',
+  excel: 'ic-excel',
+  unknown: 'ic-file',
+  folder: 'ic-folder',
+  photoshop: 'ic-pts',
+  illustrator: 'ic-ai',
+  powerpoint: 'ic-power-point',
 }
 
 const ALL_EXTENSIONS = new Set([
@@ -92,13 +92,13 @@ const isSupportedExtension = (ext: string) => ALL_EXTENSIONS.has(ext)
  * @example getFileName('/path/to/file%20name.txt') => 'file name.txt'
  */
 export function getFileName(input: string) {
-  if (!input?.trim()) return ""
+  if (!input?.trim()) return ''
 
   try {
     const cleanInput = input.split(/[?#]/)[0].trim()
-    return decodeURIComponent(cleanInput.split("/").pop() || "")
+    return decodeURIComponent(cleanInput.split('/').pop() || '')
   } catch {
-    return ""
+    return ''
   }
 }
 
@@ -110,10 +110,10 @@ export function getFileName(input: string) {
  * @example getFileExtension('mp3') => 'mp3'
  */
 export function getFileExtension(input: string) {
-  if (!input?.trim()) return "unknown"
+  if (!input?.trim()) return 'unknown'
 
   const cleanInput = input.trim().toLowerCase()
-  const [mimeType, mimeSubtype] = cleanInput.split("/")
+  const [mimeType, mimeSubtype] = cleanInput.split('/')
   const ext = getFileName(cleanInput).match(/\.([^.]+)$/)?.[1]
 
   // 1. Extract extension from file name or URL (e.g., 'file.pdf' -> 'pdf')
@@ -128,7 +128,7 @@ export function getFileExtension(input: string) {
   // 4. Check if the whole input is a known extension
   if (isSupportedExtension(cleanInput)) return cleanInput
 
-  return "unknown"
+  return 'unknown'
 }
 
 /**
@@ -174,12 +174,12 @@ export function getFileMeta(file: string | File | null) {
       size: file.size,
       lastModified: file.lastModified,
       lastModifiedDate: new Date(file.lastModified),
-      format: formatFromMime !== "unknown" ? formatFromMime : formatFromName,
+      format: formatFromMime !== 'unknown' ? formatFromMime : formatFromName,
       path: file.webkitRelativePath,
     }
   }
 
-  if (typeof file === "string") {
+  if (typeof file === 'string') {
     return {
       key: file,
       path: file,
@@ -191,9 +191,9 @@ export function getFileMeta(file: string | File | null) {
   }
 
   return {
-    name: "",
-    type: "",
+    name: '',
+    type: '',
     size: 0,
-    format: "unknown",
+    format: 'unknown',
   }
 }

@@ -215,7 +215,7 @@
             "save": "Guardar cambios",
             "update_success": "Contraseña actualizada con éxito"
         },
-        
+
         "profile": "Profile Settings",
         "security": "Security Settings",
         "billing": {
@@ -400,7 +400,7 @@
         "chip": "PROGRAMA DE EMBAJADORES",
         "card_title": "Gana créditos invitando a otros negocios",
         "description": "Comparte tu enlace y por cada amigo que automatice su tienda, ambos recibiréis un pack de créditos extra.",
-        
+
         "your_code": "Tu enlace",
         "copy": "Copiar",
         "share_directly": "Compartir directamente",
@@ -414,7 +414,7 @@
         "monthly_limit": "Límite mensual",
         "referrals_this_month": "Referidos este mes",
         "limit_reset": "El límite se reinicia el día 1 de cada mes. Solo se contabilizan referidos que completen todas las acciones.",
-        
+
         "how_does_it_work": "¿Cómo funciona?",
         "step_1": "Comparte tu enlace",
         "step_1_description": "Envíaselo a dueños de eCommerce o agencias a las que les pueda interesar AI Shop Helper.",
@@ -423,7 +423,7 @@
         "step_3": "Primera acción real",
         "step_3_description": "El crédito se libera cuando ejecute su primer flujo.",
         "required": "REQUERIDO",
-        
+
         "copy_success_toast": "Enlace de referido copiado al portapapeles",
         "share_message": "Me estoy ahorrando un montón de horas cada semana con {{appName}}. Entra desde aquí 👉 https://app.aishophelper.com/signup?ref={{code}} y nos dan {{credits}} créditos gratis a cada uno. ¡Ya me darás las gracias!",
         "share_on_twitter": "Compartir en X/Twitter",

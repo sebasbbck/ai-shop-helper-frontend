@@ -1,10 +1,10 @@
-import CssBaseline from "@mui/material/CssBaseline"
-import { ThemeProvider as ThemeVarsProvider } from "@mui/material/styles"
+import CssBaseline from '@mui/material/CssBaseline'
+import { ThemeProvider as ThemeVarsProvider } from '@mui/material/styles'
 
-import { useSettingsContext } from "../components/settings"
+import { useSettingsContext } from '../components/settings'
 
-import { createTheme } from "./create-theme"
-import { Rtl } from "./with-settings/right-to-left"
+import { createTheme } from './create-theme'
+import { Rtl } from './with-settings/right-to-left'
 
 // ----------------------------------------------------------------------
 
@@ -16,7 +16,11 @@ interface ThemeProviderProps {
 
 // ----------------------------------------------------------------------
 
-export function ThemeProvider({ themeOverrides, children, ...other }: ThemeProviderProps) {
+export function ThemeProvider({
+  themeOverrides,
+  children,
+  ...other
+}: ThemeProviderProps) {
   const settings = useSettingsContext()
 
   const theme = createTheme({

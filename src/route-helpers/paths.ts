@@ -1,26 +1,26 @@
 // ----------------------------------------------------------------------
 
 const ROOTS = {
-  AUTH: "/$lang/auth",
-  DASHBOARD: "/$lang/dashboard",
-  AGENTS: "/$lang/agents",
-  BLOGWRITER: "/$lang/blog-writer",
-  CONNECTION: "/$lang/connection",
-  ADMINPANEL: "/$lang/admin-panel",
-  SETTINGS: "/$lang/settings",
+  AUTH: '/$lang/auth',
+  DASHBOARD: '/$lang/dashboard',
+  AGENTS: '/$lang/agents',
+  BLOGWRITER: '/$lang/blog-writer',
+  CONNECTION: '/$lang/connection',
+  ADMINPANEL: '/$lang/admin-panel',
+  SETTINGS: '/$lang/settings',
 }
 
 // ----------------------------------------------------------------------
 
 export const paths = {
-  faqs: "/$lang/faqs",
-  minimalStore: "https://mui.com/store/items/minimal-dashboard/",
-  team: "/$lang/team",
-  inbox: "/$lang/inbox",
-  integrations: "/$lang/integrations",
-  referrals: "/$lang/referrals",
-  oldSettings: "/$lang/old-settings",
-  login: "/$lang/login",
+  faqs: '/$lang/faqs',
+  minimalStore: 'https://mui.com/store/items/minimal-dashboard/',
+  team: '/$lang/team',
+  inbox: '/$lang/inbox',
+  integrations: '/$lang/integrations',
+  referrals: '/$lang/referrals',
+  oldSettings: '/$lang/old-settings',
+  login: '/$lang/login',
   // AUTH
   auth: {
     amplify: {
@@ -49,7 +49,7 @@ export const paths = {
   },
   // DASHBOARD
   dashboard: {
-    root: "/$lang",
+    root: '/$lang',
     team: `${ROOTS.DASHBOARD}/team`,
     inbox: `${ROOTS.DASHBOARD}/inbox`,
     integrations: `${ROOTS.DASHBOARD}/integrations`,
@@ -77,12 +77,12 @@ export const paths = {
     users: `${ROOTS.ADMINPANEL}/admin`,
     projects: `${ROOTS.ADMINPANEL}/projects`,
     questions: `${ROOTS.ADMINPANEL}/questions`,
-    workflowQuestions: () => `${ROOTS.ADMINPANEL}/workflows/{$workflowId}/questions`,
+    workflowQuestions: () =>
+      `${ROOTS.ADMINPANEL}/workflows/{$workflowId}/questions`,
     projectActions: () => `${ROOTS.ADMINPANEL}/actions/{$projectId}`,
     agents: `${ROOTS.ADMINPANEL}/agents`,
     subscriptions: `${ROOTS.ADMINPANEL}/subscriptions`,
     settings: `${ROOTS.ADMINPANEL}/settings`,
-
   },
   // SETTINGS
   settings: {

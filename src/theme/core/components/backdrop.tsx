@@ -1,9 +1,9 @@
-import { Components, Theme } from "@mui/material/styles"
-import { varAlpha } from "minimal-shared/utils"
+import { Components, Theme } from '@mui/material/styles'
+import { varAlpha } from 'minimal-shared/utils'
 
 // ----------------------------------------------------------------------
 
-const MuiBackdrop: Components<Theme>["MuiBackdrop"] = {
+const MuiBackdrop: Components<Theme>['MuiBackdrop'] = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     root: ({ theme }) => ({
@@ -12,7 +12,7 @@ const MuiBackdrop: Components<Theme>["MuiBackdrop"] = {
           props: (props) => !props.invisible,
           style: {
             backgroundColor: varAlpha(
-              theme.vars.palette.grey["800Channel"],
+              theme.vars.palette.grey['800Channel'],
               0.48,
             ),
           },

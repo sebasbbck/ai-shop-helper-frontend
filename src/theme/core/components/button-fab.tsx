@@ -1,25 +1,29 @@
-import { fabClasses } from "@mui/material/Fab"
-import { pxToRem, varAlpha } from "minimal-shared/utils"
+import { fabClasses } from '@mui/material/Fab'
+import { pxToRem, varAlpha } from 'minimal-shared/utils'
 
-import { colorKeys } from "../palette"
-import { Components, ComponentsVariants, Theme } from "@mui/material/styles"
-import { CSSObject } from "@mui/material/styles"
-import { FabProps } from "@mui/material/Fab"
+import { colorKeys } from '../palette'
+import { Components, ComponentsVariants, Theme } from '@mui/material/styles'
+import { CSSObject } from '@mui/material/styles'
+import { FabProps } from '@mui/material/Fab'
 
 // ----------------------------------------------------------------------
 
-const baseColors = ["default", "inherit"] as const
-const allColors = [...baseColors, ...colorKeys.palette, ...colorKeys.common] as const
+const baseColors = ['default', 'inherit'] as const
+const allColors = [
+  ...baseColors,
+  ...colorKeys.palette,
+  ...colorKeys.common,
+] as const
 
 const VARIANTS = {
-  filled: ["circular", "extended"] as const,
-  outlined: ["outlined", "outlinedExtended"] as const,
-  soft: ["soft", "softExtended"] as const,
-  extended: ["extended", "outlinedExtended", "softExtended"] as const,
+  filled: ['circular', 'extended'] as const,
+  outlined: ['outlined', 'outlinedExtended'] as const,
+  soft: ['soft', 'softExtended'] as const,
+  extended: ['extended', 'outlinedExtended', 'softExtended'] as const,
 } as const
 
 interface DimensionValue {
-  "--size": string
+  '--size': string
   padding: string
   fontSize: string
   lineHeight: number
@@ -27,26 +31,29 @@ interface DimensionValue {
 
 const DIMENSIONS: Record<string, DimensionValue> = {
   extendedSmall: {
-    "--size": "36px",
-    padding: "4px 8px",
+    '--size': '36px',
+    padding: '4px 8px',
     fontSize: pxToRem(13),
     lineHeight: 22 / 13,
   },
   extendedMedium: {
-    "--size": "40px",
-    padding: "6px 12px",
+    '--size': '40px',
+    padding: '6px 12px',
     fontSize: pxToRem(14),
     lineHeight: 24 / 14,
   },
   extendedLarge: {
-    "--size": "48px",
-    padding: "8px 16px",
+    '--size': '48px',
+    padding: '8px 16px',
     fontSize: pxToRem(15),
     lineHeight: 26 / 15,
   },
 }
 
-function isVariant(allowed: readonly string[], variant: string | undefined): variant is string {
+function isVariant(
+  allowed: readonly string[],
+  variant: string | undefined,
+): variant is string {
   return !!variant && allowed.includes(variant)
 }
 
@@ -56,17 +63,17 @@ function isVariant(allowed: readonly string[], variant: string | undefined): var
 const filledVariants: ComponentsVariants<Theme>['MuiFab'] = [
   {
     props: (props: FabProps): boolean =>
-      isVariant(VARIANTS.filled, props.variant) && props.color === "default",
+      isVariant(VARIANTS.filled, props.variant) && props.color === 'default',
     style: ({ theme }: { theme: Theme }): CSSObject => ({
-      ...theme.mixins.filledStyles(theme, "default", { hover: true }),
+      ...theme.mixins.filledStyles(theme, 'default', { hover: true }),
       boxShadow: theme.vars.customShadows.z8,
     }),
   },
   {
     props: (props) =>
-      isVariant(VARIANTS.filled, props.variant) && props.color === "inherit",
+      isVariant(VARIANTS.filled, props.variant) && props.color === 'inherit',
     style: ({ theme }) => ({
-      ...theme.mixins.filledStyles(theme, "inherit", { hover: true }),
+      ...theme.mixins.filledStyles(theme, 'inherit', { hover: true }),
       boxShadow: theme.vars.customShadows.z8,
     }),
   },
@@ -89,18 +96,19 @@ const filledVariants: ComponentsVariants<Theme>['MuiFab'] = [
 
 const outlinedVariants: ComponentsVariants<Theme>['MuiFab'] = [
   {
-    props: (props: FabProps): boolean => isVariant(VARIANTS.outlined, props.variant),
+    props: (props: FabProps): boolean =>
+      isVariant(VARIANTS.outlined, props.variant),
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       borderWidth: 1,
-      boxShadow: "none",
-      borderStyle: "solid",
-      backgroundColor: "transparent",
-      borderColor: varAlpha("currentColor", theme.vars.opacity.outlined.border),
-      "&:hover": {
-        borderColor: "currentColor",
-        boxShadow: "0 0 0 0.75px currentColor",
+      boxShadow: 'none',
+      borderStyle: 'solid',
+      backgroundColor: 'transparent',
+      borderColor: varAlpha('currentColor', theme.vars.opacity.outlined.border),
+      '&:hover': {
+        borderColor: 'currentColor',
+        boxShadow: '0 0 0 0.75px currentColor',
         backgroundColor: varAlpha(
-          "currentColor",
+          'currentColor',
           theme.vars.palette.action.hoverOpacity,
         ),
       },
@@ -109,17 +117,17 @@ const outlinedVariants: ComponentsVariants<Theme>['MuiFab'] = [
   {
     props: (props: FabProps): boolean =>
       isVariant(VARIANTS.outlined, props.variant) &&
-      (props.color === "default" || props.color === "inherit"),
+      (props.color === 'default' || props.color === 'inherit'),
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       borderColor: theme.vars.palette.shared.buttonOutlined,
-      "&:hover": {
+      '&:hover': {
         backgroundColor: theme.vars.palette.action.hover,
       },
     }),
   },
   {
     props: (props: FabProps): boolean =>
-      isVariant(VARIANTS.outlined, props.variant) && props.color === "default",
+      isVariant(VARIANTS.outlined, props.variant) && props.color === 'default',
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       color: theme.vars.palette.action.active,
     }),
@@ -152,39 +160,41 @@ const softVariants: ComponentsVariants<Theme>['MuiFab'] = [
 
 const sizeVariants: ComponentsVariants<Theme>['MuiFab'] = [
   {
-    props: (props: FabProps): boolean => isVariant(VARIANTS.extended, props.variant),
+    props: (props: FabProps): boolean =>
+      isVariant(VARIANTS.extended, props.variant),
     style: ({ theme }: { theme: Theme }): CSSObject => ({
-      width: "auto",
-      height: "auto",
+      width: 'auto',
+      height: 'auto',
       gap: theme.spacing(1),
-      minWidth: "var(--size)",
-      minHeight: "var(--size)",
-      borderRadius: "calc(var(--size) / 2)",
+      minWidth: 'var(--size)',
+      minHeight: 'var(--size)',
+      borderRadius: 'calc(var(--size) / 2)',
     }),
   },
   {
     props: (props: FabProps): boolean =>
-      isVariant(VARIANTS.extended, props.variant) && props.size === "small",
+      isVariant(VARIANTS.extended, props.variant) && props.size === 'small',
     style: DIMENSIONS.extendedSmall,
   },
   {
     props: (props: FabProps): boolean =>
-      isVariant(VARIANTS.extended, props.variant) && props.size === "medium",
+      isVariant(VARIANTS.extended, props.variant) && props.size === 'medium',
     style: DIMENSIONS.extendedMedium,
   },
   {
     props: (props: FabProps): boolean =>
-      isVariant(VARIANTS.extended, props.variant) && props.size === "large",
+      isVariant(VARIANTS.extended, props.variant) && props.size === 'large',
     style: DIMENSIONS.extendedLarge,
   },
 ]
 
 const disabledVariants: ComponentsVariants<Theme>['MuiFab'] = [
   {
-    props: (props: FabProps): boolean => isVariant(VARIANTS.outlined, props.variant),
+    props: (props: FabProps): boolean =>
+      isVariant(VARIANTS.outlined, props.variant),
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       [`&.${fabClasses.disabled}`]: {
-        backgroundColor: "transparent",
+        backgroundColor: 'transparent',
         borderColor: theme.vars.palette.action.disabledBackground,
       },
     }),
@@ -197,13 +207,13 @@ const disabledVariants: ComponentsVariants<Theme>['MuiFab'] = [
 const MuiFab: Components<Theme>['MuiFab'] = {
   // ▼▼▼▼▼▼▼▼ ⚙️ PROPS ▼▼▼▼▼▼▼▼
   defaultProps: {
-    color: "primary",
-    size: "medium",
+    color: 'primary',
+    size: 'medium',
   },
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     root: {
-      "&:hover": { boxShadow: "none" },
+      '&:hover': { boxShadow: 'none' },
     },
   },
   variants: [

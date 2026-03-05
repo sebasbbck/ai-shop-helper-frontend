@@ -1,5 +1,5 @@
-export * from "./classes"
+export * from './classes'
 
-export * from "./iconify"
+export * from './iconify'
 
-export * from "./register-icons"
+export * from './register-icons'

@@ -1,8 +1,8 @@
-import { Components, Theme } from "@mui/material/styles"
-import { tableCellClasses } from "@mui/material/TableCell"
+import { Components, Theme } from '@mui/material/styles'
+import { tableCellClasses } from '@mui/material/TableCell'
 
-import { tableRowClasses } from "@mui/material/TableRow"
-import { varAlpha } from "minimal-shared/utils"
+import { tableRowClasses } from '@mui/material/TableRow'
+import { varAlpha } from 'minimal-shared/utils'
 
 // ----------------------------------------------------------------------
 
@@ -11,7 +11,7 @@ const MuiTableContainer: Components<Theme>['MuiTableContainer'] = {
   styleOverrides: {
     root: ({ theme }) => ({
       ...theme.mixins.scrollbarStyles(theme),
-      position: "relative",
+      position: 'relative',
     }),
   },
 }
@@ -22,14 +22,14 @@ const MuiTableRow: Components<Theme>['MuiTableRow'] = {
     root: ({ theme }) => ({
       [`&.${tableRowClasses.selected}`]: {
         backgroundColor: varAlpha(theme.vars.palette.primary.darkChannel, 0.04),
-        "&:hover": {
+        '&:hover': {
           backgroundColor: varAlpha(
             theme.vars.palette.primary.darkChannel,
             0.08,
           ),
         },
       },
-      "&:last-of-type": {
+      '&:last-of-type': {
         [`& .${tableCellClasses.root}`]: {
           border: 0,
         },
@@ -42,7 +42,7 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     root: {
-      borderBottomStyle: "dashed",
+      borderBottomStyle: 'dashed',
     },
     head: ({ theme }) => ({
       fontSize: theme.typography.pxToRem(14),
@@ -63,24 +63,24 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
 const MuiTablePagination = {
   // ▼▼▼▼▼▼▼▼ ⚙️ PROPS ▼▼▼▼▼▼▼▼
   defaultProps: {
-    backIconButtonProps: { size: "small" },
-    nextIconButtonProps: { size: "small" },
-    slotProps: { select: { name: "table-pagination-select" } },
+    backIconButtonProps: { size: 'small' },
+    nextIconButtonProps: { size: 'small' },
+    slotProps: { select: { name: 'table-pagination-select' } },
   },
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
-    root: { width: "100%" },
+    root: { width: '100%' },
     toolbar: { height: 64 },
     actions: { marginRight: 8 },
     select: {
-      display: "flex",
-      alignItems: "center",
+      display: 'flex',
+      alignItems: 'center',
     },
     selectIcon: {
       right: 4,
       width: 16,
       height: 16,
-      top: "calc(50% - 8px)",
+      top: 'calc(50% - 8px)',
     },
   },
 }

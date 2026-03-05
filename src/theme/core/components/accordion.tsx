@@ -1,9 +1,9 @@
-import { Components, ComponentsVariants, CSSObject, Theme } from "@mui/material"
-import { accordionClasses, AccordionProps } from "@mui/material/Accordion"
-import { accordionDetailsClasses } from "@mui/material/AccordionDetails"
-import { accordionSummaryClasses } from "@mui/material/AccordionSummary"
-import Box, { BoxProps } from "@mui/material/Box"
-import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon"
+import { Components, ComponentsVariants, CSSObject, Theme } from '@mui/material'
+import { accordionClasses, AccordionProps } from '@mui/material/Accordion'
+import { accordionDetailsClasses } from '@mui/material/AccordionDetails'
+import { accordionSummaryClasses } from '@mui/material/AccordionSummary'
+import Box, { BoxProps } from '@mui/material/Box'
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
 
 // ----------------------------------------------------------------------
 
@@ -38,36 +38,36 @@ const MinusIcon = (props: SvgIconProps) => (
 )
 
 const iconClasses = {
-  container: "accordion__icon__container",
-  plus: "accordion__icon__plus",
-  minus: "accordion__icon__minus",
+  container: 'accordion__icon__container',
+  plus: 'accordion__icon__plus',
+  minus: 'accordion__icon__minus',
 }
 
 const getExpandIconStyles = (theme: Theme) => {
   const resetTransform = {
     default: {
-      transition: "inherit",
-      transform: "rotate(0deg)",
+      transition: 'inherit',
+      transform: 'rotate(0deg)',
     },
     expanded: {
-      transform: "rotate(-180deg)",
+      transform: 'rotate(-180deg)',
     },
   }
 
   const iconContainerStyles = {
     width: 24,
     height: 24,
-    display: "flex",
-    position: "relative",
-    alignItems: "center",
-    justifyContent: "center",
+    display: 'flex',
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 
   const iconStyles = {
     width: 18,
     height: 18,
-    position: "absolute",
-    transition: theme.transitions.create(["transform", "opacity"], {
+    position: 'absolute',
+    transition: theme.transitions.create(['transform', 'opacity'], {
       easing: theme.transitions.easing.easeIn,
       duration: theme.transitions.duration.shortest,
     }),
@@ -80,18 +80,18 @@ const getExpandIconStyles = (theme: Theme) => {
     },
     [`& .${iconClasses.plus}`]: {
       ...iconStyles,
-      transform: "scale(1)",
+      transform: 'scale(1)',
       opacity: 1,
     },
     [`& .${iconClasses.minus}`]: {
       ...iconStyles,
-      transform: "scale(0.4)",
+      transform: 'scale(0.4)',
       opacity: 0,
     },
     [`&.${accordionSummaryClasses.expanded}`]: {
       [`& .${iconClasses.container}`]: resetTransform.expanded,
-      [`& .${iconClasses.plus}`]: { transform: "scale(0.4)", opacity: 0 },
-      [`& .${iconClasses.minus}`]: { transform: "scale(1)", opacity: 1 },
+      [`& .${iconClasses.plus}`]: { transform: 'scale(0.4)', opacity: 0 },
+      [`& .${iconClasses.minus}`]: { transform: 'scale(1)', opacity: 1 },
     },
   }
 }
@@ -106,7 +106,9 @@ const ExpandIcon = (props: BoxProps) => (
 /* **********************************************************************
  * 🗳️ Variants
  * **********************************************************************/
-type AccordionVariantProps = Partial<AccordionProps> & { ownerState: Partial<AccordionProps> }
+type AccordionVariantProps = Partial<AccordionProps> & {
+  ownerState: Partial<AccordionProps>
+}
 
 const expandedVariants: ComponentsVariants<Theme>['MuiAccordion'] = [
   {
@@ -157,7 +159,7 @@ const disableVariants: ComponentsVariants<Theme>['MuiAccordion'] = [
 /* **********************************************************************
  * 🧩 Components
  * **********************************************************************/
-const MuiAccordion: Components<Theme>["MuiAccordion"] = {
+const MuiAccordion: Components<Theme>['MuiAccordion'] = {
   // ▼▼▼▼▼▼▼▼ ⚙️ PROPS ▼▼▼▼▼▼▼▼
   defaultProps: {
     square: true,
@@ -165,7 +167,7 @@ const MuiAccordion: Components<Theme>["MuiAccordion"] = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     root: {
-      backgroundColor: "transparent",
+      backgroundColor: 'transparent',
       variants: [
         ...(expandedVariants ?? []),
         ...(disableGuttersVariants ?? []),
@@ -177,15 +179,15 @@ const MuiAccordion: Components<Theme>["MuiAccordion"] = {
 
 const sizingReset = {
   root: {
-    minHeight: "auto",
+    minHeight: 'auto',
     [`&.${accordionSummaryClasses.expanded}`]: {
-      minHeight: "inherit",
+      minHeight: 'inherit',
     },
   },
   content: {
     margin: 0,
     [`&.${accordionSummaryClasses.expanded}`]: {
-      margin: "inherit",
+      margin: 'inherit',
     },
   },
 }
@@ -206,8 +208,8 @@ const MuiAccordionSummary = {
     },
     expandIconWrapper: ({ theme }: { theme: Theme }) => ({
       ...getExpandIconStyles(theme),
-      color: "inherit",
-      alignSelf: "flex-start",
+      color: 'inherit',
+      alignSelf: 'flex-start',
       marginLeft: theme.spacing(2),
     }),
   },

@@ -4,7 +4,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "generate-client": "orval --config ./orval.config.ts"
+    "generate-client": "orval --config ./orval.config.ts",
+    "fix:prettier": "npm run lint:prettier -- --write",
+    "lint:prettier": "prettier --config .prettierrc --check"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -34,6 +36,7 @@
     "@types/node": "25.2.3",
     "@types/react": "19.2.14",
     "orval": "^8.4.1",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "prettier": "^3.8.1"
   }
 }

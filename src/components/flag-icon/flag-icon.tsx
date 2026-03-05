@@ -1,7 +1,7 @@
-import { styled, SxProps, Theme } from "@mui/material/styles"
-import { mergeClasses } from "minimal-shared/utils"
+import { styled, SxProps, Theme } from '@mui/material/styles'
+import { mergeClasses } from 'minimal-shared/utils'
 
-import { flagIconClasses } from "./classes"
+import { flagIconClasses } from './classes'
 
 // ----------------------------------------------------------------------
 
@@ -35,21 +35,21 @@ export function FlagIcon({ code, className, sx, ...other }: FlagIconProps) {
 
 // ----------------------------------------------------------------------
 
-const FlagRoot = styled("span")(({ theme }) => ({
+const FlagRoot = styled('span')(({ theme }) => ({
   width: 26,
   height: 20,
   flexShrink: 0,
-  overflow: "hidden",
-  borderRadius: "5px",
-  alignItems: "center",
-  display: "inline-flex",
-  justifyContent: "center",
+  overflow: 'hidden',
+  borderRadius: '5px',
+  alignItems: 'center',
+  display: 'inline-flex',
+  justifyContent: 'center',
   backgroundColor: theme.vars.palette.background.neutral,
 }))
 
-const FlagImg = styled("img")(() => ({
-  width: "100%",
-  height: "100%",
-  maxWidth: "unset",
-  objectFit: "cover",
+const FlagImg = styled('img')(() => ({
+  width: '100%',
+  height: '100%',
+  maxWidth: 'unset',
+  objectFit: 'cover',
 }))

@@ -1,22 +1,22 @@
-import { SxProps, Theme } from "@mui/material"
-import SvgIcon from "@mui/material/SvgIcon"
-import { memo } from "react"
+import { SxProps, Theme } from '@mui/material'
+import SvgIcon from '@mui/material/SvgIcon'
+import { memo } from 'react'
 
 // ----------------------------------------------------------------------
 
-function PlanEnterpriseIcon({ sx, ...other }: { sx?: SxProps<Theme>}) {
+function PlanEnterpriseIcon({ sx, ...other }: { sx?: SxProps<Theme> }) {
   return (
     <SvgIcon
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
       sx={[
         (theme) => ({
-          "--primary-main": theme.vars.palette.warning.main,
-          "--primary-dark": theme.vars.palette.warning.dark,
-          "--primary-darker": theme.vars.palette.warning.darker,
+          '--primary-main': theme.vars.palette.warning.main,
+          '--primary-dark': theme.vars.palette.warning.dark,
+          '--primary-darker': theme.vars.palette.warning.darker,
           width: 48,
           flexShrink: 0,
-          height: "auto",
+          height: 'auto',
         }),
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}

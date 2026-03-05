@@ -1,21 +1,21 @@
-import Box from "@mui/material/Box"
-import { alpha as hexAlpha, SxProps, Theme } from "@mui/material/styles"
+import Box from '@mui/material/Box'
+import { alpha as hexAlpha, SxProps, Theme } from '@mui/material/styles'
 
-import { OptionButton } from "./styles"
-import Tooltip from "@mui/material/Tooltip"
+import { OptionButton } from './styles'
+import Tooltip from '@mui/material/Tooltip'
 
 // ----------------------------------------------------------------------
 
 interface PresetsOptionsProps {
-  sx?: SxProps<Theme>,
-  value: string,
-  icon: React.ReactNode,
+  sx?: SxProps<Theme>
+  value: string
+  icon: React.ReactNode
   options: {
     name: string
-    value: string,
-    icon: React.ReactNode,
-    tooltip?: string,
-  }[],
+    value: string
+    icon: React.ReactNode
+    tooltip?: string
+  }[]
   onChangeOption: (o: string) => any
 }
 
@@ -32,8 +32,8 @@ export function PresetsOptions({
       sx={[
         {
           gap: 1.5,
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
         },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
@@ -67,21 +67,21 @@ export function PresetsOptions({
                 </OptionButton>
               </Tooltip>
             ) : (
-            <OptionButton
-              key={option.name}
-              onClick={() => onChangeOption(option.name)}
-              sx={{
-                height: 64,
-                color: option.value,
+              <OptionButton
+                key={option.name}
+                onClick={() => onChangeOption(option.name)}
+                sx={{
+                  height: 64,
+                  color: option.value,
 
-                ...(selected && {
-                  bgcolor: hexAlpha(option.value, 0.08),
-                }),
-              }}
-              selected={undefined}
-            > 
-              {option.icon ? option.icon : icon}
-            </OptionButton>
+                  ...(selected && {
+                    bgcolor: hexAlpha(option.value, 0.08),
+                  }),
+                }}
+                selected={undefined}
+              >
+                {option.icon ? option.icon : icon}
+              </OptionButton>
             )}
           </>
         )

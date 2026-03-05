@@ -1,15 +1,15 @@
-import dayjs from "dayjs"
-import * as z from "zod"
-import { t } from "i18next"
+import dayjs from 'dayjs'
+import * as z from 'zod'
+import { t } from 'i18next'
 
 // ----------------------------------------------------------------------
 
 interface SchemaUtilsProps {
-  error?: { 
+  error?: {
     required?: string
     invalid?: string
   }
-  isValid?: (val: string) => boolean 
+  isValid?: (val: string) => boolean
 }
 
 export const schemaUtils = {
@@ -20,9 +20,14 @@ export const schemaUtils = {
   phoneNumber: (props?: SchemaUtilsProps) =>
     z
       .string()
-      .min(1, { error: props?.error?.required ?? t("translation:forms.phone_number_required") })
+      .min(1, {
+        error:
+          props?.error?.required ??
+          t('translation:forms.phone_number_required'),
+      })
       .refine((val) => props?.isValid?.(val), {
-        error: props?.error?.invalid ?? t("translation:forms.phone_number_invalid"),
+        error:
+          props?.error?.invalid ?? t('translation:forms.phone_number_invalid'),
       }),
 
   /**
@@ -32,10 +37,9 @@ export const schemaUtils = {
   email: (props?: SchemaUtilsProps) =>
     z.email({
       error: ({ input, code }) =>
-        input && code.startsWith("invalid")
-          ? (props?.error?.invalid ??
-            t("translation:forms.email_invalid"))
-          : (props?.error?.required ?? t("translation:forms.email_required")),
+        input && code.startsWith('invalid')
+          ? (props?.error?.invalid ?? t('translation:forms.email_invalid'))
+          : (props?.error?.required ?? t('translation:forms.email_required')),
     }),
 
   /**
@@ -48,10 +52,11 @@ export const schemaUtils = {
       z.union([z.string(), z.number(), z.date(), z.null()]).check((ctx) => {
         const value = ctx.value
 
-        if (value === null || value === "") {
+        if (value === null || value === '') {
           ctx.issues.push({
-            code: "custom",
-            message: props?.error?.required ?? t("translation:forms.date_required"),
+            code: 'custom',
+            message:
+              props?.error?.required ?? t('translation:forms.date_required'),
             input: value,
           })
           return
@@ -59,8 +64,9 @@ export const schemaUtils = {
 
         if (!dayjs(value).isValid()) {
           ctx.issues.push({
-            code: "custom",
-            message: props?.error?.invalid ?? t("translation:forms.date_invalid"),
+            code: 'custom',
+            message:
+              props?.error?.invalid ?? t('translation:forms.date_invalid'),
             input: value,
           })
         }
@@ -75,9 +81,9 @@ export const schemaUtils = {
     z.string().refine(
       (val) => {
         const cleanedValue = val.trim()
-        return cleanedValue !== "" && cleanedValue !== "<p></p>"
+        return cleanedValue !== '' && cleanedValue !== '<p></p>'
       },
-      { error: props?.error ?? t("translation:forms.content_required") },
+      { error: props?.error ?? t('translation:forms.content_required') },
     ),
 
   /**
@@ -85,9 +91,11 @@ export const schemaUtils = {
    * Apply for input, select... with null value.
    */
   nullableInput: (schema: any, options: { error: any }) =>
-    schema.nullable().refine((val: null | undefined) => val !== null && val !== undefined, {
-      error: options?.error ?? t("translation:forms.required"),
-    }),
+    schema
+      .nullable()
+      .refine((val: null | undefined) => val !== null && val !== undefined, {
+        error: options?.error ?? t('translation:forms.required'),
+      }),
 
   /**
    * Boolean
@@ -95,7 +103,7 @@ export const schemaUtils = {
    */
   boolean: (props: { error: any }) =>
     z.boolean().refine((val) => val === true, {
-      error: props?.error ?? t("translation:forms.required"),
+      error: props?.error ?? t('translation:forms.required'),
     }),
 
   /**
@@ -108,7 +116,8 @@ export const schemaUtils = {
       .array()
       .refine((val) => val[0] >= props.min && val[1] <= props.max, {
         error:
-          props.error ?? t("translation:forms.range", { min: props.min, max: props.max } ),
+          props.error ??
+          t('translation:forms.range', { min: props.min, max: props.max }),
       }),
 
   /**
@@ -122,10 +131,10 @@ export const schemaUtils = {
       .or(z.null())
       .check((ctx) => {
         const value = ctx.value
-        if (!value || (typeof value === "string" && !value.length)) {
+        if (!value || (typeof value === 'string' && !value.length)) {
           ctx.issues.push({
-            code: "custom",
-            message: props?.error ?? t("translation:forms.file_required"),
+            code: 'custom',
+            message: props?.error ?? t('translation:forms.file_required'),
             input: value,
           })
         }
@@ -137,7 +146,7 @@ export const schemaUtils = {
   files: (props: { error: any }) =>
     z
       .array(z.union([z.string(), z.file()]))
-      .min(1, { error: props?.error ?? t("translation:forms.files_required") }),
+      .min(1, { error: props?.error ?? t('translation:forms.files_required') }),
 }
 
 // ----------------------------------------------------------------------

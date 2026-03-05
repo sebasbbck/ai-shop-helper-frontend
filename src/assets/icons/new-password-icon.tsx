@@ -1,10 +1,10 @@
-import { SxProps, Theme } from "@mui/material"
-import SvgIcon from "@mui/material/SvgIcon"
-import { memo } from "react"
+import { SxProps, Theme } from '@mui/material'
+import SvgIcon from '@mui/material/SvgIcon'
+import { memo } from 'react'
 
 // ----------------------------------------------------------------------
 
-function NewPasswordIcon({ sx, ...other }: { sx?: SxProps<Theme>}) {
+function NewPasswordIcon({ sx, ...other }: { sx?: SxProps<Theme> }) {
   return (
     <SvgIcon
       fill="none"
@@ -12,12 +12,12 @@ function NewPasswordIcon({ sx, ...other }: { sx?: SxProps<Theme>}) {
       xmlns="http://www.w3.org/2000/svg"
       sx={[
         (theme) => ({
-          "--primary-main": theme.vars.palette.primary.main,
-          "--warning-light": theme.vars.palette.warning.light,
-          "--warning-dark": theme.vars.palette.warning.dark,
+          '--primary-main': theme.vars.palette.primary.main,
+          '--warning-light': theme.vars.palette.warning.light,
+          '--warning-dark': theme.vars.palette.warning.dark,
           width: 96,
           flexShrink: 0,
-          height: "auto",
+          height: 'auto',
         }),
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
@@ -47,7 +47,7 @@ function NewPasswordIcon({ sx, ...other }: { sx?: SxProps<Theme>}) {
         fill="var(--warning-dark)"
       />
       <g
-        style={{ mixBlendMode: "overlay" }}
+        style={{ mixBlendMode: 'overlay' }}
         filter="url(#filter0_i_3223_38505)"
       >
         <path

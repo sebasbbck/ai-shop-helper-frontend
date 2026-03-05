@@ -1,6 +1,6 @@
-import { radioClasses, RadioProps } from "@mui/material/Radio"
-import { Components, Theme } from "@mui/material/styles"
-import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon"
+import { radioClasses, RadioProps } from '@mui/material/Radio'
+import { Components, Theme } from '@mui/material/styles'
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
 
 // ----------------------------------------------------------------------
 
@@ -30,10 +30,10 @@ const CheckedIcon = (props: SvgIconProps) => (
 /* **********************************************************************
  * 🧩 Components
  * **********************************************************************/
-const MuiRadio: Components<Theme>["MuiRadio"] = {
+const MuiRadio: Components<Theme>['MuiRadio'] = {
   // ▼▼▼▼▼▼▼▼ ⚙️ PROPS ▼▼▼▼▼▼▼▼
   defaultProps: {
-    size: "small",
+    size: 'small',
     icon: <Icon />,
     checkedIcon: <CheckedIcon />,
   },
@@ -43,7 +43,7 @@ const MuiRadio: Components<Theme>["MuiRadio"] = {
       padding: theme.spacing(1),
       variants: [
         {
-          props: (props: RadioProps) => props.color === "default",
+          props: (props: RadioProps) => props.color === 'default',
           style: {
             [`&.${radioClasses.checked}`]: {
               color: theme.vars.palette.text.primary,

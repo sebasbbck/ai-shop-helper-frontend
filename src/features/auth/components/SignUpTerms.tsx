@@ -1,12 +1,12 @@
-import { SxProps, Theme } from "@mui/material"
-import Box from "@mui/material/Box"
-import Link from "@mui/material/Link"
-import NextLink from "next/link"
-import { useTranslation } from "next-i18next"
+import { SxProps, Theme } from '@mui/material'
+import Box from '@mui/material/Box'
+import Link from '@mui/material/Link'
+import NextLink from 'next/link'
+import { useTranslation } from 'next-i18next'
 
 // ----------------------------------------------------------------------
 
-export function SignUpTerms({ sx, ...other }: { sx?: SxProps<Theme>}) {
+export function SignUpTerms({ sx, ...other }: { sx?: SxProps<Theme> }) {
   const { t } = useTranslation()
   return (
     <Box
@@ -14,36 +14,36 @@ export function SignUpTerms({ sx, ...other }: { sx?: SxProps<Theme>}) {
       sx={[
         () => ({
           mt: 3,
-          display: "block",
-          textAlign: "center",
-          typography: "caption",
-          color: "text.secondary",
+          display: 'block',
+          textAlign: 'center',
+          typography: 'caption',
+          color: 'text.secondary',
         }),
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}
     >
-      {t("translation:signup.disclaimer1")}
+      {t('translation:signup.disclaimer1')}
       <Link
         component={NextLink}
         target="_blank"
-        href={t("translation:signup.terms_link")}
+        href={t('translation:signup.terms_link')}
         underline="hover"
         color="primary"
       >
-        {t("translation:signup.terms")}
+        {t('translation:signup.terms')}
       </Link>
-      {t("translation:signup.disclaimer2")}
+      {t('translation:signup.disclaimer2')}
       <Link
         component={NextLink}
         target="_blank"
-        href={t("translation:signup.privacy_policy_link")}
+        href={t('translation:signup.privacy_policy_link')}
         underline="hover"
         color="primary"
       >
-        {t("translation:signup.privacy_policy")}
+        {t('translation:signup.privacy_policy')}
       </Link>
-      {t("translation:signup.disclaimer3")}
+      {t('translation:signup.disclaimer3')}
     </Box>
   )
 }

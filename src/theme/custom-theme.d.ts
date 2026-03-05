@@ -1,14 +1,14 @@
 import '@mui/material/styles'
-import { varAlpha } from "minimal-shared/utils"
-import { bgBlur, bgGradient } from "./background"
-import { borderGradient } from "./border"
+import { varAlpha } from 'minimal-shared/utils'
+import { bgBlur, bgGradient } from './background'
+import { borderGradient } from './border'
 import {
   filledStyles,
   menuItemStyles,
   paperStyles,
   softStyles,
-} from "./global-styles-components"
-import { maxLine, textGradient } from "./text"
+} from './global-styles-components'
+import { maxLine, textGradient } from './text'
 
 declare module '@mui/material/styles' {
   // This adds the .vars property to the theme object
@@ -39,19 +39,19 @@ declare module '@mui/material/styles' {
   }
 
   interface Mixins {
-    paperStyles: (theme: Theme, options?: { dropdown?: boolean }) => any;
-    menuItemStyles: (theme: Theme) => any;
-    hideScrollX: React.CSSProperties;
-    hideScrollY: React.CSSProperties;
-    scrollbarStyles: (theme: Theme) => any;
-    bgBlur,
-    maxLine,
-    bgGradient,
-    softStyles,
-    paperStyles,
-    textGradient,
-    filledStyles,
-    borderGradient,
-    menuItemStyles,
+    paperStyles: (theme: Theme, options?: { dropdown?: boolean }) => any
+    menuItemStyles: (theme: Theme) => any
+    hideScrollX: React.CSSProperties
+    hideScrollY: React.CSSProperties
+    scrollbarStyles: (theme: Theme) => any
+    bgBlur
+    maxLine
+    bgGradient
+    softStyles
+    paperStyles
+    textGradient
+    filledStyles
+    borderGradient
+    menuItemStyles
   }
 }

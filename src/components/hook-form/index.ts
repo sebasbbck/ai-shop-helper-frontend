@@ -1,19 +1,19 @@
-import { SxProps, Theme } from "@mui/material/styles"
+import { SxProps, Theme } from '@mui/material/styles'
 
-export * from "./fields"
-export * from "./form-provider"
-export * from "./rhf-autocomplete"
-export * from "./rhf-checkbox"
-export * from "./rhf-country-select"
-export * from "./rhf-date-picker"
-export * from "./rhf-phone-input"
-export * from "./rhf-radio-group"
-export * from "./rhf-rating"
-export * from "./rhf-select"
-export * from "./rhf-slider"
-export * from "./rhf-switch"
-export * from "./rhf-text-field"
-export * from "./schema-utils"
+export * from './fields'
+export * from './form-provider'
+export * from './rhf-autocomplete'
+export * from './rhf-checkbox'
+export * from './rhf-country-select'
+export * from './rhf-date-picker'
+export * from './rhf-phone-input'
+export * from './rhf-radio-group'
+export * from './rhf-rating'
+export * from './rhf-select'
+export * from './rhf-slider'
+export * from './rhf-switch'
+export * from './rhf-text-field'
+export * from './schema-utils'
 
 export interface RHFProps {
   name: string
@@ -33,12 +33,12 @@ export interface RHFProps {
   }
   helperText?: string
   chip?: {
-    size?: "small" | "medium"
-    variant?: "filled" | "outlined" | "soft" | "solid"
+    size?: 'small' | 'medium'
+    variant?: 'filled' | 'outlined' | 'soft' | 'solid'
     [key: string]: any
   }
   checkbox?: {
-    size?: "small" | "medium"
+    size?: 'small' | 'medium'
     [key: string]: any
   }
   placeholder?: string

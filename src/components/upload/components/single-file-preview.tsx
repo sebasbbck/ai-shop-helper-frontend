@@ -1,22 +1,27 @@
-import { mergeClasses } from 'minimal-shared/utils';
+import { mergeClasses } from 'minimal-shared/utils'
 
-import { styled, SxProps, Theme } from '@mui/material/styles';
+import { styled, SxProps, Theme } from '@mui/material/styles'
 
-import { uploadClasses } from '../classes';
-import { getFileMeta, useFilePreview } from '../../file-thumbnail';
+import { uploadClasses } from '../classes'
+import { getFileMeta, useFilePreview } from '../../file-thumbnail'
 
 // ----------------------------------------------------------------------
 
 interface SingleFilePreviewProps {
-  sx?: SxProps<Theme>;
-  file: File | string;
-  className?: string;
-  [key: string]: any;
+  sx?: SxProps<Theme>
+  file: File | string
+  className?: string
+  [key: string]: any
 }
 
-export function SingleFilePreview({ sx, file, className, ...other }: SingleFilePreviewProps) {
-  const fileMeta = getFileMeta(file);
-  const { previewUrl } = useFilePreview(file);
+export function SingleFilePreview({
+  sx,
+  file,
+  className,
+  ...other
+}: SingleFilePreviewProps) {
+  const fileMeta = getFileMeta(file)
+  const { previewUrl } = useFilePreview(file)
 
   return (
     <PreviewRoot
@@ -26,7 +31,7 @@ export function SingleFilePreview({ sx, file, className, ...other }: SingleFileP
     >
       {previewUrl && <PreviewImage alt={fileMeta.name} src={previewUrl} />}
     </PreviewRoot>
-  );
+  )
 }
 
 // ----------------------------------------------------------------------
@@ -39,11 +44,11 @@ const PreviewRoot = styled('div')(({ theme }) => ({
   position: 'absolute',
   borderRadius: 'inherit',
   padding: theme.spacing(1),
-}));
+}))
 
 const PreviewImage = styled('img')({
   width: '100%',
   height: '100%',
   objectFit: 'cover',
   borderRadius: 'inherit',
-});
+})

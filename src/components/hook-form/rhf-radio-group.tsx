@@ -1,12 +1,12 @@
-import FormControl from "@mui/material/FormControl"
-import FormControlLabel from "@mui/material/FormControlLabel"
-import FormLabel from "@mui/material/FormLabel"
-import Radio from "@mui/material/Radio"
-import RadioGroup from "@mui/material/RadioGroup"
-import { Controller, useFormContext } from "react-hook-form"
+import FormControl from '@mui/material/FormControl'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormLabel from '@mui/material/FormLabel'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
+import { Controller, useFormContext } from 'react-hook-form'
 
-import { HelperText } from "./help-text"
-import { RHFProps } from "."
+import { HelperText } from './help-text'
+import { RHFProps } from '.'
 
 // ----------------------------------------------------------------------
 
@@ -35,7 +35,7 @@ export function RHFRadioGroup({
               component="legend"
               {...slotProps?.formLabel}
               sx={[
-                { mb: 1, typography: "body2" },
+                { mb: 1, typography: 'body2' },
                 ...(Array.isArray(slotProps?.formLabel?.sx)
                   ? slotProps.formLabel.sx
                   : [slotProps?.formLabel?.sx]),
@@ -63,7 +63,7 @@ export function RHFRadioGroup({
                       input: {
                         id: `${option.label}-radio`,
                         ...(!option.label && {
-                          "aria-label": `${option.label} radio`,
+                          'aria-label': `${option.label} radio`,
                         }),
                         ...slotProps?.radio?.slotProps?.input,
                       },

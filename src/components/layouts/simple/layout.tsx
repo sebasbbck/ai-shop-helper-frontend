@@ -1,14 +1,14 @@
-import Alert from "@mui/material/Alert"
+import Alert from '@mui/material/Alert'
 
-import Box from "@mui/material/Box"
-import Link from "@mui/material/Link"
-import { merge } from "es-toolkit"
-import NextLink from "next/link"
-import { HeaderSection, LayoutSection, MainSection } from "../core"
-import { SimpleCompactContent } from "./content"
-import { LanguagePopover } from "../components/language-popover"
-import { Breakpoint, SxProps, Theme } from "@mui/material"
-import { useTranslation } from "next-i18next"
+import Box from '@mui/material/Box'
+import Link from '@mui/material/Link'
+import { merge } from 'es-toolkit'
+import NextLink from 'next/link'
+import { HeaderSection, LayoutSection, MainSection } from '../core'
+import { SimpleCompactContent } from './content'
+import { LanguagePopover } from '../components/language-popover'
+import { Breakpoint, SxProps, Theme } from '@mui/material'
+import { useTranslation } from 'next-i18next'
 
 // ----------------------------------------------------------------------
 
@@ -31,7 +31,7 @@ export function SimpleLayout({
   cssVars,
   children,
   slotProps,
-  layoutQuery = "md",
+  layoutQuery = 'md',
 }: SimpleLayoutProps) {
   const { t } = useTranslation('translation')
 
@@ -40,27 +40,33 @@ export function SimpleLayout({
 
     const headerSlots = {
       topArea: (
-        <Alert severity="info" sx={{ display: "none", borderRadius: 0 }}>
+        <Alert severity="info" sx={{ display: 'none', borderRadius: 0 }}>
           This is an info Alert.
         </Alert>
       ),
-      leftArea: <img src="/assets/images/ai-shop-helper-logo-recortado.png" alt="Logo" style={{ maxWidth: "40px" }} />,
+      leftArea: (
+        <img
+          src="/assets/images/ai-shop-helper-logo-recortado.png"
+          alt="Logo"
+          style={{ maxWidth: '40px' }}
+        />
+      ),
       rightArea: (
         <Box
           sx={{
-            display: "flex",
-            alignItems: "center",
+            display: 'flex',
+            alignItems: 'center',
             gap: { xs: 1, sm: 1.5 },
           }}
         >
           {/** @slot Help link */}
           <Link
-            href={t("translation:layout.faqs_link")}
+            href={t('translation:layout.faqs_link')}
             component={NextLink}
             color="inherit"
-            sx={{ typography: "subtitle2" }}
+            sx={{ typography: 'subtitle2' }}
           >
-            {t("translation:layout.help")}
+            {t('translation:layout.help')}
           </Link>
 
           {/** @slot Language popover */}
@@ -119,7 +125,7 @@ export function SimpleLayout({
       /** **************************************
        * @Styles
        *************************************** */
-      cssVars={{ "--layout-simple-content-compact-width": "448px", ...cssVars }}
+      cssVars={{ '--layout-simple-content-compact-width': '448px', ...cssVars }}
       sx={sx}
     >
       {renderMain()}

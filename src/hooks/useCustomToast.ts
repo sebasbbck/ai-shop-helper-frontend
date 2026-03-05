@@ -1,6 +1,6 @@
-"use client"
+'use client'
 
-import { muiToaster } from "../components/ui/mui-toaster"
+import { muiToaster } from '../components/ui/mui-toaster'
 
 const useCustomToast = () => {
   const showSuccessToast = (description: string) => {

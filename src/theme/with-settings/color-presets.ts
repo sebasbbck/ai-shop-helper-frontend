@@ -1,14 +1,14 @@
-import { primary, secondary } from "../core/palette"
+import { primary, secondary } from '../core/palette'
 
 // ----------------------------------------------------------------------
 
 function getRandomColor() {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
+  const letters = '0123456789ABCDEF'
+  let color = '#'
   for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
+    color += letters[Math.floor(Math.random() * 16)]
   }
-  return color;
+  return color
 }
 
 export const primaryColorPresets = {
@@ -21,44 +21,45 @@ export const primaryColorPresets = {
     contrastText: primary.contrastText,
   },
   preset1: {
-    lighter: "#EBD6FD",
-    light: "#B985F4",
-    main: "#7635dc",
-    dark: "#431A9E",
-    darker: "#200A69",
-    contrastText: "#FFFFFF",
+    lighter: '#EBD6FD',
+    light: '#B985F4',
+    main: '#7635dc',
+    dark: '#431A9E',
+    darker: '#200A69',
+    contrastText: '#FFFFFF',
   },
   preset2: {
-    lighter: "#CDE9FD",
-    light: "#6BB1F8",
-    main: "#0C68E9",
-    dark: "#063BA7",
-    darker: "#021D6F",
-    contrastText: "#FFFFFF",
+    lighter: '#CDE9FD',
+    light: '#6BB1F8',
+    main: '#0C68E9',
+    dark: '#063BA7',
+    darker: '#021D6F',
+    contrastText: '#FFFFFF',
   },
   preset3: {
-    lighter: "#FEF4D4",
-    light: "#FED680",
-    main: "#fda92d",
-    dark: "#B66816",
-    darker: "#793908",
-    contrastText: "#1C252E",
+    lighter: '#FEF4D4',
+    light: '#FED680',
+    main: '#fda92d',
+    dark: '#B66816',
+    darker: '#793908',
+    contrastText: '#1C252E',
   },
   preset4: {
-    lighter: "#FFE3D5",
-    light: "#FFC1AC",
-    main: "#FF3030",
-    dark: "#B71833",
-    darker: "#7A0930",
-    contrastText: "#FFFFFF",
+    lighter: '#FFE3D5',
+    light: '#FFC1AC',
+    main: '#FF3030',
+    dark: '#B71833',
+    darker: '#7A0930',
+    contrastText: '#FFFFFF',
   },
-  preset5: { // why not?
+  preset5: {
+    // why not?
     lighter: getRandomColor(),
     light: getRandomColor(),
     main: getRandomColor(),
     dark: getRandomColor(),
     darker: getRandomColor(),
-    contrastText: "#FFFFFF",
+    contrastText: '#FFFFFF',
   },
 }
 
@@ -72,43 +73,43 @@ export const secondaryColorPresets = {
     contrastText: secondary.contrastText,
   },
   preset1: {
-    lighter: "#CAFDEB",
-    light: "#61F4D9",
-    main: "#00DCDA",
-    dark: "#00849E",
-    darker: "#004569",
-    contrastText: "#FFFFFF",
+    lighter: '#CAFDEB',
+    light: '#61F4D9',
+    main: '#00DCDA',
+    dark: '#00849E',
+    darker: '#004569',
+    contrastText: '#FFFFFF',
   },
   preset2: {
-    lighter: "#D6E5FD",
-    light: "#85A9F3",
-    main: "#3562D7",
-    dark: "#1A369A",
-    darker: "#0A1967",
-    contrastText: "#FFFFFF",
+    lighter: '#D6E5FD',
+    light: '#85A9F3',
+    main: '#3562D7',
+    dark: '#1A369A',
+    darker: '#0A1967',
+    contrastText: '#FFFFFF',
   },
   preset3: {
-    lighter: "#FFF3D8",
-    light: "#FFD18B",
-    main: "#FFA03F",
-    dark: "#B75D1F",
-    darker: "#7A2D0C",
-    contrastText: "#1C252E",
+    lighter: '#FFF3D8',
+    light: '#FFD18B',
+    main: '#FFA03F',
+    dark: '#B75D1F',
+    darker: '#7A2D0C',
+    contrastText: '#1C252E',
   },
   preset4: {
-    lighter: "#FEEFD5",
-    light: "#FBC182",
-    main: "#F37F31",
-    dark: "#AE4318",
-    darker: "#741B09",
-    contrastText: "#FFFFFF",
+    lighter: '#FEEFD5',
+    light: '#FBC182',
+    main: '#F37F31',
+    dark: '#AE4318',
+    darker: '#741B09',
+    contrastText: '#FFFFFF',
   },
   preset5: {
-    lighter: "#FCF0DA",
-    light: "#EEC18D",
-    main: "#C87941",
-    dark: "#904220",
-    darker: "#601B0C",
-    contrastText: "#FFFFFF",
+    lighter: '#FCF0DA',
+    light: '#EEC18D',
+    main: '#C87941',
+    dark: '#904220',
+    darker: '#601B0C',
+    contrastText: '#FFFFFF',
   },
 }

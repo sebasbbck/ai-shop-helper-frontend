@@ -215,7 +215,7 @@
             "save": "Save changes",
             "update_success": "Password updated successfully"
         },
-        
+
         "profile": "Profile Settings",
         "security": "Security Settings",
         "billing": {
@@ -400,7 +400,7 @@
         "chip": "AMBASSADOR PROGRAMME",
         "card_title": "Earn credits by inviting other businesses",
         "description": "Share your link and get an extra pack of credits for each friend who automates their shop.",
-        
+
         "your_code": "Your link",
         "copy": "Copy",
         "share_directly": "Share directly",
@@ -414,7 +414,7 @@
         "monthly_limit": "Monthly limit",
         "referrals_this_month": "Referred this month",
         "limit_reset": "The limit resets on the first day of every month. Only successful referrals count towards the limit.",
-        
+
         "how_does_it_work": "How does it work?",
         "step_1": "Share your link",
         "step_1_description": "Send it to eCommerce owners or agencies that might be interested in AI Shop Helper.",
@@ -423,7 +423,7 @@
         "step_3": "First real action",
         "step_3_description": "The credit is released when they run their first workflow.",
         "required": "REQUIRED",
-        
+
         "copy_success_toast": "Referral link copied to the clipboard",
         "share_message": "I'm saving a ton of hours every week with {{appName}}. Join here 👉 https://app.aishophelper.com/signup?ref={{code}} and we'll both get {{credits}} free credits!",
         "share_on_twitter": "Share on X/Twitter",

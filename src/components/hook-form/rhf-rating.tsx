@@ -1,9 +1,9 @@
-import Box from "@mui/material/Box"
-import Rating from "@mui/material/Rating"
-import { Controller, useFormContext } from "react-hook-form"
+import Box from '@mui/material/Box'
+import Rating from '@mui/material/Rating'
+import { Controller, useFormContext } from 'react-hook-form'
 
-import { HelperText } from "./help-text"
-import { RHFProps } from "."
+import { HelperText } from './help-text'
+import { RHFProps } from '.'
 
 // ----------------------------------------------------------------------
 
@@ -18,7 +18,7 @@ export function RHFRating({ name, helperText, slotProps, ...other }: RHFProps) {
         <Box
           {...slotProps?.wrapper}
           sx={[
-            { display: "flex", flexDirection: "column" },
+            { display: 'flex', flexDirection: 'column' },
             ...(Array.isArray(slotProps?.wrapper?.sx)
               ? slotProps.wrapper.sx
               : [slotProps?.wrapper?.sx]),

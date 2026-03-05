@@ -1,14 +1,14 @@
-import { buttonClasses } from "@mui/material/Button"
-import { inputLabelClasses } from "@mui/material/InputLabel"
-import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon"
-import { pickersSectionListClasses } from "@mui/x-date-pickers/PickersSectionList"
+import { buttonClasses } from '@mui/material/Button'
+import { inputLabelClasses } from '@mui/material/InputLabel'
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
+import { pickersSectionListClasses } from '@mui/x-date-pickers/PickersSectionList'
 import {
   pickersFilledInputClasses,
   pickersInputBaseClasses,
   pickersOutlinedInputClasses,
-} from "@mui/x-date-pickers/PickersTextField"
-import { Theme } from "@mui/material/styles"
-import { CSSObject } from "@mui/material/styles"
+} from '@mui/x-date-pickers/PickersTextField'
+import { Theme } from '@mui/material/styles'
+import { CSSObject } from '@mui/material/styles'
 
 import {
   filledInputStyles,
@@ -18,8 +18,8 @@ import {
   inputStyles,
   outlinedInputStyles,
   outlinedInputVariants,
-} from "./text-field"
-import { JSX } from "react"
+} from './text-field'
+import { JSX } from 'react'
 
 // ----------------------------------------------------------------------
 
@@ -114,12 +114,12 @@ const MuiPickersLayout = {
   styleOverrides: {
     actionBar: ({ theme }: { theme: Theme }): CSSObject => ({
       padding: theme.spacing(2),
-      "& > :not(:first-of-type)": {
+      '& > :not(:first-of-type)': {
         marginLeft: theme.spacing(1),
       },
       [`& .${buttonClasses.root}`]: {
-        "&:last-of-type": {
-          ...theme.mixins.filledStyles(theme, "inherit", {
+        '&:last-of-type': {
+          ...theme.mixins.filledStyles(theme, 'inherit', {
             hover: {
               boxShadow: theme.vars.customShadows.z8,
             },
@@ -157,15 +157,15 @@ const MuiClock = {
 const inputComponents = {
   MuiPickersTextField: {
     defaultProps: {
-      variant: "outlined",
+      variant: 'outlined',
     },
     styleOverrides: {
       root: (): CSSObject => ({
         // We use class selectors here to handle the specific logic previously in variants
         [`& .${inputLabelClasses.root}[data-shrink="false"] + .${pickersInputBaseClasses.root} > .${pickersSectionListClasses.root}`]:
           {
-             // This applies logic when NOT focused and EMPTY based on the data attributes MUI provides
-             opacity: 0,
+            // This applies logic when NOT focused and EMPTY based on the data attributes MUI provides
+            opacity: 0,
           },
       }),
     },
@@ -173,13 +173,13 @@ const inputComponents = {
   MuiPickersInputBase: {
     styleOverrides: {
       root: ({ theme }: { theme: Theme }): CSSObject => ({
-        ...inputBaseStyles.root("picker", theme, {
+        ...inputBaseStyles.root('picker', theme, {
           input: pickersSectionListClasses.root,
           disabled: pickersInputBaseClasses.disabled,
         }),
       }),
       sectionsContainer: ({ theme }: { theme: Theme }): CSSObject => ({
-        ...inputBaseStyles.input("picker", theme),
+        ...inputBaseStyles.input('picker', theme),
       }),
     },
     variants: [
@@ -190,7 +190,8 @@ const inputComponents = {
         },
       })),
       {
-        props: (props: any): boolean => !props.isFieldFocused && !!props.isFieldValueEmpty,
+        props: (props: any): boolean =>
+          !props.isFieldFocused && !!props.isFieldValueEmpty,
         style: ({ theme }: { theme: Theme }): CSSObject => ({
           [`& .${pickersInputBaseClasses.sectionsContainer}`]: {
             opacity: 1,
@@ -216,7 +217,8 @@ const inputComponents = {
       ...(outlinedInputVariants.input ?? []).map((variant) => ({
         ...variant,
         style: {
-          [`& .${pickersOutlinedInputClasses.sectionsContainer}`]: variant.style,
+          [`& .${pickersOutlinedInputClasses.sectionsContainer}`]:
+            variant.style,
         },
       })),
     ],
@@ -253,17 +255,27 @@ const toolbarComponents = {
   },
   MuiTimePickerToolbar: {
     styleOverrides: {
-    separator: (): CSSObject => ({ marginLeft: 2, marginRight: 2 }),
-    ampmLandscape: (): CSSObject => ({ gap: 16, justifyContent: "flex-start" }),
-    ampmLabel: ({ theme }: { theme: Theme }): CSSObject => ({ ...theme.typography.subtitle1 }),
+      separator: (): CSSObject => ({ marginLeft: 2, marginRight: 2 }),
+      ampmLandscape: (): CSSObject => ({
+        gap: 16,
+        justifyContent: 'flex-start',
+      }),
+      ampmLabel: ({ theme }: { theme: Theme }): CSSObject => ({
+        ...theme.typography.subtitle1,
+      }),
     },
   },
   MuiDateTimePickerToolbar: {
     styleOverrides: {
-    separator: (): CSSObject => ({ marginLeft: 2, marginRight: 2 }),
-    ampmLandscape: (): CSSObject => ({ gap: 16, justifyContent: "flex-start" }),
-    ampmLabel: ({ theme }: { theme: Theme }): CSSObject => ({ ...theme.typography.subtitle1 }),
-    timeDigitsContainer: (): CSSObject => ({ alignItems: "center" }),
+      separator: (): CSSObject => ({ marginLeft: 2, marginRight: 2 }),
+      ampmLandscape: (): CSSObject => ({
+        gap: 16,
+        justifyContent: 'flex-start',
+      }),
+      ampmLabel: ({ theme }: { theme: Theme }): CSSObject => ({
+        ...theme.typography.subtitle1,
+      }),
+      timeDigitsContainer: (): CSSObject => ({ alignItems: 'center' }),
     },
   },
 }

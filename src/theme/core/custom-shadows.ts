@@ -1,4 +1,4 @@
-import { varAlpha } from "minimal-shared/utils"
+import { varAlpha } from 'minimal-shared/utils'
 
 import {
   common,
@@ -9,7 +9,7 @@ import {
   secondary,
   success,
   warning,
-} from "./palette"
+} from './palette'
 
 // ----------------------------------------------------------------------
 
@@ -44,6 +44,6 @@ function createCustomShadows(colorChannel: string) {
  * 📦 Final
  * **********************************************************************/
 export const customShadows = {
-  light: createCustomShadows(grey["500Channel"]),
+  light: createCustomShadows(grey['500Channel']),
   dark: createCustomShadows(common.blackChannel),
 }

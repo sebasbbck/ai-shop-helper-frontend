@@ -399,7 +399,7 @@
         "chip": "BOTSCHAFTER-PROGRAMM",
         "card_title": "Verdienen Sie Credits, indem Sie andere Unternehmen einladen",
         "description": "Teilen Sie Ihren Link und erhalten Sie ein Extra-Paket an Credits für jeden Freund, der seinen Shop automatisiert.",
-        
+
         "your_code": "Ihr Link",
         "copy": "Kopieren",
         "share_directly": "Direkt teilen",
@@ -413,7 +413,7 @@
         "monthly_limit": "Monatliches Limit",
         "referrals_this_month": "Diesen Monat empfohlen",
         "limit_reset": "Das Limit wird am ersten Tag jedes Monats zurückgesetzt. Nur erfolgreiche Empfehlungen zählen für das Limit.",
-        
+
         "how_does_it_work": "Wie funktioniert es?",
         "step_1": "Link teilen",
         "step_1_description": "Senden Sie ihn an E-Commerce-Inhaber oder Agenturen, die an AI Shop Helper interessiert sein könnten.",
@@ -422,7 +422,7 @@
         "step_3": "Erste echte Aktion",
         "step_3_description": "Das Guthaben wird freigeschaltet, sobald der erste Workflow ausgeführt wird.",
         "required": "ERFORDERLICH",
-        
+
         "copy_success_toast": "Empfehlungslink in die Zwischenablage kopiert",
         "share_message": "Ich spare jede Woche jede Menge Zeit mit {{appName}}. Melde dich hier an 👉 https://app.aishophelper.com/signup?ref={{code}} und wir bekommen beide {{credits}} Gratis-Credits!",
         "share_on_twitter": "Auf X/Twitter teilen",

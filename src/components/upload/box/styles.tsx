@@ -1,8 +1,8 @@
-import { varAlpha } from 'minimal-shared/utils';
+import { varAlpha } from 'minimal-shared/utils'
 
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles'
 
-import { uploadClasses } from '../classes';
+import { uploadClasses } from '../classes'
 
 // ----------------------------------------------------------------------
 
@@ -33,4 +33,4 @@ export const UploadArea = styled('div')(({ theme }) => ({
     borderColor: theme.vars.palette.error.main,
     backgroundColor: varAlpha(theme.vars.palette.error.mainChannel, 0.08),
   },
-}));
+}))

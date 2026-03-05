@@ -1,10 +1,10 @@
-import GlobalStyles from "@mui/material/GlobalStyles"
+import GlobalStyles from '@mui/material/GlobalStyles'
 
-import { styled, SxProps, Theme } from "@mui/material/styles"
-import { mergeClasses } from "minimal-shared/utils"
+import { styled, SxProps, Theme } from '@mui/material/styles'
+import { mergeClasses } from 'minimal-shared/utils'
 
-import { layoutClasses } from "./classes"
-import { layoutSectionVars } from "./css-vars"
+import { layoutClasses } from './classes'
+import { layoutSectionVars } from './css-vars'
 
 // ----------------------------------------------------------------------
 
@@ -70,10 +70,10 @@ export function LayoutSection({
 
 // ----------------------------------------------------------------------
 
-const LayoutRoot = styled("div")``
+const LayoutRoot = styled('div')``
 
-const LayoutSidebarContainer = styled("div")(() => ({
-  display: "flex",
-  flex: "1 1 auto",
-  flexDirection: "column",
+const LayoutSidebarContainer = styled('div')(() => ({
+  display: 'flex',
+  flex: '1 1 auto',
+  flexDirection: 'column',
 }))

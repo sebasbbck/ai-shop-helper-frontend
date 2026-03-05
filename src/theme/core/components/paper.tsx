@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------
 
-import { PaperProps, Theme } from "@mui/material"
+import { PaperProps, Theme } from '@mui/material'
 
 const MuiPaper = {
   // ▼▼▼▼▼▼▼▼ ⚙️ PROPS ▼▼▼▼▼▼▼▼
@@ -10,10 +10,10 @@ const MuiPaper = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     root: {
-      backgroundImage: "none",
+      backgroundImage: 'none',
       variants: [
         {
-          props: (props: PaperProps) => props.variant === "outlined",
+          props: (props: PaperProps) => props.variant === 'outlined',
           style: ({ theme }: { theme: Theme }) => ({
             borderColor: theme.vars.palette.shared.paperOutlined,
           }),

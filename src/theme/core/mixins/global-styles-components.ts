@@ -1,9 +1,9 @@
-import { Theme } from "@mui/material"
-import { autocompleteClasses } from "@mui/material/Autocomplete"
-import { checkboxClasses } from "@mui/material/Checkbox"
-import { dividerClasses } from "@mui/material/Divider"
-import { menuItemClasses } from "@mui/material/MenuItem"
-import { noRtlFlip, varAlpha } from "minimal-shared/utils"
+import { Theme } from '@mui/material'
+import { autocompleteClasses } from '@mui/material/Autocomplete'
+import { checkboxClasses } from '@mui/material/Checkbox'
+import { dividerClasses } from '@mui/material/Divider'
+import { menuItemClasses } from '@mui/material/MenuItem'
+import { noRtlFlip, varAlpha } from 'minimal-shared/utils'
 
 // ----------------------------------------------------------------------
 
@@ -22,13 +22,13 @@ export function menuItemStyles(theme: Theme) {
     ...theme.typography.body2,
     padding: theme.spacing(0.75, 1),
     borderRadius: Number(theme.shape.borderRadius) * 0.75,
-    "&:not(:last-of-type)": {
+    '&:not(:last-of-type)': {
       marginBottom: 4,
     },
     [`&.${menuItemClasses.selected}`]: {
       fontWeight: theme.typography.fontWeightBold,
       backgroundColor: theme.vars.palette.action.selected,
-      "&:hover": { backgroundColor: theme.vars.palette.action.hover },
+      '&:hover': { backgroundColor: theme.vars.palette.action.hover },
     },
     [`& .${checkboxClasses.root}`]: {
       padding: theme.spacing(0.5),
@@ -37,7 +37,7 @@ export function menuItemStyles(theme: Theme) {
     },
     [`&.${autocompleteClasses.option}[aria-selected="true"]`]: {
       backgroundColor: theme.vars.palette.action.selected,
-      "&:hover": { backgroundColor: theme.vars.palette.action.hover },
+      '&:hover': { backgroundColor: theme.vars.palette.action.hover },
     },
     [`&+.${dividerClasses.root}`]: {
       margin: theme.spacing(0.5, 0),
@@ -74,19 +74,22 @@ export function menuItemStyles(theme: Theme) {
  * https://www.fffuel.co/eeencode/
  */
 const cyanShape =
-  "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSJ1cmwoI3BhaW50MF9yYWRpYWxfNDQ2NF81NTMzOCkiIGZpbGwtb3BhY2l0eT0iMC4xIi8+CjxkZWZzPgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50MF9yYWRpYWxfNDQ2NF81NTMzOCIgY3g9IjAiIGN5PSIwIiByPSIxIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSgxMjAgMS44MTgxMmUtMDUpIHJvdGF0ZSgtNDUpIHNjYWxlKDEyMy4yNSkiPgo8c3RvcCBzdG9wLWNvbG9yPSIjMDBCOEQ5Ii8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzAwQjhEOSIgc3RvcC1vcGFjaXR5PSIwIi8+CjwvcmFkaWFsR3JhZGllbnQ+CjwvZGVmcz4KPC9zdmc+Cg=="
+  'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSJ1cmwoI3BhaW50MF9yYWRpYWxfNDQ2NF81NTMzOCkiIGZpbGwtb3BhY2l0eT0iMC4xIi8+CjxkZWZzPgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50MF9yYWRpYWxfNDQ2NF81NTMzOCIgY3g9IjAiIGN5PSIwIiByPSIxIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSgxMjAgMS44MTgxMmUtMDUpIHJvdGF0ZSgtNDUpIHNjYWxlKDEyMy4yNSkiPgo8c3RvcCBzdG9wLWNvbG9yPSIjMDBCOEQ5Ii8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzAwQjhEOSIgc3RvcC1vcGFjaXR5PSIwIi8+CjwvcmFkaWFsR3JhZGllbnQ+CjwvZGVmcz4KPC9zdmc+Cg=='
 
 const redShape =
-  "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSJ1cmwoI3BhaW50MF9yYWRpYWxfNDQ2NF81NTMzNykiIGZpbGwtb3BhY2l0eT0iMC4xIi8+CjxkZWZzPgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50MF9yYWRpYWxfNDQ2NF81NTMzNyIgY3g9IjAiIGN5PSIwIiByPSIxIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSgwIDEyMCkgcm90YXRlKDEzNSkgc2NhbGUoMTIzLjI1KSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRjU2MzAiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkY1NjMwIiBzdG9wLW9wYWNpdHk9IjAiLz4KPC9yYWRpYWxHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K"
+  'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSJ1cmwoI3BhaW50MF9yYWRpYWxfNDQ2NF81NTMzNykiIGZpbGwtb3BhY2l0eT0iMC4xIi8+CjxkZWZzPgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50MF9yYWRpYWxfNDQ2NF81NTMzNyIgY3g9IjAiIGN5PSIwIiByPSIxIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSgwIDEyMCkgcm90YXRlKDEzNSkgc2NhbGUoMTIzLjI1KSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRjU2MzAiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkY1NjMwIiBzdG9wLW9wYWNpdHk9IjAiLz4KPC9yYWRpYWxHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K'
 
-export function paperStyles(theme: Theme, options: { blur?: number; color?: string; dropdown?: boolean } ) {
+export function paperStyles(
+  theme: Theme,
+  options: { blur?: number; color?: string; dropdown?: boolean },
+) {
   const { blur = 20, color, dropdown } = options ?? {}
 
   return {
     ...theme.mixins.bgGradient({
       images: [`url(${cyanShape})`, `url(${redShape})`],
-      sizes: ["50%", "50%"],
-      positions: [noRtlFlip("top right"), noRtlFlip("left bottom")],
+      sizes: ['50%', '50%'],
+      positions: [noRtlFlip('top right'), noRtlFlip('left bottom')],
     }),
     backdropFilter: `blur(${blur}px)`,
     WebkitBackdropFilter: `blur(${blur}px)`,
@@ -124,14 +127,18 @@ function getHoverStyles(hoverOption?: boolean | object, hoverBase?: any) {
   if (!hoverOption) return {}
 
   return {
-    "&:hover": {
+    '&:hover': {
       ...hoverBase,
-      ...(typeof hoverOption === "object" ? hoverOption : {}),
+      ...(typeof hoverOption === 'object' ? hoverOption : {}),
     },
   }
 }
 
-export function filledStyles(theme: Theme, colorKey: string, options?: { hover?: boolean | object }) {
+export function filledStyles(
+  theme: Theme,
+  colorKey: string,
+  options?: { hover?: boolean | object },
+) {
   if (!colorKey) {
     console.warn(
       '[filledStyles] Missing colorKey. Please provide a valid color such as "primary", "black", or "default".',
@@ -139,7 +146,7 @@ export function filledStyles(theme: Theme, colorKey: string, options?: { hover?:
     return {}
   }
 
-  if (colorKey === "default") {
+  if (colorKey === 'default') {
     const base = {
       color: theme.vars.palette.grey[800],
       backgroundColor: theme.vars.palette.grey[300],
@@ -152,11 +159,11 @@ export function filledStyles(theme: Theme, colorKey: string, options?: { hover?:
     return { ...base, ...hover }
   }
 
-  if (colorKey === "inherit") {
+  if (colorKey === 'inherit') {
     const base = {
       color: theme.vars.palette.common.white,
       backgroundColor: theme.vars.palette.grey[800],
-      ...theme.applyStyles("dark", {
+      ...theme.applyStyles('dark', {
         color: theme.vars.palette.grey[800],
         backgroundColor: theme.vars.palette.common.white,
       }),
@@ -164,7 +171,7 @@ export function filledStyles(theme: Theme, colorKey: string, options?: { hover?:
 
     const hover = getHoverStyles(options?.hover, {
       backgroundColor: theme.vars.palette.grey[700],
-      ...theme.applyStyles("dark", {
+      ...theme.applyStyles('dark', {
         backgroundColor: theme.vars.palette.grey[400],
       }),
     })
@@ -172,9 +179,9 @@ export function filledStyles(theme: Theme, colorKey: string, options?: { hover?:
     return { ...base, ...hover }
   }
 
-  if (colorKey === "white" || colorKey === "black") {
+  if (colorKey === 'white' || colorKey === 'black') {
     const base = {
-      color: `${theme.vars.palette.common[colorKey === "white" ? "black" : "white"]}`,
+      color: `${theme.vars.palette.common[colorKey === 'white' ? 'black' : 'white']}`,
       backgroundColor: theme.vars.palette.common[colorKey],
     }
 
@@ -201,7 +208,11 @@ export function filledStyles(theme: Theme, colorKey: string, options?: { hover?:
   return { ...colorPalette.base, ...colorPalette.hover }
 }
 
-export function softStyles(theme: Theme, colorKey?: string, options?: { hover?: boolean | object }) {
+export function softStyles(
+  theme: Theme,
+  colorKey?: string,
+  options?: { hover?: boolean | object },
+) {
   if (!colorKey) {
     console.warn(
       '[softStyles] Missing colorKey. Please provide a valid color such as "primary", "black", or "default".',
@@ -209,25 +220,25 @@ export function softStyles(theme: Theme, colorKey?: string, options?: { hover?: 
     return {}
   }
 
-  if (colorKey === "default") {
+  if (colorKey === 'default') {
     return {
-      ...filledStyles(theme, "default", options),
-      boxShadow: "none",
+      ...filledStyles(theme, 'default', options),
+      boxShadow: 'none',
     }
   }
 
-  if (colorKey === "inherit") {
+  if (colorKey === 'inherit') {
     const base = {
-      boxShadow: "none",
+      boxShadow: 'none',
       backgroundColor: varAlpha(
-        theme.vars.palette.grey["500Channel"],
+        theme.vars.palette.grey['500Channel'],
         theme.vars.opacity.soft.bg,
       ),
     }
 
     const hover = getHoverStyles(options?.hover, {
       backgroundColor: varAlpha(
-        theme.vars.palette.grey["500Channel"],
+        theme.vars.palette.grey['500Channel'],
         theme.vars.opacity.soft.hoverBg,
       ),
     })
@@ -235,19 +246,19 @@ export function softStyles(theme: Theme, colorKey?: string, options?: { hover?: 
     return { ...base, ...hover }
   }
 
-  if (colorKey === "white" || colorKey === "black") {
+  if (colorKey === 'white' || colorKey === 'black') {
     const base = {
-      boxShadow: "none",
+      boxShadow: 'none',
       color: theme.vars.palette.common[colorKey],
       backgroundColor: varAlpha(
-        "currentColor",
+        'currentColor',
         theme.vars.opacity.soft.commonBg,
       ),
     }
 
     const hover = getHoverStyles(options?.hover, {
       backgroundColor: varAlpha(
-        "currentColor",
+        'currentColor',
         theme.vars.opacity.soft.commonHoverBg,
       ),
     })
@@ -257,13 +268,13 @@ export function softStyles(theme: Theme, colorKey?: string, options?: { hover?: 
 
   const colorPalette = {
     base: {
-      boxShadow: "none",
+      boxShadow: 'none',
       color: theme.vars.palette[colorKey].dark,
       backgroundColor: varAlpha(
         theme.vars.palette[colorKey].mainChannel,
         theme.vars.opacity.soft.bg,
       ),
-      ...theme.applyStyles("dark", {
+      ...theme.applyStyles('dark', {
         color: theme.vars.palette[colorKey].light,
       }),
     },

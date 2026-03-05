@@ -1,8 +1,8 @@
 // ----------------------------------------------------------------------
 
-import { Components, Theme } from "@mui/material/styles"
+import { Components, Theme } from '@mui/material/styles'
 
-const MuiMenuItem: Components<Theme>["MuiMenu"] = {
+const MuiMenuItem: Components<Theme>['MuiMenu'] = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     root: ({ theme }) => ({

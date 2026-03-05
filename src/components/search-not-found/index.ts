@@ -1,1 +1,1 @@
-export * from "./search-not-found"
+export * from './search-not-found'

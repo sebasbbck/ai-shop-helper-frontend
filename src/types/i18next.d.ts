@@ -1,11 +1,11 @@
-import 'i18next';
-import translation from '../../public/locales/en/translation.json';
+import 'i18next'
+import translation from '../../public/locales/en/translation.json'
 
 declare module 'i18next' {
   interface CustomTypeOptions {
-    defaultNS: 'translation';
+    defaultNS: 'translation'
     resources: {
-      translation: typeof translation;
-    };
+      translation: typeof translation
+    }
   }
 }

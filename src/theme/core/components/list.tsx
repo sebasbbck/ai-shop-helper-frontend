@@ -1,34 +1,34 @@
 // ----------------------------------------------------------------------
 
-import { Components, Theme } from "@mui/material/styles"
+import { Components, Theme } from '@mui/material/styles'
 
-const MuiListItemIcon: Components<Theme>["MuiListItemIcon"] = {
+const MuiListItemIcon: Components<Theme>['MuiListItemIcon'] = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     root: ({ theme }) => ({
-      color: "inherit",
-      minWidth: "auto",
+      color: 'inherit',
+      minWidth: 'auto',
       marginRight: theme.spacing(2),
     }),
   },
 }
 
-const MuiListItemAvatar: Components<Theme>["MuiListItemAvatar"] = {
+const MuiListItemAvatar: Components<Theme>['MuiListItemAvatar'] = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     root: ({ theme }) => ({
-      minWidth: "auto",
+      minWidth: 'auto',
       marginRight: theme.spacing(2),
     }),
   },
 }
 
-const MuiListItemText: Components<Theme>["MuiListItemText"] = {
+const MuiListItemText: Components<Theme>['MuiListItemText'] = {
   // ▼▼▼▼▼▼▼▼ ⚙️ PROPS ▼▼▼▼▼▼▼▼
   defaultProps: {
     slotProps: {
-      primary: { typography: "subtitle2" },
-      secondary: { component: "span" },
+      primary: { typography: 'subtitle2' },
+      secondary: { component: 'span' },
     },
   },
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼

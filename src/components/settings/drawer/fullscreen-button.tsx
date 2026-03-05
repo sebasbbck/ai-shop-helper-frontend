@@ -1,9 +1,9 @@
-import IconButton from "@mui/material/IconButton"
+import IconButton from '@mui/material/IconButton'
 
-import Tooltip from "@mui/material/Tooltip"
-import { useCallback, useState } from "react"
+import Tooltip from '@mui/material/Tooltip'
+import { useCallback, useState } from 'react'
 
-import { Iconify } from "../../iconify"
+import { Iconify } from '../../iconify'
 
 // ----------------------------------------------------------------------
 
@@ -21,15 +21,17 @@ export function FullScreenButton() {
   }, [])
 
   return (
-    <Tooltip title={fullscreen ? "Exit" : "Fullscreen"}>
+    <Tooltip title={fullscreen ? 'Exit' : 'Fullscreen'}>
       <IconButton
         onClick={handleToggleFullscreen}
-        color={fullscreen ? "primary" : "default"}
+        color={fullscreen ? 'primary' : 'default'}
       >
         <Iconify
-          icon={fullscreen
-            ? "solar:quit-full-screen-square-outline"
-            : "solar:full-screen-square-outline"}
+          icon={
+            fullscreen
+              ? 'solar:quit-full-screen-square-outline'
+              : 'solar:full-screen-square-outline'
+          }
           className={undefined}
           height={undefined}
           sx={undefined}

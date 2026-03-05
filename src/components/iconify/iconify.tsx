@@ -1,10 +1,10 @@
-import { Icon } from "@iconify/react"
-import { styled, SxProps, Theme } from "@mui/material/styles"
-import { mergeClasses } from "minimal-shared/utils"
-import { useId } from "react"
+import { Icon } from '@iconify/react'
+import { styled, SxProps, Theme } from '@mui/material/styles'
+import { mergeClasses } from 'minimal-shared/utils'
+import { useId } from 'react'
 
-import { iconifyClasses } from "./classes"
-import { allIconNames, registerIcons } from "./register-icons"
+import { iconifyClasses } from './classes'
+import { allIconNames, registerIcons } from './register-icons'
 
 // ----------------------------------------------------------------------
 
@@ -17,7 +17,14 @@ interface IconifyProps {
   [key: string]: any
 }
 
-export function Iconify({ className, icon, width = 20, height, sx, ...other }: IconifyProps) {
+export function Iconify({
+  className,
+  icon,
+  width = 20,
+  height,
+  sx,
+  ...other
+}: IconifyProps) {
   const uniqueId = useId()
 
   if (!allIconNames.includes(icon)) {
@@ -26,7 +33,7 @@ export function Iconify({ className, icon, width = 20, height, sx, ...other }: I
         `Icon "${icon}" is currently loaded online, which may cause flickering effects.`,
         `To ensure a smoother experience, please register your icon collection for offline use.`,
         `More information is available at: https://docs.minimals.cc/icons/`,
-      ].join("\n"),
+      ].join('\n'),
     )
   }
 
@@ -43,7 +50,7 @@ export function Iconify({ className, icon, width = 20, height, sx, ...other }: I
           width,
           flexShrink: 0,
           height: height ?? width,
-          display: "inline-flex",
+          display: 'inline-flex',
         },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}

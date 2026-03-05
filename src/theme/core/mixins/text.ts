@@ -1,5 +1,5 @@
-import { createTheme as getTheme } from "@mui/material/styles"
-import { remToPx } from "minimal-shared/utils"
+import { createTheme as getTheme } from '@mui/material/styles'
+import { remToPx } from 'minimal-shared/utils'
 
 // ----------------------------------------------------------------------
 
@@ -16,11 +16,11 @@ import { remToPx } from "minimal-shared/utils"
 export function textGradient(color: string) {
   return {
     background: `linear-gradient(${color})`,
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    backgroundClip: "text",
-    textFillColor: "transparent",
-    color: "transparent",
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+    textFillColor: 'transparent',
+    color: 'transparent',
   }
 }
 
@@ -46,11 +46,11 @@ export function textGradient(color: string) {
  */
 
 function getFontSize(fontSize: string | number) {
-  return typeof fontSize === "string" ? remToPx(fontSize) : fontSize
+  return typeof fontSize === 'string' ? remToPx(fontSize) : fontSize
 }
 
 function getLineHeight(lineHeight: string | number, fontSize: number) {
-  if (typeof lineHeight === "string") {
+  if (typeof lineHeight === 'string') {
     return fontSize ? remToPx(lineHeight) / fontSize : 1
   }
 
@@ -61,17 +61,23 @@ function calculateHeight(fontSize: number, lineHeight: number, line: number) {
   return fontSize * lineHeight * line
 }
 
-export function maxLine({ line, persistent }: { line: number; persistent?: any }) {
+export function maxLine({
+  line,
+  persistent,
+}: {
+  line: number
+  persistent?: any
+}) {
   const {
     breakpoints: { keys, up },
   } = getTheme()
 
   const baseStyles = {
-    overflow: "hidden",
-    display: "-webkit-box",
-    textOverflow: "ellipsis",
+    overflow: 'hidden',
+    display: '-webkit-box',
+    textOverflow: 'ellipsis',
     WebkitLineClamp: line,
-    WebkitBoxOrient: "vertical",
+    WebkitBoxOrient: 'vertical',
   }
 
   if (!persistent) {
@@ -85,17 +91,20 @@ export function maxLine({ line, persistent }: { line: number; persistent?: any }
     return baseStyles
   }
 
-  const responsiveStyles = keys.reduce<Record<string, any>>((acc, breakpoint) => {
-    const fontSize = getFontSize(persistent[up(breakpoint)]?.fontSize)
+  const responsiveStyles = keys.reduce<Record<string, any>>(
+    (acc, breakpoint) => {
+      const fontSize = getFontSize(persistent[up(breakpoint)]?.fontSize)
 
-    if (fontSize) {
-      acc[up(breakpoint)] = {
-        height: calculateHeight(fontSize, lineHeight, line),
+      if (fontSize) {
+        acc[up(breakpoint)] = {
+          height: calculateHeight(fontSize, lineHeight, line),
+        }
       }
-    }
 
-    return acc
-  }, {})
+      return acc
+    },
+    {},
+  )
 
   return {
     ...baseStyles,

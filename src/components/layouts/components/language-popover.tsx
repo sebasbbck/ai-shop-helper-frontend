@@ -1,16 +1,16 @@
-import { useNavigate, useParams } from "@tanstack/react-router"
-import IconButton from "@mui/material/IconButton"
-import MenuItem from "@mui/material/MenuItem"
-import MenuList from "@mui/material/MenuList"
+import { useNavigate, useParams } from '@tanstack/react-router'
+import IconButton from '@mui/material/IconButton'
+import MenuItem from '@mui/material/MenuItem'
+import MenuList from '@mui/material/MenuList'
 // import { m } from "framer-motion"
-import { usePopover } from "minimal-shared/hooks"
-import { useCallback } from "react"
+import { usePopover } from 'minimal-shared/hooks'
+import { useCallback } from 'react'
 // TODO: READD ANIMATIONS
 // import { transitionTap, varHover, varTap } from "@/components/animate"
-import { CustomPopover } from "../../../components/custom-popover"
-import { FlagIcon } from "../../../components/flag-icon"
-import { SxProps, Theme } from "@mui/material"
-import { useRouter } from "next/router"
+import { CustomPopover } from '../../../components/custom-popover'
+import { FlagIcon } from '../../../components/flag-icon'
+import { SxProps, Theme } from '@mui/material'
+import { useRouter } from 'next/router'
 
 interface LanguagePopoverProps {
   data: {
@@ -22,9 +22,13 @@ interface LanguagePopoverProps {
   [key: string]: any
 }
 
-export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProps) {
+export function LanguagePopover({
+  data = [],
+  sx,
+  ...other
+}: LanguagePopoverProps) {
   const { open, anchorEl, onClose, onOpen } = usePopover()
-  
+
   // 1. Get the current lang from the URL
   const router = useRouter()
   const lang = router.locale
@@ -38,15 +42,20 @@ export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProp
       router.push(
         { pathname: router.pathname, query: router.query },
         { pathname: router.pathname, query: router.query },
-        { locale: newLang }
+        { locale: newLang },
       )
       onClose()
     },
-    [router, onClose]
+    [router, onClose],
   )
 
   const renderMenuList = () => (
-    <CustomPopover open={open} anchorEl={anchorEl} onClose={onClose} slotProps={undefined}>
+    <CustomPopover
+      open={open}
+      anchorEl={anchorEl}
+      onClose={onClose}
+      slotProps={undefined}
+    >
       <MenuList sx={{ width: 160, minHeight: 72 }}>
         {data?.map((option) => (
           <MenuItem

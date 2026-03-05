@@ -1,13 +1,13 @@
-import Box from "@mui/material/Box"
-import Checkbox from "@mui/material/Checkbox"
-import FormControl from "@mui/material/FormControl"
-import FormControlLabel from "@mui/material/FormControlLabel"
-import FormGroup from "@mui/material/FormGroup"
-import FormLabel from "@mui/material/FormLabel"
-import { Controller, useFormContext } from "react-hook-form"
+import Box from '@mui/material/Box'
+import Checkbox from '@mui/material/Checkbox'
+import FormControl from '@mui/material/FormControl'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormGroup from '@mui/material/FormGroup'
+import FormLabel from '@mui/material/FormLabel'
+import { Controller, useFormContext } from 'react-hook-form'
 
-import { HelperText } from "./help-text"
-import { RHFProps } from "."
+import { HelperText } from './help-text'
+import { RHFProps } from '.'
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ export function RHFCheckbox({
                   ...slotProps?.checkbox?.slotProps,
                   input: {
                     id: `${name}-checkbox`,
-                    ...(!label && { "aria-label": `${name} checkbox` }),
+                    ...(!label && { 'aria-label': `${name} checkbox` }),
                     ...slotProps?.checkbox?.slotProps?.input,
                   },
                 }}
@@ -87,7 +87,7 @@ export function RHFMultiCheckbox({
               component="legend"
               {...slotProps?.formLabel}
               sx={[
-                { mb: 1, typography: "body2" },
+                { mb: 1, typography: 'body2' },
                 ...(Array.isArray(slotProps?.formLabel?.sx)
                   ? slotProps.formLabel.sx
                   : [slotProps?.formLabel?.sx]),
@@ -113,7 +113,7 @@ export function RHFMultiCheckbox({
                       input: {
                         id: `${option.label}-checkbox`,
                         ...(!option.label && {
-                          "aria-label": `${option.label} checkbox`,
+                          'aria-label': `${option.label} checkbox`,
                         }),
                         ...slotProps?.checkbox?.slotProps?.input,
                       },

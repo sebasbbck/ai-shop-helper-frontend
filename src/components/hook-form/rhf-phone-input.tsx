@@ -1,6 +1,6 @@
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form'
 
-import { PhoneInput } from '../phone-input';
+import { PhoneInput } from '../phone-input'
 
 // ----------------------------------------------------------------------
 
@@ -10,8 +10,12 @@ interface RHFPhoneInputProps {
   [key: string]: any
 }
 
-export function RHFPhoneInput({ name, helperText, ...other }: RHFPhoneInputProps) {
-  const { control } = useFormContext();
+export function RHFPhoneInput({
+  name,
+  helperText,
+  ...other
+}: RHFPhoneInputProps) {
+  const { control } = useFormContext()
 
   return (
     <Controller
@@ -27,5 +31,5 @@ export function RHFPhoneInput({ name, helperText, ...other }: RHFPhoneInputProps
         />
       )}
     />
-  );
+  )
 }

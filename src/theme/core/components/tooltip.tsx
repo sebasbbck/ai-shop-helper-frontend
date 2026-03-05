@@ -1,5 +1,5 @@
-import { Theme } from "@mui/material/styles"
-import { parseCssVar } from "minimal-shared/utils"
+import { Theme } from '@mui/material/styles'
+import { parseCssVar } from 'minimal-shared/utils'
 
 // ----------------------------------------------------------------------
 
@@ -10,7 +10,7 @@ const MuiTooltip = {
       popper: {
         modifiers: [
           {
-            name: "offset",
+            name: 'offset',
             options: {
               offset: [0, -4],
             },
@@ -25,7 +25,7 @@ const MuiTooltip = {
       borderRadius: Number(theme.shape.borderRadius) * 0.75,
       [parseCssVar(theme.vars.palette.Tooltip.bg)]:
         theme.vars.palette.grey[800],
-      ...theme.applyStyles("dark", {
+      ...theme.applyStyles('dark', {
         [parseCssVar(theme.vars.palette.Tooltip.bg)]:
           theme.vars.palette.grey[700],
       }),

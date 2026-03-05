@@ -1,5 +1,5 @@
-export * from "./settings-context"
+export * from './settings-context'
 
-export * from "./settings-provider"
+export * from './settings-provider'
 
-export * from "./use-settings-context"
+export * from './use-settings-context'

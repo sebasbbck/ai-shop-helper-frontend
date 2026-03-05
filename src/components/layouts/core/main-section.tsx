@@ -1,7 +1,7 @@
-import { styled, SxProps, Theme } from "@mui/material/styles"
-import { mergeClasses } from "minimal-shared/utils"
+import { styled, SxProps, Theme } from '@mui/material/styles'
+import { mergeClasses } from 'minimal-shared/utils'
 
-import { layoutClasses } from "./classes"
+import { layoutClasses } from './classes'
 
 // ----------------------------------------------------------------------
 
@@ -12,7 +12,12 @@ interface MainSectionProps {
   [key: string]: any
 }
 
-export function MainSection({ children, className, sx, ...other }: MainSectionProps) {
+export function MainSection({
+  children,
+  className,
+  sx,
+  ...other
+}: MainSectionProps) {
   return (
     <MainRoot
       className={mergeClasses([layoutClasses.main, className])}
@@ -26,8 +31,8 @@ export function MainSection({ children, className, sx, ...other }: MainSectionPr
 
 // ----------------------------------------------------------------------
 
-const MainRoot = styled("main")({
-  display: "flex",
-  flex: "1 1 auto",
-  flexDirection: "column",
+const MainRoot = styled('main')({
+  display: 'flex',
+  flex: '1 1 auto',
+  flexDirection: 'column',
 })

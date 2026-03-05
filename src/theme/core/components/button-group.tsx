@@ -1,9 +1,9 @@
-import { buttonGroupClasses } from "@mui/material/ButtonGroup"
-import { varAlpha } from "minimal-shared/utils"
+import { buttonGroupClasses } from '@mui/material/ButtonGroup'
+import { varAlpha } from 'minimal-shared/utils'
 
-import { colorKeys } from "../palette"
-import { Components, ComponentsVariants, Theme } from "@mui/material/styles"
-import { CSSObject } from "@mui/material/styles"
+import { colorKeys } from '../palette'
+import { Components, ComponentsVariants, Theme } from '@mui/material/styles'
+import { CSSObject } from '@mui/material/styles'
 
 // ----------------------------------------------------------------------
 
@@ -13,7 +13,7 @@ import { CSSObject } from "@mui/material/styles"
 
 const groupedVariants: ComponentsVariants<Theme>['MuiButtonGroup'] = [
   {
-    props: (props: any) => props.variant === "contained",
+    props: (props: any) => props.variant === 'contained',
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       [`& .${buttonGroupClasses.grouped}`]: {
         borderColor: theme.vars.palette.shared.buttonOutlined,
@@ -21,26 +21,32 @@ const groupedVariants: ComponentsVariants<Theme>['MuiButtonGroup'] = [
     }),
   },
   ...(colorKeys?.palette || []).map((colorKey: string) => ({
-    props: (props: any) => props.variant === "contained" && props.color === colorKey,
+    props: (props: any) =>
+      props.variant === 'contained' && props.color === colorKey,
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       [`& .${buttonGroupClasses.grouped}`]: {
         borderColor: varAlpha(
-          theme.vars.palette[colorKey as keyof typeof theme.vars.palette].darkChannel,
+          theme.vars.palette[colorKey as keyof typeof theme.vars.palette]
+            .darkChannel,
           theme.vars.opacity.outlined.border,
         ),
       },
     }),
   })),
   {
-    props: (props: any) => props.variant === "text",
+    props: (props: any) => props.variant === 'text',
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       [`& .${buttonGroupClasses.grouped}`]: {
-        borderColor: varAlpha("currentColor", theme.vars.opacity.outlined.border),
+        borderColor: varAlpha(
+          'currentColor',
+          theme.vars.opacity.outlined.border,
+        ),
       },
     }),
   },
   {
-    props: (props: any) => props.variant === "text" && props.color === "inherit",
+    props: (props: any) =>
+      props.variant === 'text' && props.color === 'inherit',
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       [`& .${buttonGroupClasses.grouped}`]: {
         borderColor: theme.vars.palette.shared.buttonOutlined,
@@ -48,16 +54,17 @@ const groupedVariants: ComponentsVariants<Theme>['MuiButtonGroup'] = [
     }),
   },
   {
-    props: (props: any) => props.variant === "soft",
+    props: (props: any) => props.variant === 'soft',
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       [`& .${buttonGroupClasses.grouped}`]: {
-        borderStyle: "solid",
-        borderColor: varAlpha("currentColor", theme.vars.opacity.soft.border),
+        borderStyle: 'solid',
+        borderColor: varAlpha('currentColor', theme.vars.opacity.soft.border),
       },
     }),
   },
   {
-    props: (props: any) => props.variant === "soft" && props.color === "inherit",
+    props: (props: any) =>
+      props.variant === 'soft' && props.color === 'inherit',
     style: ({ theme }: { theme: Theme }): CSSObject => ({
       [`& .${buttonGroupClasses.grouped}`]: {
         borderColor: theme.vars.palette.shared.buttonOutlined,
@@ -68,19 +75,23 @@ const groupedVariants: ComponentsVariants<Theme>['MuiButtonGroup'] = [
 
 const positionVariants: ComponentsVariants<Theme>['MuiButtonGroup'] = [
   {
-    props: (props: any) => props.variant === "soft" && props.orientation === "horizontal",
+    props: (props: any) =>
+      props.variant === 'soft' && props.orientation === 'horizontal',
     style: {
-      [`& .${buttonGroupClasses.firstButton}, & .${buttonGroupClasses.middleButton}`]: {
-        borderRightWidth: 1,
-      },
+      [`& .${buttonGroupClasses.firstButton}, & .${buttonGroupClasses.middleButton}`]:
+        {
+          borderRightWidth: 1,
+        },
     },
   },
   {
-    props: (props: any) => props.variant === "soft" && props.orientation === "vertical",
+    props: (props: any) =>
+      props.variant === 'soft' && props.orientation === 'vertical',
     style: {
-      [`& .${buttonGroupClasses.firstButton}, & .${buttonGroupClasses.middleButton}`]: {
-        borderBottomWidth: 1,
-      },
+      [`& .${buttonGroupClasses.firstButton}, & .${buttonGroupClasses.middleButton}`]:
+        {
+          borderBottomWidth: 1,
+        },
     },
   },
 ]
@@ -101,7 +112,7 @@ const disabledVariants: ComponentsVariants<Theme>['MuiButtonGroup'] = [
  * **********************************************************************/
 const MuiButtonGroup: Components<Theme>['MuiButtonGroup'] = {
   defaultProps: {
-    color: "inherit",
+    color: 'inherit',
     disableElevation: true,
   },
   styleOverrides: {

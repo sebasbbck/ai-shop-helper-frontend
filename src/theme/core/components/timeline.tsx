@@ -1,12 +1,12 @@
 // ----------------------------------------------------------------------
 
-import { Theme } from "@mui/material/styles"
+import { Theme } from '@mui/material/styles'
 
 const MuiTimelineDot = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     root: {
-      boxShadow: "none",
+      boxShadow: 'none',
     },
   },
 }

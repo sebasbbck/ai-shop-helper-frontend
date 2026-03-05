@@ -1,18 +1,18 @@
-import Box from "@mui/material/Box"
-import Slider, { sliderClasses } from "@mui/material/Slider"
-import { setFont } from "minimal-shared/utils"
+import Box from '@mui/material/Box'
+import Slider, { sliderClasses } from '@mui/material/Slider'
+import { setFont } from 'minimal-shared/utils'
 
-import { OptionButton } from "./styles"
-import { ReactNode } from "react"
-import { SxProps, Theme } from "@mui/material"
+import { OptionButton } from './styles'
+import { ReactNode } from 'react'
+import { SxProps, Theme } from '@mui/material'
 
 // ----------------------------------------------------------------------
 
 interface FontFamilyOptionsProps {
-  sx?: SxProps<Theme>,
-  icon: ReactNode,
-  value: string,
-  options: string[],
+  sx?: SxProps<Theme>
+  icon: ReactNode
+  value: string
+  options: string[]
   onChangeOption: (o: string) => any
 }
 
@@ -29,8 +29,8 @@ export function FontFamilyOptions({
       sx={[
         {
           gap: 1.5,
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, 1fr)',
         },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
@@ -44,17 +44,18 @@ export function FontFamilyOptions({
             key={option}
             selected={selected}
             onClick={() => onChangeOption(option)}
-            sx={(theme: any) => ({ // TODO: replace any with the actual type?
+            sx={(theme: any) => ({
+              // TODO: replace any with the actual type?
               py: 2,
               gap: 0.75,
-              flexDirection: "column",
+              flexDirection: 'column',
               fontFamily: setFont(option),
               fontSize: theme.typography.pxToRem(12),
             })}
           >
             {icon}
-            {option.endsWith("Variable")
-              ? option.replace(" Variable", "")
+            {option.endsWith('Variable')
+              ? option.replace(' Variable', '')
               : option}
           </OptionButton>
         )
@@ -66,9 +67,9 @@ export function FontFamilyOptions({
 // ----------------------------------------------------------------------
 
 interface FontSizeOptionsProps {
-  sx?: SxProps<Theme>,
-  value: number,
-  options: number[],
+  sx?: SxProps<Theme>
+  value: number
+  options: number[]
   onChangeOption: (o: number) => any
 }
 

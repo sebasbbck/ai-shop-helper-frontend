@@ -1,13 +1,13 @@
-import Box from "@mui/material/Box"
-import FormControl from "@mui/material/FormControl"
-import FormControlLabel from "@mui/material/FormControlLabel"
-import FormGroup from "@mui/material/FormGroup"
-import FormLabel from "@mui/material/FormLabel"
-import Switch from "@mui/material/Switch"
-import { Controller, useFormContext } from "react-hook-form"
+import Box from '@mui/material/Box'
+import FormControl from '@mui/material/FormControl'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormGroup from '@mui/material/FormGroup'
+import FormLabel from '@mui/material/FormLabel'
+import Switch from '@mui/material/Switch'
+import { Controller, useFormContext } from 'react-hook-form'
 
-import { HelperText } from "./help-text"
-import { RHFProps } from "."
+import { HelperText } from './help-text'
+import { RHFProps } from '.'
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ export function RHFSwitch({
                   ...slotProps?.switch?.slotProps,
                   input: {
                     id: `${name}-switch`,
-                    ...(!label && { "aria-label": `${name} switch` }),
+                    ...(!label && { 'aria-label': `${name} switch` }),
                     ...slotProps?.switch?.slotProps?.input,
                   },
                 }}
@@ -87,7 +87,7 @@ export function RHFMultiSwitch({
               component="legend"
               {...slotProps?.formLabel}
               sx={[
-                { mb: 1, typography: "body2" },
+                { mb: 1, typography: 'body2' },
                 ...(Array.isArray(slotProps?.formLabel?.sx)
                   ? slotProps.formLabel.sx
                   : [slotProps?.formLabel?.sx]),
@@ -113,7 +113,7 @@ export function RHFMultiSwitch({
                       input: {
                         id: `${option.label}-switch`,
                         ...(!option.label && {
-                          "aria-label": `${option.label} switch`,
+                          'aria-label': `${option.label} switch`,
                         }),
                         ...slotProps?.switch?.slotProps?.input,
                       },

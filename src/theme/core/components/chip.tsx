@@ -1,17 +1,17 @@
-import { chipClasses, ChipProps } from "@mui/material/Chip"
-import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon"
+import { chipClasses, ChipProps } from '@mui/material/Chip'
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
 
-import { colorKeys } from "../palette"
-import { ComponentsVariants, Theme } from "@mui/material/styles"
+import { colorKeys } from '../palette'
+import { ComponentsVariants, Theme } from '@mui/material/styles'
 
 // ----------------------------------------------------------------------
 
-const baseColors = ["default"]
+const baseColors = ['default']
 const allColors = [...baseColors, ...colorKeys.palette, ...colorKeys.common]
 
 const DIMENSIONS = {
-  small: { borderRadius: "8px" },
-  medium: { borderRadius: "10px" },
+  small: { borderRadius: '8px' },
+  medium: { borderRadius: '10px' },
 }
 
 /* **********************************************************************
@@ -34,16 +34,17 @@ const DeleteIcon = (props: SvgIconProps) => (
  * **********************************************************************/
 const filledVariants: ComponentsVariants<Theme>['MuiChip'] = [
   {
-    props: (props) => props.variant === "filled" && props.color === "default",
+    props: (props) => props.variant === 'filled' && props.color === 'default',
     style: ({ theme }) => ({
-      ...theme.mixins.filledStyles(theme, "inherit"),
+      ...theme.mixins.filledStyles(theme, 'inherit'),
       [`&.${chipClasses.clickable}`]: {
-        ...theme.mixins.filledStyles(theme, "inherit", { hover: true }),
+        ...theme.mixins.filledStyles(theme, 'inherit', { hover: true }),
       },
     }),
   },
   ...colorKeys.common.map((colorKey) => ({
-    props: (props: ChipProps) => props.variant === "filled" && props.color === colorKey,
+    props: (props: ChipProps) =>
+      props.variant === 'filled' && props.color === colorKey,
     style: ({ theme }: { theme: Theme }) => ({
       ...theme.mixins.filledStyles(theme, colorKey),
       [`&.${chipClasses.clickable}`]: {
@@ -55,19 +56,20 @@ const filledVariants: ComponentsVariants<Theme>['MuiChip'] = [
 
 const outlinedVariants: ComponentsVariants<Theme>['MuiChip'] = [
   {
-    props: (props) => props.variant === "outlined",
+    props: (props) => props.variant === 'outlined',
     style: {
-      borderColor: "currentColor",
+      borderColor: 'currentColor',
     },
   },
   {
-    props: (props) => props.variant === "outlined" && props.color === "default",
+    props: (props) => props.variant === 'outlined' && props.color === 'default',
     style: ({ theme }) => ({
       borderColor: theme.vars.palette.shared.buttonOutlined,
     }),
   },
   ...colorKeys.common.map((colorKey) => ({
-    props: (props: ChipProps) => props.variant === "outlined" && props.color === colorKey,
+    props: (props: ChipProps) =>
+      props.variant === 'outlined' && props.color === colorKey,
     style: ({ theme }: { theme: Theme }) => ({
       color: theme.vars.palette.common[colorKey],
     }),
@@ -76,9 +78,10 @@ const outlinedVariants: ComponentsVariants<Theme>['MuiChip'] = [
 
 const softVariants = [
   ...allColors.map((colorKey) => ({
-    props: (props: ChipProps) => props.variant === "soft" as any && props.color === colorKey,
+    props: (props: ChipProps) =>
+      props.variant === ('soft' as any) && props.color === colorKey,
     style: ({ theme }: { theme: Theme }) => {
-      const currentColor = colorKey === "default" ? "inherit" : colorKey
+      const currentColor = colorKey === 'default' ? 'inherit' : colorKey
 
       return {
         ...theme.mixins.softStyles(theme, currentColor),
@@ -90,12 +93,12 @@ const softVariants = [
   })),
 ]
 
-const avatarVariants: ComponentsVariants<Theme>['MuiChip'] =[
+const avatarVariants: ComponentsVariants<Theme>['MuiChip'] = [
   ...colorKeys.common.map((colorKey) => ({
     props: (props: ChipProps) => props.color === colorKey,
     style: {
-      color: "inherit",
-      backgroundColor: "color-mix(in srgb, currentColor 24%, transparent)",
+      color: 'inherit',
+      backgroundColor: 'color-mix(in srgb, currentColor 24%, transparent)',
     },
   })),
   ...colorKeys.palette.map((colorKey) => ({
@@ -109,11 +112,11 @@ const avatarVariants: ComponentsVariants<Theme>['MuiChip'] =[
 
 const sizeVariants = [
   {
-    props: (props: ChipProps) => props.size === "small",
+    props: (props: ChipProps) => props.size === 'small',
     style: { ...DIMENSIONS.small },
   },
   {
-    props: (props: ChipProps) => props.size === "medium",
+    props: (props: ChipProps) => props.size === 'medium',
     style: { ...DIMENSIONS.medium },
   },
 ]
@@ -134,7 +137,7 @@ const disabledVariants = [
         [`& .${chipClasses.avatar}`]: {
           color: theme.vars.palette.action.disabled,
           backgroundColor: theme.vars.palette.action.disabledBackground,
-          "& img": { opacity: theme.vars.palette.action.disabledOpacity },
+          '& img': { opacity: theme.vars.palette.action.disabledOpacity },
         },
       },
     }),
@@ -148,7 +151,7 @@ const MuiChip = {
   // ▼▼▼▼▼▼▼▼ ⚙️ PROPS ▼▼▼▼▼▼▼▼
   defaultProps: {
     deleteIcon: <DeleteIcon />,
-    variant: "soft",
+    variant: 'soft',
   },
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
@@ -168,14 +171,14 @@ const MuiChip = {
       variants: [...avatarVariants],
     },
     icon: {
-      color: "currentColor",
+      color: 'currentColor',
     },
     deleteIcon: {
       opacity: 0.48,
-      color: "currentColor",
-      "&:hover": {
+      color: 'currentColor',
+      '&:hover': {
         opacity: 0.8,
-        color: "currentColor",
+        color: 'currentColor',
       },
     },
   },
