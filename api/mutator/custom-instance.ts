@@ -3,6 +3,7 @@ import Axios, {
   AxiosError,
   InternalAxiosRequestConfig,
 } from 'axios'
+import { getToken } from '../../src/utils/token'
 
 export const AXIOS_INSTANCE = Axios.create({
   baseURL:
@@ -15,7 +16,7 @@ export const AXIOS_INSTANCE = Axios.create({
 AXIOS_INSTANCE.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token =
-      typeof window !== 'undefined' ? localStorage.getItem('token') : null
+      typeof window !== 'undefined' ? getToken() : null
 
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`
