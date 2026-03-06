@@ -2,10 +2,11 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function proxy(request: NextRequest) {
-  const token = request.cookies.get('token')?.value
+  const refreshToken = request.cookies.get('refresh_token')?.value
+  console.log('refresh_token found: ' + refreshToken)
   const loginUrl = new URL('/login', request.url)
 
-  if (!token) {
+  if (!refreshToken) {
     return NextResponse.redirect(loginUrl)
   }
 

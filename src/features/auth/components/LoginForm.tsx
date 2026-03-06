@@ -33,7 +33,6 @@ import NextLink from 'next/link'
 import { login } from '../../../../api/auth/auth'
 import { getMe } from '../../../../api/users/users'
 import { getErrorMessage } from '../../../hooks/useHandleError'
-import { setToken } from '../../../utils/token'
 
 // SignInSchema moved into the field-level validation via schemaUtils where needed
 
@@ -64,7 +63,6 @@ export default function LoginForm() {
   })
 
   const onSubmit = async (data: any) => {
-    console.log('Login submitted: ', data)
     try {
       setIsSubmitting(true)
 
@@ -72,7 +70,7 @@ export default function LoginForm() {
         username: data.username,
         password: data.password,
         grant_type: 'password',
-      }).then((data) => setToken(data.access_token))
+      }).then((data) => localStorage.setItem('token', data.access_token))
 
       // optionally refresh user
       try {

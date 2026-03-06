@@ -4,6 +4,7 @@ import { health } from '../api/default/default'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import { getMe } from '../api/users/users'
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
@@ -18,8 +19,8 @@ export default function Home() {
 
   async function getHealth() {
     try {
-      const response = await health()
-      console.log(response.data)
+      const response = await getMe()
+      console.log(response.name)
     } catch (error) {
       console.error(error)
     }

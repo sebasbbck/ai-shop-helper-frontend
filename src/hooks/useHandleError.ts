@@ -21,9 +21,9 @@ export function getErrorMessage(err: any) {
       errorMessage = errDetail.detail
     }
 
-    if (errDetail.code) {
-      if (i18n.exists(`translation:errors.${errDetail.code}`)) {
-        errorMessage = t(`translation:errors.${errDetail.code}` as any)
+    if (err.status) {
+      if (i18n.exists(`translation:errors.${err.status}`)) {
+        errorMessage = t(`translation:errors.${err.status}` as any)
       } else if (i18n.exists(`translation:errors.fallbacks.${err.status}`)) {
         errorMessage = t(`translation:errors.fallbacks.${err.status}` as any)
       } else {

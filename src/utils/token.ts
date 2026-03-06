@@ -1,11 +1,10 @@
 import Cookies from 'js-cookie'
 
-const TOKEN_COOKIE_NAME = 'token'
+const TOKEN_COOKIE_NAME = 'refresh_token'
 
 export const setToken = (token: string) => {
   Cookies.set(TOKEN_COOKIE_NAME, token, {
-    // expires in 24 hours
-    expires: 1,
+    expires: 30,
     // secure flag - only send over HTTPS in production
     secure: process.env.NODE_ENV === 'production',
     // httpOnly would be ideal but not available in browser

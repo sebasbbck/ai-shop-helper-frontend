@@ -43,10 +43,16 @@ export default async function handler(
         // Forward the content-type so the backend knows how to parse the buffer
         'Content-Type': req.headers['content-type'] || 'application/json',
         Authorization: req.headers['authorization'] || '',
+        Cookie: req.headers.cookie || '',
       },
       // Send the actual buffer
       body: requestBody as BodyInit | undefined,
     })
+
+    const cookies = response.headers
+      .getSetCookie()
+      .map((cookie) => cookie.replace(/Path=[^;]+/, 'Path=/'))
+    res.setHeader('Set-Cookie', cookies)
 
     const contentType = response.headers.get('content-type')
     res.status(response.status)
