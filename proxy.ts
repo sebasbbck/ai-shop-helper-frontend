@@ -2,18 +2,39 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl
   const refreshToken = request.cookies.get('refresh_token')?.value
-  console.log('refresh_token found: ' + refreshToken)
-  const loginUrl = new URL('/login', request.url)
 
-  if (!refreshToken) {
-    return NextResponse.redirect(loginUrl)
+  const authRoutes = [
+    '/login',
+    '/signup',
+    '/recover-password',
+    '/reset-password',
+  ]
+  const protectedRoutes = ['/', '/dashboard']
+
+  if (refreshToken && authRoutes.some((route) => pathname.startsWith(route))) {
+    return NextResponse.redirect(new URL('/', request.url))
+  }
+
+  const isProtectedRoute = protectedRoutes.some(
+    (route) => pathname === route || pathname.startsWith('/dashboard/'),
+  )
+
+  if (!refreshToken && isProtectedRoute) {
+    return NextResponse.redirect(new URL('/login', request.url))
   }
 
   return NextResponse.next()
 }
 
-// Specifies which routes this middleware should run on
 export const config = {
-  matcher: ['/', '/dashboard/:path*'],
+  matcher: [
+    '/',
+    '/dashboard/:path*',
+    '/login',
+    '/signup',
+    '/recover-password',
+    '/reset-password',
+  ],
 }
