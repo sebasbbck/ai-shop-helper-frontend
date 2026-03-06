@@ -1,0 +1,14 @@
+services:
+  frontend:
+    build:
+      context: .
+      target: deps # Stop at the 'deps' stage to keep the image light
+    command: bun dev
+    volumes:
+      - .:/app          # Mount the whole project for HMR (Hot Module Replacement)
+      - /app/.next  
+      - /app/node_modules # Anonymous volume to prevent local modules from overwriting container modules
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development

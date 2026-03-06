@@ -1,10 +1,10 @@
-import { defineConfig } from 'orval';
+import { defineConfig } from 'orval'
 
-const toCamelCase = (str: string) => 
-  str.toLowerCase().replace(/[-_ ](\w)/g, (_, c) => c.toUpperCase());
+const toCamelCase = (str: string) =>
+  str.toLowerCase().replace(/[-_ ](\w)/g, (_, c) => c.toUpperCase())
 
 export default defineConfig({
-  petstore: {
+  ai_shop_helper: {
     output: {
       httpClient: 'axios',
       mode: 'tags-split',
@@ -20,8 +20,9 @@ export default defineConfig({
         operationName: (operation, _route, _verb) => {
           // Use the summary if it exists (e.g., "Read Item" -> "readItem")
           // Otherwise, grab the first part of the operationId before the underscores
-          const name = operation.summary || operation.operationId?.split('__')[0] || 'api';
-          return toCamelCase(name);
+          const name =
+            operation.summary || operation.operationId?.split('__')[0] || 'api'
+          return toCamelCase(name)
         },
         transformer: (input) => {
           if (input.pathRoute) {
@@ -29,17 +30,19 @@ export default defineConfig({
               Object.values(path).forEach((operation: any) => {
                 if (operation.responses) {
                   Object.values(operation.responses).forEach((res: any) => {
-                    const schema = res.content?.['application/json']?.schema;
+                    const schema = res.content?.['application/json']?.schema
                     // FastAPI puts "Response Read Item..." in the title. Let's simplify.
                     if (schema && schema.title) {
-                      schema.title = schema.title.replace(/Response /g, '').replace(/Get|Post|Put|Delete/g, '');
+                      schema.title = schema.title
+                        .replace(/Response /g, '')
+                        .replace(/Get|Post|Put|Delete/g, '')
                     }
-                  });
+                  })
                 }
-              });
-            });
+              })
+            })
           }
-          return input;
+          return input
         },
       },
     },
@@ -47,4 +50,15 @@ export default defineConfig({
       target: './openapi.json',
     },
   },
-});
+  ai_shop_helper_zod: {
+    input: {
+      target: './openapi.json',
+    },
+    output: {
+      mode: 'tags-split',
+      client: 'zod',
+      target: 'api/',
+      fileExtension: '.zod.ts',
+    },
+  },
+})

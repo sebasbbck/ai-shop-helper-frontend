@@ -1,4 +1,3 @@
-
 FROM oven/bun:1 AS base
 
 WORKDIR /app
@@ -16,6 +15,7 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
+RUN bun run generate-client
 RUN bun run build
 
 FROM base AS runner

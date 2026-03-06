@@ -17,7 +17,7 @@ curl -fsSL https://bun.sh/install | bash
     ```bash
     # For npm, pnpm or yarn
     docker build -t nextjs-docker .
-    
+
     # For bun
     docker build -f Dockerfile.bun -t nextjs-docker .
     ```

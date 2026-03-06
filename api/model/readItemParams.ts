@@ -6,5 +6,5 @@
  */
 
 export type ReadItemParams = {
-q?: string | null;
-};
+  q?: string | null
+}

@@ -1,0 +1,497 @@
+{
+    "titles": {
+        "home": "Accueil | {{appName}}",
+        "team": "Mon équipe | {{appName}}",
+        "inbox": "Boîte de réception | {{appName}}",
+        "projects": "Projets | {{appName}}",
+        "calendar": "Calendrier | {{appName}}",
+        "integrations": "Intégrations | {{appName}}",
+        "appearance": "Apparence | {{appName}}",
+        "security": "Sécurité | {{appName}}",
+        "billing": "Facturation | {{appName}}",
+        "subscription_and_billing": "Abonnement et facturation | {{appName}}",
+        "subscription": "Abonnement | {{appName}}",
+        "admin": "Admin | {{appName}}",
+        "referrals": "Parrainage | {{appName}}",
+        "notifications": "Notifications | {{appName}}",
+        "change_password": "Changer le mot de passe | {{appName}}",
+        "settings": "Paramètres | {{appName}}",
+        "profile": "Profil | {{appName}}",
+        "blog_writer": "Rédacteur Blog | {{appName}}",
+        "activate_user": "Activer l'utilisateur | {{appName}}",
+        "login": "Connexion | {{appName}}",
+        "signup": "Inscription | {{appName}}",
+        "recover_password": "Récupérer le mot de passe | {{appName}}",
+        "reset_password": "Réinitialiser le mot de passe | {{appName}}",
+        "connection_success": "Connexion réussie | {{appName}}",
+        "connection_failure": "Échec de la connexion | {{appName}}",
+        "404": "Page non trouvée | {{appName}}"
+    },
+    "admin": {
+        "projects": {
+            "title": "Projets",
+            "add_new": "Ajouter un nouveau projet",
+            "table": {
+                "name": "Nom du projet",
+                "status": "Statut"
+            }
+        }
+    },
+    "onboarding": {
+        "continue": "Continuer",
+        "start": "Commençons à former votre équipe",
+        "subtitle1": "Nous devons connaître davantage votre entreprise pour donner du contexte à votre équipe.",
+        "subtitle1_continue": "Nous avons besoin de plus d'informations pour continuer. Reprenons là où nous nous étions arrêtés.",
+        "subtitle2": "Vous pouvez modifier vos réponses depuis le menu Paramètres.",
+        "unexpected_response": "Réponse inattendue :",
+        "connection_error": "Erreur lors du démarrage de la connexion :",
+        "download_plugin": "Télécharger le plugin",
+        "connect_wordpress": "Connecter WordPress",
+        "make_changes": "Modifier",
+        "validating": "Validation de l'URL...",
+        "processing": "Traitement en cours...",
+        "not_empty": "La réponse ne peut pas être vide"
+    },
+    "team": {
+        "hello_user": "Bonjour, {{name}} 👋",
+        "hello_admin": "Bonjour, admin 🧑‍💻",
+        "agents": {
+            "blog": {
+                "title": "Rédacteur blog",
+                "description": "Publiez automatiquement des articles sur votre blog"
+            },
+            "social_media": {
+                "title": "Gestionnaire réseaux sociaux",
+                "description": "Planifiez, créez et publiez des posts sur vos réseaux sociaux"
+            },
+            "product_optimiser": {
+                "title": "Optimiseur de produits",
+                "description": "Analysez votre catalogue et améliorez vos fiches produits"
+            },
+            "graphic_designer": {
+                "title": "Graphiste",
+                "description": "Créez et intégrez vos images"
+            },
+            "catalogue_organiser": {
+                "title": "Organisateur de catalogue",
+                "description": "Téléchargez vos fichiers PDF, CSV ou Excel et nous les ajouterons à votre boutique"
+            },
+            "a/b_testing_expert": {
+                "title": "Expert en tests A/B",
+                "description": "Améliorez la conversion avec des tests A/B"
+            },
+            "coming_soon": {
+                "title": "Bientôt disponible",
+                "description": "Nous travaillons encore sur cet agent"
+            }
+        }
+    },
+    "layout": {
+        "general": "Général",
+        "logout": "Déconnexion",
+        "settings": "Paramètres",
+        "profile": "Profil",
+        "dashboard": "Tableau de bord",
+        "team": "Mon équipe",
+        "inbox": "Boîte de réception",
+        "projects": "Projets",
+        "calendar": "Calendrier",
+        "integrations": "Intégrations",
+        "appearance": "Apparence",
+        "security": "Sécurité",
+        "billing": "Facturation",
+        "subscription_and_billing": "Abonnement et facturation",
+        "subscription": "Abonnement",
+        "admin": "Admin",
+        "referrals": "Parrainage",
+        "notifications": "Notifications",
+        "change_password": "Changer le mot de passe",
+        "upgrade_card": {
+            "title": "Besoin de plus de crédits ?",
+            "subtitle": "Boostez votre productivité !",
+            "cta": "Passer au plan supérieur"
+        },
+        "help": "Besoin d'aide ?",
+        "faqs_link": "https://aishophelper.ai/en/contact-us/"
+    },
+    "settings": {
+        "general": {
+            "image_upload_formats": "Formats acceptés : .jpeg, .jpg, .png, .gif",
+            "image_upload_max_size": "Taille maximale : 5 Mo",
+            "name": "Nom",
+            "email": "Email",
+            "save": "Enregistrer les modifications",
+            "coming_soon": "D'autres paramètres utilisateur seront disponibles ici.",
+            "successful_save": "Utilisateur mis à jour avec succès.",
+            "upload_photo": "Télécharger une photo",
+            "change_photo": "Changer la photo"
+        },
+        "appearance": {
+            "title": "Paramètres visuels",
+            "tooltip": "Réinitialiser tous les paramètres",
+            "dark_mode": "Mode sombre",
+            "system": "Système",
+            "contrast": "Contraste",
+            "rtl": "De droite à gauche",
+            "compact": "Compact",
+            "compact_tooltip": "Disponible uniquement en haute résolution > 1600 px",
+            "presets": "Préréglages",
+            "random": "Assigne des couleurs aléatoires à chaque rafraîchissement de la page",
+            "layout": "Mise en page",
+            "sidebar": "Barre latérale",
+            "style": "Style",
+            "integrate": "Intégrer",
+            "apparent": "Apparent",
+            "font": "Police",
+            "family": "Famille",
+            "size": "Taille"
+        },
+        "projects": {
+            "manage": "Gérer",
+            "title": "Projets",
+            "add": "Ajouter un projet",
+            "add_project": {
+                "title": "Gestion de projet",
+                "join": "Rejoindre un projet",
+                "invitation_code": "Code d'invitation",
+                "create": "Créer un nouveau projet",
+                "set_as_current_project": "Définir comme projet actuel",
+                "name": "Nom du projet",
+                "back": "Retour",
+                "create_button": "Créer",
+                "join_button": "Rejoindre",
+                "create_success": "Projet créé avec succès",
+                "create_failure": "Une erreur est survenue lors de la création du projet",
+                "join_success": "Projet rejoint avec succès",
+                "join_failure": "Une erreur est survenue lors de la tentative de rejoindre le projet"
+            },
+            "tokens": "Crédits",
+            "no_projects": "Vous n'avez pas encore de projets. Créez-en un ou rejoignez-en un pour commencer !",
+            "members": "Membres",
+            "edit": "Modifier l'intégration",
+            "default_project_tooltip": "Définir comme projet par défaut. Ce projet sera sélectionné par défaut lorsque vous vous connecterez.",
+            "members_dialog": {
+                "role_update_success": "Rôle mis à jour avec succès",
+                "kick_user_success": "Utilisateur retiré avec succès",
+                "demote_to_editor": "Rétrograder en Éditeur",
+                "promote_to_editor": "Promouvoir en Éditeur",
+                "demote_to_member": "Rétrograder en Membre",
+                "promote_to_admin": "Promouvoir en Admin",
+                "kick": "Retirer du projet",
+                "title": "Membres de",
+                "no_members": "Ce projet n'a aucun membre.",
+                "no_email": "Aucun email",
+                "invite": "Inviter",
+                "close": "Fermer",
+                "admin": "Admin",
+                "editor": "Éditeur",
+                "member": "Membre"
+            },
+            "invite_dialog": {
+                "invitation_failure": "Erreur lors de la création de l'invitation :",
+                "title": "Créer une invitation",
+                "success_title": "Invitation créée avec succès",
+                "success_text": "Donnez cet identifiant à la personne que vous souhaitez ajouter à ce projet :",
+                "subtitle": "Configurer les permissions pour le nouveau membre.",
+                "expiration_date": "Date d'expiration",
+                "close": "Fermer",
+                "cancel": "Annuler",
+                "create": "Créer",
+                "sending": "Création..."
+            },
+            "edit_dialog": {
+                "title": "Modifier",
+                "close": "Fermer",
+                "update": "Mettre à jour",
+                "update_success": "Réponse mise à jour avec succès",
+                "update_failure": "Une erreur est survenue lors de la mise à jour de la réponse."
+            }
+        },
+        "change_password": {
+            "current_password": "Mot de passe actuel",
+            "new_password": "Nouveau mot de passe",
+            "confirm_password": "Confirmer le mot de passe",
+            "info": "+8 caractères",
+            "save": "Enregistrer les modifications",
+            "update_success": "Mot de passe mis à jour avec succès"
+        },
+
+        "profile": "Paramètres du profil",
+        "security": "Paramètres de sécurité",
+        "billing": {
+            "no_credits_left": "Il semble que vous n'ayez plus de crédits. Ne vous inquiétez pas, vous pouvez en acheter plus ou mettre à niveau votre plan pour obtenir plus de crédits mensuels.",
+            "current": "Actuel",
+            "free": "Gratuit",
+            "/month": "/mois",
+            "plan": "Forfait",
+            "billing_name": "Nom de facturation",
+            "billing_address": "Adresse de facturation",
+            "billing_phone_number": "Téléphone de facturation",
+            "payment_method": "Mode de paiement",
+            "cancel_plan": "Résilier le forfait",
+            "upgrade_plan": "Changer pour un forfait supérieur"
+        },
+        "notifications": "Paramètres de notification"
+    },
+    "forms": {
+        "required": "Ce champ est requis",
+        "password_minimum_characters": "Le mot de passe doit contenir au moins 8 caractères",
+        "password_must_contain_uppercase": "Le mot de passe doit contenir au moins une majuscule",
+        "password_must_contain_lowercase": "Le mot de passe doit contenir au moins une minuscule",
+        "password_must_contain_number": "Le mot de passe doit contenir au moins un chiffre",
+        "password_must_contain_special_character": "Le mot de passe doit contenir au moins un caractère spécial",
+        "passwords_do_not_match": "Les mots de passe ne correspondent pas",
+        "new_password_must_be_different": "Le nouveau mot de passe doit être différent de l'actuel",
+        "name_not_empty": "Le nom ne doit pas être vide",
+        "confirmation_not_empty": "La confirmation du mot de passe ne doit pas être vide",
+        "invalid_code_format": "Format de code invalide. Il doit être composé d'un nom d'utilisateur, d'un trait d'union et de 5 caractères alphanumériques.",
+        "name": "Nom",
+        "email": "Email",
+        "password": "Mot de passe",
+        "confirm_password": "Confirmer le mot de passe",
+        "code": "Code",
+        "phone_number_required": "Le numéro de téléphone est requis",
+        "phone_number_invalid": "Numéro de téléphone invalide",
+        "email_invalid": "L'email doit être une adresse email valide",
+        "email_required": "L'email ne peut pas être vide",
+        "date_required": "La date est requise",
+        "date_invalid": "Date invalide",
+        "content_required": "Le contenu est requis",
+        "range": "La plage doit être comprise entre {{min}} et {{max}}",
+        "file_required": "Le fichier est requis",
+        "files_required": "Les fichiers sont requis"
+    },
+    "login": {
+        "title": "Connectez-vous à votre compte",
+        "no_account": "Nouveau ici ? ",
+        "signup_link": "S'inscrire",
+        "forgot_password": "Mot de passe oublié ?",
+        "login": "Se connecter",
+        "alternative_login": "ou accédez avec"
+    },
+    "signup": {
+        "title": "Commencez à utiliser AI Shop Helper dès aujourd'hui",
+        "account": "Déjà inscrit ? ",
+        "login_link": "Se connecter",
+        "8_chars": "+8 caractères",
+        "referral_code": "J'ai un code de parrainage",
+        "create_account": "Créer un compte",
+        "disclaimer1": "En m'inscrivant, je déclare avoir lu et accepté les ",
+        "disclaimer2": " et la ",
+        "disclaimer3": " de AI Shop Helper.",
+        "terms": "Conditions d'utilisation",
+        "privacy_policy": "Politique de confidentialité",
+        "terms_link": "https://aishophelper.ai/en/terms-of-use-and-contracting/",
+        "privacy_policy_link": "https://aishophelper.ai/en/privacy-policy/",
+        "invalid_code": "Code invalide",
+        "invalid_code_description": "Le code de parrainage passé en paramètre n'est pas valide. Veuillez le saisir manuellement.",
+        "signed_up_title": "Votre compte a été créé avec succès",
+        "signed_up_description": "Pour pouvoir vous connecter, vous devez vérifier votre compte. Veuillez consulter votre boîte de réception et suivre les instructions contenues dans l'e-mail que nous vous avons envoyé."
+    },
+    "recover_password": {
+        "title": "Récupérer votre mot de passe",
+        "instructions": "Nous vous enverrons un email avec un lien pour réinitialiser votre mot de passe.",
+        "send": "Envoyer",
+        "back_to_login": "Retour à la connexion",
+        "success": "Email de récupération envoyé avec succès"
+    },
+    "reset_password": {
+        "title": "Réinitialiser votre mot de passe",
+        "instructions": "Entrez votre nouveau mot de passe ci-dessous et validez pour récupérer l'accès à votre compte.",
+        "new_password": "Nouveau mot de passe",
+        "confirm_password": "Confirmer le mot de passe",
+        "send": "Envoyer",
+        "no_token_error": "Aucun jeton de réinitialisation de mot de passe trouvé",
+        "back_to_login": "Retour à la connexion",
+        "success": "Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe."
+    },
+    "activate_user": {
+        "no_token": "Token non fourni",
+        "success": "Utilisateur activé avec succès. Redirection vers la page de connexion...",
+        "error": "Une erreur est survenue lors de l'activation de l'utilisateur. Veuillez réessayer.",
+        "activating": "Activation de l'utilisateur...",
+        "go_to_login": "Aller à la page de connexion"
+    },
+    "connection": {
+        "success":  "Connexion réussie. Redirection vers la page d'accueil...",
+        "failure_title": "Échec de la connexion",
+        "failure_description": "Nous sommes désolés, nous n'avons pas pu connecter votre site WordPress à AI Shop Helper. Veuillez réessayer dans quelques minutes, et si le problème persiste, contactez-nous.",
+        "failure_button": "Retour à l'accueil"
+    },
+    "blog_writer_page": {
+        "title": "Créez votre prochain article de blog en 1 minute",
+        "description": "Nous utiliserons les informations de votre site web et de vos concurrents pour générer un article adapté à votre activité. ",
+        "button": "Créer un article en 1 minute",
+        "drafts": "Brouillons",
+        "scheduled": "Planifiés",
+        "published": "Publiés",
+        "placeholder_posts_card": "Vous verrez ici vos prochains articles une fois générés",
+        "placeholder_drafts": "Vous verrez ici vos articles générés mais non révisés.",
+        "placeholder_programmed": "C'est ici qu'apparaîtront les articles planifiés depuis AI Shop Helper.",
+        "placeholder_published": "Vous trouverez ici les articles qui sont déjà en ligne.",
+        "placeholder_none": "Il n'y a aucun article à afficher.",
+        "posts_edit": "Modifier",
+        "posts_schedule": "Planifier",
+        "posts_publish": "Publier",
+        "posts_delete": "Supprimer",
+        "posts_title": "Titre",
+        "posts_date": "Date",
+        "onboarding": {
+            "title_gen_fail": "Aucun titre généré automatiquement n'a été reçu",
+            "title_gen_generic_error": "Une erreur est survenue lors de l'obtention automatique des titres.",
+            "feedback_send_error": "Le feedback n'a pas pu être envoyé",
+            "no_next_question": "La question suivante attendue n'a pas été trouvée :",
+            "image_question_misconfiguration": "La question \"¿Cómo quieres añadir imágenes?\" a été placée par erreur en dernière position. C'est une erreur de configuration de notre part.",
+            "image_upload_max_size": "Le fichier {{ file }} a une taille supérieure à 5 Mo. Sélectionnez un autre fichier et réessayez.",
+            "invalid_image": "Le fichier {{ file }} n'est pas une image valide. Sélectionnez un fichier image valide et réessayez.",
+            "wait": "Juste un instant",
+            "waiting_for_titles": "Nous analysons vos pages pour éviter les sujets répétés et générer des idées fraîches. Le temps d'attente dépend du nombre d'articles que vous avez.",
+            "placeholder": "Écrivez ici...",
+            "article_ready": "Votre article est prêt !",
+            "article_pending": "Nous générons votre article",
+            "article_ready_description": "Votre article est prêt ! Nous l'avons enregistré comme brouillon sur votre site WordPress. Vous pouvez le réviser et le publier quand vous le souhaitez.",
+            "article_pending_description": "Cela prend généralement environ une minute. Vous pouvez continuer à naviguer ; nous vous informerons quand ce sera prêt.",
+            "cost": "Coût : ",
+            "tokens": " crédits.",
+            "no_images": "Générer l'article sans images",
+            "generate": "Générer l'article",
+            "generating": "Génération de l'article...",
+            "cancel": "Annuler",
+            "regenerate": "Régénérer",
+            "regenerating": "Régénération des titres...",
+            "free_regenerate": "Régénérer gratuitement avec feedback",
+            "free_regenerate_description": "Si vous nous dites pourquoi vous vouliez régénérer les titres, nous ne vous facturerons pas les nouveaux titres.",
+            "free_regenerate_placeholder": "Donnez-nous votre avis...",
+            "accept": "Accepter",
+            "generate_with_ai": "Générer avec l'IA",
+            "upload_own": "Télécharger mes propres images",
+            "stock": "Banque d'images",
+            "see_on_wordpress": "Voir sur WordPress",
+            "generate_again": "En générer un autre",
+            "next": "Suivant",
+            "empty_title_warning": "Le nouveau titre ne peut pas être vide",
+            "back": "Retour"
+        }
+    },
+    "simulated_progress": {
+        "stage_0": [
+            "Analyse de votre site pour éviter la cannibalisation de contenu...",
+            "Détection des sujets déjà publiés...",
+            "Analyse de la structure SEO de votre site..."
+        ],
+        "stage_1": [
+            "Rédaction d'un article accrocheur...",
+            "Rédaction de texte optimisé pour le SEO...",
+            "Structuration du texte pour améliorer le temps de lecture..."
+        ],
+        "stage_2": [
+            "Ajout d'images et de textes alternatifs...",
+            "Recherche d'opportunités de positionnement...",
+            "Placement des images et textes alternatifs..."
+        ],
+        "stage_3": [
+            "Nous avons presque terminé...",
+            "Amélioration...",
+            "Finalisation..."
+        ]
+    },
+    "referrals": {
+        "title": "Parrainage | {{appName}}",
+        "chip": "PROGRAMME D'AMBASSADEURS",
+        "card_title": "Gagnez des crédits en invitant d'autres entreprises",
+        "description": "Partagez votre lien et recevez un pack de crédits supplémentaire pour chaque ami qui automatise sa boutique.",
+
+        "your_code": "Votre lien",
+        "copy": "Copier",
+        "share_directly": "Partager directement",
+        "more": "Plus",
+
+        "recent_referrals": "Parrainages récents",
+        "Liberado": "Valide",
+        "Pendiente": "En attente",
+        "real_action_required": "Action requise",
+
+        "monthly_limit": "Limite mensuelle",
+        "referrals_this_month": "Parrainés ce mois-ci",
+        "limit_reset": "La limite est réinitialisée le premier jour de chaque mois. Seuls les parrainages réussis sont comptabilisés.",
+
+        "how_does_it_work": "Comment ça marche ?",
+        "step_1": "Partagez votre lien",
+        "step_1_description": "Envoyez-le aux propriétaires de boutiques e-commerce ou aux agences susceptibles d'être intéressés par AI Shop Helper.",
+        "step_2": "Connexion WordPress",
+        "step_2_description": "L'utilisateur parrainé doit connecter sa boutique WordPress pour commencer à utiliser l'application.",
+        "step_3": "Première action réelle",
+        "step_3_description": "Le crédit est débloqué lorsqu'il lance son premier flux de travail.",
+        "required": "REQUIS",
+
+        "copy_success_toast": "Lien de parrainage copié dans le presse-papiers",
+        "share_message": "Je gagne un temps fou chaque semaine avec {{appName}}. Inscris-toi ici 👉 https://app.aishophelper.com/signup?ref={{code}} et nous recevrons tous les deux {{credits}} crédits gratuits !",
+        "share_on_twitter": "Partager sur X/Twitter",
+        "share_on_facebook": "Partager sur Facebook",
+        "share_on_linkedin": "Partager sur LinkedIn",
+        "share_on_reddit": "Partager sur Reddit",
+        "share_by_email": "Partager par e-mail"
+    },
+    "404": {
+        "title": "Page non trouvée",
+        "description": "Désolé, nous n'avons pas pu trouver la page que vous recherchez. Peut-être avez-vous mal tapé l'URL ? Assurez-vous de vérifier votre orthographe.",
+        "return": "Retourner à l'accueil"
+    },
+    "toasts": {
+        "coming_soon": "Bientôt disponible"
+    },
+    "errors": {
+        "fallbacks": {
+            "default": "Quelque chose s'est mal passé.",
+            "unknown": "Erreur inconnue",
+            "400": "Entrée invalide.",
+            "401": "Session invalide. Veuillez vous assurer que vous êtes correctement connecté.",
+            "402": "Vous n'avez pas assez de crédits pour cette action.",
+            "403": "Vous n'avez pas la permission d'accéder à cette ressource.",
+            "404": "Impossible de trouver cette ressource.",
+            "409": "La ressource existe déjà.",
+            "422": "Entrée invalide.",
+            "429": "Vous avez fait trop de demandes. Veuillez patienter un instant avant de continuer.",
+            "500": "Impossible d'accéder au service demandé.",
+            "503": "Impossible d'accéder au service demandé."
+        },
+        "AUTH_INVALID_CREDENTIALS": "Mot de passe incorrect.",
+        "AUTH_INVALID_TOKEN": "Jeton invalide ou expiré.",
+        "AUTH_USER_INACTIVE": "Votre compte n'est pas actif. Veuillez rechercher l'email d'activation dans votre boîte de réception.",
+        "PERMISSION_DENIED": "Vous n'avez pas la permission d'effectuer cette action",
+        "USER_NOT_FOUND": "Utilisateur non trouvé.",
+        "PROJECT_NOT_FOUND": "Projet non trouvé.",
+        "WORKFLOW_NOT_FOUND": "Flux de travail non trouvé.",
+        "ACTION_NOT_FOUND": "Action non trouvée.",
+        "QUESTION_NOT_FOUND": "Question non trouvée.",
+        "AGENT_NOT_FOUND": "Agent non trouvé.",
+        "PAGE_NOT_FOUND": "Page non trouvée.",
+        "INVITATION_NOT_FOUND": "Invitation non trouvée.",
+        "SUBSCRIPTION_NOT_FOUND": "Abonnement non trouvé.",
+        "ANSWER_NOT_FOUND": "Réponse non trouvée.",
+        "EMAIL_ALREADY_EXISTS": "Un utilisateur avec cet email existe déjà.",
+        "PROJECT_NAME_ALREADY_EXISTS": "Un projet avec ce nom existe déjà.",
+        "USER_ALREADY_IN_PROJECT": "L'utilisateur est déjà dans ce projet.",
+        "WORKFLOW_NAME_ALREADY_EXISTS": "Un flux de travail avec ce nom existe déjà.",
+        "AGENT_NAME_ALREADY_EXISTS": "Un agent avec ce nom existe déjà.",
+        "QUESTION_ALREADY_EXISTS": "Cette question existe déjà.",
+        "ANSWER_ALREADY_EXISTS": "Une réponse à cette question existe déjà.",
+        "SUBSCRIPTION_NAME_ALREADY_EXISTS": "Un abonnement avec ce nom existe déjà.",
+        "SUBSCRIPTION_ALREADY_ACTIVE": "Vous avez déjà un abonnement actif.",
+        "INVALID_INPUT": "Entrée invalide.",
+        "INVALID_URL": "Format d'URL invalide.",
+        "URL_UNREACHABLE": "Veuillez vérifier que l'URL est accessible.",
+        "URL_NOT_WORDPRESS": "Ce n'est pas un site WordPress.",
+        "PASSWORD_REUSE_NOT_ALLOWED": "Le nouveau mot de passe ne peut pas être le même que l'actuel.",
+        "INSUFFICIENT_TOKENS": "Vous n'avez pas assez de crédits.",
+        "INVALID_SUBSCRIPTION": "Abonnement invalide.",
+        "NO_ACTIVE_SUBSCRIPTION": "Vous n'avez pas d'abonnement actif à modifier.",
+        "SUBSCRIPTION_DOWNGRADE_NOT_ALLOWED": "Vous pouvez uniquement passer à un abonnement avec un prix supérieur.",
+        "SERVICE_UNAVAILABLE": "Le service est actuellement indisponible.",
+        "WORKFLOW_SERVICE_UNAVAILABLE": "Le service de flux de travail est actuellement indisponible. Veuillez réessayer plus tard."
+    },
+    "general_error": {
+        "try_again": "Réessayer",
+        "refresh_page": "Actualiser la page"
+    }
+}

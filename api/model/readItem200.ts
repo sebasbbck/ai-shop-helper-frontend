@@ -5,4 +5,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type ReadItem200 = {[key: string]: number | string | null};
+export type ReadItem200 = { [key: string]: number | string | null }
