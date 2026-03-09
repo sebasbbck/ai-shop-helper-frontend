@@ -1,10 +1,7 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import { health } from '../api/default/default'
-
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
-import { getMe } from '../api/users/users'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { DashboardLayout } from '../src/components/layouts/dashboard'
+import HomePage from '../src/features/agents/components/HomePage'
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
@@ -14,82 +11,12 @@ export async function getStaticProps({ locale }: { locale: string }) {
   }
 }
 
-export default function Home() {
+export default function OldIndex() {
   const { t } = useTranslation('translation')
 
-  async function getHealth() {
-    try {
-      const response = await getMe()
-      console.log(response.name)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js</a> on Docker!
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <i>{t('translation:onboarding.start')}</i>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-
-        <button onClick={getHealth}>Get Health</button>
-      </footer>
-    </div>
+    <DashboardLayout>
+      <HomePage />
+    </DashboardLayout>
   )
 }
