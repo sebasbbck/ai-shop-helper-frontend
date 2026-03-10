@@ -432,6 +432,140 @@
         }
       }
     },
+    "/n8n-test/start": {
+      "post": {
+        "tags": [
+          "n8n-test"
+        ],
+        "summary": "Start Workflow",
+        "operationId": "n8n-test-start_workflow",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object",
+                "title": "Payload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response N8N-Test-Start Workflow"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/n8n-test/tasks/{task_id}": {
+      "get": {
+        "tags": [
+          "n8n-test"
+        ],
+        "summary": "Get Task",
+        "operationId": "n8n-test-get_task",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response N8N-Test-Get Task"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/n8n-test/callback": {
+      "post": {
+        "tags": [
+          "n8n-test"
+        ],
+        "summary": "Callback",
+        "operationId": "n8n-test-callback",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object",
+                "title": "Payload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response N8N-Test-Callback"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/health": {
       "get": {
         "tags": [
@@ -608,7 +742,11 @@
           "password": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 128,
+                "minLength": 8,
+                "format": "password",
+                "writeOnly": true
               },
               {
                 "type": "null"
@@ -656,7 +794,11 @@
           },
           "password": {
             "type": "string",
-            "title": "Password"
+            "maxLength": 128,
+            "minLength": 8,
+            "format": "password",
+            "title": "Password",
+            "writeOnly": true
           }
         },
         "type": "object",
@@ -744,7 +886,11 @@
           "password": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 128,
+                "minLength": 8,
+                "format": "password",
+                "writeOnly": true
               },
               {
                 "type": "null"

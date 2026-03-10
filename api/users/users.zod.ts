@@ -42,10 +42,15 @@ Raises:
     HTTPException: 409 if the email is already registered.
  * @summary Update Me
  */
+export const usersUpdateMeBodyPasswordOneMin = 8;
+export const usersUpdateMeBodyPasswordOneMax = 128;
+
+
+
 export const UsersUpdateMeBody = zod.object({
   "email": zod.union([zod.string().email(),zod.null()]).optional(),
   "name": zod.union([zod.string(),zod.null()]).optional(),
-  "password": zod.union([zod.string(),zod.null()]).optional()
+  "password": zod.union([zod.string().min(usersUpdateMeBodyPasswordOneMin).max(usersUpdateMeBodyPasswordOneMax),zod.null()]).optional()
 }).describe('Schema for updating the current user\'s own profile.')
 
 export const UsersUpdateMeResponse = zod.object({
@@ -140,10 +145,15 @@ export const UsersUpdateUserParams = zod.object({
   "user_id": zod.string().uuid()
 })
 
+export const usersUpdateUserBodyPasswordOneMin = 8;
+export const usersUpdateUserBodyPasswordOneMax = 128;
+
+
+
 export const UsersUpdateUserBody = zod.object({
   "email": zod.union([zod.string().email(),zod.null()]).optional(),
   "name": zod.union([zod.string(),zod.null()]).optional(),
-  "password": zod.union([zod.string(),zod.null()]).optional(),
+  "password": zod.union([zod.string().min(usersUpdateUserBodyPasswordOneMin).max(usersUpdateUserBodyPasswordOneMax),zod.null()]).optional(),
   "is_active": zod.union([zod.boolean(),zod.null()]).optional(),
   "is_superuser": zod.union([zod.boolean(),zod.null()]).optional()
 }).describe('Schema for superuser updating any user.')

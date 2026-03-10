@@ -10,7 +10,6 @@ import { NavItem } from './nav-item'
 import { useTranslation } from 'next-i18next'
 import { SxProps, Theme } from '@mui/material/styles'
 import { useRouter } from 'next/router'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 // ----------------------------------------------------------------------
 

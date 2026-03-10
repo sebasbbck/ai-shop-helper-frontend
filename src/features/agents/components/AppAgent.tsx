@@ -41,10 +41,7 @@ export function AppAgent({
       sx={[
         (theme) => ({
           ...(theme as any).mixins.bgGradient({
-            images: [
-              gradient,
-              `url(${CONFIG.assetsDir}/assets/background/background-5.webp)`,
-            ],
+            images: [gradient],
           }),
 
           pt: 2,

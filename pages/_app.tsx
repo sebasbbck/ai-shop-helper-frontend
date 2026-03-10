@@ -12,6 +12,8 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import path from 'path'
+import nextI18NextConfig from '../next-i18next.config'
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache(),
@@ -37,4 +39,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   )
 }
 
-export default appWithTranslation(MyApp)
+export default appWithTranslation(MyApp, nextI18NextConfig)

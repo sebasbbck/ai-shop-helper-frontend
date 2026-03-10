@@ -6,6 +6,9 @@
  */
 
 export * from './bodyAuthLogin';
+export * from './callback200';
+export * from './callbackBody';
+export * from './getTask200';
 export * from './getUsersParams';
 export * from './health200';
 export * from './healthDb200';
@@ -17,6 +20,8 @@ export * from './paginatedResponseUserPublic';
 export * from './readItem200';
 export * from './readItemParams';
 export * from './readRoot200';
+export * from './startWorkflow200';
+export * from './startWorkflowBody';
 export * from './token';
 export * from './userAdminUpdate';
 export * from './userCreate';

@@ -2,14 +2,14 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { health } from '../api/default/default'
 
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import { getStaticTranslations } from '../lib/get-static-translations'
 import { getMe } from '../api/users/users'
 
-export async function getStaticProps({ locale }: { locale: string }) {
+export async function getServerSideProps({ locale }: { locale: string }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['translation'])),
+      ...(await getStaticTranslations(locale)),
     },
   }
 }

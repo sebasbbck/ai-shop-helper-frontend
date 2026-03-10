@@ -21,10 +21,15 @@ Raises:
     HTTPException: 409 if the email is already registered.
  * @summary Register
  */
+export const authRegisterBodyPasswordMin = 8;
+export const authRegisterBodyPasswordMax = 128;
+
+
+
 export const AuthRegisterBody = zod.object({
   "email": zod.string().email(),
   "name": zod.string(),
-  "password": zod.string()
+  "password": zod.string().min(authRegisterBodyPasswordMin).max(authRegisterBodyPasswordMax)
 }).describe('Schema for creating a new user.')
 
 /**

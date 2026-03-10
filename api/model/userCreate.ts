@@ -11,5 +11,9 @@
 export interface UserCreate {
   email: string;
   name: string;
+  /**
+   * @minLength 8
+   * @maxLength 128
+   */
   password: string;
 }
