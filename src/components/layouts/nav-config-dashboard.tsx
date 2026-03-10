@@ -18,7 +18,7 @@ export const navData = [
       },*/
       {
         title: 'layout.team',
-        path: paths.dashboard.root,
+        path: '/',
         allowClick: true,
         icon: (
           <Iconify
