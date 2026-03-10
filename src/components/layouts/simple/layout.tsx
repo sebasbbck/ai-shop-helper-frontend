@@ -9,6 +9,7 @@ import { SimpleCompactContent } from './content'
 import { LanguagePopover } from '../components/language-popover'
 import { Breakpoint, SxProps, Theme } from '@mui/material'
 import { useTranslation } from 'next-i18next'
+import router from 'next/router'
 
 // ----------------------------------------------------------------------
 
@@ -48,7 +49,8 @@ export function SimpleLayout({
         <img
           src="/assets/images/ai-shop-helper-logo-recortado.png"
           alt="Logo"
-          style={{ maxWidth: '40px' }}
+          style={{ maxWidth: '40px', cursor: 'pointer' }}
+          onClick={() => router.push('/')}
         />
       ),
       rightArea: (

@@ -16,15 +16,6 @@ function PageNotFoundIllustration({
   hideBackground: boolean
   sx?: SxProps<Theme>
 }) {
-  const renderCharacterImage = () => (
-    <image
-      href={`${CONFIG.assetsDir}/assets/illustrations/characters/character-question.webp`}
-      height="280"
-      x="220"
-      y="40"
-    />
-  )
-
   return (
     <SvgIcon
       viewBox="0 0 480 360"
@@ -45,8 +36,6 @@ function PageNotFoundIllustration({
       {...other}
     >
       {!hideBackground && <BackgroundShape />}
-
-      {renderCharacterImage()}
 
       <path
         fill="#FFAB00"
