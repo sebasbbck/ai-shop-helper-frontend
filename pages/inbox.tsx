@@ -1,7 +1,7 @@
 import { useTranslation } from 'next-i18next'
 import { getStaticTranslations } from '../lib/get-static-translations'
 import { DashboardLayout } from '../src/components/layouts/dashboard'
-import HomePage from '../src/features/agents/components/HomePage'
+import Inbox from '../src/features/notifications/components/Inbox'
 
 export async function getServerSideProps({ locale }: { locale: string }) {
   return {
@@ -11,12 +11,12 @@ export async function getServerSideProps({ locale }: { locale: string }) {
   }
 }
 
-export default function Index() {
+export default function InboxPage() {
   const { t } = useTranslation('translation')
 
   return (
     <DashboardLayout>
-      <HomePage />
+      <Inbox />
     </DashboardLayout>
   )
 }
