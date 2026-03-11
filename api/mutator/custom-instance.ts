@@ -4,7 +4,6 @@ import Axios, {
   InternalAxiosRequestConfig,
 } from 'axios'
 import { logout, refresh } from '../auth/auth'
-import router from 'next/router'
 
 export const AXIOS_INSTANCE = Axios.create({
   baseURL:

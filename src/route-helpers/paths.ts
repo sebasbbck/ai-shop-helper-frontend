@@ -6,7 +6,7 @@ const ROOTS = {
   AGENTS: '/$lang/agents',
   BLOGWRITER: '/$lang/blog-writer',
   CONNECTION: '/$lang/connection',
-  ADMINPANEL: '/$lang/admin-panel',
+  ADMINPANEL: '/$lang/admin',
   SETTINGS: '/$lang/settings',
 }
 

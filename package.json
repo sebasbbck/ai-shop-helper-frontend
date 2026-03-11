@@ -25,6 +25,7 @@
     "axios": "^1.13.5",
     "dayjs": "^1.11.19",
     "framer-motion": "^12.35.1",
+    "jose": "^6.2.1",
     "minimal-shared": "^1.1.5",
     "next": "latest",
     "next-i18next": "^15.4.3",

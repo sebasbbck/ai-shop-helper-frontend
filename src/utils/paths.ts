@@ -6,7 +6,7 @@ const ROOTS = {
   AGENTS: '/agents',
   BLOGWRITER: '/blog-writer',
   CONNECTION: '/connection',
-  ADMINPANEL: '/admin-panel',
+  ADMINPANEL: '/admin',
   SETTINGS: '/settings',
 }
 
@@ -74,7 +74,7 @@ export const paths = {
   // ADMIN PANEL
   adminPanel: {
     root: ROOTS.ADMINPANEL,
-    users: `${ROOTS.ADMINPANEL}/admin`,
+    users: `${ROOTS.ADMINPANEL}/users`,
     projects: `${ROOTS.ADMINPANEL}/projects`,
     questions: `${ROOTS.ADMINPANEL}/questions`,
     workflowQuestions: () =>
