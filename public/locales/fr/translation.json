@@ -437,6 +437,10 @@
         "description": "Désolé, nous n'avons pas pu trouver la page que vous recherchez. Peut-être avez-vous mal tapé l'URL ? Assurez-vous de vérifier votre orthographe.",
         "return": "Retourner à l'accueil"
     },
+    "403": {
+        "title": "Accès refusé",
+        "description": "La page à laquelle vous essayez d'accéder est soumise à des restrictions d'accès."
+    },
     "toasts": {
         "coming_soon": "Bientôt disponible"
     },

@@ -437,6 +437,10 @@
         "description": "Lamentamos, não conseguimos encontrar a página que procura. Talvez tenha digitado mal o URL? Verifique a ortografia.",
         "return": "Ir para o início"
     },
+    "403": {
+        "title": "Sem permissão",
+        "description": "A página que está a tentar aceder tem acesso restrito."
+    },
     "toasts": {
         "coming_soon": "Em breve"
     },

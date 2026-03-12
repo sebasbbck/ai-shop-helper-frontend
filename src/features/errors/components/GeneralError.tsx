@@ -22,9 +22,7 @@ export function GeneralError(statusCode: any) {
       </m.div>
 
       <m.div variants={varBounce('in')}>
-        <Typography sx={{ color: 'text.secondary' }}>
-          Error {statusCode}
-        </Typography>
+        <Typography sx={{ color: 'text.secondary' }}>Error 500</Typography>
       </m.div>
 
       <m.div variants={varBounce('in')}>

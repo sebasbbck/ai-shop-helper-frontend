@@ -1,6 +1,9 @@
 import { decodeJwt } from 'jose'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { Forbidden } from '../../errors/components/403'
+import { DashboardContent } from '../../../components/layouts/dashboard'
+import { Typography } from '@mui/material'
 
 export default function AdminControl() {
   const [isAdmin, setIsAdmin] = useState(false)
@@ -10,13 +13,14 @@ export default function AdminControl() {
     const token = localStorage.getItem('token')
     const payload = decodeJwt(token) as any
 
-    if (!payload.is_superuser) {
-      router.replace('/') // TODO: render 403 Forbidden page
-    } else {
-      setIsAdmin(true)
-    }
+    setIsAdmin(payload.is_superuser)
   }, [])
 
-  if (!isAdmin) return null // Or a loading spinner
-  return <h2>Buenas, hacker maestro 🧑‍💻</h2>
+  if (!isAdmin) return <Forbidden />
+
+  return (
+    <DashboardContent maxWidth="xl">
+      <Typography variant="h4">Buenas, hacker maestro 🧑‍💻</Typography>
+    </DashboardContent>
+  )
 }

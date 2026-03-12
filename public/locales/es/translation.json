@@ -437,6 +437,10 @@
         "description": "Lo sentimos, no pudimos encontrar la página que estás buscando. ¿Quizás escribiste mal la URL? Asegúrate de verificar tu ortografía.",
         "return": "Volver al inicio"
     },
+    "403": {
+        "title": "Sin permiso",
+        "description": "La página a la que intentas acceder tiene acceso restringido."
+    },
     "toasts": {
         "coming_soon": "Próximamente"
     },

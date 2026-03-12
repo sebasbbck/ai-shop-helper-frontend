@@ -7,7 +7,7 @@ services:
     volumes:
       - .:/app          # Mount the whole project for HMR (Hot Module Replacement)
       - /app/.next  
-      - /app/node_modules # Anonymous volume to prevent local modules from overwriting container modules
+      # - /app/node_modules # Anonymous volume to prevent local modules from overwriting container modules
     ports:
       - "3000:3000"
     environment:

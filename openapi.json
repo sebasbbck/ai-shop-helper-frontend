@@ -526,7 +526,7 @@
         "tags": [
           "n8n-test"
         ],
-        "summary": "N8N Callback",
+        "summary": "Callback",
         "operationId": "n8n-test-callback",
         "requestBody": {
           "content": {
