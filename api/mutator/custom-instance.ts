@@ -56,7 +56,8 @@ AXIOS_INSTANCE.interceptors.response.use(
     if (
       error.response?.status === 401 && 
       !originalRequest.url?.includes('/auth/refresh') &&
-      !originalRequest.url?.includes('/auth/logout')
+      !originalRequest.url?.includes('/auth/logout') &&
+      !originalRequest.url?.includes('/auth/login')
     ) {
       if (isRefreshing) {
         // Queue this request until the refresh is done

@@ -23,15 +23,11 @@ import type {
   UseQueryResult
 } from '@tanstack/react-query';
 
-import {
-  useCallback
-} from 'react';
-
 import type {
-  Callback200,
-  CallbackBody,
   GetTask200,
   HTTPValidationError,
+  N8nCallback200,
+  N8nCallbackBody,
   StartWorkflow200,
   StartWorkflowBody
 } from '.././model';
@@ -198,29 +194,29 @@ export function useGetTask<TData = Awaited<ReturnType<typeof getTask>>, TError =
 
 
 /**
- * @summary Callback
+ * @summary N8N Callback
  */
-export const callback = (
-    callbackBody: BodyType<CallbackBody>,
+export const n8nCallback = (
+    n8nCallbackBody: BodyType<N8nCallbackBody>,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
       
       
-      return customInstance<Callback200>(
-      {url: `/n8n-test/callback`, method: 'POST',
+      return customInstance<N8nCallback200>(
+      {url: `/n8n-test/n8n-callback`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
-      data: callbackBody, signal
+      data: n8nCallbackBody, signal
     },
       options);
     }
   
 
 
-export const getCallbackMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof callback>>, TError,{data: BodyType<CallbackBody>}, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof callback>>, TError,{data: BodyType<CallbackBody>}, TContext> => {
+export const getN8nCallbackMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof n8nCallback>>, TError,{data: BodyType<N8nCallbackBody>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof n8nCallback>>, TError,{data: BodyType<N8nCallbackBody>}, TContext> => {
 
-const mutationKey = ['callback'];
+const mutationKey = ['n8nCallback'];
 const {mutation: mutationOptions, request: requestOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
@@ -230,10 +226,10 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof callback>>, {data: BodyType<CallbackBody>}> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof n8nCallback>>, {data: BodyType<N8nCallbackBody>}> = (props) => {
           const {data} = props ?? {};
 
-          return  callback(data,requestOptions)
+          return  n8nCallback(data,requestOptions)
         }
 
 
@@ -243,21 +239,21 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
   return  { mutationFn, ...mutationOptions }}
 
-    export type CallbackMutationResult = NonNullable<Awaited<ReturnType<typeof callback>>>
-    export type CallbackMutationBody = BodyType<CallbackBody>
-    export type CallbackMutationError = ErrorType<HTTPValidationError>
+    export type N8nCallbackMutationResult = NonNullable<Awaited<ReturnType<typeof n8nCallback>>>
+    export type N8nCallbackMutationBody = BodyType<N8nCallbackBody>
+    export type N8nCallbackMutationError = ErrorType<HTTPValidationError>
 
     /**
- * @summary Callback
+ * @summary N8N Callback
  */
-export const useCallback = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof callback>>, TError,{data: BodyType<CallbackBody>}, TContext>, request?: SecondParameter<typeof customInstance>}
+export const useN8nCallback = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof n8nCallback>>, TError,{data: BodyType<N8nCallbackBody>}, TContext>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof callback>>,
+        Awaited<ReturnType<typeof n8nCallback>>,
         TError,
-        {data: BodyType<CallbackBody>},
+        {data: BodyType<N8nCallbackBody>},
         TContext
       > => {
-      return useMutation(getCallbackMutationOptions(options), queryClient);
+      return useMutation(getN8nCallbackMutationOptions(options), queryClient);
     }
     

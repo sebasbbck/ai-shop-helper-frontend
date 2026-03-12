@@ -24,7 +24,7 @@ export const N8nTestGetTaskParams = zod.object({
 export const N8nTestGetTaskResponse = zod.record(zod.string(), zod.unknown())
 
 /**
- * @summary Callback
+ * @summary N8N Callback
  */
 export const N8nTestCallbackBody = zod.record(zod.string(), zod.unknown())
 

@@ -521,12 +521,12 @@
         }
       }
     },
-    "/n8n-test/callback": {
+    "/n8n-test/n8n-callback": {
       "post": {
         "tags": [
           "n8n-test"
         ],
-        "summary": "Callback",
+        "summary": "N8N Callback",
         "operationId": "n8n-test-callback",
         "requestBody": {
           "content": {

@@ -16,6 +16,8 @@ export * from './healthN8n200';
 export * from './healthN8nDb200';
 export * from './healthN8nWebhook200';
 export * from './hTTPValidationError';
+export * from './n8nCallback200';
+export * from './n8nCallbackBody';
 export * from './paginatedResponseUserPublic';
 export * from './readItem200';
 export * from './readItemParams';
