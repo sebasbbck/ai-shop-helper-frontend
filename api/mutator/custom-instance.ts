@@ -6,10 +6,7 @@ import Axios, {
 import { logout, refresh } from '../auth/auth'
 
 export const AXIOS_INSTANCE = Axios.create({
-  baseURL:
-    process.env.NODE_ENV === 'development'
-      ? '/api/proxy'
-      : process.env.NEXT_PUBLIC_BACKEND_URL,
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 })
 
 // Auth and i18n handler
