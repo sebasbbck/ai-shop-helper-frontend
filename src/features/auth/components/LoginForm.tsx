@@ -81,7 +81,7 @@ export default function LoginForm() {
       router.replace('/')
     } catch (err) {
       console.error(err)
-      setErrorMessage(getErrorMessage(err as any))
+      setErrorMessage(getErrorMessage(err, t))
     }
     setIsSubmitting(false)
   }

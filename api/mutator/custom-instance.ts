@@ -52,31 +52,39 @@ AXIOS_INSTANCE.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest = error.config;
 
+    if (!originalRequest || (originalRequest as any)._retry) {
+      return Promise.reject(error)
+    }
+
     // If it's not already a refresh/logout attempt
-    if (
-      error.response?.status === 401 && 
-      !originalRequest.url?.includes('/auth/refresh') &&
-      !originalRequest.url?.includes('/auth/logout') &&
-      !originalRequest.url?.includes('/auth/login')
-    ) {
+    const isAuthRequest = 
+      originalRequest.url?.match(/\/auth\/(login|refresh|logout)/) || 
+      originalRequest.url?.includes('/login')
+
+    if (error.response?.status === 401 && !isAuthRequest) {
       if (isRefreshing) {
         // Queue this request until the refresh is done
         return new Promise((resolve, reject) => {
-          failedQueue.push({ resolve, reject });
+          failedQueue.push({ resolve, reject })
         })
           .then((token) => {
-            originalRequest.headers['Authorization'] = `Bearer ${token}`;
+            if (originalRequest.headers) {
+               originalRequest.headers['Authorization'] = `Bearer ${token}`
+            }
             return AXIOS_INSTANCE(originalRequest);
           })
           .catch((err) => Promise.reject(err));
       }
 
-      isRefreshing = true;
+      (originalRequest as any)._retry = true
+      isRefreshing = true
 
       try {
         const { access_token } = await refresh();
         localStorage.setItem('token', access_token);
-        originalRequest.headers['Authorization'] = `Bearer ${access_token}`;
+        if (originalRequest.headers) {
+           originalRequest.headers['Authorization'] = `Bearer ${access_token}`;
+        }
         
         processQueue(null, access_token);
         return AXIOS_INSTANCE(originalRequest);
