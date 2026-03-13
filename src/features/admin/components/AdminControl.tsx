@@ -4,19 +4,18 @@ import { useRouter } from 'next/router'
 import { Forbidden } from '../../errors/components/403'
 import { DashboardContent } from '../../../components/layouts/dashboard'
 import { Typography } from '@mui/material'
+import useAuth from '../../../hooks/useAuth'
 
 export default function AdminControl() {
-  const [isAdmin, setIsAdmin] = useState(false)
-  const router = useRouter()
-
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null)
+  const { user } = useAuth()
+  
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    const payload = decodeJwt(token) as any
+    if (user) setIsAdmin(user.is_superuser)
+  }, [user])
 
-    setIsAdmin(payload.is_superuser)
-  }, [])
-
-  if (!isAdmin) return <Forbidden />
+  if (isAdmin === null) return <></>
+  if (isAdmin === false) return <Forbidden />
 
   return (
     <DashboardContent maxWidth="xl">
