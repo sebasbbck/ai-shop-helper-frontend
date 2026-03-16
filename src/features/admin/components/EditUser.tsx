@@ -37,7 +37,7 @@ export default function EditUser({
   return (
     <>
       <MenuItem onClick={() => setIsOpen(true)} sx={{ color: 'text.primary' }}>
-        <Iconify icon="solar:pen-bold" sx={{ mr: 2 }} />
+        <Iconify icon="solar:pen-bold" sx={{ mr: 1 }} />
         Editar usuario
       </MenuItem>
 

@@ -30,6 +30,7 @@ import EditUser from './EditUser'
 import { usePopover } from 'minimal-shared/hooks'
 import { CustomPopover } from '../../../components/custom-popover'
 import { Iconify } from '../../../components/iconify'
+import DeleteUser from './DeleteUser'
 
 function UsersTable() {
   const queryClient = useQueryClient()
@@ -130,6 +131,7 @@ function UsersTable() {
         <MenuList>
           <Box style={{ marginBottom: '4px' }}>
             <EditUser user={user} closeParent={menuActions.onClose} />
+            <DeleteUser user={user} closeParent={menuActions.onClose} />
           </Box>
         </MenuList>
       </CustomPopover>
