@@ -436,6 +436,10 @@
         "description": "Entschuldigung, wir konnten die gesuchte Seite nicht finden. Vielleicht haben Sie sich bei der URL vertippt? Bitte überprüfen Sie Ihre Schreibweise.",
         "return": "Zur Startseite"
     },
+    "403": {
+        "title": "Keine Berechtigung",
+        "description": "Die Seite, auf die Sie zugreifen möchten, ist nur eingeschränkt zugänglich."
+    },
     "toasts": {
         "coming_soon": "Demnächst verfügbar"
     },

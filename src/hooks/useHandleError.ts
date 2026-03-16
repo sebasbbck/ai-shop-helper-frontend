@@ -2,7 +2,6 @@ import { useCallback } from 'react'
 import { useRouter } from 'next/router'
 import useCustomToast from './useCustomToast'
 import { i18n } from 'next-i18next'
-import { t } from 'i18next'
 import { AxiosError } from 'axios'
 
 export interface ErrorHandleResult {
@@ -10,36 +9,33 @@ export interface ErrorHandleResult {
   shouldRedirectToBilling: boolean
 }
 
-export function getErrorMessage(err: any) {
-  let errorMessage: string
+export function getErrorMessage(err: any, t?: any) {
+  const translate = t || ((key: string) => key)
 
   if (err instanceof AxiosError) {
-    errorMessage = err.message
-
+    const statusCode = err.response?.status
     const errDetail = err.response?.data
+
+    // Try server-returned detail
     if (errDetail?.detail && typeof errDetail.detail === 'string') {
-      errorMessage = errDetail.detail
+      return errDetail.detail
     }
 
-    if (err.status) {
-      if (i18n.exists(`translation:errors.${err.status}`)) {
-        errorMessage = t(`translation:errors.${err.status}` as any)
-      } else if (i18n.exists(`translation:errors.fallbacks.${err.status}`)) {
-        errorMessage = t(`translation:errors.fallbacks.${err.status}` as any)
-      } else {
-        errorMessage =
-          errDetail.message || t('translation:errors.fallbacks.default')
-      }
+    // Try specific status code translations
+    if (statusCode) {
+      const specificKey = `translation:errors.${statusCode}`
+      const fallbackKey = `translation:errors.fallbacks.${statusCode}`
+
+      if (i18n.exists(specificKey)) return t(specificKey)
+      if (i18n.exists(fallbackKey)) return t(fallbackKey)
     }
-  } else if (err instanceof Error) {
-    errorMessage = err.message || t('translation:errors.fallbacks.default')
-  } else if (typeof err === 'string') {
-    errorMessage = err
-  } else {
-    errorMessage = t('translation:errors.fallbacks.default')
+
+    return (
+      errDetail?.message || translate('translation:errors.fallbacks.default')
+    )
   }
 
-  return errorMessage
+  return err?.message || translate('translation:errors.fallbacks.default')
 }
 
 export const handleError = (err: any): ErrorHandleResult => {

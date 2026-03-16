@@ -8,5 +8,6 @@ public/*
 yarn.lock
 package-lock.json
 jsconfig.json
+openapi.json
 
 api/*

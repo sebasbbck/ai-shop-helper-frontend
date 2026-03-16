@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const refreshToken = request.cookies.get('refresh_token')?.value
 
@@ -11,16 +11,19 @@ export function proxy(request: NextRequest) {
     '/recover-password',
     '/reset-password',
   ]
-  const protectedRoutes = ['/', '/dashboard']
+  const isAdminRoute = pathname.startsWith('/admin')
+  const isProtectedRoute =
+    pathname.startsWith('/dashboard') ||
+    pathname.startsWith('/settings') ||
+    pathname === '/' ||
+    isAdminRoute
 
+  // Redirect logged in users away from auth pages
   if (refreshToken && authRoutes.some((route) => pathname.startsWith(route))) {
     return NextResponse.redirect(new URL('/', request.url))
   }
 
-  const isProtectedRoute = protectedRoutes.some(
-    (route) => pathname === route || pathname.startsWith('/dashboard/'),
-  )
-
+  // Redirect unauthenticated users away from protected pages
   if (!refreshToken && isProtectedRoute) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
@@ -32,9 +35,11 @@ export const config = {
   matcher: [
     '/',
     '/dashboard/:path*',
+    '/admin/:path*',
     '/login',
     '/signup',
     '/recover-password',
     '/reset-password',
+    '/settings/:path*',
   ],
 }
