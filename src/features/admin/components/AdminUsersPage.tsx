@@ -16,17 +16,25 @@ import {
   TableRow,
   Typography,
   CircularProgress,
-} from "@mui/material"
-import { useQueryClient } from "@tanstack/react-query"
-import { z } from "zod"
+  MenuList,
+  MenuItem,
+  IconButton,
+} from '@mui/material'
+import { useQueryClient } from '@tanstack/react-query'
+import { z } from 'zod'
 // import AddUser from "/components/Admin/AddUser"
 import useAuth from '../../../hooks/useAuth'
 import { UserPublic } from '../../../../api/model'
 import { useGetUsers } from '../../../../api/users/users'
+import EditUser from './EditUser'
+import { usePopover } from 'minimal-shared/hooks'
+import { CustomPopover } from '../../../components/custom-popover'
+import { Iconify } from '../../../components/iconify'
 
 function UsersTable() {
   const queryClient = useQueryClient()
   const { user: currentUser } = useAuth()
+  const [selectedUser, setSelectedUser] = useState<UserPublic | null>(null)
   const router = useRouter()
 
   const page = Number(router.query.page) || 1
@@ -42,7 +50,7 @@ function UsersTable() {
         enabled: router.isReady,
         placeholderData: (prevData) => prevData,
       },
-    }
+    },
   )
 
   const setPage = (newPage: number) => {
@@ -52,7 +60,7 @@ function UsersTable() {
         query: { ...router.query, page: newPage },
       },
       undefined,
-      { shallow: true } // Prevents full page refresh
+      { shallow: true }, // Prevents full page refresh
     )
   }
 
@@ -69,38 +77,71 @@ function UsersTable() {
 
       if (isTyping) return
 
-      if (event.key === "ArrowRight") {
+      if (event.key === 'ArrowRight') {
         if (page < totalPages) {
           setPage(page + 1)
         }
-      } else if (event.key === "ArrowLeft") {
+      } else if (event.key === 'ArrowLeft') {
         if (page > 1) {
           setPage(page - 1)
         }
       }
     }
 
-    window.addEventListener("keydown", handleKeyDown)
+    window.addEventListener('keydown', handleKeyDown)
 
     // Cleanup the listener when the component unmounts
     return () => {
-      window.removeEventListener("keydown", handleKeyDown)
+      window.removeEventListener('keydown', handleKeyDown)
     }
   }, [page, totalPages, setPage])
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
+    newPage: number,
   ) => {
     // MUI TablePagination is 0-indexed, but our router state is 1-indexed
     setPage(newPage + 1)
   }
 
   const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setPerPage(parseInt(event.target.value, 10))
     setPage(1)
+  }
+
+  const menuActions = usePopover()
+  const renderMenuActions = (user: UserPublic) => {
+    return (
+      <CustomPopover
+        open={menuActions.open}
+        anchorEl={menuActions.anchorEl}
+        onClose={menuActions.onClose}
+        disablePortal
+        slotProps={{
+          paper: {
+            onClick: (e: { stopPropagation: () => any }) => e.stopPropagation(),
+          },
+        }}
+        disableEnforceFocus
+        disableRestoreFocus
+      >
+        <MenuList>
+          <Box style={{ marginBottom: '4px' }}>
+            <EditUser user={user} closeParent={menuActions.onClose} />
+          </Box>
+        </MenuList>
+      </CustomPopover>
+    )
+  }
+
+  const handleOpenMenu = (
+    event: React.MouseEvent<HTMLElement>,
+    user: UserPublic,
+  ) => {
+    setSelectedUser(user)
+    menuActions.onOpen(event)
   }
 
   if (isLoading) {
@@ -127,11 +168,14 @@ function UsersTable() {
         <TableContainer component={Paper} variant="outlined">
           <Table size="medium">
             <TableHead>
-              <TableRow sx={{ backgroundColor: "action.hover" }}>
+              <TableRow sx={{ backgroundColor: 'action.hover' }}>
                 <TableCell width="30%">Nombre</TableCell>
                 <TableCell width="30%">Email</TableCell>
-                <TableCell width="20%">Rol</TableCell>
-                <TableCell width="20%">Estado</TableCell>
+                <TableCell width="15%">Rol</TableCell>
+                <TableCell width="15%">Estado</TableCell>
+                <TableCell width="10%" align="right">
+                  Acciones
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -141,9 +185,9 @@ function UsersTable() {
                   sx={{ opacity: isPlaceholderData ? 0.5 : 1 }}
                 >
                   <TableCell
-                    sx={{ color: !user.name ? "text.secondary" : "inherit" }}
+                    sx={{ color: !user.name ? 'text.secondary' : 'inherit' }}
                   >
-                    {user.name || "N/A"}
+                    {user.name || 'N/A'}
                     {currentUser?.id === user.id && (
                       <Chip
                         label="Tú"
@@ -156,18 +200,23 @@ function UsersTable() {
                   <TableCell
                     sx={{
                       maxWidth: 200,
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
                     }}
                   >
                     {user.email}
                   </TableCell>
                   <TableCell>
-                    {user.is_superuser ? "Admin" : "Usuario"}
+                    {user.is_superuser ? 'Admin' : 'Usuario'}
                   </TableCell>
                   <TableCell>
-                    {user.is_active ? "Activo" : "Inactivo"}
+                    {user.is_active ? 'Activo' : 'Inactivo'}
+                  </TableCell>
+                  <TableCell align="right">
+                    <IconButton onClick={(e) => handleOpenMenu(e, user)}>
+                      <Iconify icon="custom:menu-duotone" />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
@@ -188,6 +237,8 @@ function UsersTable() {
           />
         </TableContainer>
       )}
+
+      {renderMenuActions(selectedUser)}
     </>
   )
 }
@@ -195,7 +246,7 @@ function UsersTable() {
 export default function AdminUsersPage() {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null)
   const { user } = useAuth()
-  
+
   useEffect(() => {
     if (user) setIsAdmin(user.is_superuser)
   }, [user])
@@ -205,9 +256,7 @@ export default function AdminUsersPage() {
 
   return (
     <DashboardContent maxWidth="xl">
-      <Typography variant="h4">
-        Gestión de usuarios
-      </Typography>
+      <Typography variant="h4">Gestión de usuarios</Typography>
 
       <UsersTable />
     </DashboardContent>
