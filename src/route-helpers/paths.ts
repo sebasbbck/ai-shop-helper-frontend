@@ -1,26 +1,26 @@
 // ----------------------------------------------------------------------
 
 const ROOTS = {
-  AUTH: '/$lang/auth',
-  DASHBOARD: '/$lang/dashboard',
-  AGENTS: '/$lang/agents',
-  BLOGWRITER: '/$lang/blog-writer',
-  CONNECTION: '/$lang/connection',
-  ADMINPANEL: '/$lang/admin',
-  SETTINGS: '/$lang/settings',
+  AUTH: '/auth',
+  DASHBOARD: '/dashboard',
+  AGENTS: '/agents',
+  BLOGWRITER: '/blog-writer',
+  CONNECTION: '/connection',
+  ADMINPANEL: '/admin',
+  SETTINGS: '/settings',
 }
 
 // ----------------------------------------------------------------------
 
 export const paths = {
-  faqs: '/$lang/faqs',
+  faqs: '/faqs',
   minimalStore: 'https://mui.com/store/items/minimal-dashboard/',
-  team: '/$lang/team',
-  inbox: '/$lang/inbox',
-  integrations: '/$lang/integrations',
-  referrals: '/$lang/referrals',
-  oldSettings: '/$lang/old-settings',
-  login: '/$lang/login',
+  team: '/team',
+  inbox: '/inbox',
+  integrations: '/integrations',
+  referrals: '/referrals',
+  oldSettings: '/old-settings',
+  login: '/login',
   // AUTH
   auth: {
     amplify: {
@@ -49,7 +49,7 @@ export const paths = {
   },
   // DASHBOARD
   dashboard: {
-    root: '/$lang',
+    root: '',
     team: `${ROOTS.DASHBOARD}/team`,
     inbox: `${ROOTS.DASHBOARD}/inbox`,
     integrations: `${ROOTS.DASHBOARD}/integrations`,
