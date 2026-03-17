@@ -28,11 +28,9 @@ ENV NODE_ENV=production \
     PORT=3000 \
     HOSTNAME="0.0.0.0"
 
-ARG BACKEND_URL="https://dev.aishophelper.ai/api/v1"
+ARG BACKEND_URL
 
 ENV NEXT_PUBLIC_BACKEND_URL=${BACKEND_URL}
-
-ENV BACKEND_URL=${BACKEND_URL}
 
 RUN groupadd --system --gid 1001 nodejs && \
     useradd --system --uid 1001 --no-log-init -g nodejs nextjs
