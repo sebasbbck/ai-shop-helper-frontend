@@ -15,6 +15,9 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
+ARG BACKEND_URL
+ENV NEXT_PUBLIC_BACKEND_URL=${BACKEND_URL}
+
 RUN bun run generate-client
 RUN bun run build
 
