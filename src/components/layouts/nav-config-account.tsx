@@ -6,7 +6,7 @@ import { Iconify } from '../../components/iconify'
 export const _account = [
   {
     label: 'layout.profile',
-    href: paths.settings.general,
+    href: paths.settings.root,
     icon: <Iconify icon="custom:profile-duotone" />,
   },
   {
@@ -24,11 +24,6 @@ export const _account = [
     label: 'layout.notifications',
     href: paths.settings.notifications,
     icon: <Iconify icon="solar:bell-bing-bold-duotone" />,
-  },
-  {
-    label: 'layout.security',
-    href: paths.settings.changePassword,
-    icon: <Iconify icon="solar:shield-keyhole-bold-duotone" />,
   },
   {
     label: 'layout.appearance',

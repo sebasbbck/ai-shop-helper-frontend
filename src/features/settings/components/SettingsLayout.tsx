@@ -19,7 +19,7 @@ export const SettingsLayout = ({ children, ...other }: SettingsLayoutProps) => {
   const { t } = useTranslation()
 
   const validPaths = [
-    paths.settings.general,
+    paths.settings.root,
     paths.settings.projects,
     paths.settings.billing,
     paths.settings.notifications,
@@ -36,8 +36,8 @@ export const SettingsLayout = ({ children, ...other }: SettingsLayoutProps) => {
           iconPosition="start"
           component={NextLink}
           label={t('translation:layout.general')}
-          value={paths.settings.general}
-          href={paths.settings.general}
+          value={paths.settings.root}
+          href={paths.settings.root}
         />
         <Tab
           icon={<Iconify width={24} icon="fluent:briefcase-24-filled" />}
@@ -60,13 +60,6 @@ export const SettingsLayout = ({ children, ...other }: SettingsLayoutProps) => {
           label={t('translation:layout.notifications')}
           value={paths.settings.notifications}
           href={paths.settings.notifications}
-        />
-        <Tab
-          icon={<Iconify width={24} icon="solar:password-minimalistic-bold" />}
-          component={NextLink}
-          label={t('translation:layout.change_password')}
-          value={paths.settings.changePassword}
-          href={paths.settings.changePassword}
         />
         <Tab
           icon={<Iconify width={24} icon="solar:pallete-2-bold" />}
