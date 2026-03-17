@@ -15,6 +15,9 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
+ARG BACKEND_URL
+ENV NEXT_PUBLIC_BACKEND_URL=${BACKEND_URL}
+
 RUN bun run generate-client
 RUN bun run build
 
@@ -27,10 +30,6 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production \
     PORT=3000 \
     HOSTNAME="0.0.0.0"
-
-ARG BACKEND_URL
-
-ENV NEXT_PUBLIC_BACKEND_URL=${BACKEND_URL}
 
 RUN groupadd --system --gid 1001 nodejs && \
     useradd --system --uid 1001 --no-log-init -g nodejs nextjs
