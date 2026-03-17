@@ -12,6 +12,10 @@ export const AXIOS_INSTANCE = Axios.create({
 // Auth and i18n handler
 AXIOS_INSTANCE.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    console.log('Request Base URL:', config.baseURL) // Debugging log
+    console.log('Request URL:', config.url) // Debugging log
+    console.log('Config:', config) // Debugging log
+    
     const token =
       typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
