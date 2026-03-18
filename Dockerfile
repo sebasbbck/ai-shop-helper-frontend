@@ -13,13 +13,9 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+ARG BACKEND_URL
+ENV NEXT_PUBLIC_BACKEND_URL=/api/proxy
 ENV NEXT_TELEMETRY_DISABLED=1
-
-# ARG BACKEND_URL
-# ENV NEXT_PUBLIC_BACKEND_URL=${BACKEND_URL}
-ENV BACKEND_URL=https://dev.aishophelper.ai/api/v1
-ENV NEXT_PUBLIC_BACKEND_URL=/api/proxy 
-
 
 RUN bun run generate-client
 RUN bun run build
