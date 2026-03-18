@@ -20,7 +20,8 @@ export default async function handler(
 
   try {
     const targetUrl = new URL(`${backend.replace(/\/$/, '')}/${pathString}`)
-    
+    console.log('[proxy]', req.method, targetUrl.toString())
+
     // Forward query parameters
     Object.entries(req.query).forEach(([key, value]) => {
       if (key !== 'path' && value) {
