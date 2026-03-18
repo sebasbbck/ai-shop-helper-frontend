@@ -33,6 +33,7 @@ import NextLink from 'next/link'
 import { login } from '../../../../api/auth/auth'
 import { getMe } from '../../../../api/users/users'
 import { getErrorMessage } from '../../../hooks/useHandleError'
+import useAuth from '../../../hooks/useAuth'
 
 // SignInSchema moved into the field-level validation via schemaUtils where needed
 
@@ -43,6 +44,7 @@ export default function LoginForm() {
   const showPassword = useBoolean()
   // const { showInfoToast } = useCustomToast()
   const { t } = useTranslation()
+  const { loginMutation } = useAuth()
   // const params = useParams({ from: '/$lang' })
 
   const defaultValues = {
@@ -65,12 +67,11 @@ export default function LoginForm() {
   const onSubmit = async (data: any) => {
     try {
       setIsSubmitting(true)
-
-      await login({
+      await loginMutation.mutateAsync({
         username: data.username,
         password: data.password,
         grant_type: 'password',
-      }).then((data) => localStorage.setItem('token', data.access_token))
+      })
 
       // optionally refresh user
       try {

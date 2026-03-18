@@ -1,13 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import { login, register, logout as logoutApi } from '../../api/auth/auth'
 import { useGetMe, getGetMeQueryKey } from '../../api/users/users'
-import type { BodyAuthLogin, UserPublic, UserCreate } from '../../api/model'
+import type { BodyAuthLogin, UserCreate } from '../../api/model'
 import useHandleError from './useHandleError'
-import { useTranslation } from 'next-i18next'
-import { setToken, getToken, clearToken } from '../utils/token'
+import { clearToken } from '../utils/token'
 
 const isLoggedIn = () => {
   return localStorage.getItem('token') !== null
@@ -17,7 +16,6 @@ const useAuth = () => {
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
   const queryClient = useQueryClient()
-  const { t } = useTranslation()
   const handleError = useHandleError()
 
   const { data: user, refetch } = useGetMe({
@@ -41,7 +39,7 @@ const useAuth = () => {
 
   const performLogin = async (credentials: BodyAuthLogin) => {
     const response = await login(credentials)
-    setToken(response.access_token)
+    localStorage.setItem('token', response.access_token)
   }
 
   const loginMutation = useMutation({
@@ -50,7 +48,7 @@ const useAuth = () => {
       // Invalidate and refetch the user query after successful login
       await queryClient.invalidateQueries({ queryKey: getGetMeQueryKey() })
       await refetch()
-      router.push('/')
+      router.replace('/')
     },
     onError: (err: unknown) => {
       handleError(err)
@@ -59,13 +57,11 @@ const useAuth = () => {
 
   const logout = async () => {
     try {
-      // Call the logout API endpoint
       await logoutApi()
     } catch (e) {
       // Continue with logout even if API call fails
       console.warn('Error calling logout API:', e)
     } finally {
-      // Clear local state
       clearToken()
 
       // Clear react-query cache to avoid leaking previous user's cached data

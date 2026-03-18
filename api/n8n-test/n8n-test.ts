@@ -197,13 +197,14 @@ export function useGetTask<TData = Awaited<ReturnType<typeof getTask>>, TError =
  * @summary N8N Callback
  */
 export const n8nCallback = (
+    taskId: string,
     n8nCallbackBody: BodyType<N8nCallbackBody>,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
       
       
       return customInstance<N8nCallback200>(
-      {url: `/n8n-test/n8n-callback`, method: 'POST',
+      {url: `/n8n-test/n8n-callback/${taskId}`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: n8nCallbackBody, signal
     },
@@ -213,8 +214,8 @@ export const n8nCallback = (
 
 
 export const getN8nCallbackMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof n8nCallback>>, TError,{data: BodyType<N8nCallbackBody>}, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof n8nCallback>>, TError,{data: BodyType<N8nCallbackBody>}, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof n8nCallback>>, TError,{taskId: string;data: BodyType<N8nCallbackBody>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof n8nCallback>>, TError,{taskId: string;data: BodyType<N8nCallbackBody>}, TContext> => {
 
 const mutationKey = ['n8nCallback'];
 const {mutation: mutationOptions, request: requestOptions} = options ?
@@ -226,10 +227,10 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof n8nCallback>>, {data: BodyType<N8nCallbackBody>}> = (props) => {
-          const {data} = props ?? {};
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof n8nCallback>>, {taskId: string;data: BodyType<N8nCallbackBody>}> = (props) => {
+          const {taskId,data} = props ?? {};
 
-          return  n8nCallback(data,requestOptions)
+          return  n8nCallback(taskId,data,requestOptions)
         }
 
 
@@ -247,11 +248,11 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
  * @summary N8N Callback
  */
 export const useN8nCallback = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof n8nCallback>>, TError,{data: BodyType<N8nCallbackBody>}, TContext>, request?: SecondParameter<typeof customInstance>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof n8nCallback>>, TError,{taskId: string;data: BodyType<N8nCallbackBody>}, TContext>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof n8nCallback>>,
         TError,
-        {data: BodyType<N8nCallbackBody>},
+        {taskId: string;data: BodyType<N8nCallbackBody>},
         TContext
       > => {
       return useMutation(getN8nCallbackMutationOptions(options), queryClient);
