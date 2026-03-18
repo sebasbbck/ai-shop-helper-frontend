@@ -1,17 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import { login, register, logout as logoutApi } from '../../api/auth/auth'
 import { useGetMe, getGetMeQueryKey } from '../../api/users/users'
 import type { BodyAuthLogin, UserPublic, UserCreate } from '../../api/model'
 import useHandleError from './useHandleError'
 import { useTranslation } from 'next-i18next'
-import { setToken, getToken, clearToken } from '../utils/token'
-
-const isLoggedIn = () => {
-  return localStorage.getItem('token') !== null
-}
+import { setAccessToken, clearAccessToken } from '../../api/mutator/custom-instance'
 
 const useAuth = () => {
   const [error, setError] = useState<string | null>(null)
@@ -20,11 +16,7 @@ const useAuth = () => {
   const { t } = useTranslation()
   const handleError = useHandleError()
 
-  const { data: user, refetch } = useGetMe({
-    query: {
-      enabled: typeof window !== 'undefined' && isLoggedIn(),
-    },
-  })
+  const { data: user, refetch } = useGetMe()
 
   const signUpMutation = useMutation({
     mutationFn: (data: UserCreate) => register(data),
@@ -41,13 +33,12 @@ const useAuth = () => {
 
   const performLogin = async (credentials: BodyAuthLogin) => {
     const response = await login(credentials)
-    setToken(response.access_token)
+    setAccessToken(response.access_token)
   }
 
   const loginMutation = useMutation({
     mutationFn: performLogin,
     onSuccess: async () => {
-      // Invalidate and refetch the user query after successful login
       await queryClient.invalidateQueries({ queryKey: getGetMeQueryKey() })
       await refetch()
       router.push('/')
@@ -59,19 +50,12 @@ const useAuth = () => {
 
   const logout = async () => {
     try {
-      // Call the logout API endpoint
       await logoutApi()
     } catch (e) {
-      // Continue with logout even if API call fails
       console.warn('Error calling logout API:', e)
     } finally {
-      // Clear local state
-      clearToken()
-
-      // Clear react-query cache to avoid leaking previous user's cached data
+      clearAccessToken()
       queryClient.clear()
-
-      // Redirect to login
       router.push('/login')
     }
   }
@@ -86,5 +70,4 @@ const useAuth = () => {
   }
 }
 
-export { isLoggedIn }
 export default useAuth

@@ -12,25 +12,24 @@ export default async function handler(
 ) {
   const { path } = req.query
   const pathString = Array.isArray(path) ? path.join('/') : path || ''
-  const backend = process.env.NEXT_PUBLIC_BACKEND_URL
+  const backend = process.env.BACKEND_URL
 
   if (!backend) {
     return res.status(502).json({ error: 'Proxy Configuration Error' })
   }
 
-  const targetUrl = new URL(`${backend.replace(/\/$/, '')}/${pathString}`)
-
-  // Forward query parameters
-  Object.entries(req.query).forEach(([key, value]) => {
-    if (key !== 'path' && value) {
-      targetUrl.searchParams.append(
-        key,
-        Array.isArray(value) ? value[0] : value,
-      )
-    }
-  })
-
   try {
+    const targetUrl = new URL(`${backend.replace(/\/$/, '')}/${pathString}`)
+    
+    // Forward query parameters
+    Object.entries(req.query).forEach(([key, value]) => {
+      if (key !== 'path' && value) {
+        targetUrl.searchParams.append(
+          key,
+          Array.isArray(value) ? value[0] : value,
+        )
+      }
+    })
     // Get the raw body from the stream
     let requestBody: Buffer | undefined = undefined
     if (req.method !== 'GET' && req.method !== 'HEAD') {
@@ -44,6 +43,9 @@ export default async function handler(
         'Content-Type': req.headers['content-type'] || 'application/json',
         Authorization: req.headers['authorization'] || '',
         Cookie: req.headers.cookie || '',
+        ...(req.headers['accept-language'] && {
+          'Accept-Language': req.headers['accept-language'],
+        }),
       },
       // Send the actual buffer
       body: requestBody as BodyInit | undefined,
@@ -51,7 +53,11 @@ export default async function handler(
 
     const cookies = response.headers
       .getSetCookie()
-      .map((cookie) => cookie.replace(/Path=[^;]+/, 'Path=/'))
+      .map((cookie) =>
+        cookie
+          .replace(/;\s*Domain=[^;]+/gi, '')
+          .replace(/Path=[^;]+/, 'Path=/')
+      )
     res.setHeader('Set-Cookie', cookies)
 
     const contentType = response.headers.get('content-type')

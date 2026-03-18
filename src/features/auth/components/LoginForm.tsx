@@ -33,6 +33,7 @@ import NextLink from 'next/link'
 import { login } from '../../../../api/auth/auth'
 import { getMe } from '../../../../api/users/users'
 import { getErrorMessage } from '../../../hooks/useHandleError'
+import { setAccessToken } from '../../../../api/mutator/custom-instance'
 
 // SignInSchema moved into the field-level validation via schemaUtils where needed
 
@@ -66,11 +67,12 @@ export default function LoginForm() {
     try {
       setIsSubmitting(true)
 
-      await login({
+      const response = await login({
         username: data.username,
         password: data.password,
         grant_type: 'password',
-      }).then((data) => localStorage.setItem('token', data.access_token))
+      })
+      setAccessToken(response.access_token)
 
       // optionally refresh user
       try {

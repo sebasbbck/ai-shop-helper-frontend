@@ -26,8 +26,8 @@ export function getErrorMessage(err: any, t?: any) {
       const specificKey = `translation:errors.${statusCode}`
       const fallbackKey = `translation:errors.fallbacks.${statusCode}`
 
-      if (i18n.exists(specificKey)) return t(specificKey)
-      if (i18n.exists(fallbackKey)) return t(fallbackKey)
+      if (i18n.exists(specificKey)) return translate(specificKey)
+      if (i18n.exists(fallbackKey)) return translate(fallbackKey)
     }
 
     return (

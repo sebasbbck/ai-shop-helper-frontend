@@ -9,18 +9,21 @@ export const AXIOS_INSTANCE = Axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 })
 
+let accessToken: string | null = null
+
+export const setAccessToken = (token: string) => {
+  accessToken = token
+}
+
+export const clearAccessToken = () => {
+  accessToken = null
+}
+
 // Auth and i18n handler
 AXIOS_INSTANCE.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    console.log('Request Base URL:', config.baseURL) // Debugging log
-    console.log('Request URL:', config.url) // Debugging log
-    console.log('Config:', config) // Debugging log
-    
-    const token =
-      typeof window !== 'undefined' ? localStorage.getItem('token') : null
-
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`
+    if (accessToken && config.headers) {
+      config.headers.Authorization = `Bearer ${accessToken}`
     }
 
     const lang =
@@ -34,78 +37,79 @@ AXIOS_INSTANCE.interceptors.request.use(
   (error) => Promise.reject(error),
 )
 
-let isRefreshing = false;
-let failedQueue: any[] = [];
+let isRefreshing = false
+let failedQueue: { resolve: (token: string) => void; reject: (err: unknown) => void }[] = []
 
-const processQueue = (error: any, token: string | null = null) => {
+const processQueue = (error: unknown, token: string | null = null) => {
   failedQueue.forEach((prom) => {
     if (error) {
-      prom.reject(error);
+      prom.reject(error)
     } else {
-      prom.resolve(token);
+      prom.resolve(token!)
     }
-  });
-  failedQueue = [];
-};
+  })
+  failedQueue = []
+}
 
 AXIOS_INSTANCE.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config;
+    const originalRequest = error.config
 
     if (!originalRequest || (originalRequest as any)._retry) {
       return Promise.reject(error)
     }
 
-    // If it's not already a refresh/logout attempt
-    const isAuthRequest = 
-      originalRequest.url?.match(/\/auth\/(login|refresh|logout)/) || 
+    const isAuthRequest =
+      originalRequest.url?.match(/\/auth\/(login|refresh|logout)/) ||
       originalRequest.url?.includes('/login')
 
     if (error.response?.status === 401 && !isAuthRequest) {
       if (isRefreshing) {
-        // Queue this request until the refresh is done
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject })
         })
           .then((token) => {
             if (originalRequest.headers) {
-               originalRequest.headers['Authorization'] = `Bearer ${token}`
+              originalRequest.headers['Authorization'] = `Bearer ${token}`
             }
-            return AXIOS_INSTANCE(originalRequest);
+            return AXIOS_INSTANCE(originalRequest)
           })
-          .catch((err) => Promise.reject(err));
+          .catch((err) => Promise.reject(err))
       }
 
-      (originalRequest as any)._retry = true
+      ;(originalRequest as any)._retry = true
       isRefreshing = true
 
       try {
-        const { access_token } = await refresh();
-        localStorage.setItem('token', access_token);
+        const { access_token } = await refresh()
+        setAccessToken(access_token)
         if (originalRequest.headers) {
-           originalRequest.headers['Authorization'] = `Bearer ${access_token}`;
+          originalRequest.headers['Authorization'] = `Bearer ${access_token}`
         }
-        
-        processQueue(null, access_token);
-        return AXIOS_INSTANCE(originalRequest);
+
+        processQueue(null, access_token)
+        return AXIOS_INSTANCE(originalRequest)
       } catch (refreshError) {
-        processQueue(refreshError, null);
-        
-        // If refresh fails, wipe everything locally
-        localStorage.removeItem('token');
-        logout().catch(() => console.warn("Backend logout failed, but the access token has been cleared locally."));
-        
-        window.location.href = '/login';
-        return Promise.reject(refreshError);
+        processQueue(refreshError, null)
+        clearAccessToken()
+        logout().catch(() =>
+          console.warn('Backend logout failed, but the access token has been cleared locally.')
+        )
+        const authPages = ['/login', '/signup', '/recover-password']
+        const onAuthPage = authPages.some((p) => window.location.pathname.startsWith(p))
+        if (!onAuthPage) {
+          window.location.href = '/login'
+        }
+        return Promise.reject(refreshError)
       } finally {
-        isRefreshing = false;
+        isRefreshing = false
       }
     }
 
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
-);
+)
 
 // Add a second `options` argument to pass extra options to each query
 export const customInstance = <T>(
@@ -132,6 +136,3 @@ export type ErrorType<Error> = AxiosError<Error>
 
 // Standard body type
 export type BodyType<BodyData> = BodyData
-
-// Or wrap the body type if processing data before sending
-// export type BodyType<BodyData> = CamelCase<BodyData>;
