@@ -7,7 +7,7 @@ import { useGetMe, getGetMeQueryKey } from '../../api/users/users'
 import type { BodyAuthLogin, UserPublic, UserCreate } from '../../api/model'
 import useHandleError from './useHandleError'
 import { useTranslation } from 'next-i18next'
-import { setAccessToken, clearAccessToken } from '../../api/mutator/custom-instance'
+import { setAccessToken, clearAccessToken, getAccessToken } from '../../api/mutator/custom-instance'
 
 const useAuth = () => {
   const [error, setError] = useState<string | null>(null)
@@ -16,7 +16,11 @@ const useAuth = () => {
   const { t } = useTranslation()
   const handleError = useHandleError()
 
-  const { data: user, refetch } = useGetMe()
+  const { data: user, refetch } = useGetMe({
+    query: {
+      enabled: typeof window !== 'undefined' && !!getAccessToken(),
+    },
+  })
 
   const signUpMutation = useMutation({
     mutationFn: (data: UserCreate) => register(data),

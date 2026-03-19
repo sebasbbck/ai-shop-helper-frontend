@@ -13,17 +13,31 @@ let accessToken: string | null = null
 
 export const setAccessToken = (token: string) => {
   accessToken = token
+  if (typeof window !== 'undefined') {
+    sessionStorage.setItem('access_token', token)
+  }
+}
+
+export const getAccessToken = (): string | null => {
+  if (!accessToken && typeof window !== 'undefined') {
+    accessToken = sessionStorage.getItem('access_token')
+  }
+  return accessToken
 }
 
 export const clearAccessToken = () => {
   accessToken = null
+  if (typeof window !== 'undefined') {
+    sessionStorage.removeItem('access_token')
+  }
 }
 
 // Auth and i18n handler
 AXIOS_INSTANCE.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    if (accessToken && config.headers) {
-      config.headers.Authorization = `Bearer ${accessToken}`
+    const token = getAccessToken()
+    if (token && config.headers) {
+      config.headers.Authorization = `Bearer ${token}`
     }
 
     const lang =
