@@ -13,6 +13,8 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+ARG BACKEND_URL
+ENV NEXT_PUBLIC_BACKEND_URL=/api/proxy
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN bun run generate-client

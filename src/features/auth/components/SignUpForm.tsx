@@ -15,7 +15,6 @@ import * as z from 'zod'
 import { FormHead } from './FormHead'
 import { SignUpTerms } from './SignUpTerms'
 import { Iconify } from '../../../components/iconify/iconify'
-// import useAuth, { isLoggedIn } from "../hooks/useAuth"
 // import { getErrorMessage } from "@/utils"
 // import Collapse from "@mui/material/Collapse"
 import useCustomToast from '../../../hooks/useCustomToast'

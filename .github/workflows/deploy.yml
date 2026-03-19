@@ -1,0 +1,87 @@
+name: Build and Deploy Frontend
+
+on:
+  push:
+    branches:
+      - main
+      - production
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: eu-south-2
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🌍 Set environment variables
+        run: |
+          if [ "${{ github.ref }}" = "refs/heads/production" ]; then
+            ENVIRONMENT=prod
+          else
+            ENVIRONMENT=dev
+          fi
+          echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
+          echo "ECR_REPOSITORY=${ENVIRONMENT}-ai-shop-helper-frontend-ecr" >> $GITHUB_ENV
+          echo "ECS_CLUSTER=${ENVIRONMENT}-ai-shop-helper-cluster" >> $GITHUB_ENV
+          echo "ECS_SERVICE=${ENVIRONMENT}-ai-shop-helper-frontend" >> $GITHUB_ENV
+
+      - name: 🔐 Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: 🔑 Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: 📡 Get backend URL from SSM Parameter Store
+        id: get-backend-url
+        run: |
+          BACKEND_URL=$(aws ssm get-parameter \
+            --name "/ai-shop-helper/${{ env.ENVIRONMENT }}/backend-url" \
+            --query 'Parameter.Value' \
+            --output text)
+          echo "backend_url=$BACKEND_URL" >> $GITHUB_OUTPUT
+
+      - name: 🐳 Build, tag, and push image to ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+          BACKEND_URL: ${{ steps.get-backend-url.outputs.backend_url }}
+        run: |
+          docker build --build-arg BACKEND_URL=$BACKEND_URL \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+      - name: 📥 Download app task definition
+        run: |
+          aws ecs describe-task-definition \
+            --task-definition ${{ env.ECS_SERVICE }} \
+            --query taskDefinition \
+            > task-definition.json
+
+      - name: 🔧 Render app task definition with new image
+        id: render-app
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: frontend
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+
+      - name: 🚀 Deploy to ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{ steps.render-app.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
