@@ -36,6 +36,7 @@ import {
 } from '../../../../api/orgs/orgs'
 import { OrgPublic } from '../../../../api/model'
 import { OrgsCreateOrgBody } from '../../../../api/orgs/orgs.zod'
+import { OrgMembersDialog } from '../orgs/components/OrgMembersDialog'
 
 // ----------------------------------------------------------------------
 
@@ -65,8 +66,9 @@ export function SettingsOrgs() {
   const { t } = useTranslation()
   const router = useRouter()
 
-  // const [selectedProjectForMembers, setSelectedProjectForMembers] = useState<Project | null>(null)
-  // const openMembersDialog = !!selectedProjectForMembers
+  const [selectedOrgForMembers, setSelectedOrgForMembers] =
+    useState<OrgPublic | null>(null)
+  const openMembersDialog = !!selectedOrgForMembers
 
   // const [selectedProjectForEdit, setSelectedProjectForEdit] = useState<Project | null>(null)
   // const openEditDialog = !!selectedProjectForEdit
@@ -493,15 +495,15 @@ export function SettingsOrgs() {
       </Card>
 
       {renderFormCreateFormDialog()}
-      {/*
-      {selectedProjectForMembers &&
-        <ProjectMembersDialog 
-          open={openMembersDialog} 
-          project={selectedProjectForMembers}
-          onClose={() => setSelectedProjectForMembers(null)}
-        />
-      }
 
+      {selectedOrgForMembers && (
+        <OrgMembersDialog
+          open={openMembersDialog}
+          org={selectedOrgForMembers}
+          onClose={() => setSelectedOrgForMembers(null)}
+        />
+      )}
+      {/*
       {selectedProjectForEdit &&
         <ProjectEditDialog 
           open={openEditDialog} 
