@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useRouter } from 'next/router'
 import useCustomToast from './useCustomToast'
-import { i18n } from 'next-i18next'
+import { i18n, useTranslation } from 'next-i18next'
 import { AxiosError } from 'axios'
 
 export interface ErrorHandleResult {
@@ -22,7 +22,7 @@ export function getErrorMessage(err: any, t?: any) {
     }
 
     // Try specific status code translations
-    if (statusCode) {
+    if (statusCode && t) {
       const specificKey = `translation:errors.${statusCode}`
       const fallbackKey = `translation:errors.fallbacks.${statusCode}`
 
@@ -38,8 +38,8 @@ export function getErrorMessage(err: any, t?: any) {
   return err?.message || translate('translation:errors.fallbacks.default')
 }
 
-export const handleError = (err: any): ErrorHandleResult => {
-  const errorMessage = getErrorMessage(err)
+export const handleError = (err: any, t?: any): ErrorHandleResult => {
+  const errorMessage = getErrorMessage(err, t)
 
   if (err instanceof AxiosError && err.status === 402) {
     return { message: errorMessage, shouldRedirectToBilling: true }
@@ -50,11 +50,12 @@ export const handleError = (err: any): ErrorHandleResult => {
 
 export default function useHandleError() {
   const { showErrorToast } = useCustomToast()
+  const { t } = useTranslation()
   const router = useRouter()
 
   return useCallback(
     (err: any) => {
-      const result: ErrorHandleResult = handleError(err)
+      const result: ErrorHandleResult = handleError(err, t)
 
       showErrorToast(result.message)
 

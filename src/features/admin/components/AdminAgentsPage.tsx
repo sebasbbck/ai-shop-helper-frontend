@@ -19,29 +19,33 @@ import {
   MenuList,
   MenuItem,
   IconButton,
+  Button,
 } from '@mui/material'
 import { useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
 // import AddUser from "/components/Admin/AddUser"
 import useAuth from '../../../hooks/useAuth'
-import { UserPublic } from '../../../../api/model'
-import { useGetUsers } from '../../../../api/users/users'
+import { AgentPublic, UserPublic } from '../../../../api/model'
 import EditUser from './EditUser'
 import { usePopover } from 'minimal-shared/hooks'
 import { CustomPopover } from '../../../components/custom-popover'
 import { Iconify } from '../../../components/iconify'
 import DeleteUser from './DeleteUser'
+import { useGetAgents } from '../../../../api/agents/agents'
+import AddAgent from './AddAgent'
+import DeleteAgent from './DeleteAgent'
+import EditAgent from './EditAgent'
 
-function UsersTable() {
+function AgentsTable() {
   const queryClient = useQueryClient()
   const { user: currentUser } = useAuth()
-  const [selectedUser, setSelectedUser] = useState<UserPublic | null>(null)
+  const [selectedAgent, setSelectedAgent] = useState<AgentPublic | null>(null)
   const router = useRouter()
 
   const page = Number(router.query.page) || 1
   const [perPage, setPerPage] = useState(10)
 
-  const { data, isLoading, isPlaceholderData } = useGetUsers(
+  const { data, isLoading, isPlaceholderData } = useGetAgents(
     {
       offset: (page - 1) * perPage,
       limit: perPage,
@@ -65,7 +69,7 @@ function UsersTable() {
     )
   }
 
-  const users = data?.items ?? []
+  const agents = data?.items ?? []
   const count = data?.total ?? 0
   const totalPages = Math.ceil(count / perPage)
 
@@ -113,7 +117,7 @@ function UsersTable() {
   }
 
   const menuActions = usePopover()
-  const renderMenuActions = (user: UserPublic) => {
+  const renderMenuActions = (agent: AgentPublic) => {
     return (
       <CustomPopover
         open={menuActions.open}
@@ -130,8 +134,8 @@ function UsersTable() {
       >
         <MenuList>
           <Box style={{ marginBottom: '4px' }}>
-            <EditUser user={user} closeParent={menuActions.onClose} />
-            <DeleteUser user={user} closeParent={menuActions.onClose} />
+            <EditAgent agent={agent} closeParent={menuActions.onClose} />
+            <DeleteAgent agent={agent} closeParent={menuActions.onClose} />
           </Box>
         </MenuList>
       </CustomPopover>
@@ -140,9 +144,9 @@ function UsersTable() {
 
   const handleOpenMenu = (
     event: React.MouseEvent<HTMLElement>,
-    user: UserPublic,
+    agent: AgentPublic,
   ) => {
-    setSelectedUser(user)
+    setSelectedAgent(agent)
     menuActions.onOpen(event)
   }
 
@@ -156,14 +160,10 @@ function UsersTable() {
 
   return (
     <>
-      <Box display="flex" justifyContent="flex-end" alignItems="center" mb={2}>
-        {/* <AddUser /> */}
-      </Box>
-
-      {users.length === 0 ? (
+      {agents.length === 0 ? (
         <Box mt={8} mb={4} width="100%" textAlign="center">
           <Typography variant="subtitle1" fontWeight="bold">
-            No se encontraron usuarios.
+            No se encontraron agentes.
           </Typography>
         </Box>
       ) : (
@@ -172,33 +172,20 @@ function UsersTable() {
             <TableHead>
               <TableRow sx={{ backgroundColor: 'action.hover' }}>
                 <TableCell width="30%">Nombre</TableCell>
-                <TableCell width="30%">Email</TableCell>
-                <TableCell width="15%">Rol</TableCell>
-                <TableCell width="15%">Estado</TableCell>
+                <TableCell width="45%">Descripción</TableCell>
+                <TableCell width="15%">Última actualización</TableCell>
                 <TableCell width="10%" align="right">
                   Acciones
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {users.map((user: UserPublic) => (
+              {agents.map((agent: AgentPublic) => (
                 <TableRow
-                  key={user.id}
+                  key={agent.id}
                   sx={{ opacity: isPlaceholderData ? 0.5 : 1 }}
                 >
-                  <TableCell
-                    sx={{ color: !user.name ? 'text.secondary' : 'inherit' }}
-                  >
-                    {user.name || 'N/A'}
-                    {currentUser?.id === user.id && (
-                      <Chip
-                        label="Tú"
-                        size="small"
-                        color="primary"
-                        sx={{ ml: 1 }}
-                      />
-                    )}
-                  </TableCell>
+                  <TableCell>{agent.name}</TableCell>
                   <TableCell
                     sx={{
                       maxWidth: 200,
@@ -207,16 +194,15 @@ function UsersTable() {
                       textOverflow: 'ellipsis',
                     }}
                   >
-                    {user.email}
+                    {agent.description}
                   </TableCell>
                   <TableCell>
-                    {user.is_superuser ? 'Admin' : 'Usuario'}
-                  </TableCell>
-                  <TableCell>
-                    {user.is_active ? 'Activo' : 'Inactivo'}
+                    {new Date(agent.updated_at).toLocaleString('es-ES', {
+                      timeZone: 'Europe/Madrid',
+                    })}
                   </TableCell>
                   <TableCell align="right">
-                    <IconButton onClick={(e) => handleOpenMenu(e, user)}>
+                    <IconButton onClick={(e) => handleOpenMenu(e, agent)}>
                       <Iconify icon="custom:menu-duotone" />
                     </IconButton>
                   </TableCell>
@@ -240,12 +226,12 @@ function UsersTable() {
         </TableContainer>
       )}
 
-      {renderMenuActions(selectedUser)}
+      {renderMenuActions(selectedAgent)}
     </>
   )
 }
 
-export default function AdminUsersPage() {
+export default function AdminAgentsPage() {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null)
   const { user } = useAuth()
 
@@ -258,9 +244,11 @@ export default function AdminUsersPage() {
 
   return (
     <DashboardContent maxWidth="xl">
-      <Typography variant="h4">Gestión de usuarios</Typography>
-
-      <UsersTable />
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
+        <Typography variant="h4">Gestión de agentes</Typography>
+        <AddAgent />
+      </Box>
+      <AgentsTable />
     </DashboardContent>
   )
 }
