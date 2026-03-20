@@ -10,6 +10,7 @@ import { useTranslation } from 'next-i18next'
 import {
   setAccessToken,
   clearAccessToken,
+  getAccessToken,
 } from '../../api/mutator/custom-instance'
 
 const useAuth = () => {
@@ -18,7 +19,11 @@ const useAuth = () => {
   const queryClient = useQueryClient()
   const handleError = useHandleError()
 
-  const { data: user, refetch } = useGetMe()
+  const { data: user, refetch } = useGetMe({
+    query: {
+      enabled: typeof window !== 'undefined' && !!getAccessToken(),
+    },
+  })
 
   const signUpMutation = useMutation({
     mutationFn: (data: UserCreate) => register(data),
