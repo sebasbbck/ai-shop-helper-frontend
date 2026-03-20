@@ -11,16 +11,16 @@ import MenuItem from '@mui/material/MenuItem'
 
 import useCustomToast from '../../../hooks/useCustomToast'
 import useHandleError from '../../../hooks/useHandleError'
-import { UserPublic } from '../../../../api/model'
-import { useDeleteUser } from '../../../../api/users/users'
+import { AgentPublic } from '../../../../api/model'
 import { Iconify } from '../../../components/iconify'
+import { useDeleteAgent } from '../../../../api/agents/agents'
 import { themeConfig } from '../../../theme'
 
-export default function DeleteUser({
-  user,
+export default function DeleteAgent({
+  agent,
   closeParent,
 }: {
-  user: UserPublic
+  agent: AgentPublic
   closeParent?: any
 }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -32,13 +32,13 @@ export default function DeleteUser({
         sx={{ color: themeConfig.palette.error.main }}
       >
         <Iconify icon="solar:trash-bin-trash-bold" sx={{ mr: 1 }} />
-        Eliminar usuario
+        Eliminar agente
       </MenuItem>
 
       {/* Only render the form logic when the dialog is actually open */}
       {isOpen && (
-        <DeleteUserForm
-          user={user}
+        <DeleteAgentForm
+          agent={agent}
           open={isOpen}
           onClose={() => {
             setIsOpen(false)
@@ -50,12 +50,12 @@ export default function DeleteUser({
   )
 }
 
-function DeleteUserForm({
-  user,
+function DeleteAgentForm({
+  agent,
   open,
   onClose,
 }: {
-  user: UserPublic
+  agent: AgentPublic
   open: boolean
   onClose: () => void
 }) {
@@ -74,10 +74,10 @@ function DeleteUserForm({
     formState: { isSubmitting },
   } = methods
 
-  const deleteMutation = useDeleteUser({
+  const deleteMutation = useDeleteAgent({
     mutation: {
       onSuccess: () => {
-        showSuccessToast('Usuario eliminado con éxito')
+        showSuccessToast('Agente eliminado con éxito')
         onClose()
         reset(undefined, { keepValues: true })
       },
@@ -85,22 +85,22 @@ function DeleteUserForm({
         handleError(err)
       },
       onSettled: () => {
-        queryClient.invalidateQueries({ queryKey: ['users'] })
+        queryClient.invalidateQueries({ queryKey: ['agents'] })
       },
     },
   })
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    deleteMutation.mutate({ userId: user.id })
+    deleteMutation.mutate({ agentId: agent.id })
   }
 
   return (
     <Dialog fullWidth={true} maxWidth="sm" open={open} onClose={onClose}>
-      <DialogTitle>Eliminar usuario</DialogTitle>
+      <DialogTitle>Eliminar agente</DialogTitle>
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
           <DialogContentText mb={4}>
-            Todos los ítems asociados con este usuario también serán{' '}
+            Todos los pasos y las acciones del agente también serán{' '}
             <strong>eliminados permanentemente.</strong> ¿Estás seguro? No se
             podrá deshacer esta acción.
           </DialogContentText>

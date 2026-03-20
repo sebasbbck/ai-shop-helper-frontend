@@ -33,6 +33,8 @@ import { Iconify } from '../../../components/iconify'
 import DeleteUser from './DeleteUser'
 import { useGetAgents } from '../../../../api/agents/agents'
 import AddAgent from './AddAgent'
+import DeleteAgent from './DeleteAgent'
+import EditAgent from './EditAgent'
 
 function AgentsTable() {
   const queryClient = useQueryClient()
@@ -115,7 +117,7 @@ function AgentsTable() {
   }
 
   const menuActions = usePopover()
-  const renderMenuActions = (user: UserPublic) => {
+  const renderMenuActions = (agent: AgentPublic) => {
     return (
       <CustomPopover
         open={menuActions.open}
@@ -132,23 +134,21 @@ function AgentsTable() {
       >
         <MenuList>
           <Box style={{ marginBottom: '4px' }}>
-            <EditUser user={user} closeParent={menuActions.onClose} />
-            <DeleteUser user={user} closeParent={menuActions.onClose} />
+            <EditAgent agent={agent} closeParent={menuActions.onClose} />
+            <DeleteAgent agent={agent} closeParent={menuActions.onClose} />
           </Box>
         </MenuList>
       </CustomPopover>
     )
   }
 
-  /*
   const handleOpenMenu = (
     event: React.MouseEvent<HTMLElement>,
-    user: UserPublic,
+    agent: AgentPublic,
   ) => {
-    setSelectedUser(user)
+    setSelectedAgent(agent)
     menuActions.onOpen(event)
   }
-  */
 
   if (isLoading) {
     return (
@@ -202,9 +202,7 @@ function AgentsTable() {
                     })}
                   </TableCell>
                   <TableCell align="right">
-                    <IconButton
-                    // onClick={(e) => handleOpenMenu(e, user)}
-                    >
+                    <IconButton onClick={(e) => handleOpenMenu(e, agent)}>
                       <Iconify icon="custom:menu-duotone" />
                     </IconButton>
                   </TableCell>
@@ -228,9 +226,7 @@ function AgentsTable() {
         </TableContainer>
       )}
 
-      {
-        // renderMenuActions(selectedUser)
-      }
+      {renderMenuActions(selectedAgent)}
     </>
   )
 }
