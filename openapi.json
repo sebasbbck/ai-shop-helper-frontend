@@ -2339,24 +2339,35 @@
         }
       }
     },
-    "/n8n-test/n8n-callback": {
+    "/n8n-test/n8n-callback/{task_id}": {
       "post": {
         "tags": [
           "n8n-test"
         ],
         "summary": "N8N Callback",
         "operationId": "n8n-test-n8n_callback",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "additionalProperties": true,
                 "type": "object",
+                "additionalProperties": true,
                 "title": "Payload"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -2364,8 +2375,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
                   "type": "object",
+                  "additionalProperties": true,
                   "title": "Response N8N-Test-N8N Callback"
                 }
               }
