@@ -10,6 +10,11 @@ export const _account = [
     icon: <Iconify icon="custom:profile-duotone" />,
   },
   {
+    label: 'layout.orgs',
+    href: paths.settings.orgs,
+    icon: <Iconify icon="solar:buildings-bold-duotone" />,
+  },
+  {
     label: 'layout.projects',
     href: paths.settings.projects,
     icon: <Iconify icon="solar:notes-bold-duotone" />,
