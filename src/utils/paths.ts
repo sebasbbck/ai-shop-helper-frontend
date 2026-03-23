@@ -83,6 +83,7 @@ export const paths = {
     agents: `${ROOTS.ADMINPANEL}/agents`,
     subscriptions: `${ROOTS.ADMINPANEL}/subscriptions`,
     settings: `${ROOTS.ADMINPANEL}/settings`,
+    roles: `${ROOTS.ADMINPANEL}/roles`,
   },
   // SETTINGS
   settings: {

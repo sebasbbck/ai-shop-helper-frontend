@@ -13,7 +13,7 @@ import useCustomToast from '../../../hooks/useCustomToast'
 import useHandleError from '../../../hooks/useHandleError'
 import { Field, Form } from '../../../components/hook-form'
 import { UserAdminUpdate, UserPublic } from '../../../../api/model'
-import { useUpdateUser } from '../../../../api/users/users'
+import { getGetUsersQueryKey, useUpdateUser } from '../../../../api/users/users'
 import MenuItem from '@mui/material/MenuItem'
 import { Iconify } from '../../../components/iconify'
 
@@ -100,7 +100,7 @@ function EditUserForm({
         handleError(err)
       },
       onSettled: () => {
-        queryClient.invalidateQueries({ queryKey: ['users'] })
+        queryClient.invalidateQueries({ queryKey: getGetUsersQueryKey() })
       },
     },
   })
