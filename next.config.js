@@ -8,4 +8,5 @@ module.exports = {
     locales: ['en', 'es', 'fr', 'de', 'pt'],
   },
   output: 'standalone',
+  skipTrailingSlashRedirect: true,
 }

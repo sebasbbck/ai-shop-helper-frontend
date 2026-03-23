@@ -7,6 +7,7 @@ import { logout, refresh } from '../auth/auth'
 
 export const AXIOS_INSTANCE = Axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
+  withCredentials: true,
 })
 
 let accessToken: string | null = null
