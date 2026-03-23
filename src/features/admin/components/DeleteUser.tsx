@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem'
 import useCustomToast from '../../../hooks/useCustomToast'
 import useHandleError from '../../../hooks/useHandleError'
 import { UserPublic } from '../../../../api/model'
-import { useDeleteUser } from '../../../../api/users/users'
+import { getGetUsersQueryKey, useDeleteUser } from '../../../../api/users/users'
 import { Iconify } from '../../../components/iconify'
 import { themeConfig } from '../../../theme'
 
@@ -85,7 +85,7 @@ function DeleteUserForm({
         handleError(err)
       },
       onSettled: () => {
-        queryClient.invalidateQueries({ queryKey: ['users'] })
+        queryClient.invalidateQueries({ queryKey: getGetUsersQueryKey() })
       },
     },
   })

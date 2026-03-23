@@ -13,7 +13,10 @@ import useCustomToast from '../../../hooks/useCustomToast'
 import useHandleError from '../../../hooks/useHandleError'
 import { AgentPublic } from '../../../../api/model'
 import { Iconify } from '../../../components/iconify'
-import { useDeleteAgent } from '../../../../api/agents/agents'
+import {
+  getGetAgentsQueryKey,
+  useDeleteAgent,
+} from '../../../../api/agents/agents'
 import { themeConfig } from '../../../theme'
 
 export default function DeleteAgent({
@@ -85,7 +88,7 @@ function DeleteAgentForm({
         handleError(err)
       },
       onSettled: () => {
-        queryClient.invalidateQueries({ queryKey: ['agents'] })
+        queryClient.invalidateQueries({ queryKey: getGetAgentsQueryKey() })
       },
     },
   })

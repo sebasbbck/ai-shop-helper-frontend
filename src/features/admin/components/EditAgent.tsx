@@ -21,7 +21,10 @@ import {
 import { useUpdateUser } from '../../../../api/users/users'
 import MenuItem from '@mui/material/MenuItem'
 import { Iconify } from '../../../components/iconify'
-import { useUpdateAgent } from '../../../../api/agents/agents'
+import {
+  getGetAgentsQueryKey,
+  useUpdateAgent,
+} from '../../../../api/agents/agents'
 
 interface EditUserProps {
   user: UserPublic
@@ -97,7 +100,7 @@ function EditAgentForm({
         handleError(err)
       },
       onSettled: () => {
-        queryClient.invalidateQueries({ queryKey: ['agents'] })
+        queryClient.invalidateQueries({ queryKey: getGetAgentsQueryKey() })
       },
     },
   })
