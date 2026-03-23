@@ -32,6 +32,12 @@ export const navData = [
         visible: (user: UserPublic) => user?.is_superuser,
       },
       {
+        title: 'Agentes',
+        path: paths.adminPanel.agents,
+        icon: <Iconify width={18} icon="solar:user-hand-up-bold-duotone" />,
+        visible: (user: UserPublic) => user?.is_superuser,
+      },
+      {
         title: 'Volver a la app',
         path: '/',
         // render this item in the bottom nav area
