@@ -19,7 +19,8 @@ export const SettingsLayout = ({ children, ...other }: SettingsLayoutProps) => {
   const { t } = useTranslation()
 
   const validPaths = [
-    paths.settings.general,
+    paths.settings.root,
+    paths.settings.orgs,
     paths.settings.projects,
     paths.settings.billing,
     paths.settings.notifications,
@@ -32,22 +33,29 @@ export const SettingsLayout = ({ children, ...other }: SettingsLayoutProps) => {
     <DashboardContent {...other}>
       <Tabs value={currentTab} onChange={() => {}} sx={{ mb: 3 }}>
         <Tab
-          icon={<Iconify width={24} icon="solar:user-id-bold" />}
+          icon={<Iconify width={24} icon="custom:profile-duotone" />}
           iconPosition="start"
           component={NextLink}
           label={t('translation:layout.general')}
-          value={paths.settings.general}
-          href={paths.settings.general}
+          value={paths.settings.root}
+          href={paths.settings.root}
         />
         <Tab
-          icon={<Iconify width={24} icon="fluent:briefcase-24-filled" />}
+          icon={<Iconify width={24} icon="solar:buildings-bold-duotone" />}
+          component={NextLink}
+          label={t('translation:layout.orgs')}
+          value={paths.settings.orgs}
+          href={paths.settings.orgs}
+        />
+        <Tab
+          icon={<Iconify width={24} icon="solar:notes-bold-duotone" />}
           component={NextLink}
           label={t('translation:layout.projects')}
           value={paths.settings.projects}
           href={paths.settings.projects}
         />
         <Tab
-          icon={<Iconify width={24} icon="solar:bill-list-bold" />}
+          icon={<Iconify width={24} icon="custom:invoice-duotone" />}
           iconPosition="start"
           component={NextLink}
           label={t('translation:layout.billing')}
@@ -55,21 +63,14 @@ export const SettingsLayout = ({ children, ...other }: SettingsLayoutProps) => {
           href={paths.settings.billing}
         />
         <Tab
-          icon={<Iconify width={24} icon="solar:notification-unread-bold" />}
+          icon={<Iconify width={24} icon="solar:bell-bing-bold-duotone" />}
           component={NextLink}
           label={t('translation:layout.notifications')}
           value={paths.settings.notifications}
           href={paths.settings.notifications}
         />
         <Tab
-          icon={<Iconify width={24} icon="solar:password-minimalistic-bold" />}
-          component={NextLink}
-          label={t('translation:layout.change_password')}
-          value={paths.settings.changePassword}
-          href={paths.settings.changePassword}
-        />
-        <Tab
-          icon={<Iconify width={24} icon="solar:pallete-2-bold" />}
+          icon={<Iconify width={24} icon="solar:pallete-2-bold-duotone" />}
           iconPosition="start"
           component={NextLink}
           label={t('translation:layout.appearance')}

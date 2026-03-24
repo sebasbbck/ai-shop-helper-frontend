@@ -93,6 +93,7 @@ export const paths = {
     billing: `${ROOTS.SETTINGS}/billing`,
     notifications: `${ROOTS.SETTINGS}/notifications`,
     projects: `${ROOTS.SETTINGS}/projects`,
+    orgs: `${ROOTS.SETTINGS}/orgs`,
     changePassword: `${ROOTS.SETTINGS}/change-password`,
   },
 }
