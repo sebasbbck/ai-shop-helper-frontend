@@ -1,15 +1,9 @@
 import { useTranslation } from 'next-i18next'
-import { getStaticTranslations } from '../lib/get-static-translations'
 import { SimpleLayout } from '../src/components/layouts/simple'
 import RecoverPasswordForm from '../src/features/auth/components/RecoverPasswordForm'
+import { withAuthRedirect } from '../src/lib/auth/with-auth-redirect'
 
-export async function getServerSideProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await getStaticTranslations(locale)),
-    },
-  }
-}
+export const getServerSideProps = withAuthRedirect()
 
 export default function RecoverPassword() {
   const { t } = useTranslation('translation')

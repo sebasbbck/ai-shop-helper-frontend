@@ -3,16 +3,10 @@ import styles from '../styles/Home.module.css'
 import { health } from '../api/default/default'
 
 import { useTranslation } from 'next-i18next'
-import { getStaticTranslations } from '../lib/get-static-translations'
 import { getMe } from '../api/users/users'
+import { withAuth } from '../src/lib/auth/with-auth'
 
-export async function getServerSideProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await getStaticTranslations(locale)),
-    },
-  }
-}
+export const getServerSideProps = withAuth()
 
 export default function OldIndex() {
   const { t } = useTranslation('translation')
