@@ -1,13 +1,13 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
-import { login, register, logout as logoutApi } from '../../api/auth/auth'
-import { useGetMe, getGetMeQueryKey } from '../../api/users/users'
+import { register } from '../../api/auth/auth'
+import { getGetMeQueryKey } from '../../api/users/users'
 import type { BodyAuthLogin, UserPublic, UserCreate } from '../../api/model'
 import useHandleError from './useHandleError'
 import { useTranslation } from 'next-i18next'
-import { setAccessToken, clearAccessToken, getAccessToken } from '../../api/mutator/custom-instance'
+import { setAccessToken, clearAccessToken } from '../../api/mutator/custom-instance'
 
 const useAuth = () => {
   const [error, setError] = useState<string | null>(null)
@@ -16,10 +16,23 @@ const useAuth = () => {
   const { t } = useTranslation()
   const handleError = useHandleError()
 
-  const { data: user, refetch } = useGetMe({
-    query: {
-      enabled: typeof window !== 'undefined' && !!getAccessToken(),
+  const { data: user, refetch } = useQuery({
+    queryKey: getGetMeQueryKey(),
+    queryFn: async () => {
+      const response = await fetch('/api/auth/me', {
+        credentials: 'include'
+      })
+      if (!response.ok) throw new Error('Not authenticated')
+      const data = await response.json()
+
+      if (data.access_token) {
+        setAccessToken(data.access_token)
+      }
+
+      return data
     },
+    enabled: typeof window !== 'undefined',
+    retry: false,
   })
 
   const signUpMutation = useMutation({
@@ -36,8 +49,23 @@ const useAuth = () => {
   })
 
   const performLogin = async (credentials: BodyAuthLogin) => {
-    const response = await login(credentials)
-    setAccessToken(response.access_token)
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        username: credentials.username,
+        password: credentials.password,
+      }),
+    })
+
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(error.detail || 'Login failed')
+    }
+
+    const data = await response.json()
+    setAccessToken(data.access_token)
   }
 
   const loginMutation = useMutation({
@@ -54,7 +82,10 @@ const useAuth = () => {
 
   const logout = async () => {
     try {
-      await logoutApi()
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+      })
     } catch (e) {
       console.warn('Error calling logout API:', e)
     } finally {
