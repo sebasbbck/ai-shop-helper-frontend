@@ -11,12 +11,17 @@ export async function proxy(request: NextRequest) {
     '/recover-password',
     '/reset-password',
   ]
-  const isAdminRoute = pathname.startsWith('/admin')
-  const isProtectedRoute =
-    pathname.startsWith('/dashboard') ||
-    pathname.startsWith('/settings') ||
-    pathname === '/' ||
-    isAdminRoute
+
+  const protectedRoutes = [
+    '/',
+    '/admin',
+    '/agents',
+    '/inbox',
+    '/referrals',
+    '/settings',
+    '/dashboard',
+    '/connection',
+  ]
 
   // Redirect logged in users away from auth pages
   if (refreshToken && authRoutes.some((route) => pathname.startsWith(route))) {
@@ -24,7 +29,10 @@ export async function proxy(request: NextRequest) {
   }
 
   // Redirect unauthenticated users away from protected pages
-  if (!refreshToken && isProtectedRoute) {
+  if (
+    !refreshToken &&
+    protectedRoutes.some((route) => pathname.startsWith(route))
+  ) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 

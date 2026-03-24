@@ -164,3 +164,30 @@ export const ProjectsDeleteProjectParams = zod.object({
   "project_id": zod.string().uuid()
 })
 
+/**
+ * Get all projects the current user has access to across all organizations.
+
+Args:
+    current_user (User): The current authenticated user.
+    pagination (PaginationParams): The pagination parameters.
+    session (SessionDep): The database session.
+
+Returns:
+    PaginatedResponse[ProjectPublic]: The paginated list of projects.
+ * @summary Get My Projects
+ */
+export const projectsGetMyProjectsQueryOffsetDefault = 0;
+export const projectsGetMyProjectsQueryOffsetMin = 0;
+
+export const projectsGetMyProjectsQueryLimitDefault = 50;
+export const projectsGetMyProjectsQueryLimitMax = 100;
+
+
+
+export const ProjectsGetMyProjectsQueryParams = zod.object({
+  "offset": zod.number().min(projectsGetMyProjectsQueryOffsetMin).default(projectsGetMyProjectsQueryOffsetDefault),
+  "limit": zod.number().min(1).max(projectsGetMyProjectsQueryLimitMax).default(projectsGetMyProjectsQueryLimitDefault)
+})
+
+export const ProjectsGetMyProjectsResponse = zod.unknown()
+

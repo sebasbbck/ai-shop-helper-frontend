@@ -24,6 +24,7 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  GetMyProjectsParams,
   GetOrgProjectsParams,
   HTTPValidationError,
   PaginatedResponseProjectPublic,
@@ -489,4 +490,103 @@ export const useDeleteProject = <TError = ErrorType<HTTPValidationError>,
       > => {
       return useMutation(getDeleteProjectMutationOptions(options), queryClient);
     }
+    /**
+ * Get all projects the current user has access to across all organizations.
+
+Args:
+    current_user (User): The current authenticated user.
+    pagination (PaginationParams): The pagination parameters.
+    session (SessionDep): The database session.
+
+Returns:
+    PaginatedResponse[ProjectPublic]: The paginated list of projects.
+ * @summary Get My Projects
+ */
+export const getMyProjects = (
+    params?: GetMyProjectsParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<PaginatedResponseProjectPublic>(
+      {url: `/projects/`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+
+
+export const getGetMyProjectsQueryKey = (params?: GetMyProjectsParams,) => {
+    return [
+    `/projects/`, ...(params ? [params] : [])
+    ] as const;
+    }
+
     
+export const getGetMyProjectsQueryOptions = <TData = Awaited<ReturnType<typeof getMyProjects>>, TError = ErrorType<HTTPValidationError>>(params?: GetMyProjectsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyProjects>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyProjectsQueryKey(params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyProjects>>> = ({ signal }) => getMyProjects(params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMyProjects>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyProjectsQueryResult = NonNullable<Awaited<ReturnType<typeof getMyProjects>>>
+export type GetMyProjectsQueryError = ErrorType<HTTPValidationError>
+
+
+export function useGetMyProjects<TData = Awaited<ReturnType<typeof getMyProjects>>, TError = ErrorType<HTTPValidationError>>(
+ params: undefined |  GetMyProjectsParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyProjects>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyProjects>>,
+          TError,
+          Awaited<ReturnType<typeof getMyProjects>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyProjects<TData = Awaited<ReturnType<typeof getMyProjects>>, TError = ErrorType<HTTPValidationError>>(
+ params?: GetMyProjectsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyProjects>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyProjects>>,
+          TError,
+          Awaited<ReturnType<typeof getMyProjects>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyProjects<TData = Awaited<ReturnType<typeof getMyProjects>>, TError = ErrorType<HTTPValidationError>>(
+ params?: GetMyProjectsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyProjects>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get My Projects
+ */
+
+export function useGetMyProjects<TData = Awaited<ReturnType<typeof getMyProjects>>, TError = ErrorType<HTTPValidationError>>(
+ params?: GetMyProjectsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyProjects>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyProjectsQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+

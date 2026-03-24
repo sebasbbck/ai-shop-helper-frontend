@@ -116,12 +116,13 @@ export const useCreateAgent = <TError = ErrorType<HTTPValidationError>,
       return useMutation(getCreateAgentMutationOptions(options), queryClient);
     }
     /**
- * Get a paginated list of agents. Superuser only.
+ * Get a paginated list of agents. Authenticated users only.
 
 Args:
-    current_superuser (User): The current superuser.
+    current_user (User): The current authenticated user.
     pagination (PaginationParams): The pagination parameters.
     session (SessionDep): The database session.
+    project_type_id (UUID | None): Optional filter by project type ID.
 
 Returns:
     PaginatedResponse[AgentPublic]: The paginated list of agents.

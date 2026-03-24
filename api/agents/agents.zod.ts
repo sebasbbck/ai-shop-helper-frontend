@@ -32,12 +32,13 @@ export const AgentsCreateAgentBody = zod.object({
 }).describe('Schema for creating a new agent.')
 
 /**
- * Get a paginated list of agents. Superuser only.
+ * Get a paginated list of agents. Authenticated users only.
 
 Args:
-    current_superuser (User): The current superuser.
+    current_user (User): The current authenticated user.
     pagination (PaginationParams): The pagination parameters.
     session (SessionDep): The database session.
+    project_type_id (UUID | None): Optional filter by project type ID.
 
 Returns:
     PaginatedResponse[AgentPublic]: The paginated list of agents.
@@ -52,6 +53,7 @@ export const agentsGetAgentsQueryLimitMax = 100;
 
 
 export const AgentsGetAgentsQueryParams = zod.object({
+  "project_type_id": zod.union([zod.string().uuid(),zod.null()]).optional(),
   "offset": zod.number().min(agentsGetAgentsQueryOffsetMin).default(agentsGetAgentsQueryOffsetDefault),
   "limit": zod.number().min(1).max(agentsGetAgentsQueryLimitMax).default(agentsGetAgentsQueryLimitDefault)
 })

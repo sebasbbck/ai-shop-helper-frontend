@@ -186,11 +186,11 @@ export function AccountDrawer({ data = [], sx, ...other }: AccountDrawerProps) {
           <Box sx={{ px: 2.5, py: 3 }}>
             <UpgradeBlock />
           </Box>
-        </Scrollbar>
 
-        <Box sx={{ p: 2.5 }}>
-          <SignOutButton onClose={onClose} />
-        </Box>
+          <Box sx={{ p: 2.5 }}>
+            <SignOutButton onClose={onClose} />
+          </Box>
+        </Scrollbar>
       </Drawer>
     </>
   )

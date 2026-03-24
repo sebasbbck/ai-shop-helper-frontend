@@ -16,6 +16,7 @@ export * from './callbackBody';
 export * from './getAgentProjectTypesParams';
 export * from './getAgentsParams';
 export * from './getMyOrgsParams';
+export * from './getMyProjectsParams';
 export * from './getOrgMembersParams';
 export * from './getOrgProjectsParams';
 export * from './getProjectTypesParams';
