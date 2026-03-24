@@ -8,6 +8,7 @@ import useCustomToast from '../../../hooks/useCustomToast'
 import { useTranslation } from 'next-i18next'
 import { CONFIG } from '../../../global-config'
 import { DashboardContent } from '../../../components/layouts/dashboard'
+import { Alert } from '@mui/material'
 
 // ----------------------------------------------------------------------
 
@@ -22,6 +23,11 @@ export default function Page() {
     <>
       <title>{title}</title>
       <DashboardContent maxWidth="xl">
+        <Alert severity="info" sx={{ mb: 3 }}>
+          Esta página era la antigua página principal. De momento se conserva
+          como referencia, pero los agentes no están enlazados. Será eliminada
+          próximamente.
+        </Alert>
         <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
           {user?.is_superuser
             ? t('translation:team.hello_admin', '', { name: user?.name })
