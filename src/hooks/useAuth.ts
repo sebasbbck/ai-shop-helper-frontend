@@ -4,16 +4,19 @@ import { useState } from 'react'
 
 import { login, register, logout as logoutApi } from '../../api/auth/auth'
 import { useGetMe, getGetMeQueryKey } from '../../api/users/users'
-import type { BodyAuthLogin, UserPublic, UserCreate } from '../../api/model'
+import type { BodyAuthLogin, UserCreate } from '../../api/model'
 import useHandleError from './useHandleError'
 import { useTranslation } from 'next-i18next'
-import { setAccessToken, clearAccessToken, getAccessToken } from '../../api/mutator/custom-instance'
+import {
+  setAccessToken,
+  clearAccessToken,
+  getAccessToken,
+} from '../../api/mutator/custom-instance'
 
 const useAuth = () => {
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
   const queryClient = useQueryClient()
-  const { t } = useTranslation()
   const handleError = useHandleError()
 
   const { data: user, refetch } = useGetMe({
@@ -45,7 +48,7 @@ const useAuth = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: getGetMeQueryKey() })
       await refetch()
-      router.push('/')
+      router.replace('/')
     },
     onError: (err: unknown) => {
       handleError(err)
