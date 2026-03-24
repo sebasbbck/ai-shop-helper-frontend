@@ -1,9 +1,8 @@
-import type { NextApiRequest } from 'next'
 import { decodeAccessToken } from './jwt'
 import { ACCESS_TOKEN_COOKIE } from './constants'
 import type { AccessTokenPayload } from './types'
 
-export function getTokenFromCookies(req: NextApiRequest): string | null {
+export function getTokenFromCookies(req: { cookies: Partial<{ [key: string]: string }> }): string | null {
   return req.cookies[ACCESS_TOKEN_COOKIE] || null
 }
 
