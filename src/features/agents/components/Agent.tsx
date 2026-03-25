@@ -1,12 +1,20 @@
 import {
   Box,
   Button,
+  Chip,
   CircularProgress,
   Grid,
+  Paper,
   Stack,
   Step,
   StepLabel,
   Stepper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Typography,
 } from '@mui/material'
 import { useGetTask, useStartWorkflow } from '../../../../api/n8n-test/n8n-test'
@@ -18,6 +26,56 @@ import { useRouter } from 'next/router'
 import { useGetAgents } from '../../../../api/agents/agents'
 import { DashboardContent } from '../../../components/layouts/dashboard'
 import { AgentWorkflowCard } from './AgentWorkflowCard'
+import { Label } from '../../../components/label'
+
+const TaskRow = ({
+  taskId,
+  agentName,
+}: {
+  taskId: string
+  agentName: string
+}) => {
+  const { data } = useGetTask(taskId, {
+    query: {
+      enabled: !!taskId,
+      refetchInterval: (query) => {
+        const currentData = query.state.data as any
+        if (
+          currentData?.status === 'completed' ||
+          currentData?.status === 'failed'
+        ) {
+          return false
+        }
+        return 3000
+      },
+    },
+  })
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return 'success'
+      case 'failed':
+        return 'error'
+      case 'running':
+        return 'primary'
+      default:
+        return 'default'
+    }
+  }
+
+  return (
+    <TableRow>
+      <TableCell>{taskId.slice(0, 12)}...</TableCell>
+      <TableCell>{agentName}</TableCell>
+      <TableCell>
+        <Label size="small" color={getStatusColor(data?.status as string)}>
+          {(data?.status as string) || 'pending'}
+        </Label>
+      </TableCell>
+    </TableRow>
+  )
+}
 
 export default function Agent({
   agentId,
@@ -28,8 +86,7 @@ export default function Agent({
 }) {
   const { showSuccessToast } = useCustomToast()
   const handleError = useHandleError()
-  const [taskId, setTaskId] = useState<string | null>(null)
-  const [status, setStatus] = useState(null)
+  const [tasks, setTasks] = useState<{ id: string; name: string }[]>([])
   const [activeStep, setActiveStep] = useState<number | null>(null)
   const router = useRouter()
   const { id } = router.query
@@ -43,7 +100,10 @@ export default function Agent({
   const mutation = useStartWorkflow({
     mutation: {
       onSuccess: (res) => {
-        setTaskId(res.task_id as string)
+        setTasks((prev) => [
+          { id: res.task_id as string, name: agent.name },
+          ...prev,
+        ])
         showSuccessToast('Workflow lanzado con éxito')
       },
       onError: (err) => {
@@ -55,25 +115,6 @@ export default function Agent({
   const startWorkflow = (data: StartWorkflowBody) => {
     mutation.mutate({ data })
   }
-
-  const { data, isLoading, refetch } = useGetTask(taskId, {
-    query: {
-      // Only fetch if we actually have a taskId
-      enabled: !!taskId,
-      // Polling interval in milliseconds (e.g., 3000ms = 3 seconds)
-      refetchInterval: (query) => {
-        const currentData = query.state.data as any
-        // Logic: stop polling if the status is 'completed' or 'failed'
-        if (
-          currentData?.status === 'completed' ||
-          currentData?.status === 'failed'
-        ) {
-          return false
-        }
-        return 3000
-      },
-    },
-  })
 
   const mockSteps = [
     {
@@ -95,7 +136,6 @@ export default function Agent({
                   message: 'test',
                 },
               })
-              setActiveStep(1)
             }}
           >
             Lanzar workflow
@@ -106,13 +146,9 @@ export default function Agent({
     {
       title: `Estado del workflow ${agent?.name}`,
       summarisedTitle: 'dolor sit amet,',
-      description: `Has ejecutado la tarea con ID ${taskId}. Su estado es: ${data?.status as any}`,
+      description: `Has ejecutado la tarea`,
       content: <></>,
-      action: (
-        <Button variant="outlined" onClick={() => refetch()}>
-          Comprobar estado
-        </Button>
-      ),
+      action: <></>,
     },
     {
       title: 'Revisa tus ajustes de organización',
@@ -138,7 +174,7 @@ export default function Agent({
     <DashboardContent maxWidth="xl">
       <Box>
         <Grid container spacing={3}>
-          <Grid size={12}>
+          <Grid size={{ xs: 12, md: 8 }}>
             <Stepper
               activeStep={activeStep ?? -1}
               nonLinear
@@ -217,6 +253,47 @@ export default function Agent({
                 </Stack>
               }
             ></AgentWorkflowCard>
+          </Grid>
+
+          <Grid size={{ xs: 12, md: 4 }}>
+            <TableContainer
+              component={Paper}
+              variant="outlined"
+              sx={{ maxHeight: '440px' }}
+            >
+              <Table>
+                <TableHead>
+                  <TableRow sx={{ backgroundColor: 'action.hover' }}>
+                    <TableCell width="40%">ID</TableCell>
+                    <TableCell width="40%">Nombre</TableCell>
+                    <TableCell align="right" width="20%">
+                      Estado
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {tasks.length === 0 ? (
+                    <TableRow>
+                      <TableCell
+                        colSpan={3}
+                        align="center"
+                        sx={{ py: 4, color: 'text.secondary' }}
+                      >
+                        No hay tareas en ejecución
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    tasks.map((task) => (
+                      <TaskRow
+                        key={task.id}
+                        taskId={task.id}
+                        agentName={task.name}
+                      />
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Grid>
         </Grid>
       </Box>
