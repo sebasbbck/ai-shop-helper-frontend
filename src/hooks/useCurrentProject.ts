@@ -4,9 +4,13 @@ import useAuth from './useAuth'
 
 import { ProjectPublic } from '../../api/model'
 import { useNavigate, useParams } from '@tanstack/react-router'
-import { useGetMyProjects } from '../../api/projects/projects'
+import {
+  getGetMyProjectsQueryKey,
+  useGetMyProjects,
+} from '../../api/projects/projects'
 
 const CURRENT_PROJECT_KEY = 'current_project_id'
+const DEFAULT_PROJECT_IDS_KEY = 'default_project_ids'
 const DEFAULT_PROJECT_NAME = 'Proyecto por defecto'
 
 function readCurrentProjectId(): string | null {
@@ -25,13 +29,37 @@ function setCurrentProjectId(id: string) {
   }
 }
 
+function readDefaultProjectIdForUser(userId: string): string | null {
+  try {
+    const mapStr = localStorage.getItem(DEFAULT_PROJECT_IDS_KEY)
+    if (!mapStr) return null
+    const map = JSON.parse(mapStr) as Record<string, string>
+    return map[userId] ?? null
+  } catch (_err) {
+    return null
+  }
+}
+
+function setDefaultProjectIdForUser(userId: string, projectId: string) {
+  try {
+    const mapStr = localStorage.getItem(DEFAULT_PROJECT_IDS_KEY)
+    const map = mapStr ? JSON.parse(mapStr) : {}
+    map[userId] = projectId
+    localStorage.setItem(DEFAULT_PROJECT_IDS_KEY, JSON.stringify(map))
+  } catch (_err) {
+    // ignore
+  }
+}
+
+export { readDefaultProjectIdForUser, setDefaultProjectIdForUser }
+
 export default function useCurrentProject() {
   const qc = useQueryClient()
 
   const { user: authUser } = useAuth()
   const prevTokensRef = useRef<number | null>(null)
 
-  const { data, isLoading, refetch } = useGetMyProjects()
+  const { data, isLoading, isFetching, refetch } = useGetMyProjects()
   const projects = (data?.items as ProjectPublic[]) ?? []
   // enabled: isLoggedIn(),
 
@@ -70,18 +98,27 @@ export default function useCurrentProject() {
   */
 
   useEffect(() => {
-    const list: ProjectPublic[] = Array.isArray(projects) ? projects : []
-    if (isLoading) return
+    if (isLoading || isFetching) return
 
+    const list: ProjectPublic[] = Array.isArray(projects) ? projects : []
     const stored = selectedProjectId ?? readCurrentProjectId()
 
     if (list.length > 0) {
       const exists = stored && list.find((p) => String(p.id) === String(stored))
-      if (!exists) {
-        const firstId = list[0]?.id
-        if (firstId) {
-          setCurrentProjectId(String(firstId))
-          setSelectedProjectId(String(firstId))
+      if (!exists && !isFetching) {
+        // Try to get the user's default project first, otherwise use the first project
+        const defaultProjectId = authUser?.id
+          ? readDefaultProjectIdForUser(authUser.id)
+          : null
+        const defaultProject =
+          defaultProjectId &&
+          list.find((p) => String(p.id) === String(defaultProjectId))
+        const projectToUse = defaultProject ?? list[0]
+        const projectId =
+          typeof projectToUse === 'string' ? '' : projectToUse.id
+        if (projectId) {
+          setCurrentProjectId(String(projectId))
+          setSelectedProjectId(String(projectId))
         }
       } else {
         if (stored && stored !== selectedProjectId) {
@@ -98,7 +135,7 @@ export default function useCurrentProject() {
       // createProjectMutation.mutate(DEFAULT_PROJECT_NAME)
       return
     }
-  }, [projects, isLoading, selectedProjectId]) // , createProjectMutation.mutate
+  }, [projects, isLoading, isFetching, selectedProjectId]) // , createProjectMutation.mutate
 
   useEffect(() => {
     const handler = (e: any) => {
@@ -141,7 +178,8 @@ export default function useCurrentProject() {
     (projectId: string) => {
       setCurrentProjectId(projectId)
       setSelectedProjectId(String(projectId))
-      qc.invalidateQueries({ queryKey: ['projects'] })
+
+      qc.invalidateQueries({ queryKey: getGetMyProjectsQueryKey() })
       qc.invalidateQueries({
         predicate: (query) => {
           const key = query.queryKey
@@ -161,7 +199,7 @@ export default function useCurrentProject() {
         )
       } catch (_e) {}
     },
-    [qc],
+    [qc, authUser?.id],
   )
 
   // effect to monitor token drops
