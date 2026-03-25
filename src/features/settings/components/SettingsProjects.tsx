@@ -465,11 +465,9 @@ export function SettingsProjects() {
                         component="span"
                         sx={{ color: 'text.primary', fontWeight: 'bold' }}
                       >
-                        {
-                          (orgs as OrgPublic[]).find(
-                            (o) => o.id === project.org_id,
-                          ).name
-                        }
+                        {(orgs as OrgPublic[])?.find(
+                          (o) => o.id === project.org_id,
+                        )?.name ?? 'Cargando...'}
                       </Box>
                       {/*
                       <IconButton 
