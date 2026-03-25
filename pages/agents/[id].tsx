@@ -4,14 +4,9 @@ import { DashboardLayout } from '../../src/components/layouts/dashboard'
 import AdminAgentsPage from '../../src/features/admin/components/AdminAgentsPage'
 import { useRouter } from 'next/router'
 import Agent from '../../src/features/agents/components/Agent'
+import { withAuth } from '../../src/lib/auth/with-auth'
 
-export async function getServerSideProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await getStaticTranslations(locale)),
-    },
-  }
-}
+export const getServerSideProps = withAuth()
 
 export default function AgentPage() {
   const router = useRouter()

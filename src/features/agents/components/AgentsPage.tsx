@@ -2,7 +2,7 @@ import { Box, CircularProgress, Grid, Typography } from '@mui/material'
 import { AgentPublic, StartWorkflowBody } from '../../../../api/model'
 import { DashboardContent } from '../../../components/layouts/dashboard'
 import { useRouter } from 'next/router'
-import { AppAgent } from './AppAgent'
+import { AppAgent } from './AgentCard'
 import { useGetAgents } from '../../../../api/agents/agents'
 import useCurrentProject from '../../../hooks/useCurrentProject'
 

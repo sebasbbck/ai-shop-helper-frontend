@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { useRouter } from 'next/router'
 
-import { AppAgent } from './AppAgent'
+import { AppAgent } from './AgentCard'
 import useAuth from '../../../hooks/useAuth'
 import useCustomToast from '../../../hooks/useCustomToast'
 import { useTranslation } from 'next-i18next'
