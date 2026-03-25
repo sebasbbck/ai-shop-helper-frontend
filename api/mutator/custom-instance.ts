@@ -3,7 +3,6 @@ import Axios, {
   AxiosError,
   InternalAxiosRequestConfig,
 } from 'axios'
-import { logout, refresh } from '../auth/auth'
 
 export const AXIOS_INSTANCE = Axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
@@ -14,26 +13,16 @@ let accessToken: string | null = null
 
 export const setAccessToken = (token: string) => {
   accessToken = token
-  if (typeof window !== 'undefined') {
-    sessionStorage.setItem('access_token', token)
-  }
 }
 
 export const getAccessToken = (): string | null => {
-  if (!accessToken && typeof window !== 'undefined') {
-    accessToken = sessionStorage.getItem('access_token')
-  }
   return accessToken
 }
 
 export const clearAccessToken = () => {
   accessToken = null
-  if (typeof window !== 'undefined') {
-    sessionStorage.removeItem('access_token')
-  }
 }
 
-// Auth and i18n handler
 AXIOS_INSTANCE.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = getAccessToken()
@@ -97,20 +86,32 @@ AXIOS_INSTANCE.interceptors.response.use(
       isRefreshing = true
 
       try {
-        const { access_token } = await refresh()
-        setAccessToken(access_token)
-        if (originalRequest.headers) {
-          originalRequest.headers['Authorization'] = `Bearer ${access_token}`
+        const response = await fetch('/api/auth/refresh', {
+          method: 'POST',
+          credentials: 'include'
+        })
+
+        if (!response.ok) {
+          throw new Error('Refresh failed')
         }
 
-        processQueue(null, access_token)
+        const data = await response.json()
+        setAccessToken(data.access_token)
+
+        if (originalRequest.headers) {
+          originalRequest.headers['Authorization'] = `Bearer ${data.access_token}`
+        }
+
+        processQueue(null, data.access_token)
         return AXIOS_INSTANCE(originalRequest)
       } catch (refreshError) {
         processQueue(refreshError, null)
-        clearAccessToken()
-        logout().catch(() =>
-          console.warn('Backend logout failed, but the access token has been cleared locally.')
-        )
+
+        fetch('/api/auth/logout', {
+          method: 'POST',
+          credentials: 'include'
+        }).catch(() => console.warn('Logout API failed'))
+
         const authPages = ['/login', '/signup', '/recover-password']
         const onAuthPage = authPages.some((p) => window.location.pathname.startsWith(p))
         if (!onAuthPage) {

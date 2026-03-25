@@ -4,7 +4,10 @@ import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import useCustomToast from '../../../hooks/useCustomToast'
 import useHandleError from '../../../hooks/useHandleError'
 import { AgentCreate, AgentPublic, AgentUpdate } from '../../../../api/model'
-import { useCreateAgent } from '../../../../api/agents/agents'
+import {
+  getGetAgentsQueryKey,
+  useCreateAgent,
+} from '../../../../api/agents/agents'
 import { Iconify } from '../../../components/iconify'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -81,7 +84,7 @@ function AddAgentForm({
         handleError(err)
       },
       onSettled: () => {
-        queryClient.invalidateQueries({ queryKey: ['agents'] })
+        queryClient.invalidateQueries({ queryKey: getGetAgentsQueryKey() })
       },
     },
   })

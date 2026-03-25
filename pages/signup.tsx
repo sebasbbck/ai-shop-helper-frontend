@@ -1,15 +1,9 @@
 import { useTranslation } from 'next-i18next'
-import { getStaticTranslations } from '../lib/get-static-translations'
 import SignUpForm from '../src/features/auth/components/SignUpForm'
 import { SimpleLayout } from '../src/components/layouts/simple'
+import { withAuthRedirect } from '../src/lib/auth/with-auth-redirect'
 
-export async function getServerSideProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await getStaticTranslations(locale)),
-    },
-  }
-}
+export const getServerSideProps = withAuthRedirect()
 
 export default function Signup() {
   const { t } = useTranslation('translation')

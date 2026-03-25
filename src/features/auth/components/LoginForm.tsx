@@ -30,8 +30,6 @@ import { useTranslation } from 'next-i18next'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useRouter } from 'next/router'
 import NextLink from 'next/link'
-import { login } from '../../../../api/auth/auth'
-import { getMe } from '../../../../api/users/users'
 import { getErrorMessage } from '../../../hooks/useHandleError'
 import { setAccessToken } from '../../../../api/mutator/custom-instance'
 
@@ -63,29 +61,35 @@ export default function LoginForm() {
     defaultValues,
   })
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (formData: any) => {
     try {
       setIsSubmitting(true)
 
-      const response = await login({
-        username: data.username,
-        password: data.password,
-        grant_type: 'password',
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password,
+        }),
       })
-      setAccessToken(response.access_token)
 
-      // optionally refresh user
-      try {
-        await getMe()
-      } catch {
-        // ignore
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.detail || 'Login failed')
       }
+
+      const data = await response.json()
+      setAccessToken(data.access_token)
+
       router.replace('/')
     } catch (err) {
       console.error(err)
       setErrorMessage(getErrorMessage(err, t))
+    } finally {
+      setIsSubmitting(false)
     }
-    setIsSubmitting(false)
   }
 
   const renderForm = () => (
