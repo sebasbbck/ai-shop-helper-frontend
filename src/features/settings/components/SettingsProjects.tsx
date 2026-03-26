@@ -18,13 +18,7 @@ import useCustomToast from '../../../hooks/useCustomToast'
 import { Iconify } from '../../../components/iconify'
 import { Form, Field } from '../../../components/hook-form'
 import { useBoolean } from 'minimal-shared/hooks'
-
-// import useCurrentProject from '../../../hooks/useCurrentProject'
-// import { readDefaultProjectIdForUser, setDefaultProjectIdForUser } from '../../../hooks/useCurrentProject'
 import useAuth from '../../../hooks/useAuth'
-// import { Project, ProjectsService } from '@/client'
-// import { ProjectMembersDialog } from './account-project-members-dialog'
-// import { ProjectEditDialog } from './account-project-edit-dialog'
 import useHandleError from '../../../hooks/useHandleError'
 import { useTranslation } from 'next-i18next'
 import { IconButton, Input, MenuItem, Radio, Tooltip } from '@mui/material'
@@ -41,6 +35,7 @@ import useCurrentProject, {
 } from '../../../hooks/useCurrentProject'
 import { ProjectsCreateProjectBody } from '../../../../api/projects/projects.zod'
 import { useGetMyOrgs } from '../../../../api/orgs/orgs'
+import { ProjectEditDialog } from '../../projects/components/ProjectEditDialog'
 
 // ----------------------------------------------------------------------
 
@@ -63,7 +58,7 @@ export function SettingsProjects() {
 
   const [selectedProjectForEdit, setSelectedProjectForEdit] =
     useState<ProjectPublic | null>(null)
-  const openMembersDialog = !!selectedProjectForEdit
+  const openEditDialog = !!selectedProjectForEdit
   const [defaultProjectId, setDefaultProjectId] = useState<string | null>(null)
 
   const { data: orgsData, isLoading: isLoadingOrgs } = useGetMyOrgs()
@@ -414,51 +409,6 @@ export function SettingsProjects() {
                   // TODO: Obtain org name differently
                 >
                   Organización:
-                  {/* editingTokens?.id === project.id ?
-                    // <Box sx={{ display: "flex", gap: 1, mb: 0.5, alignItems: "center" }}>
-                    <form onSubmit={onUpdateTokens} style={{ display: "flex", alignItems: "center"}}>
-                      <Input
-                        value={tokens}
-                        onChange={(e) => {setTokens(e.target.value)}}
-                        autoFocus
-                        type="number"
-                        sx={{
-                          borderRadius: "8px",
-                          height: 24,
-                          fontWeight: 600,
-                          maxWidth: 64,
-                          flexShrink: 1,
-                        }}
-                        slotProps={{
-                          input: {
-                            min: 0,
-                          },
-                        }}
-                      />
-                      <IconButton
-                        aria-label="cancel"
-                        color="error"
-                        sx={{ p: 0.5 }}
-                        onClick={() => {
-                          setEditingTokens(undefined)
-                          setTokens(undefined)
-                        }}
-                      > 
-                        <Iconify width={16} icon="material-symbols:close-rounded" />
-                      </IconButton>
-
-                      <IconButton
-                        aria-label="save"
-                        color="success"
-                        sx={{ p: 0.5 }}
-                        type="submit"
-                        disabled={updateTokensMutation.isPending}
-                      > 
-                        <Iconify width={16} icon="eva:checkmark-fill" />
-                      </IconButton>
-                    </form>
-                    // </Box>
-                  */}
                   {
                     <>
                       <Box
@@ -469,16 +419,6 @@ export function SettingsProjects() {
                           (o) => o.id === project.org_id,
                         )?.name ?? 'Cargando...'}
                       </Box>
-                      {/*
-                      <IconButton 
-                        onClick={() => {
-                          setEditingTokens(project)
-                          setTokens(project.associated_tokens?.toString())
-                        }}
-                        sx={{ p: 0.5 }}>
-                        <Iconify icon="solar:pen-bold" width={16} />
-                      </IconButton>
-                      */}
                     </>
                   }
                 </Typography>
@@ -502,9 +442,9 @@ export function SettingsProjects() {
                   color="aishophelper"
                   startIcon={<Iconify icon="solar:pen-bold" />}
                   fullWidth
-                  // onClick={() => setSelectedProjectForEdit(project)}
+                  onClick={() => setSelectedProjectForEdit(project)}
                 >
-                  {t('translation:settings.projects.edit')}
+                  {t('translation:settings.projects.edit_dialog.title')}
                 </Button>
               </Stack>
             </Paper>
@@ -514,15 +454,14 @@ export function SettingsProjects() {
 
       {renderFormCreateFormDialog()}
 
-      {/*
-      {selectedProjectForEdit &&
-        <ProjectEditDialog 
-          open={openEditDialog} 
+      {selectedProjectForEdit && (
+        <ProjectEditDialog
+          open={openEditDialog}
           project={selectedProjectForEdit}
           onClose={() => setSelectedProjectForEdit(null)}
+          orgs={orgs as OrgPublic[]}
         />
-      }
-      */}
+      )}
     </>
   )
 }
