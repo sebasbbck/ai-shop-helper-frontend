@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import useAuth from './useAuth'
 
 import { ProjectPublic } from '../../api/model'
@@ -8,6 +8,7 @@ import {
   getGetMyProjectsQueryKey,
   useGetMyProjects,
 } from '../../api/projects/projects'
+import { useGetMyOrgs } from '../../api/orgs/orgs'
 
 const CURRENT_PROJECT_KEY = 'current_project_id'
 const DEFAULT_PROJECT_IDS_KEY = 'default_project_ids'
@@ -59,9 +60,12 @@ export default function useCurrentProject() {
   const { user: authUser } = useAuth()
   const prevTokensRef = useRef<number | null>(null)
 
-  const { data, isLoading, isFetching, refetch } = useGetMyProjects()
-  const projects = (data?.items as ProjectPublic[]) ?? []
-  // enabled: isLoggedIn(),
+  const { data, isLoading, isFetching, refetch } = useGetMyOrgs()
+  const orgs = useMemo(() => (data?.items as any[]) ?? [], [data])
+  const projects = useMemo(
+    () => orgs.flatMap((org) => (org.projects ?? []) as ProjectPublic[]),
+    [orgs],
+  )
 
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
     () => {
@@ -222,6 +226,7 @@ export default function useCurrentProject() {
   */
 
   return {
+    orgs,
     projects: projects as ProjectPublic[],
     currentProject,
     isLoading,

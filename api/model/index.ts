@@ -41,6 +41,7 @@ export * from './paginatedResponseAgentProjectTypePublic';
 export * from './paginatedResponseAgentPublic';
 export * from './paginatedResponseOrgPublic';
 export * from './paginatedResponseOrgUserPublic';
+export * from './paginatedResponseOrgWithProjects';
 export * from './paginatedResponseProjectPublic';
 export * from './paginatedResponseProjectTypePublic';
 export * from './paginatedResponseRolePublic';

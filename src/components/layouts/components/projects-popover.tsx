@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem'
 import MenuList from '@mui/material/MenuList'
 import Typography from '@mui/material/Typography'
 import { usePopover } from 'minimal-shared/hooks'
-import { useCallback } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { CustomPopover } from '../../../components/custom-popover'
 import { Iconify } from '../../../components/iconify'
 import { Scrollbar } from '../../../components/scrollbar'
@@ -15,7 +15,7 @@ import { useTranslation } from 'next-i18next'
 
 import useCurrentProject from '../../../hooks/useCurrentProject'
 import { Label } from '../../../components/label'
-import { SxProps, Theme } from '@mui/material'
+import { Collapse, ListSubheader, SxProps, Theme } from '@mui/material'
 import { ProjectPublic } from '../../../../api/model'
 import { useRouter } from 'next/router'
 
@@ -28,11 +28,11 @@ interface ProjectsPopoverProps {
 
 export function ProjectsPopover({ sx, ...other }: ProjectsPopoverProps) {
   const mediaQuery = 'sm'
-
   const { open, anchorEl, onClose, onOpen } = usePopover()
   const router = useRouter()
-  const { projects, currentProject, setCurrentProject } = useCurrentProject()
+  const { orgs, currentProject, setCurrentProject } = useCurrentProject()
   const { t } = useTranslation()
+  const [expandedOrg, setExpandedOrg] = useState<string | null>(null)
 
   const handleChangeProject = useCallback(
     (newValue: ProjectPublic) => {
@@ -121,33 +121,61 @@ export function ProjectsPopover({ sx, ...other }: ProjectsPopoverProps) {
       }}
     >
       <Scrollbar sx={{ maxHeight: 240 }}>
-        <MenuList>
-          {projects.map((option) => (
-            <MenuItem
-              key={option.id}
-              selected={String(option.id) === String(currentProject?.id)}
-              onClick={() => handleChangeProject(option)}
-              sx={{ height: 48 }}
-            >
-              <Avatar
-                alt={getProjectName(option)}
-                // src={option?.logo || ""}
-                sx={{ width: 24, height: 24, fontSize: 12 }}
-              >
-                {getProjectName(option).charAt(0).toUpperCase()}
-              </Avatar>
+        {orgs.map((org: any) => (
+          <Box key={org.id}>
+            <ListSubheader
+              disableSticky
+              onClick={() =>
+                setExpandedOrg(expandedOrg === org.id ? null : org.id)
+              }
+              sx={{
+                py: 1,
+                minHeight: 44,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
 
-              <Typography
-                noWrap
-                component="span"
-                variant="body2"
-                sx={{ flexGrow: 1, fontWeight: 'fontWeightMedium' }}
-              >
-                {getProjectName(option)}
-              </Typography>
-            </MenuItem>
-          ))}
-        </MenuList>
+                color: 'text.primary',
+                '&:hover': { bgcolor: 'action.hover' },
+              }}
+            >
+              <Typography variant="subtitle2">{org.name}</Typography>
+              <Iconify
+                icon={
+                  expandedOrg === org.id
+                    ? 'eva:arrow-ios-downward-fill'
+                    : 'eva:arrow-ios-forward-fill'
+                }
+                width={16}
+              />
+            </ListSubheader>
+
+            <Collapse in={expandedOrg === org.id} timeout="auto" unmountOnExit>
+              <MenuList disablePadding>
+                {org.projects.map((option: ProjectPublic) => (
+                  <MenuItem
+                    key={option.id}
+                    selected={String(option.id) === String(currentProject?.id)}
+                    onClick={() => handleChangeProject(option)}
+                    sx={{ height: 44, pl: 3 }}
+                  >
+                    <Avatar
+                      alt={getProjectName(option)}
+                      sx={{ width: 24, height: 24, fontSize: 10 }}
+                    >
+                      {getProjectName(option).charAt(0).toUpperCase()}
+                    </Avatar>
+
+                    <Typography noWrap variant="body2" sx={{ flexGrow: 1 }}>
+                      {getProjectName(option)}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </MenuList>
+            </Collapse>
+          </Box>
+        ))}
       </Scrollbar>
 
       <Divider sx={{ my: 0.5, borderStyle: 'dashed' }} />

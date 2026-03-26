@@ -1028,7 +1028,7 @@
           "orgs"
         ],
         "summary": "Get My Orgs",
-        "description": "Get organizations the current user is a member of.\n\nArgs:\n    current_user (User): The current authenticated user.\n    pagination (PaginationParams): The pagination parameters.\n    session (SessionDep): The database session.\n\nReturns:\n    PaginatedResponse[OrgPublic]: The paginated list of organizations.",
+        "description": "Get organizations the current user is a member of with nested projects.\n\nArgs:\n    current_user (User): The current authenticated user.\n    pagination (PaginationParams): The pagination parameters.\n    session (SessionDep): The database session.\n\nReturns:\n    PaginatedResponse[OrgWithProjects]: The paginated list of organizations with projects.",
         "operationId": "orgs-get_my_orgs",
         "security": [
           {
@@ -1066,7 +1066,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaginatedResponse_OrgPublic_"
+                  "$ref": "#/components/schemas/PaginatedResponse_OrgWithProjects_"
                 }
               }
             }
@@ -3014,35 +3014,6 @@
         ],
         "title": "PaginatedResponse[AgentPublic]"
       },
-      "PaginatedResponse_OrgPublic_": {
-        "properties": {
-          "items": {
-            "items": {},
-            "type": "array",
-            "title": "Items"
-          },
-          "total": {
-            "type": "integer",
-            "title": "Total"
-          },
-          "offset": {
-            "type": "integer",
-            "title": "Offset"
-          },
-          "limit": {
-            "type": "integer",
-            "title": "Limit"
-          }
-        },
-        "type": "object",
-        "required": [
-          "items",
-          "total",
-          "offset",
-          "limit"
-        ],
-        "title": "PaginatedResponse[OrgPublic]"
-      },
       "PaginatedResponse_OrgUserPublic_": {
         "properties": {
           "items": {
@@ -3071,6 +3042,35 @@
           "limit"
         ],
         "title": "PaginatedResponse[OrgUserPublic]"
+      },
+      "PaginatedResponse_OrgWithProjects_": {
+        "properties": {
+          "items": {
+            "items": {},
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "offset",
+          "limit"
+        ],
+        "title": "PaginatedResponse[OrgWithProjects]"
       },
       "PaginatedResponse_ProjectPublic_": {
         "properties": {
