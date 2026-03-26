@@ -178,6 +178,9 @@ export default function useCurrentProject() {
     (projectId: string) => {
       setCurrentProjectId(projectId)
       setSelectedProjectId(String(projectId))
+      if (authUser?.id) {
+        setDefaultProjectIdForUser(authUser.id, projectId)
+      }
 
       qc.invalidateQueries({ queryKey: getGetMyProjectsQueryKey() })
       qc.invalidateQueries({

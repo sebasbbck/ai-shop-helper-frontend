@@ -170,7 +170,7 @@
             "no_projects": "Aún no tienes proyectos. ¡Crea o únete a uno para comenzar!",
             "members": "Miembros",
             "edit": "Editar onboarding",
-            "default_project_tooltip": "Establecer como proyecto por defecto. Este proyecto será seleccionado por defecto cuando inicies sesión.",
+            "default_project_tooltip": "Establecer como proyecto actual. Este proyecto también será seleccionado por defecto cuando inicies sesión.",
             "members_dialog": {
                 "role_update_success": "Rol actualizado correctamente",
                 "kick_user_success": "Usuario eliminado correctamente",

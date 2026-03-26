@@ -169,7 +169,7 @@
             "no_projects": "Sie haben noch keine Projekte. Erstellen Sie eines oder treten Sie einem bei, um zu beginnen!",
             "members": "Mitglieder",
             "edit": "Onboarding bearbeiten",
-            "default_project_tooltip": "Als Standardprojekt festlegen. Dieses Projekt wird standardmäßig ausgewählt, wenn Sie sich anmelden.",
+            "default_project_tooltip": "Als aktuelles Projekt festlegen. Dieses Projekt wird auch beim Anmelden standardmäßig ausgewählt.",
             "members_dialog": {
                 "role_update_success": "Rolle erfolgreich aktualisiert",
                 "kick_user_success": "Benutzer erfolgreich entfernt",

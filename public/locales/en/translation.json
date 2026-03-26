@@ -170,7 +170,7 @@
             "no_projects": "You have no projects yet. Create or join one to get started!",
             "members": "Members",
             "edit": "Edit Onboarding",
-            "default_project_tooltip": "Set as default project. This project will be selected by default when you log in.",
+            "default_project_tooltip": "Set as current project. This project will also be selected by default when you log in.",
             "members_dialog": {
                 "role_update_success": "Role updated successfully",
                 "kick_user_success": "User kicked successfully",

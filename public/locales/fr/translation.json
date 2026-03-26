@@ -169,7 +169,7 @@
             "no_projects": "Vous n'avez pas encore de projets. Créez-en un ou rejoignez-en un pour commencer !",
             "members": "Membres",
             "edit": "Modifier l'intégration",
-            "default_project_tooltip": "Définir comme projet par défaut. Ce projet sera sélectionné par défaut lorsque vous vous connecterez.",
+            "default_project_tooltip": "Définir comme projet actuel. Ce projet sera également sélectionné par défaut lors de votre connexion.",
             "members_dialog": {
                 "role_update_success": "Rôle mis à jour avec succès",
                 "kick_user_success": "Utilisateur retiré avec succès",

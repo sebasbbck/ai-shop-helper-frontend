@@ -47,7 +47,7 @@ const PROJECT_TYPES = [
 ]
 
 export function SettingsProjects() {
-  const { projects, setCurrentProject } = useCurrentProject()
+  const { projects, currentProject, setCurrentProject } = useCurrentProject()
   const { user: authUser } = useAuth()
   const qc = useQueryClient()
   const handleError = useHandleError()
@@ -66,14 +66,14 @@ export function SettingsProjects() {
 
   useEffect(() => {
     if (authUser?.id) {
-      const id = readDefaultProjectIdForUser(authUser.id)
+      const id = currentProject?.id
       setDefaultProjectId(id)
     }
-  }, [authUser?.id])
+  }, [authUser?.id, currentProject?.id])
 
   const handleSetAsDefault = (projectId: string) => {
     if (authUser?.id) {
-      setDefaultProjectIdForUser(authUser.id, projectId)
+      setCurrentProject(projectId)
       setDefaultProjectId(projectId)
     }
   }

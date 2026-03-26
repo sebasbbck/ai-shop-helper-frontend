@@ -169,7 +169,7 @@
             "no_projects": "Ainda não tem projetos. Crie ou junte-se a um para começar!",
             "members": "Membros",
             "edit": "Editar Onboarding",
-            "default_project_tooltip": "Definir como projeto por defeito. Este projeto será selecionado por defeito quando iniciar sessão.",
+            "default_project_tooltip": "Definir como projeto atual. Este projeto também será selecionado por defeito quando iniciar sessão.",
             "members_dialog": {
                 "role_update_success": "Função atualizada com sucesso",
                 "kick_user_success": "Utilizador removido com sucesso",
