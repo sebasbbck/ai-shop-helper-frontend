@@ -30,26 +30,30 @@ export default function AgentsPage() {
       </Typography>
 
       <Grid container spacing={3}>
-        {agents.map((a: AgentPublic) => (
-          <Grid id="docs-demo-step2" size={{ xs: 16, md: 6 }}>
-            <AppAgent
-              title={a.name}
-              description={a.description}
-              imgSrc="/assets/images/herramienta-blog.png"
-              hoverImgSrc="/assets/animations/herramienta-blog-animada.gif"
-              alt="Redactor de blog"
-              gradient="linear-gradient(135deg, #E3F0FF 0%, #F8FBFF 100%)"
-              titleColour="#1e63ac"
-              disabled={false}
-              onClick={() =>
-                router.push({
-                  pathname: `/agents/${a.id}`,
-                  query: { projectTypeId: currentProject.project_type_id },
-                })
-              }
-            />
-          </Grid>
-        ))}
+        {!isLoading && currentProject === null && (
+          <>Selecciona un proyecto para ver los agentes disponibles.</>
+        )}
+        {currentProject &&
+          agents.map((a: AgentPublic) => (
+            <Grid id="docs-demo-step2" size={{ xs: 16, md: 6 }}>
+              <AppAgent
+                title={a.name}
+                description={a.description}
+                imgSrc="/assets/images/herramienta-blog.png"
+                hoverImgSrc="/assets/animations/herramienta-blog-animada.gif"
+                alt="Redactor de blog"
+                gradient="linear-gradient(135deg, #E3F0FF 0%, #F8FBFF 100%)"
+                titleColour="#1e63ac"
+                disabled={false}
+                onClick={() =>
+                  router.push({
+                    pathname: `/agents/${a.id}`,
+                    query: { projectTypeId: currentProject.project_type_id },
+                  })
+                }
+              />
+            </Grid>
+          ))}
       </Grid>
     </DashboardContent>
   )

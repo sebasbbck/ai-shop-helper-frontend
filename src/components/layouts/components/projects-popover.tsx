@@ -31,7 +31,7 @@ export function ProjectsPopover({ sx, ...other }: ProjectsPopoverProps) {
   const { open, anchorEl, onClose, onOpen } = usePopover()
   const router = useRouter()
   const { orgs, currentProject, setCurrentProject } = useCurrentProject()
-  const { t } = useTranslation()
+  const { t } = useTranslation('translation')
   const [expandedOrg, setExpandedOrg] = useState<string | null>(null)
 
   const handleChangeProject = useCallback(
@@ -46,6 +46,11 @@ export function ProjectsPopover({ sx, ...other }: ProjectsPopoverProps) {
 
   const getProjectName = (project: ProjectPublic) =>
     project?.name || 'Cargando...'
+
+  const hasProjects = useMemo(
+    () => orgs.some((org: any) => org.projects && org.projects.length > 0),
+    [orgs],
+  )
 
   const buttonBg = {
     height: 1,
@@ -84,23 +89,47 @@ export function ProjectsPopover({ sx, ...other }: ProjectsPopoverProps) {
     >
       {/* Adapted: Use the first letter of the project name as a fallback logo */
       /* TODO: add logos to projects*/}
-      <Avatar
-        alt={getProjectName(currentProject)}
-        // src={currentProject?.logo || ""}
-        sx={{ width: 24, height: 24, borderRadius: '50%', fontSize: 12 }}
-      >
-        {getProjectName(currentProject).charAt(0).toUpperCase()}
-      </Avatar>
+      {hasProjects ? (
+        <>
+          <Avatar
+            alt={getProjectName(currentProject)}
+            // src={currentProject?.logo || ""}
+            sx={{ width: 24, height: 24, borderRadius: '50%', fontSize: 12 }}
+          >
+            {getProjectName(currentProject).charAt(0).toUpperCase()}
+          </Avatar>
 
-      <Box
-        component="span"
-        sx={{
-          typography: 'subtitle2',
-          display: { xs: 'none', [mediaQuery]: 'inline-flex' },
-        }}
-      >
-        {getProjectName(currentProject)}
-      </Box>
+          <Box
+            component="span"
+            sx={{
+              typography: 'subtitle2',
+              display: { xs: 'none', [mediaQuery]: 'inline-flex' },
+            }}
+          >
+            {getProjectName(currentProject)}
+          </Box>
+        </>
+      ) : (
+        <>
+          <Avatar
+            alt={t('translation:settings.projects.no_project')}
+            // src={currentProject?.logo || ""}
+            sx={{ width: 24, height: 24, borderRadius: '50%', fontSize: 12 }}
+          >
+            {' '}
+          </Avatar>
+
+          <Box
+            component="span"
+            sx={{
+              typography: 'subtitle2',
+              display: { xs: 'none', [mediaQuery]: 'inline-flex' },
+            }}
+          >
+            {t('translation:settings.projects.no_project')}
+          </Box>
+        </>
+      )}
 
       <Iconify
         width={16}
@@ -121,61 +150,83 @@ export function ProjectsPopover({ sx, ...other }: ProjectsPopoverProps) {
       }}
     >
       <Scrollbar sx={{ maxHeight: 240 }}>
-        {orgs.map((org: any) => (
-          <Box key={org.id}>
-            <ListSubheader
-              disableSticky
-              onClick={() =>
-                setExpandedOrg(expandedOrg === org.id ? null : org.id)
-              }
-              sx={{
-                py: 1,
-                minHeight: 44,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
+        {!hasProjects ? (
+          <Typography
+            variant="body2"
+            sx={{ p: 2, color: 'text.secondary', textAlign: 'center' }}
+          >
+            {t('translation:settings.projects.no_project_desc')}
+          </Typography>
+        ) : (
+          orgs.map(
+            (org: any) =>
+              org.projects?.length > 0 && (
+                <Box key={org.id}>
+                  <ListSubheader
+                    disableSticky
+                    onClick={() =>
+                      setExpandedOrg(expandedOrg === org.id ? null : org.id)
+                    }
+                    sx={{
+                      py: 1,
+                      minHeight: 44,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
 
-                color: 'text.primary',
-                '&:hover': { bgcolor: 'action.hover' },
-              }}
-            >
-              <Typography variant="subtitle2">{org.name}</Typography>
-              <Iconify
-                icon={
-                  expandedOrg === org.id
-                    ? 'eva:arrow-ios-downward-fill'
-                    : 'eva:arrow-ios-forward-fill'
-                }
-                width={16}
-              />
-            </ListSubheader>
-
-            <Collapse in={expandedOrg === org.id} timeout="auto" unmountOnExit>
-              <MenuList disablePadding>
-                {org.projects.map((option: ProjectPublic) => (
-                  <MenuItem
-                    key={option.id}
-                    selected={String(option.id) === String(currentProject?.id)}
-                    onClick={() => handleChangeProject(option)}
-                    sx={{ height: 44, pl: 3 }}
+                      color: 'text.primary',
+                      '&:hover': { bgcolor: 'action.hover' },
+                    }}
                   >
-                    <Avatar
-                      alt={getProjectName(option)}
-                      sx={{ width: 24, height: 24, fontSize: 10 }}
-                    >
-                      {getProjectName(option).charAt(0).toUpperCase()}
-                    </Avatar>
+                    <Typography variant="subtitle2">{org.name}</Typography>
+                    <Iconify
+                      icon={
+                        expandedOrg === org.id
+                          ? 'eva:arrow-ios-downward-fill'
+                          : 'eva:arrow-ios-forward-fill'
+                      }
+                      width={16}
+                    />
+                  </ListSubheader>
 
-                    <Typography noWrap variant="body2" sx={{ flexGrow: 1 }}>
-                      {getProjectName(option)}
-                    </Typography>
-                  </MenuItem>
-                ))}
-              </MenuList>
-            </Collapse>
-          </Box>
-        ))}
+                  <Collapse
+                    in={expandedOrg === org.id}
+                    timeout="auto"
+                    unmountOnExit
+                  >
+                    <MenuList disablePadding>
+                      {org.projects.map((option: ProjectPublic) => (
+                        <MenuItem
+                          key={option.id}
+                          selected={
+                            String(option.id) === String(currentProject?.id)
+                          }
+                          onClick={() => handleChangeProject(option)}
+                          sx={{ height: 44, pl: 3 }}
+                        >
+                          <Avatar
+                            alt={getProjectName(option)}
+                            sx={{ width: 24, height: 24, fontSize: 10 }}
+                          >
+                            {getProjectName(option).charAt(0).toUpperCase()}
+                          </Avatar>
+
+                          <Typography
+                            noWrap
+                            variant="body2"
+                            sx={{ flexGrow: 1 }}
+                          >
+                            {getProjectName(option)}
+                          </Typography>
+                        </MenuItem>
+                      ))}
+                    </MenuList>
+                  </Collapse>
+                </Box>
+              ),
+          )
+        )}
       </Scrollbar>
 
       <Divider sx={{ my: 0.5, borderStyle: 'dashed' }} />

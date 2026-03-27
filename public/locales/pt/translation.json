@@ -147,6 +147,8 @@
             "size": "Tamanho"
         },
         "projects": {
+            "no_project": "Nenhum projeto",
+            "no_project_desc": "Não tem projetos para selecionar. Crie um projeto na sua organização ou participe num e ele aparecerá nesta lista.",
             "manage": "Gerir",
             "title": "Projetos",
             "add": "Adicionar projeto",

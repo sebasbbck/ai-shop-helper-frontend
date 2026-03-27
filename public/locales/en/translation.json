@@ -148,6 +148,8 @@
             "size": "Size"
         },
         "projects": {
+            "no_project": "No project",
+            "no_project_desc": "You have no projects to select. Create a project in your organisation or join one and it will appear in this list.",
             "manage": "Manage",
             "title": "Projects",
             "add": "Add project",
