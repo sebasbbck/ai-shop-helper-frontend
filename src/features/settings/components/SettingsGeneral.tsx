@@ -1,7 +1,7 @@
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useQueryClient, useMutation } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
@@ -65,16 +65,16 @@ export function SettingsGeneral() {
         ),
       confirm_password: z.string().optional().or(z.literal('')),
     })
-    .refine((data) => data.password === data.confirm_password, {
-      message: t('translation:forms.passwords_do_not_match'),
-      path: ['confirm_password'],
-    })
-
-  const currentUser = {
-    name: user?.name ?? '',
-    email: user?.email ?? '',
-    // photo_url: user?.photo_url,
-  }
+    .refine(
+      (data) => {
+        if (!data.password && !data.confirm_password) return true
+        return data.password === data.confirm_password
+      },
+      {
+        message: t('translation:forms.passwords_do_not_match'),
+        path: ['confirm_password'],
+      },
+    )
 
   const methods = useForm<UserUpdate>({
     mode: 'onBlur',
@@ -89,9 +89,8 @@ export function SettingsGeneral() {
 
   const {
     handleSubmit,
-    setError,
     reset,
-    formState: { errors, isValid, isSubmitting },
+    formState: { isSubmitting },
   } = methods
 
   const updateMutation = useUpdateMe({
