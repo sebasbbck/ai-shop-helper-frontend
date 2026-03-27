@@ -178,6 +178,7 @@
                 "promote_to_editor": "Ascender a Editor",
                 "demote_to_member": "Degradar a Miembro",
                 "promote_to_admin": "Ascender a Administrador",
+                "change_role": "Cambiar rol a:",
                 "kick": "Eliminar del proyecto",
                 "title": "Miembros de",
                 "no_members": "Este proyecto no tiene miembros.",

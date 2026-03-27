@@ -177,6 +177,7 @@
                 "promote_to_editor": "Zum Editor befördern",
                 "demote_to_member": "Zum Mitglied zurückstufen",
                 "promote_to_admin": "Zum Admin befördern",
+                "change_role": "Rolle ändern zu:",
                 "kick": "Vom Projekt entfernen",
                 "title": "Mitglieder von",
                 "no_members": "Dieses Projekt hat keine Mitglieder.",

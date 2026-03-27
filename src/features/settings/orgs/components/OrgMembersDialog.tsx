@@ -27,12 +27,34 @@ import useAuth from '../../../../hooks/useAuth'
 import { useTranslation } from 'next-i18next'
 import { OrgPublic, OrgUserPublic, UserPublic } from '../../../../../api/model'
 import {
+  getGetOrgMembersQueryKey,
   getOrgMembers,
   useGetOrgMembers,
   useRemoveOrgMember,
+  useUpdateOrgMemberRole,
 } from '../../../../../api/org-members/org-members'
+import { FormControl, Select, SelectChangeEvent } from '@mui/material'
 
 // ----------------------------------------------------------------------
+
+// TODO: Remove mock data
+const MOCK_ROLES = [
+  {
+    id: '62caed24-f680-46ca-a012-8f4db2f74c5f',
+    name: 'Propietario',
+    access_level: 0,
+  },
+  {
+    id: 'a53dd559-6294-4599-a4d9-00483b553d7d',
+    name: 'Admin',
+    access_level: 10,
+  },
+  {
+    id: 'daf54d0b-837a-479e-84b8-0920d098c395',
+    name: 'Miembro',
+    access_level: 50,
+  },
+]
 
 interface OrgMembersDialogProps {
   open: boolean
@@ -47,8 +69,8 @@ export function OrgMembersDialog({
 }: OrgMembersDialogProps) {
   const [cachedOrg, setCachedOrg] = useState(org)
   const [inviteDialogOpen, setInviteDialogOpen] = useState(false)
-  const [selectedUser, setSelectedUser] = useState(null)
-  const queryClient = useQueryClient()
+  const [selectedUser, setSelectedUser] = useState<OrgUserPublic | null>(null)
+  const qc = useQueryClient()
   const { user: currentUser } = useAuth()
   const { showSuccessToast } = useCustomToast()
   const handleError = useHandleError()
@@ -66,26 +88,28 @@ export function OrgMembersDialog({
   // Safely extract items from the response
   const users = paginatedData?.items ?? []
 
-  /*
-  const userRoleMutation = useMutation({
-    mutationFn: (data: { is_administrator: boolean, is_editor: boolean, userProjectId: string }) =>
-      ProjectsService.updateUserProjectRole({
-        projectId: projectId || "",
-        requestBody: {
-          is_administrator: data.is_administrator,
-          is_editor: data.is_editor
-        },
-        userProjectId: data.userProjectId,
-      }),
-    onSuccess: () => {
-      showSuccessToast(t("translation:settings.projects.members_dialog.role_update_success"))
-      queryClient.invalidateQueries({ queryKey: ["projectUsers", projectId] })
-    },
-    onError: (err) => {
-      handleError(err)
+  const updateRoleMutation = useUpdateOrgMemberRole({
+    mutation: {
+      onSuccess: async () => {
+        showSuccessToast('Rol actualizado con éxito')
+        menuActions.onClose()
+        qc.invalidateQueries({ queryKey: getGetOrgMembersQueryKey(org.id) })
+      },
+      onError: (err) => {
+        handleError(err)
+      },
     },
   })
-  */
+
+  const handleRoleChange = (event: SelectChangeEvent) => {
+    updateRoleMutation.mutate({
+      orgId: org.id,
+      userId: selectedUser.user_id,
+      data: {
+        role_id: event.target.value,
+      },
+    })
+  }
 
   const removeMutation = useRemoveOrgMember({
     mutation: {
@@ -93,7 +117,7 @@ export function OrgMembersDialog({
         showSuccessToast(
           t('translation:settings.projects.members_dialog.kick_user_success'),
         )
-        queryClient.invalidateQueries({ queryKey: ['orgMembers', orgId] })
+        qc.invalidateQueries({ queryKey: getGetOrgMembersQueryKey(org.id) })
       },
       onError: (err) => {
         handleError(err)
@@ -103,7 +127,7 @@ export function OrgMembersDialog({
 
   const menuActions = usePopover()
 
-  const renderMenuActions = (user: any) => (
+  const renderMenuActions = (user: OrgUserPublic) => (
     <CustomPopover
       open={menuActions.open}
       anchorEl={menuActions.anchorEl}
@@ -111,62 +135,28 @@ export function OrgMembersDialog({
       slotProps={{ arrow: { placement: 'right-top' } }}
     >
       <MenuList>
-        {user?.is_administrator ? (
-          <Box sx={{ mb: '4px' }}>
-            <MenuItem onClick={() => {}}>
-              <Iconify icon="tdesign:user-arrow-down-filled" />
-              {t(
-                'translation:settings.projects.members_dialog.demote_to_editor',
-              )}
-            </MenuItem>
-
-            <MenuItem onClick={() => {}}>
-              <Iconify icon="tdesign:user-arrow-down-filled" />
-              {t(
-                'translation:settings.projects.members_dialog.demote_to_member',
-              )}
-            </MenuItem>
-          </Box>
-        ) : user?.is_editor ? (
-          <Box sx={{ mb: '4px' }}>
-            <MenuItem onClick={() => {}}>
-              <Iconify icon="tdesign:user-arrow-up-filled" />
-              {t(
-                'translation:settings.projects.members_dialog.promote_to_admin',
-              )}
-            </MenuItem>
-
-            <MenuItem onClick={() => {}}>
-              <Iconify icon="tdesign:user-arrow-down-filled" />
-              {t(
-                'translation:settings.projects.members_dialog.demote_to_member',
-              )}
-            </MenuItem>
-          </Box>
-        ) : (
-          user && (
-            <Box sx={{ mb: '4px' }}>
-              <MenuItem onClick={() => {}}>
-                <Iconify icon="tdesign:user-arrow-up-filled" />
-                {t(
-                  'translation:settings.projects.members_dialog.promote_to_admin',
-                )}
-              </MenuItem>
-
-              <MenuItem onClick={() => {}}>
-                <Iconify icon="tdesign:user-arrow-up-filled" />
-                {t(
-                  'translation:settings.projects.members_dialog.promote_to_editor',
-                )}
-              </MenuItem>
-            </Box>
-          )
-        )}
+        <FormControl size="small">
+          <MenuItem>
+            <Iconify icon="tdesign:user-arrow-up-filled" />
+            {t('translation:settings.projects.members_dialog.change_role')}
+            <Select
+              sx={{ maxHeight: 40 }}
+              value={user?.role_id}
+              onChange={handleRoleChange}
+            >
+              {MOCK_ROLES.map((role) => (
+                <MenuItem key={role.id} value={role.id}>
+                  {role.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </MenuItem>
+        </FormControl>
         <Divider sx={{ borderStyle: 'dashed', mb: '4px' }} />
 
         <MenuItem
           onClick={() => {
-            removeMutation.mutate({ orgId: orgId, userId: user.id })
+            removeMutation.mutate({ orgId: orgId, userId: user.user_id })
             menuActions.onClose()
           }}
           sx={{ color: 'error.main' }}
@@ -255,7 +245,7 @@ export function OrgMembersDialog({
                     <IconButton
                       color={menuActions.open ? 'inherit' : 'default'}
                       onClick={(e) => {
-                        setSelectedUser(user as any)
+                        setSelectedUser(user)
                         menuActions.onOpen(e)
                       }}
                     >

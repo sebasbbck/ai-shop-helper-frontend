@@ -473,7 +473,7 @@ export function SettingsOrgs() {
                   color="inherit"
                   startIcon={<Iconify icon="mingcute:group-line" />}
                   fullWidth
-                  // onClick={() => setSelectedProjectForMembers(project)}
+                  onClick={() => setSelectedOrgForMembers(org)}
                 >
                   {t('translation:settings.projects.members')}
                 </Button>

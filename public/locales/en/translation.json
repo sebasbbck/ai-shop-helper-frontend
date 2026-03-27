@@ -178,6 +178,7 @@
                 "promote_to_editor": "Promote to Editor",
                 "demote_to_member": "Demote to Member",
                 "promote_to_admin": "Promote to Admin",
+                "change_role": "Change role to:",
                 "kick": "Remove from project",
                 "title": "Members of",
                 "no_members": "This project has no members.",
