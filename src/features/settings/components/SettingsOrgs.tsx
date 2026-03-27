@@ -20,7 +20,6 @@ import { Form, Field } from '../../../components/hook-form'
 import { useBoolean } from 'minimal-shared/hooks'
 
 // import useCurrentProject from '../../../hooks/useCurrentProject'
-// import { readDefaultProjectIdForUser, setDefaultProjectIdForUser } from '../../../hooks/useCurrentProject'
 import useAuth from '../../../hooks/useAuth'
 // import { Project, ProjectsService } from '@/client'
 // import { ProjectMembersDialog } from './account-project-members-dialog'
@@ -30,31 +29,17 @@ import { useTranslation } from 'next-i18next'
 import { IconButton, Input, Radio, Tooltip } from '@mui/material'
 import { useRouter } from 'next/router'
 import {
+  getGetMyOrgsQueryKey,
   getMyOrgs,
   useCreateOrg,
   useGetMyOrgs,
+  useUpdateOrg,
 } from '../../../../api/orgs/orgs'
-import { OrgPublic } from '../../../../api/model'
+import { OrgPublic, ProjectPublic } from '../../../../api/model'
 import { OrgsCreateOrgBody } from '../../../../api/orgs/orgs.zod'
 import { OrgMembersDialog } from '../orgs/components/OrgMembersDialog'
 
 // ----------------------------------------------------------------------
-
-/*
-export type ProjectCreateProps = {
-  project_name: string;
-  set_as_current_project: boolean;
-};
-
-const CreateProjectSchema = z.object({
-  project_name: z.string().trim().min(1, "El nombre es obligatorio"),
-  set_as_current_project: z.boolean()
-})
-
-const JoinProjectSchema = z.object({
-  invitation_id: z.string().trim().min(1, "El código es obligatorio"),
-})
-*/
 
 export function SettingsOrgs() {
   // const { projects, setCurrentProject } = useCurrentProject()
@@ -73,31 +58,15 @@ export function SettingsOrgs() {
   // const [selectedProjectForEdit, setSelectedProjectForEdit] = useState<Project | null>(null)
   // const openEditDialog = !!selectedProjectForEdit
 
-  // const [editingTokens, setEditingTokens] = useState<Project | undefined>(undefined)
-  const [tokens, setTokens] = useState<string | undefined>(undefined)
+  const [editingTokens, setEditingTokens] = useState<OrgPublic | undefined>(
+    undefined,
+  )
+  const [credits, setCredits] = useState<string | undefined>(undefined)
 
   const { data, isLoading } = useGetMyOrgs()
 
   // Safely extract items from the response
   const orgs = data?.items ?? []
-
-  /*
-  const [defaultProjectId, setDefaultProjectId] = useState<string | null>(null)
-  
-  useEffect(() => {
-    if (authUser?.id) {
-      const id = readDefaultProjectIdForUser(authUser.id)
-      setDefaultProjectId(id)
-    }
-  }, [authUser?.id])
-  
-  const handleSetAsDefault = (projectId: string) => {
-    if (authUser?.id) {
-      setDefaultProjectIdForUser(authUser.id, projectId)
-      setDefaultProjectId(projectId)
-    }
-  }
-  */
 
   const createProjectMethods = useForm({
     resolver: zodResolver(OrgsCreateOrgBody),
@@ -172,19 +141,6 @@ export function SettingsOrgs() {
     console.log(data)
     joinMutation.mutate(data)
   })
-
-  const UpdateTokensSchema = z.object({
-      tokens: z.number().min(0, "El número de créditos no puede ser negativo"),
-    })
-  
-    type UpdateTokensForm = z.infer<typeof UpdateTokensSchema>
-
-    const methods = useForm<UpdateTokensForm>({
-      resolver: zodResolver(UpdateTokensSchema),
-      defaultValues: { 
-          tokens: editingTokens?.associated_tokens ?? 0 
-      },
-    })
   
     const { reset } = methods
   
@@ -193,37 +149,65 @@ export function SettingsOrgs() {
         reset({ tokens: editingTokens.associated_tokens ?? 0 })
       }
     }, [editingTokens, reset])
-  
-    const updateTokensMutation = useMutation({
-      mutationFn: (tokens: number) =>
-        ProjectsService.updateProjectAssociatedTokens({ 
-          projectId: editingTokens?.id ?? "", 
-          requestBody: { associated_tokens: tokens } 
-        }),
-      onSuccess: async () => {
-        await qc.invalidateQueries({ queryKey: ["projects"] })
-        showSuccessToast("Créditos actualizados")
-      },
-      onError: (err: any) => {
-        handleError(err)
+  */
+
+  const UpdateSchema = z.object({
+    name: z
+      .string()
+      .min(3, 'El nombre de la organización debe tener al menos 3 caracteres'),
+    credits: z.number().min(0, 'El número de créditos no puede ser negativo'),
+  })
+
+  type UpdateForm = z.infer<typeof UpdateSchema>
+
+  const methods = useForm<UpdateForm>({
+    resolver: zodResolver(UpdateSchema),
+    defaultValues: {
+      name: editingTokens?.name,
+      credits: editingTokens?.credits ?? 0,
+    },
+  })
+
+  const onUpdateTokens = async (e: any) => {
+    e.preventDefault()
+    const numericCredits = credits ? parseInt(credits) : 0
+    console.log(numericCredits)
+    const validation = UpdateSchema.safeParse({
+      credits: numericCredits,
+      name: editingTokens.name,
+    })
+
+    if (!validation.success) {
+      handleError(validation.error.message)
+      return
+    }
+    await updateMutation.mutateAsync({
+      orgId: editingTokens.id,
+      data: {
+        name: editingTokens.name,
+        credits: numericCredits,
       },
     })
-  
-    const onUpdateTokens = async (e: React.FormEvent) => {
-      e.preventDefault()
-      const numericTokens = tokens ? parseInt(tokens) : 0
-      const validation = UpdateTokensSchema.safeParse({ tokens: numericTokens })
+  }
 
-      if (!validation.success) {
-        handleError(validation.error.message)
-        return
-      }
-      await updateTokensMutation.mutateAsync(numericTokens)
+  const updateMutation = useUpdateOrg({
+    mutation: {
+      onSuccess: async (data, variables) => {
+        qc.invalidateQueries({ queryKey: getGetMyOrgsQueryKey() })
 
-      setEditingTokens(undefined)
-      setTokens(undefined)
-    }
-*/
+        showSuccessToast(
+          t('translation:settings.projects.edit_dialog.update_success'),
+        )
+        setEditingTokens(undefined)
+        setCredits(undefined)
+      },
+      onError: (err) => {
+        console.log(err)
+        handleError(err)
+      },
+    },
+  })
+
   const renderFormCreateFormDialog = () => (
     <Dialog
       fullWidth
@@ -398,16 +382,21 @@ export function SettingsOrgs() {
                   }}
                 >
                   {t('translation:settings.projects.tokens')}:
-                  {/* editingTokens?.id === project.id ?
+                  {editingTokens?.id === org.id ? (
                     // <Box sx={{ display: "flex", gap: 1, mb: 0.5, alignItems: "center" }}>
-                    <form onSubmit={onUpdateTokens} style={{ display: "flex", alignItems: "center"}}>
+                    <form
+                      onSubmit={onUpdateTokens}
+                      style={{ display: 'flex', alignItems: 'center' }}
+                    >
                       <Input
-                        value={tokens}
-                        onChange={(e) => {setTokens(e.target.value)}}
+                        value={credits}
+                        onChange={(e) => {
+                          setCredits(e.target.value)
+                        }}
                         autoFocus
                         type="number"
                         sx={{
-                          borderRadius: "8px",
+                          borderRadius: '8px',
                           height: 24,
                           fontWeight: 600,
                           maxWidth: 64,
@@ -425,10 +414,13 @@ export function SettingsOrgs() {
                         sx={{ p: 0.5 }}
                         onClick={() => {
                           setEditingTokens(undefined)
-                          setTokens(undefined)
+                          setCredits(undefined)
                         }}
-                      > 
-                        <Iconify width={16} icon="material-symbols:close-rounded" />
+                      >
+                        <Iconify
+                          width={16}
+                          icon="material-symbols:close-rounded"
+                        />
                       </IconButton>
 
                       <IconButton
@@ -436,14 +428,13 @@ export function SettingsOrgs() {
                         color="success"
                         sx={{ p: 0.5 }}
                         type="submit"
-                        disabled={updateTokensMutation.isPending}
-                      > 
+                        disabled={updateMutation.isPending}
+                      >
                         <Iconify width={16} icon="eva:checkmark-fill" />
                       </IconButton>
                     </form>
+                  ) : (
                     // </Box>
-                  */}
-                  {
                     <>
                       <Box
                         component="span"
@@ -451,18 +442,18 @@ export function SettingsOrgs() {
                       >
                         {org.credits}
                       </Box>
-                      {/*
-                      <IconButton 
+
+                      <IconButton
                         onClick={() => {
-                          setEditingTokens(project)
-                          setTokens(project.associated_tokens?.toString())
+                          setEditingTokens(org)
+                          setCredits(org.credits?.toString())
                         }}
-                        sx={{ p: 0.5 }}>
+                        sx={{ p: 0.5 }}
+                      >
                         <Iconify icon="solar:pen-bold" width={16} />
                       </IconButton>
-                      */}
                     </>
-                  }
+                  )}
                 </Typography>
               </Stack>
 
@@ -482,11 +473,11 @@ export function SettingsOrgs() {
                   size="small"
                   variant="contained"
                   color="aishophelper"
-                  startIcon={<Iconify icon="solar:pen-bold" />}
+                  startIcon={<Iconify icon="solar:settings-bold" />}
                   fullWidth
                   // onClick={() => setSelectedProjectForEdit(project)}
                 >
-                  {t('translation:settings.projects.edit')}
+                  {t('translation:settings.projects.manage')}
                 </Button>
               </Stack>
             </Paper>
