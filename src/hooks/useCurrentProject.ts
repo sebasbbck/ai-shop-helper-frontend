@@ -3,12 +3,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import useAuth from './useAuth'
 
 import { ProjectPublic } from '../../api/model'
-import { useNavigate, useParams } from '@tanstack/react-router'
 import {
   getGetMyProjectsQueryKey,
   useGetMyProjects,
 } from '../../api/projects/projects'
 import { useGetMyOrgs } from '../../api/orgs/orgs'
+import { getAccessToken } from '../../api/mutator/custom-instance'
 
 const CURRENT_PROJECT_KEY = 'current_project_id'
 const DEFAULT_PROJECT_IDS_KEY = 'default_project_ids'
@@ -58,24 +58,31 @@ export default function useCurrentProject() {
   const qc = useQueryClient()
 
   const { user: authUser } = useAuth()
+  const token = getAccessToken()
   const prevTokensRef = useRef<number | null>(null)
 
-  const { data, isLoading, isFetching, refetch } = useGetMyOrgs()
+  const { data, isLoading, isFetching, refetch } = useGetMyOrgs(undefined, {
+    query: {
+      // Only fire if we have a token and user
+      enabled: !!token && !!authUser?.id,
+    },
+  })
   const orgs = useMemo(() => (data?.items as any[]) ?? [], [data])
   const projects = useMemo(
     () => orgs.flatMap((org) => (org.projects ?? []) as ProjectPublic[]),
     [orgs],
   )
+  // enabled: isLoggedIn(),
 
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
-    () => {
-      try {
-        return readCurrentProjectId()
-      } catch (_err) {
-        return null
-      }
-    },
+    null,
   )
+
+  useEffect(() => {
+    // Only runs on the client after mount
+    const id = readCurrentProjectId()
+    if (id) setSelectedProjectId(id)
+  }, [])
 
   /*
   const createProjectMutation = useMutation<Project, unknown, string>({

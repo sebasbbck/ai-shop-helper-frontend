@@ -36,6 +36,7 @@ import useCurrentProject, {
 import { ProjectsCreateProjectBody } from '../../../../api/projects/projects.zod'
 import { useGetMyOrgs } from '../../../../api/orgs/orgs'
 import { ProjectEditDialog } from '../../projects/components/ProjectEditDialog'
+import { getAccessToken } from '../../../../api/mutator/custom-instance'
 
 // ----------------------------------------------------------------------
 
@@ -49,6 +50,7 @@ const PROJECT_TYPES = [
 export function SettingsProjects() {
   const { projects, currentProject, setCurrentProject } = useCurrentProject()
   const { user: authUser } = useAuth()
+  const token = getAccessToken()
   const qc = useQueryClient()
   const handleError = useHandleError()
   const openCreateDialog = useBoolean()
@@ -61,7 +63,12 @@ export function SettingsProjects() {
   const openEditDialog = !!selectedProjectForEdit
   const [defaultProjectId, setDefaultProjectId] = useState<string | null>(null)
 
-  const { data: orgsData, isLoading: isLoadingOrgs } = useGetMyOrgs()
+  const { data: orgsData, isLoading: isLoadingOrgs } = useGetMyOrgs(undefined, {
+    query: {
+      // Only fire if we have a token and user
+      enabled: !!token && !!authUser?.id,
+    },
+  })
   const orgs = orgsData?.items ?? []
 
   useEffect(() => {
