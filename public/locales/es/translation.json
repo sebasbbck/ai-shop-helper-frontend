@@ -147,6 +147,29 @@
             "family": "Familia",
             "size": "Tamaño"
         },
+        "orgs": {
+            "no_org": "Sin organización",
+            "no_org_desc": "No perteneces a ninguna organización. Crea una organización o pídele a un administrador que te añada a una y aparecerá en esta lista.",
+            "manage": "Gestionar",
+            "title": "Organizaciones",
+            "add": "Añadir organización",
+            "add_org": {
+                "title": "Gestión de organizaciones",
+                "join": "Unirse a una organización",
+                "name": "Nombre de la organización",
+                "create": "Crear nueva organización",
+                "back": "Atrás",
+                "create_button": "Crear",
+                "create_success": "Organización creada con éxito",
+                "create_failure": "Hubo un error al crear la organización"
+            },
+            "edit_org": {
+                "update_success": "Organización actualizada con éxito"
+            },
+            "no_orgs": "Aún no perteneces a ninguna organización. ¡Crea o únete a una para comenzar!",
+            "min_characters": "El nombre de la organización debe tener al menos 3 caracteres",
+            "credits_not_negative": "El número de créditos no puede ser negativo"
+        },
         "projects": {
             "no_project": "Sin proyecto",
             "no_project_desc": "No tienes proyectos para seleccionar. Crea un proyecto en tu organización o únete a uno y aparecerá en esta lista.",

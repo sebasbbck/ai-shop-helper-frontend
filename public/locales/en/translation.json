@@ -147,6 +147,29 @@
             "family": "Family",
             "size": "Size"
         },
+        "orgs": {
+            "no_org": "No organisation",
+            "no_org_desc": "You're not a member of any organisations. Create an organization or ask an administrator to add you to one and it will appear in this list.",
+            "manage": "Manage",
+            "title": "Organisations",
+            "add": "Add organisations",
+            "add_org": {
+                "title": "Organisation Management",
+                "join": "Join an organisation",
+                "name": "Organisation name",
+                "create": "Create new organisation",
+                "back": "Back",
+                "create_button": "Create",
+                "create_success": "Organisation created successfully",
+                "create_failure": "There was an error creating the organisation"
+            },
+            "edit_org": {
+                "update_success": "Organisation updated successfully"
+            },
+            "no_orgs": "You're not a member of any organisations. Create or join one to get started!",
+            "min_characters": "The organisation name must have at least 3 characters",
+            "credits_not_negative": "The number of credits cannot be negative"
+        },
         "projects": {
             "no_project": "No project",
             "no_project_desc": "You have no projects to select. Create a project in your organisation or join one and it will appear in this list.",

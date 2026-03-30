@@ -84,9 +84,7 @@ export function SettingsOrgs() {
       onSuccess: async (data, variables) => {
         qc.invalidateQueries({ queryKey: ['projects'] })
 
-        showSuccessToast(
-          t('translation:settings.projects.add_project.create_success'),
-        )
+        showSuccessToast(t('translation:settings.orgs.add_org.create_success'))
         resetCreateForm()
         openCreateDialog.onFalse()
       },
@@ -126,7 +124,7 @@ export function SettingsOrgs() {
     mutationFn: (data: { invitation_id: string }) => ProjectsService.addUserToProject({ invitationId: data.invitation_id }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['projects'] })
-      showSuccessToast(t("settings.projects.add_project.join_success"))
+      showSuccessToast(t("settings.orgs.add_org.join_success"))
       resetCreateForm()
       openCreateDialog.onFalse()
     },
@@ -217,11 +215,10 @@ export function SettingsOrgs() {
     >
       <DialogTitle>
         {dialogView === 'choice' &&
-          t('translation:settings.projects.add_project.title')}
+          t('translation:settings.orgs.add_org.title')}
         {dialogView === 'create' &&
-          t('translation:settings.projects.add_project.create')}
-        {dialogView === 'join' &&
-          t('translation:settings.projects.add_project.join')}
+          t('translation:settings.orgs.add_org.create')}
+        {dialogView === 'join' && t('translation:settings.orgs.add_org.join')}
       </DialogTitle>
 
       <Box sx={{ px: 3, py: 2, pb: 3 }}>
@@ -241,7 +238,7 @@ export function SettingsOrgs() {
               }}
               onClick={() => setDialogView('join')}
             >
-              {t('translation:settings.projects.add_project.join')}
+              {t('translation:settings.orgs.add_org.join')}
             </Button>
 
             <Button
@@ -258,7 +255,7 @@ export function SettingsOrgs() {
               }}
               onClick={() => setDialogView('create')}
             >
-              {t('translation:settings.projects.add_project.create')}
+              {t('translation:settings.orgs.add_org.create')}
             </Button>
           </Stack>
         )}
@@ -268,12 +265,12 @@ export function SettingsOrgs() {
             <Stack spacing={3}>
               <Field.Text
                 name="name"
-                label={t('translation:settings.projects.add_project.name')}
+                label={t('translation:settings.orgs.add_org.name')}
               />
 
               <Stack direction="row" spacing={1.5} justifyContent="flex-end">
                 <Button color="inherit" onClick={() => setDialogView('choice')}>
-                  {t('translation:settings.projects.add_project.back')}
+                  {t('translation:settings.orgs.add_org.back')}
                 </Button>
                 <Button
                   variant="contained"
@@ -281,7 +278,7 @@ export function SettingsOrgs() {
                   color="aishophelper"
                   loading={isCreating}
                 >
-                  {t('translation:settings.projects.add_project.create_button')}
+                  {t('translation:settings.orgs.add_org.create_button')}
                 </Button>
               </Stack>
             </Stack>
@@ -311,7 +308,7 @@ export function SettingsOrgs() {
     <>
       <Card>
         <CardHeader
-          title={t('translation:settings.projects.title')}
+          title={t('translation:settings.orgs.title')}
           action={
             <Button
               size="small"
@@ -319,7 +316,7 @@ export function SettingsOrgs() {
               startIcon={<Iconify icon="mingcute:add-line" />}
               onClick={openCreateDialog.onTrue}
             >
-              {t('translation:settings.projects.add')}
+              {t('translation:settings.orgs.add')}
             </Button>
           }
         />
