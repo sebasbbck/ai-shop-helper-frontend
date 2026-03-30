@@ -37,6 +37,7 @@ import {
 import { OrgPublic } from '../../../../api/model'
 import { OrgsCreateOrgBody } from '../../../../api/orgs/orgs.zod'
 import { OrgMembersDialog } from '../orgs/components/OrgMembersDialog'
+import { getAccessToken } from '../../../../api/mutator/custom-instance'
 
 // ----------------------------------------------------------------------
 
@@ -59,6 +60,7 @@ const JoinProjectSchema = z.object({
 export function SettingsOrgs() {
   // const { projects, setCurrentProject } = useCurrentProject()
   const { user: authUser } = useAuth()
+  const token = getAccessToken()
   const qc = useQueryClient()
   const handleError = useHandleError()
   const openCreateDialog = useBoolean()
@@ -76,7 +78,13 @@ export function SettingsOrgs() {
   // const [editingTokens, setEditingTokens] = useState<Project | undefined>(undefined)
   const [tokens, setTokens] = useState<string | undefined>(undefined)
 
-  const { data, isLoading } = useGetMyOrgs()
+  const { data, isLoading } = useGetMyOrgs(undefined,
+    {
+      query: {
+        // Only fire if we have a token and user
+        enabled: !!token && !!authUser?.id, 
+      },
+    })
 
   // Safely extract items from the response
   const orgs = data?.items ?? []
