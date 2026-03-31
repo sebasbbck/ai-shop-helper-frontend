@@ -61,7 +61,11 @@ export function SettingsProjects() {
   const openEditDialog = !!selectedProjectForEdit
   const [defaultProjectId, setDefaultProjectId] = useState<string | null>(null)
 
-  const { data: orgsData, isLoading: isLoadingOrgs } = useGetMyOrgs()
+  const { data: orgsData, isLoading: isLoadingOrgs } = useGetMyOrgs(undefined, {
+    query: {
+      enabled: !!authUser,
+    },
+  })
   const orgs = orgsData?.items ?? []
 
   useEffect(() => {

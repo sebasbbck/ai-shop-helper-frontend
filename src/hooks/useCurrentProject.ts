@@ -60,7 +60,11 @@ export default function useCurrentProject() {
   const { user: authUser } = useAuth()
   const prevTokensRef = useRef<number | null>(null)
 
-  const { data, isLoading, isFetching, refetch } = useGetMyOrgs()
+  const { data, isLoading, isFetching, refetch } = useGetMyOrgs(undefined, {
+    query: {
+      enabled: !!authUser,
+    },
+  })
   const orgs = useMemo(() => (data?.items as any[]) ?? [], [data])
   const projects = useMemo(
     () => orgs.flatMap((org) => (org.projects ?? []) as ProjectPublic[]),

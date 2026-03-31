@@ -63,7 +63,11 @@ export function SettingsOrgs() {
   )
   const [credits, setCredits] = useState<string | undefined>(undefined)
 
-  const { data, isLoading } = useGetMyOrgs()
+  const { data, isLoading } = useGetMyOrgs(undefined, {
+    query: {
+      enabled: !!authUser,
+    },
+  })
 
   // Safely extract items from the response
   const orgs = data?.items ?? []

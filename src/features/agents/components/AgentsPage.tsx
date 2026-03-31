@@ -10,9 +10,16 @@ export default function AgentsPage() {
   const router = useRouter()
   const { currentProject } = useCurrentProject()
 
-  const { data, isLoading, isError, error } = useGetAgents({
-    project_type_id: currentProject?.project_type_id,
-  })
+  const { data, isLoading, isError, error } = useGetAgents(
+    {
+      project_type_id: currentProject?.project_type_id,
+    },
+    {
+      query: {
+        enabled: !!currentProject?.project_type_id,
+      },
+    }
+  )
   const agents = data?.items ?? []
 
   if (isLoading) {
