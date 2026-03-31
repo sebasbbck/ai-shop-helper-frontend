@@ -36,6 +36,7 @@ import EditRole from './EditRole'
 function RolesTable() {
   const [selectedRole, setSelectedRole] = useState<RolePublic | null>(null)
   const router = useRouter()
+  const { user: authUser } = useAuth()
 
   const page = Number(router.query.page) || 1
   const [perPage, setPerPage] = useState(10)
@@ -48,7 +49,7 @@ function RolesTable() {
     },
     {
       query: {
-        enabled: router.isReady,
+        enabled: !!authUser,
         placeholderData: (prevData) => prevData,
       },
     },
