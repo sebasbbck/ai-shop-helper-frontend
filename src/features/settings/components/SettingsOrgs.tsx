@@ -38,12 +38,14 @@ import {
 import { OrgPublic, ProjectPublic } from '../../../../api/model'
 import { OrgsCreateOrgBody } from '../../../../api/orgs/orgs.zod'
 import { OrgMembersDialog } from '../orgs/components/OrgMembersDialog'
+import { getAccessToken } from '../../../../api/mutator/custom-instance'
 
 // ----------------------------------------------------------------------
 
 export function SettingsOrgs() {
   // const { projects, setCurrentProject } = useCurrentProject()
   const { user: authUser } = useAuth()
+  const token = getAccessToken()
   const qc = useQueryClient()
   const handleError = useHandleError()
   const openCreateDialog = useBoolean()
@@ -65,7 +67,8 @@ export function SettingsOrgs() {
 
   const { data, isLoading } = useGetMyOrgs(undefined, {
     query: {
-      enabled: !!authUser,
+      // Only fire if we have a token and user
+      enabled: !!token && !!authUser?.id,
     },
   })
 

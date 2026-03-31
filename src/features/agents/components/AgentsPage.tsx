@@ -5,10 +5,14 @@ import { useRouter } from 'next/router'
 import { AppAgent } from './AgentCard'
 import { useGetAgents } from '../../../../api/agents/agents'
 import useCurrentProject from '../../../hooks/useCurrentProject'
+import useAuth from '../../../hooks/useAuth'
+import { getAccessToken } from '../../../../api/mutator/custom-instance'
 
 export default function AgentsPage() {
   const router = useRouter()
   const { currentProject } = useCurrentProject()
+  const { user: authUser } = useAuth()
+  const token = getAccessToken()
 
   const { data, isLoading, isError, error } = useGetAgents(
     {
@@ -16,9 +20,10 @@ export default function AgentsPage() {
     },
     {
       query: {
-        enabled: !!currentProject?.project_type_id,
+        // Only fire if we have a token and user
+        enabled: !!token && !!authUser?.id,
       },
-    }
+    },
   )
   const agents = data?.items ?? []
 

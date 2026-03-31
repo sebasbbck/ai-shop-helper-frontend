@@ -36,6 +36,7 @@ import useCurrentProject, {
 import { ProjectsCreateProjectBody } from '../../../../api/projects/projects.zod'
 import { useGetMyOrgs } from '../../../../api/orgs/orgs'
 import { ProjectEditDialog } from '../../projects/components/ProjectEditDialog'
+import { getAccessToken } from '../../../../api/mutator/custom-instance'
 
 // ----------------------------------------------------------------------
 
@@ -49,6 +50,7 @@ const PROJECT_TYPES = [
 export function SettingsProjects() {
   const { projects, currentProject, setCurrentProject } = useCurrentProject()
   const { user: authUser } = useAuth()
+  const token = getAccessToken()
   const qc = useQueryClient()
   const handleError = useHandleError()
   const openCreateDialog = useBoolean()
@@ -63,7 +65,8 @@ export function SettingsProjects() {
 
   const { data: orgsData, isLoading: isLoadingOrgs } = useGetMyOrgs(undefined, {
     query: {
-      enabled: !!authUser,
+      // Only fire if we have a token and user
+      enabled: !!token && !!authUser?.id,
     },
   })
   const orgs = orgsData?.items ?? []
