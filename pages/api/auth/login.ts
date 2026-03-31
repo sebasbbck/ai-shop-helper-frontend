@@ -39,8 +39,15 @@ export default async function handler(
     const decoded = decodeAccessToken(data.access_token)
     const maxAge = decoded.exp - Math.floor(Date.now() / 1000)
 
-    const cookie = serializeCookie(ACCESS_TOKEN_COOKIE, data.access_token, maxAge)
-    res.setHeader('Set-Cookie', cookie)
+    const cookies = []
+    cookies.push(serializeCookie(ACCESS_TOKEN_COOKIE, data.access_token, maxAge))
+
+    const backendCookies = response.headers.get('set-cookie')
+    if (backendCookies) {
+      cookies.push(backendCookies)
+    }
+
+    res.setHeader('Set-Cookie', cookies)
     res.status(200).json({ access_token: data.access_token })
   } catch (error) {
     res.status(500).json({ detail: 'Internal server error' })
