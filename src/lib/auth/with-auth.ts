@@ -2,6 +2,10 @@ import type { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { getTokenFromCookies, validateToken } from './session-server'
 import type { AuthUser } from './types'
 import { getStaticTranslations } from '../../../lib/get-static-translations'
+import { REFRESH_TOKEN_COOKIE } from './constants'
+import { decodeAccessToken } from './jwt'
+import { serializeCookie } from './cookie-utils'
+import { ACCESS_TOKEN_COOKIE } from './constants'
 
 interface WithAuthOptions {
   requireAdmin?: boolean
@@ -17,25 +21,56 @@ export function withAuth(
   options: WithAuthOptions = {}
 ): GetServerSideProps {
   return async (context) => {
-    const token = getTokenFromCookies(context.req)
+    let token = getTokenFromCookies(context.req)
+    let validation = token ? validateToken(token) : { valid: false }
 
-    if (!token) {
-      return {
-        redirect: {
-          destination: '/login',
-          permanent: false,
-        },
+    if (!validation.valid) {
+      const refreshToken = context.req.cookies[REFRESH_TOKEN_COOKIE]
+
+      if (refreshToken) {
+        try {
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/refresh`,
+            {
+              method: 'POST',
+              headers: {
+                Cookie: `${REFRESH_TOKEN_COOKIE}=${refreshToken}`,
+              },
+            }
+          )
+
+          if (response.ok) {
+            const data = await response.json()
+            token = data.access_token
+            validation = validateToken(token)
+
+            if (validation.valid) {
+              const decoded = decodeAccessToken(token)
+              const maxAge = decoded.exp - Math.floor(Date.now() / 1000)
+
+              const cookies = []
+              cookies.push(serializeCookie(ACCESS_TOKEN_COOKIE, token, maxAge))
+
+              const backendCookies = response.headers.get('set-cookie')
+              if (backendCookies) {
+                cookies.push(backendCookies)
+              }
+
+              context.res.setHeader('Set-Cookie', cookies)
+            }
+          }
+        } catch (error) {
+          console.error('Server-side refresh failed:', error)
+        }
       }
-    }
 
-    const validation = validateToken(token)
-
-    if (!validation.valid || !validation.decoded) {
-      return {
-        redirect: {
-          destination: '/login',
-          permanent: false,
-        },
+      if (!validation.valid) {
+        return {
+          redirect: {
+            destination: '/login',
+            permanent: false,
+          },
+        }
       }
     }
 

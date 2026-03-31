@@ -31,7 +31,7 @@ export const OrgsCreateOrgBody = zod.object({
 }).describe('Schema for creating a new organization.')
 
 /**
- * Get organizations the current user is a member of.
+ * Get organizations the current user is a member of with nested projects.
 
 Args:
     current_user (User): The current authenticated user.
@@ -39,7 +39,7 @@ Args:
     session (SessionDep): The database session.
 
 Returns:
-    PaginatedResponse[OrgPublic]: The paginated list of organizations.
+    PaginatedResponse[OrgWithProjects]: The paginated list of organizations with projects.
  * @summary Get My Orgs
  */
 export const orgsGetMyOrgsQueryOffsetDefault = 0;

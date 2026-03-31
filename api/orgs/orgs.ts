@@ -29,7 +29,7 @@ import type {
   OrgCreate,
   OrgPublic,
   OrgUpdate,
-  PaginatedResponseOrgPublic
+  PaginatedResponseOrgWithProjects
 } from '.././model';
 
 import { customInstance } from '.././mutator/custom-instance';
@@ -116,7 +116,7 @@ export const useCreateOrg = <TError = ErrorType<HTTPValidationError>,
       return useMutation(getCreateOrgMutationOptions(options), queryClient);
     }
     /**
- * Get organizations the current user is a member of.
+ * Get organizations the current user is a member of with nested projects.
 
 Args:
     current_user (User): The current authenticated user.
@@ -124,7 +124,7 @@ Args:
     session (SessionDep): The database session.
 
 Returns:
-    PaginatedResponse[OrgPublic]: The paginated list of organizations.
+    PaginatedResponse[OrgWithProjects]: The paginated list of organizations with projects.
  * @summary Get My Orgs
  */
 export const getMyOrgs = (
@@ -133,7 +133,7 @@ export const getMyOrgs = (
 ) => {
       
       
-      return customInstance<PaginatedResponseOrgPublic>(
+      return customInstance<PaginatedResponseOrgWithProjects>(
       {url: `/orgs/`, method: 'GET',
         params, signal
     },

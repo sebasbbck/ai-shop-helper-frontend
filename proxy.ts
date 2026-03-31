@@ -2,7 +2,14 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { decodeJwt } from 'jose'
 
-const publicRoutes = ['/login', '/signup', '/recover-password', '/unauthorized', '/404', '/connection/failure']
+const publicRoutes = [
+  '/login',
+  '/signup',
+  '/recover-password',
+  '/unauthorized',
+  '/404',
+  '/connection/failure',
+]
 const authRoutes = ['/login', '/signup', '/recover-password']
 
 export function proxy(request: NextRequest) {
@@ -24,15 +31,18 @@ export function proxy(request: NextRequest) {
   }
 
   const isAdminRoute = pathname.startsWith('/admin')
-  const isPublicRoute = publicRoutes.some(route => pathname.startsWith(route))
-  const isAuthRoute = authRoutes.some(route => pathname.startsWith(route))
+  const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route))
+  const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route))
 
   if (isAuthenticated && isAuthRoute) {
     return NextResponse.redirect(new URL('/', request.url))
   }
 
   if (!isAuthenticated && !isPublicRoute) {
-    return NextResponse.redirect(new URL('/login', request.url))
+    const refreshToken = request.cookies.get('refresh_token')?.value
+    if (!refreshToken) {
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
   }
 
   if (isAuthenticated && isAdminRoute && !isAdmin) {

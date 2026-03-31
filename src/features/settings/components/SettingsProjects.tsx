@@ -18,32 +18,37 @@ import useCustomToast from '../../../hooks/useCustomToast'
 import { Iconify } from '../../../components/iconify'
 import { Form, Field } from '../../../components/hook-form'
 import { useBoolean } from 'minimal-shared/hooks'
-
-// import useCurrentProject from '../../../hooks/useCurrentProject'
 import useAuth from '../../../hooks/useAuth'
-// import { Project, ProjectsService } from '@/client'
-// import { ProjectMembersDialog } from './account-project-members-dialog'
-// import { ProjectEditDialog } from './account-project-edit-dialog'
 import useHandleError from '../../../hooks/useHandleError'
 import { useTranslation } from 'next-i18next'
-import { IconButton, Input, Radio, Tooltip } from '@mui/material'
+import { IconButton, Input, MenuItem, Radio, Tooltip } from '@mui/material'
 import { useRouter } from 'next/router'
-import {
-  getGetMyOrgsQueryKey,
-  getMyOrgs,
-  useCreateOrg,
-  useGetMyOrgs,
-  useUpdateOrg,
-} from '../../../../api/orgs/orgs'
 import { OrgPublic, ProjectPublic } from '../../../../api/model'
-import { OrgsCreateOrgBody } from '../../../../api/orgs/orgs.zod'
-import { OrgMembersDialog } from '../orgs/components/OrgMembersDialog'
+import {
+  getGetMyProjectsQueryKey,
+  useCreateProject,
+  useGetMyProjects,
+} from '../../../../api/projects/projects'
+import useCurrentProject, {
+  readDefaultProjectIdForUser,
+  setDefaultProjectIdForUser,
+} from '../../../hooks/useCurrentProject'
+import { ProjectsCreateProjectBody } from '../../../../api/projects/projects.zod'
+import { useGetMyOrgs } from '../../../../api/orgs/orgs'
+import { ProjectEditDialog } from '../../projects/components/ProjectEditDialog'
 import { getAccessToken } from '../../../../api/mutator/custom-instance'
 
 // ----------------------------------------------------------------------
 
-export function SettingsOrgs() {
-  // const { projects, setCurrentProject } = useCurrentProject()
+// TODO: Remove hardcoded project type IDs
+const PROJECT_TYPES = [
+  { value: 'd6c239a7-8052-49ed-94e3-e374175d963a', label: 'WordPress' },
+  { value: 'a495ab4e-1492-4575-ba71-1e4991a53ce0', label: 'Shopify' },
+  { value: '8a5be972-acea-43f6-9e53-b010644fe6ce', label: 'WooCommerce' },
+]
+
+export function SettingsProjects() {
+  const { projects, currentProject, setCurrentProject } = useCurrentProject()
   const { user: authUser } = useAuth()
   const token = getAccessToken()
   const qc = useQueryClient()
@@ -53,31 +58,40 @@ export function SettingsOrgs() {
   const { t } = useTranslation()
   const router = useRouter()
 
-  const [selectedOrgForMembers, setSelectedOrgForMembers] =
-    useState<OrgPublic | null>(null)
-  const openMembersDialog = !!selectedOrgForMembers
+  const [selectedProjectForEdit, setSelectedProjectForEdit] =
+    useState<ProjectPublic | null>(null)
+  const openEditDialog = !!selectedProjectForEdit
+  const [defaultProjectId, setDefaultProjectId] = useState<string | null>(null)
 
-  // const [selectedProjectForEdit, setSelectedProjectForEdit] = useState<Project | null>(null)
-  // const openEditDialog = !!selectedProjectForEdit
-
-  const [editingTokens, setEditingTokens] = useState<OrgPublic | undefined>(
-    undefined,
-  )
-  const [credits, setCredits] = useState<string | undefined>(undefined)
-
-  const { data, isLoading } = useGetMyOrgs(undefined, {
+  const { data: orgsData, isLoading: isLoadingOrgs } = useGetMyOrgs(undefined, {
     query: {
       // Only fire if we have a token and user
       enabled: !!token && !!authUser?.id,
     },
   })
+  const orgs = orgsData?.items ?? []
 
-  // Safely extract items from the response
-  const orgs = data?.items ?? []
+  useEffect(() => {
+    if (authUser?.id) {
+      const id = currentProject?.id
+      setDefaultProjectId(id)
+    }
+  }, [authUser?.id, currentProject?.id])
+
+  const handleSetAsDefault = (projectId: string) => {
+    if (authUser?.id) {
+      setCurrentProject(projectId)
+      setDefaultProjectId(projectId)
+    }
+  }
 
   const createProjectMethods = useForm({
-    resolver: zodResolver(OrgsCreateOrgBody),
-    defaultValues: { name: '' },
+    resolver: zodResolver(ProjectsCreateProjectBody),
+    defaultValues: {
+      name: '',
+      project_type_id: '',
+      org_id: '',
+    },
   })
 
   const {
@@ -86,12 +100,14 @@ export function SettingsOrgs() {
     formState: { isSubmitting: isCreating },
   } = createProjectMethods
 
-  const createMutation = useCreateOrg({
+  const createMutation = useCreateProject({
     mutation: {
       onSuccess: async (data, variables) => {
-        qc.invalidateQueries({ queryKey: ['projects'] })
+        qc.invalidateQueries({ queryKey: getGetMyProjectsQueryKey() })
 
-        showSuccessToast(t('translation:settings.orgs.add_org.create_success'))
+        showSuccessToast(
+          t('translation:settings.projects.add_project.create_success'),
+        )
         resetCreateForm()
         openCreateDialog.onFalse()
       },
@@ -102,7 +118,10 @@ export function SettingsOrgs() {
   })
 
   const onSubmitCreate = handleCreateSubmit((data) => {
-    createMutation.mutate({ data })
+    createMutation.mutate({
+      orgId: data.org_id,
+      data: data,
+    })
   })
 
   const handleCloseCreate = () => {
@@ -131,7 +150,7 @@ export function SettingsOrgs() {
     mutationFn: (data: { invitation_id: string }) => ProjectsService.addUserToProject({ invitationId: data.invitation_id }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['projects'] })
-      showSuccessToast(t("settings.orgs.add_org.join_success"))
+      showSuccessToast(t("settings.projects.add_project.join_success"))
       resetCreateForm()
       openCreateDialog.onFalse()
     },
@@ -146,6 +165,19 @@ export function SettingsOrgs() {
     console.log(data)
     joinMutation.mutate(data)
   })
+
+  const UpdateTokensSchema = z.object({
+      tokens: z.number().min(0, "El número de créditos no puede ser negativo"),
+    })
+  
+    type UpdateTokensForm = z.infer<typeof UpdateTokensSchema>
+
+    const methods = useForm<UpdateTokensForm>({
+      resolver: zodResolver(UpdateTokensSchema),
+      defaultValues: { 
+          tokens: editingTokens?.associated_tokens ?? 0 
+      },
+    })
   
     const { reset } = methods
   
@@ -154,65 +186,37 @@ export function SettingsOrgs() {
         reset({ tokens: editingTokens.associated_tokens ?? 0 })
       }
     }, [editingTokens, reset])
-  */
-
-  const UpdateSchema = z.object({
-    name: z
-      .string()
-      .min(3, 'El nombre de la organización debe tener al menos 3 caracteres'),
-    credits: z.number().min(0, 'El número de créditos no puede ser negativo'),
-  })
-
-  type UpdateForm = z.infer<typeof UpdateSchema>
-
-  const methods = useForm<UpdateForm>({
-    resolver: zodResolver(UpdateSchema),
-    defaultValues: {
-      name: editingTokens?.name,
-      credits: editingTokens?.credits ?? 0,
-    },
-  })
-
-  const onUpdateTokens = async (e: any) => {
-    e.preventDefault()
-    const numericCredits = credits ? parseInt(credits) : 0
-    console.log(numericCredits)
-    const validation = UpdateSchema.safeParse({
-      credits: numericCredits,
-      name: editingTokens.name,
-    })
-
-    if (!validation.success) {
-      handleError(validation.error.message)
-      return
-    }
-    await updateMutation.mutateAsync({
-      orgId: editingTokens.id,
-      data: {
-        name: editingTokens.name,
-        credits: numericCredits,
+  
+    const updateTokensMutation = useMutation({
+      mutationFn: (tokens: number) =>
+        ProjectsService.updateProjectAssociatedTokens({ 
+          projectId: editingTokens?.id ?? "", 
+          requestBody: { associated_tokens: tokens } 
+        }),
+      onSuccess: async () => {
+        await qc.invalidateQueries({ queryKey: ["projects"] })
+        showSuccessToast("Créditos actualizados")
       },
-    })
-  }
-
-  const updateMutation = useUpdateOrg({
-    mutation: {
-      onSuccess: async (data, variables) => {
-        qc.invalidateQueries({ queryKey: getGetMyOrgsQueryKey() })
-
-        showSuccessToast(
-          t('translation:settings.projects.edit_dialog.update_success'),
-        )
-        setEditingTokens(undefined)
-        setCredits(undefined)
-      },
-      onError: (err) => {
-        console.log(err)
+      onError: (err: any) => {
         handleError(err)
       },
-    },
-  })
+    })
+  
+    const onUpdateTokens = async (e: React.FormEvent) => {
+      e.preventDefault()
+      const numericTokens = tokens ? parseInt(tokens) : 0
+      const validation = UpdateTokensSchema.safeParse({ tokens: numericTokens })
 
+      if (!validation.success) {
+        handleError(validation.error.message)
+        return
+      }
+      await updateTokensMutation.mutateAsync(numericTokens)
+
+      setEditingTokens(undefined)
+      setTokens(undefined)
+    }
+*/
   const renderFormCreateFormDialog = () => (
     <Dialog
       fullWidth
@@ -222,10 +226,11 @@ export function SettingsOrgs() {
     >
       <DialogTitle>
         {dialogView === 'choice' &&
-          t('translation:settings.orgs.add_org.title')}
+          t('translation:settings.projects.add_project.title')}
         {dialogView === 'create' &&
-          t('translation:settings.orgs.add_org.create')}
-        {dialogView === 'join' && t('translation:settings.orgs.add_org.join')}
+          t('translation:settings.projects.add_project.create')}
+        {dialogView === 'join' &&
+          t('translation:settings.projects.add_project.join')}
       </DialogTitle>
 
       <Box sx={{ px: 3, py: 2, pb: 3 }}>
@@ -245,7 +250,7 @@ export function SettingsOrgs() {
               }}
               onClick={() => setDialogView('join')}
             >
-              {t('translation:settings.orgs.add_org.join')}
+              {t('translation:settings.projects.add_project.join')}
             </Button>
 
             <Button
@@ -262,7 +267,7 @@ export function SettingsOrgs() {
               }}
               onClick={() => setDialogView('create')}
             >
-              {t('translation:settings.orgs.add_org.create')}
+              {t('translation:settings.projects.add_project.create')}
             </Button>
           </Stack>
         )}
@@ -270,14 +275,37 @@ export function SettingsOrgs() {
         {dialogView === 'create' && (
           <Form methods={createProjectMethods} onSubmit={onSubmitCreate}>
             <Stack spacing={3}>
+              {/* Project Name */}
               <Field.Text
                 name="name"
-                label={t('translation:settings.orgs.add_org.name')}
+                label={t('translation:settings.projects.add_project.name')}
               />
+
+              {/* Organization Selection */}
+              <Field.Select
+                name="org_id"
+                label="Organización"
+                helperText={isLoadingOrgs ? 'Cargando organizaciones...' : ''}
+              >
+                {orgs.map((org: OrgPublic) => (
+                  <MenuItem key={org.id} value={org.id}>
+                    {org.name}
+                  </MenuItem>
+                ))}
+              </Field.Select>
+
+              {/* Project Type Selection */}
+              <Field.Select name="project_type_id" label="Tipo de proyecto">
+                {PROJECT_TYPES.map((type) => (
+                  <MenuItem key={type.value} value={type.value}>
+                    {type.label}
+                  </MenuItem>
+                ))}
+              </Field.Select>
 
               <Stack direction="row" spacing={1.5} justifyContent="flex-end">
                 <Button color="inherit" onClick={() => setDialogView('choice')}>
-                  {t('translation:settings.orgs.add_org.back')}
+                  {t('translation:settings.projects.add_project.back')}
                 </Button>
                 <Button
                   variant="contained"
@@ -285,7 +313,7 @@ export function SettingsOrgs() {
                   color="aishophelper"
                   loading={isCreating}
                 >
-                  {t('translation:settings.orgs.add_org.create_button')}
+                  {t('translation:settings.projects.add_project.create_button')}
                 </Button>
               </Stack>
             </Stack>
@@ -315,7 +343,7 @@ export function SettingsOrgs() {
     <>
       <Card>
         <CardHeader
-          title={t('translation:settings.orgs.title')}
+          title={t('translation:settings.projects.title')}
           action={
             <Button
               size="small"
@@ -323,7 +351,7 @@ export function SettingsOrgs() {
               startIcon={<Iconify icon="mingcute:add-line" />}
               onClick={openCreateDialog.onTrue}
             >
-              {t('translation:settings.orgs.add')}
+              {t('translation:settings.projects.add')}
             </Button>
           }
         />
@@ -337,9 +365,9 @@ export function SettingsOrgs() {
             gridTemplateColumns: { xs: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' },
           }}
         >
-          {orgs.map((org: OrgPublic) => (
+          {projects.map((project: ProjectPublic) => (
             <Paper
-              key={org.id}
+              key={project.id}
               variant="outlined"
               sx={{
                 p: 2.5,
@@ -356,24 +384,25 @@ export function SettingsOrgs() {
                   justifyContent="space-between"
                 >
                   <Typography variant="subtitle1" noWrap>
-                    {org.name}
+                    {project.name}
                   </Typography>
-                  {/*
-                    <Tooltip
-                      arrow
-                      title={t("translation:settings.projects.default_project_tooltip")}
-                      slotProps={{ tooltip: { sx: { maxWidth: 240, mr: 0.5 } } }}
-                    >
-                      <Radio
-                        checked={defaultProjectId === String(project.id)}
-                        onChange={() => handleSetAsDefault(String(project.id))}
-                        sx={{
-                          width: "24px",
-                          height: "24px"
-                        }}
-                      />
-                    </Tooltip>
-                  */}
+
+                  <Tooltip
+                    arrow
+                    title={t(
+                      'translation:settings.projects.default_project_tooltip',
+                    )}
+                    slotProps={{ tooltip: { sx: { maxWidth: 240, mr: 0.5 } } }}
+                  >
+                    <Radio
+                      checked={defaultProjectId === String(project.id)}
+                      onChange={() => handleSetAsDefault(String(project.id))}
+                      sx={{
+                        width: '24px',
+                        height: '24px',
+                      }}
+                    />
+                  </Tooltip>
                 </Stack>
 
                 <Typography
@@ -384,80 +413,21 @@ export function SettingsOrgs() {
                     alignItems: 'center',
                     gap: 0.5,
                   }}
+                  // TODO: Obtain org name differently
                 >
-                  {t('translation:settings.projects.tokens')}:
-                  {editingTokens?.id === org.id ? (
-                    // <Box sx={{ display: "flex", gap: 1, mb: 0.5, alignItems: "center" }}>
-                    <form
-                      onSubmit={onUpdateTokens}
-                      style={{ display: 'flex', alignItems: 'center' }}
-                    >
-                      <Input
-                        value={credits}
-                        onChange={(e) => {
-                          setCredits(e.target.value)
-                        }}
-                        autoFocus
-                        type="number"
-                        sx={{
-                          borderRadius: '8px',
-                          height: 24,
-                          fontWeight: 600,
-                          maxWidth: 64,
-                          flexShrink: 1,
-                        }}
-                        slotProps={{
-                          input: {
-                            min: 0,
-                          },
-                        }}
-                      />
-                      <IconButton
-                        aria-label="cancel"
-                        color="error"
-                        sx={{ p: 0.5 }}
-                        onClick={() => {
-                          setEditingTokens(undefined)
-                          setCredits(undefined)
-                        }}
-                      >
-                        <Iconify
-                          width={16}
-                          icon="material-symbols:close-rounded"
-                        />
-                      </IconButton>
-
-                      <IconButton
-                        aria-label="save"
-                        color="success"
-                        sx={{ p: 0.5 }}
-                        type="submit"
-                        disabled={updateMutation.isPending}
-                      >
-                        <Iconify width={16} icon="eva:checkmark-fill" />
-                      </IconButton>
-                    </form>
-                  ) : (
-                    // </Box>
+                  Organización:
+                  {
                     <>
                       <Box
                         component="span"
                         sx={{ color: 'text.primary', fontWeight: 'bold' }}
                       >
-                        {org.credits}
+                        {(orgs as OrgPublic[])?.find(
+                          (o) => o.id === project.org_id,
+                        )?.name ?? 'Cargando...'}
                       </Box>
-
-                      <IconButton
-                        onClick={() => {
-                          setEditingTokens(org)
-                          setCredits(org.credits?.toString())
-                        }}
-                        sx={{ p: 0.5 }}
-                      >
-                        <Iconify icon="solar:pen-bold" width={16} />
-                      </IconButton>
                     </>
-                  )}
+                  }
                 </Typography>
               </Stack>
 
@@ -468,7 +438,7 @@ export function SettingsOrgs() {
                   color="inherit"
                   startIcon={<Iconify icon="mingcute:group-line" />}
                   fullWidth
-                  onClick={() => setSelectedOrgForMembers(org)}
+                  // onClick={() => setSelectedProjectForMembers(project)}
                 >
                   {t('translation:settings.projects.members')}
                 </Button>
@@ -477,11 +447,11 @@ export function SettingsOrgs() {
                   size="small"
                   variant="contained"
                   color="aishophelper"
-                  startIcon={<Iconify icon="solar:settings-bold" />}
+                  startIcon={<Iconify icon="solar:pen-bold" />}
                   fullWidth
-                  // onClick={() => setSelectedProjectForEdit(project)}
+                  onClick={() => setSelectedProjectForEdit(project)}
                 >
-                  {t('translation:settings.projects.manage')}
+                  {t('translation:settings.projects.edit_dialog.title')}
                 </Button>
               </Stack>
             </Paper>
@@ -491,22 +461,14 @@ export function SettingsOrgs() {
 
       {renderFormCreateFormDialog()}
 
-      {selectedOrgForMembers && (
-        <OrgMembersDialog
-          open={openMembersDialog}
-          org={selectedOrgForMembers}
-          onClose={() => setSelectedOrgForMembers(null)}
-        />
-      )}
-      {/*
-      {selectedProjectForEdit &&
-        <ProjectEditDialog 
-          open={openEditDialog} 
+      {selectedProjectForEdit && (
+        <ProjectEditDialog
+          open={openEditDialog}
           project={selectedProjectForEdit}
           onClose={() => setSelectedProjectForEdit(null)}
+          orgs={orgs as OrgPublic[]}
         />
-      }
-      */}
+      )}
     </>
   )
 }

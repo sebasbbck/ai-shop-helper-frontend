@@ -19,9 +19,9 @@ import { navData as dashboardNavData } from '../nav-config-dashboard'
 import { dashboardLayoutVars, dashboardNavColorVars } from './css-vars'
 import { NavMobile } from './nav-mobile'
 import { NavVertical } from './nav-vertical'
-// import { ProjectsPopover } from '../../../components/projects-popover';
 import { LanguagePopover } from '../components/language-popover'
 import { UserPublic } from '../../../../api/model'
+import { ProjectsPopover } from '../components/projects-popover'
 // ----------------------------------------------------------------------
 
 interface DashboardLayoutProps {
@@ -113,7 +113,7 @@ export function DashboardLayout({
           />
 
           {/** @slot Projects popover */}
-          {/* <ProjectsPopover /> */}
+          <ProjectsPopover />
         </>
       ),
       rightArea: (

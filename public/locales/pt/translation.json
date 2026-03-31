@@ -146,7 +146,32 @@
             "family": "Família",
             "size": "Tamanho"
         },
+        "orgs": {
+            "no_org": "Nenhuma organização",
+            "no_org_desc": "Você ainda não pertence a nenhuma organização. Crie ou junte-se a uma para começar a colaborar com a sua equipa.",
+            "manage": "Gerir",
+            "title": "Organizações",
+            "add": "Adicionar organização",
+            "add_org": {
+                "title": "Gestão de organizações",
+                "join": "Juntar-se a uma organização",
+                "name": "Nome da organização",
+                "create": "Criar nova organização",
+                "back": "Voltar",
+                "create_button": "Criar",
+                "create_success": "Organização criada com sucesso",
+                "create_failure": "Hubo un error al crear la organización"
+            },
+            "edit_org": {
+                "update_success": "Organização atualizada com sucesso"
+            },
+            "no_orgs": "Ainda não pertence a nenhuma organização. Crie ou junte-se a uma para começar a colaborar com a sua equipa!",
+            "min_characters": "O nome da organização deve ter pelo menos 3 caracteres",
+            "credits_not_negative": "Os créditos da organização não podem ser negativos"
+        },
         "projects": {
+            "no_project": "Nenhum projeto",
+            "no_project_desc": "Não tem projetos para selecionar. Crie um projeto na sua organização ou participe num e ele aparecerá nesta lista.",
             "manage": "Gerir",
             "title": "Projetos",
             "add": "Adicionar projeto",
@@ -169,7 +194,7 @@
             "no_projects": "Ainda não tem projetos. Crie ou junte-se a um para começar!",
             "members": "Membros",
             "edit": "Editar Onboarding",
-            "default_project_tooltip": "Definir como projeto por defeito. Este projeto será selecionado por defeito quando iniciar sessão.",
+            "default_project_tooltip": "Definir como projeto atual. Este projeto também será selecionado por defeito quando iniciar sessão.",
             "members_dialog": {
                 "role_update_success": "Função atualizada com sucesso",
                 "kick_user_success": "Utilizador removido com sucesso",
@@ -177,6 +202,7 @@
                 "promote_to_editor": "Promover a Editor",
                 "demote_to_member": "Despromover a Membro",
                 "promote_to_admin": "Promover a Admin",
+                "change_role": "Alterar função para:",
                 "kick": "Remover do projeto",
                 "title": "Membros de",
                 "no_members": "Este projeto não tem membros.",

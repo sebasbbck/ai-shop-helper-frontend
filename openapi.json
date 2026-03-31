@@ -562,7 +562,7 @@
           "agents"
         ],
         "summary": "Get Agents",
-        "description": "Get a paginated list of agents. Superuser only.\n\nArgs:\n    current_superuser (User): The current superuser.\n    pagination (PaginationParams): The pagination parameters.\n    session (SessionDep): The database session.\n\nReturns:\n    PaginatedResponse[AgentPublic]: The paginated list of agents.",
+        "description": "Get a paginated list of agents. Authenticated users only.\n\nArgs:\n    current_user (User): The current authenticated user.\n    pagination (PaginationParams): The pagination parameters.\n    session (SessionDep): The database session.\n    project_type_id (UUID | None): Optional filter by project type ID.\n\nReturns:\n    PaginatedResponse[AgentPublic]: The paginated list of agents.",
         "operationId": "agents-get_agents",
         "security": [
           {
@@ -570,6 +570,23 @@
           }
         ],
         "parameters": [
+          {
+            "name": "project_type_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Project Type Id"
+            }
+          },
           {
             "name": "offset",
             "in": "query",
@@ -1011,7 +1028,7 @@
           "orgs"
         ],
         "summary": "Get My Orgs",
-        "description": "Get organizations the current user is a member of.\n\nArgs:\n    current_user (User): The current authenticated user.\n    pagination (PaginationParams): The pagination parameters.\n    session (SessionDep): The database session.\n\nReturns:\n    PaginatedResponse[OrgPublic]: The paginated list of organizations.",
+        "description": "Get organizations the current user is a member of with nested projects.\n\nArgs:\n    current_user (User): The current authenticated user.\n    pagination (PaginationParams): The pagination parameters.\n    session (SessionDep): The database session.\n\nReturns:\n    PaginatedResponse[OrgWithProjects]: The paginated list of organizations with projects.",
         "operationId": "orgs-get_my_orgs",
         "security": [
           {
@@ -1049,7 +1066,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaginatedResponse_OrgPublic_"
+                  "$ref": "#/components/schemas/PaginatedResponse_OrgWithProjects_"
                 }
               }
             }
@@ -1809,6 +1826,68 @@
         "responses": {
           "204": {
             "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/": {
+      "get": {
+        "tags": [
+          "projects"
+        ],
+        "summary": "Get My Projects",
+        "description": "Get all projects the current user has access to across all organizations.\n\nArgs:\n    current_user (User): The current authenticated user.\n    pagination (PaginationParams): The pagination parameters.\n    session (SessionDep): The database session.\n\nReturns:\n    PaginatedResponse[ProjectPublic]: The paginated list of projects.",
+        "operationId": "projects-get_my_projects",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_ProjectPublic_"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
@@ -2935,35 +3014,6 @@
         ],
         "title": "PaginatedResponse[AgentPublic]"
       },
-      "PaginatedResponse_OrgPublic_": {
-        "properties": {
-          "items": {
-            "items": {},
-            "type": "array",
-            "title": "Items"
-          },
-          "total": {
-            "type": "integer",
-            "title": "Total"
-          },
-          "offset": {
-            "type": "integer",
-            "title": "Offset"
-          },
-          "limit": {
-            "type": "integer",
-            "title": "Limit"
-          }
-        },
-        "type": "object",
-        "required": [
-          "items",
-          "total",
-          "offset",
-          "limit"
-        ],
-        "title": "PaginatedResponse[OrgPublic]"
-      },
       "PaginatedResponse_OrgUserPublic_": {
         "properties": {
           "items": {
@@ -2992,6 +3042,35 @@
           "limit"
         ],
         "title": "PaginatedResponse[OrgUserPublic]"
+      },
+      "PaginatedResponse_OrgWithProjects_": {
+        "properties": {
+          "items": {
+            "items": {},
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "offset",
+          "limit"
+        ],
+        "title": "PaginatedResponse[OrgWithProjects]"
       },
       "PaginatedResponse_ProjectPublic_": {
         "properties": {

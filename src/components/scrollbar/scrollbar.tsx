@@ -57,15 +57,36 @@ const ScrollbarRoot = styled(SimpleBar, {
 })(({ fillContent }: { fillContent: boolean }) => ({
   minWidth: 0,
   minHeight: 0,
-  flexGrow: 1,
+  flexGrow: 0,
   display: 'flex',
   flexDirection: 'column',
   ...(fillContent && {
     '& .simplebar-content': {
       display: 'flex',
       flex: '1 1 auto',
-      minHeight: '100%',
+      minHeight: 'auto',
       flexDirection: 'column',
     },
   }),
+  '& .simplebar-wrapper': {
+    height: 'auto',
+    maxHeight: 'inherit',
+  },
+  '& .simplebar-mask': {
+    height: 'auto',
+    maxHeight: 'inherit',
+  },
+  '& .simplebar-offset': {
+    height: 'auto',
+    maxHeight: 'inherit',
+  },
+  '& .simplebar-content-wrapper': {
+    height: 'auto',
+    maxHeight: 'inherit',
+    overflow: 'auto !important',
+  },
+
+  '& .simplebar-placeholder': {
+    display: 'none',
+  },
 }))

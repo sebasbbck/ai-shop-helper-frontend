@@ -7,7 +7,10 @@ import { getGetMeQueryKey } from '../../api/users/users'
 import type { BodyAuthLogin, UserCreate } from '../../api/model'
 import useHandleError from './useHandleError'
 import { useTranslation } from 'next-i18next'
-import { setAccessToken, clearAccessToken } from '../../api/mutator/custom-instance'
+import {
+  setAccessToken,
+  clearAccessToken,
+} from '../../api/mutator/custom-instance'
 
 const useAuth = () => {
   const [error, setError] = useState<string | null>(null)
@@ -19,7 +22,7 @@ const useAuth = () => {
     queryKey: getGetMeQueryKey(),
     queryFn: async () => {
       const response = await fetch('/api/auth/me', {
-        credentials: 'include'
+        credentials: 'include',
       })
       if (!response.ok) throw new Error('Not authenticated')
       const data = await response.json()
@@ -83,12 +86,13 @@ const useAuth = () => {
     try {
       await fetch('/api/auth/logout', {
         method: 'POST',
-        credentials: 'include'
+        credentials: 'include',
       })
     } catch (e) {
       console.warn('Error calling logout API:', e)
     } finally {
       clearAccessToken()
+      localStorage.removeItem('current_project_id')
       queryClient.clear()
       router.push('/login')
     }

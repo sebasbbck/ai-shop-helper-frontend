@@ -111,6 +111,7 @@ AXIOS_INSTANCE.interceptors.response.use(
           method: 'POST',
           credentials: 'include'
         }).catch(() => console.warn('Logout API failed'))
+        localStorage.removeItem("current_project_id")
 
         const authPages = ['/login', '/signup', '/recover-password']
         const onAuthPage = authPages.some((p) => window.location.pathname.startsWith(p))

@@ -5,8 +5,7 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type GetAgentsParams = {
-project_type_id?: string | null;
+export type GetMyProjectsParams = {
 /**
  * @minimum 0
  */

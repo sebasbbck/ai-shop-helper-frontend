@@ -52,7 +52,7 @@ function AgentsTable() {
     },
     {
       query: {
-        enabled: router.isReady,
+        enabled: !!currentUser,
         placeholderData: (prevData) => prevData,
       },
     },

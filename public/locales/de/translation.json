@@ -146,7 +146,32 @@
             "family": "Familie",
             "size": "Größe"
         },
+        "orgs": {
+            "no_org": "Keine Organisation",
+            "no_org_desc": "Sie gehören keiner Organisation an. Erstellen Sie eine Organisation oder bitten Sie einen Administrator, Sie zu einer Organisation hinzuzufügen, damit sie in dieser Liste angezeigt wird.",
+            "manage": "Verwalten",
+            "title": "Organisationen",
+            "add": "Organisation hinzufügen",
+            "add_org": {
+                "title": "Organisationsverwaltung",
+                "join": "Einer Organisation beitreten",
+                "name": "Name der Organisation",
+                "create": "Neue Organisation erstellen",
+                "back": "Zurück",
+                "create_button": "Erstellen",
+                "create_success": "Organisation erfolgreich erstellt",
+                "create_failure": "Beim Erstellen der Organisation ist ein Fehler aufgetreten"
+            },
+            "edit_org": {
+                "update_success": "Organisation erfolgreich aktualisiert"
+            },
+            "no_orgs": "Sie gehören noch zu keiner Organisation. Erstellen Sie eine oder treten Sie einer bei, um zu beginnen!",
+            "min_characters": "Der Name der Organisation muss mindestens 3 Zeichen lang sein",
+            "credits_not_negative": "Die Anzahl der Credits kann nicht negativ sein"
+        },
         "projects": {
+            "no_project": "Kein Projekt",
+            "no_project_desc": "Es sind keine Projekte zur Auswahl. Erstellen Sie ein Projekt in Ihrer Organisation oder treten Sie einem bei. Es wird dann in dieser Liste angezeigt.",
             "manage": "Verwalten",
             "title": "Projekte",
             "add": "Projekt hinzufügen",
@@ -169,7 +194,7 @@
             "no_projects": "Sie haben noch keine Projekte. Erstellen Sie eines oder treten Sie einem bei, um zu beginnen!",
             "members": "Mitglieder",
             "edit": "Onboarding bearbeiten",
-            "default_project_tooltip": "Als Standardprojekt festlegen. Dieses Projekt wird standardmäßig ausgewählt, wenn Sie sich anmelden.",
+            "default_project_tooltip": "Als aktuelles Projekt festlegen. Dieses Projekt wird auch beim Anmelden standardmäßig ausgewählt.",
             "members_dialog": {
                 "role_update_success": "Rolle erfolgreich aktualisiert",
                 "kick_user_success": "Benutzer erfolgreich entfernt",
@@ -177,6 +202,7 @@
                 "promote_to_editor": "Zum Editor befördern",
                 "demote_to_member": "Zum Mitglied zurückstufen",
                 "promote_to_admin": "Zum Admin befördern",
+                "change_role": "Rolle ändern zu:",
                 "kick": "Vom Projekt entfernen",
                 "title": "Mitglieder von",
                 "no_members": "Dieses Projekt hat keine Mitglieder.",
