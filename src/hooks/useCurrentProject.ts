@@ -115,7 +115,7 @@ export default function useCurrentProject() {
     const stored = selectedProjectId ?? readCurrentProjectId()
 
     if (list.length > 0) {
-      const exists = stored && list.find((p) => String(p.id) = String(stored))
+      const exists = stored && list.find((p) => String(p.id) === String(stored))
       if (!exists && !isFetching) {
         // Try to get the user's default project first, otherwise use the first project
         const defaultProjectId = authUser?.id
