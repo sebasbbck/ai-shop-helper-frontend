@@ -48,7 +48,7 @@ function UsersTable() {
     },
     {
       query: {
-        enabled: router.isReady,
+        enabled: !!currentUser,
         placeholderData: (prevData) => prevData,
       },
     },

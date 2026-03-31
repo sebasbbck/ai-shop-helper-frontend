@@ -39,7 +39,10 @@ export function proxy(request: NextRequest) {
   }
 
   if (!isAuthenticated && !isPublicRoute) {
-    return NextResponse.redirect(new URL('/login', request.url))
+    const refreshToken = request.cookies.get('refresh_token')?.value
+    if (!refreshToken) {
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
   }
 
   if (isAuthenticated && isAdminRoute && !isAdmin) {
