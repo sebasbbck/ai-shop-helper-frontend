@@ -10,6 +10,15 @@
 2. [Estado actual del proyecto](#estado-actual-del-proyecto)
     - 2.1. [Proceso general de migración](#proceso-general-de-migración)
 3. [Temas pendientes](#temas-pendientes)
+    - 3.1. [Redactor de blog](#redactor-de-blog)
+    - 3.2. [Nuevos datos de usuario en el registro](#nuevos-datos-de-usuario-en-el-registro)
+    - 3.3. [Pago](#pago)
+    - 3.4. [Onboarding](#onboarding)
+    - 3.5. [Referidos](#referidos)
+    - 3.6. [Créditos y ajustes de facturación](#créditos-y-ajustes-de-facturación)
+    - 3.7. [Notificaciones](#notificaciones)
+    - 3.8. [Gestión de organizaciones y proyectos](#gestión-de-organizaciones-y-proyectos)
+    - 3.9. [Pantallas de admin](#pantallas-de-admin)
 4. [Consideraciones para continuar con el desarrollo](#consideraciones-para-continuar-con-el-desarrollo)
     - 4.1. [Entorno](#entorno)
 
@@ -26,6 +35,72 @@ La migración está completada parcialmente, tanto en el frontend como en el bac
 ### Proceso general de migración
 
 Para explicar las consideraciones generales que hay que tener para los distintos archivos del proyecto, vamos a ver un ejemplo con la pantalla de ajustes de usuario. En el antiguo frontend, esta se encuentra en `src/sections/account/account-general.tsx`, mientras que en el nuevo, está en `src/features/settings/components/SettingsGeneral.tsx`.
+
+- **Páginas**: En el proyecto anterior, la organización de páginas era inconsistente. Los archivos bajo el directorio `/routes` eran las rutas para React Router. En estos, se determinaba qué comprobaciones hacer antes de renderizar la página, como comprobar que el usuario ha iniciado sesión, además de declarar el componente que renderizar en esa ruta. Por ejemplo, esta era la ruta `/$lang/settings/general` para los ajustes de usuario:
+
+  ```tsx
+  import { isLoggedIn } from '@/hooks/useAuth'
+  import { DashboardLayout } from '@/layouts/dashboard'
+  import AccountGeneralPage from '@/pages/settings/general'
+  import { AccountLayout } from '@/sections/account/account-layout'
+  import { createFileRoute, redirect } from '@tanstack/react-router'
+
+  export const Route = createFileRoute('/$lang/settings/general')({
+    component: RouteComponent,
+      beforeLoad: async ({ params }) => {
+        if (!isLoggedIn()) {
+          throw redirect({ to: "/$lang/login", params: { lang: params.lang } })
+        }
+      },
+  })
+
+  function RouteComponent() {
+    return (
+      <DashboardLayout sx={undefined} cssVars={undefined} slotProps={undefined}>
+        <AccountLayout>
+          <AccountGeneralPage />
+        </AccountLayout>
+      </DashboardLayout>
+    )
+  }
+  ```
+
+  Este es un ejemplo de un archivo de ruta limpio. Si el usuario ha iniciado sesión, devuelve la página AccountGeneralPage anidada en el layout del tablero (`DashboardLayout`) y de los ajustes de cuenta (`AccountLayout`). Sin embargo, `AccountGeneralPage` (`src/pages/settings/general.tsx`) contiene dentro `AccountGeneralView` (`src/sections/account/view/account-general-view.tsx`), que devuelve `AccountGeneral` (`frontend/src/sections/account/account-general.tsx`), que contiene los componentes visuales y el formulario de actualización de información del usuario.
+
+  Algunas páginas del proyecto hacen lo contrario: en vez de tener demasiados niveles, la página entera se encuentra en el archivo de la ruta. Este es el caso de las pantallas del panel de administrador, como `src/routes/$lang/admin-panel/admin.tsx`.
+
+  El nuevo proyecto utiliza el [Pages Router](https://nextjs.org/docs/pages) de Next.js. Así se ve el archivo de ruta de los ajustes de usuario:
+
+  ```tsx
+  import { useTranslation } from 'next-i18next'
+  import { DashboardLayout } from '../../src/components/layouts/dashboard'
+  import { SettingsLayout } from '../../src/features/settings/components/SettingsLayout'
+  import { SettingsGeneral } from '../../src/features/settings/components/SettingsGeneral'
+  import { withAuth } from '../../src/lib/auth/with-auth'
+
+  export const getServerSideProps = withAuth()
+
+  export default function GeneralSettingsPage() {
+    const { t } = useTranslation('translation')
+
+    return (
+      <DashboardLayout>
+        <SettingsLayout>
+          <SettingsGeneral />
+        </SettingsLayout>
+      </DashboardLayout>
+    )
+  }
+  ```
+
+  `withAuth()` es un helper para obtener el usuario actual como contexto y las traducciones del servidor a la vez.
+
+  **NOTA**: Antes de Next.js 13, Pages Router era la manera principal de crear rutas. Aunque sigue estando soportada en las versiones más recientes de Next.js, se recomienda migrar al App Router en un futuro.
+
+- **Permiso de acceso**: En vez de hacerlo individualmente por rutas, es el archivo `proxy.ts` el que determina a qué rutas pueden acceder los usuarios según su rol. Por defecto, cualquier ruta que empiece por `/admin` requiere que el usuario actual sea un superusuario y cualquier ruta que no sea pública (las de inicio de sesión/registro, conexión exitosa y errores) requiere que el usuario actual haya iniciado sesión. Si no cumple los requisitos, se redirigirá:
+  - En el caso de rutas de administrador, a una página de error.
+  - En el caso de rutas privadas, a la pantalla de inicio de sesión.
+  - En el caso de rutas de inicio de sesión y registro, si el usuario ya ha iniciado sesión, se le redirige a la página principal.
 
 - **Alias de directorio**: En el proyecto anterior, se utilizaba `@/` para módulos internos. Ahora, utilizamos direcciones relativas. Por ejemplo, así importamos los hooks en el nuevo repositorio:
 
@@ -126,6 +201,7 @@ Para continuar con esta parte, son relevantes estas páginas de la documentació
 - [Build a subscriptions integration](https://docs.stripe.com/billing/subscriptions/build-subscriptions?payment-ui=elements&api-integration=paymentintents)
 - [Accept a payment](https://docs.stripe.com/payments/accept-a-payment?payment-ui=elements&api-integration=paymentintents)
 - [API keys](https://docs.stripe.com/keys)
+- [How subscriptions work](https://docs.stripe.com/billing/subscriptions/overview)
 
 La mayoría de la documentación de Stripe está traducida al español y se puede seleccionar el idioma en la parte inferior izquierda de la página.
 
@@ -142,6 +218,45 @@ La gran desventaja que tiene esta solución es que el onboarding solo se muestra
 La solución propuesta actualmente es una pantalla de onboarding separada, con su propia ruta (/onboarding), a la que se redirige al usuario si intenta acceder a cualquier otra pantalla sin haber respondido a todas las preguntas. En `feat/onboarding` se encuentra la ruta y el diseño de la pantalla, con preguntas de ejemplo que no se envían al backend.
 
 **Nota de internacionalización**: en el proyecto full stack, las preguntas y sus descripciones no estaban traducidas porque venían directamente del backend. Si son preguntas que van a variar a menudo, se debería definir las traducciones en la base de datos. Si son fijas, se puede añadir las claves a los archivos de traducción.
+
+### Referidos
+
+La pantalla de referidos está en el nuevo repositorio con datos de prueba y con el enlace ocultado. Esto se debe a que la lógica de referidos está por implementar ya que depende de la gestión del balance de créditos. La nueva versión de AI Shop Helper permite ser propietario de más de una organización a la vez, por lo que los créditos obtenidos de invitar a usuarios no deberían ser asignados a una automáticamente. En cambio, deberían sumarse al balance actual de créditos para que el beneficiario pueda utilizarlos como desee. El límite mensual de referidos debería tratarse como el número máximo de personas invitadas en un mes que darán créditos a la persona que las invitó. Si el límite es 10, alguien puede invitar a 100 personas, pero solo recibirá los créditos de los 10 primeros invitados.
+
+### Créditos y ajustes de facturación
+
+La plantilla de ajustes de facturación tiene componentes que sobran en nuestro caso. La idea propuesta de ajustes de facturación es:
+
+- Tarjeta superior izquierda: título "Tu plan actual", cuerpo con selector de plan (Starter, Pro, Business, Enterprise) con el plan actual seleccionado y resaltado, botón para cambiar plan que se activa al seleccionar un plan distinto del actual. Al seleccionar otro plan, el título de la tarjeta cambia a "Cambiar plan".
+- Tarjeta derecha: lista de pagos recientes.
+- Tarjeta inferior izquierda: información sobre la suscripción actual:
+  - Nombre de facturación
+  - Dirección de facturación (si es necesaria)
+  - Método de pago: [Visa/MasterCard] acabada en [1234], Apple Pay, Google Pay, etc. **Importante**: NO guardamos tarjetas de crédito enteras en nuestra base de datos. Como mucho, almacenamos los últimos 4 dígitos para poder mostrar esta información.
+  - Próximo pago: Tu suscripción se renovará el [día] de [mes].
+
+Esta información se puede obtener de Stripe. La suscripción activa de un usuario, si se conoce su ID de [cliente](https://docs.stripe.com/billing/customer), que podemos almacenar cuando realice un pago, se obtiene con la siguiente llamada a la API:
+
+```bash
+curl -G https://api.stripe.com/v1/subscriptions \
+  -u "sk_test_your_key:" \
+  -d customer={{CUSTOMER_ID}} \
+  -d status=active
+```
+
+Para obtener más información aún, incluyendo del usuario, se puede expandir la llamada a GET /customers:
+
+```bash
+curl -G https://api.stripe.com/v1/customers/{{CUSTOMER_ID}} \
+  -u "sk_test_your_key:" \
+  -d "expand[]=subscriptions"
+```
+
+Como fue mencionado en la sección anterior, los créditos no serán asignados automáticamente a una organización, sino que serán parte de un balance de créditos del usuario, que luego podrá asignar créditos a organizaciones en las que tenga permiso de administración. Se debería añadir dos contadores de créditos: el de usuario y el de organización. El contador de créditos de organización se puede hacer a partir de la implementación de créditos de proyecto en el repositorio full stack, para que aparezca a la derecha del nombre del proyecto actual seleccionado.
+
+### Notificaciones
+
+La pantalla de notificaciones está implementada con datos simulados, por lo que siempre aparece una notificación sin leer en la barra lateral para demostrar cómo se vería. Actualmente, el número de notificaciones se define en los ajustes de la barra lateral con la propiedad `notificationCount`. Sin embargo, esta solución no es óptima y puede que deje de servir cuando se tenga que empezar a obtener el número de notificaciones sin leer de la base de datos.
 
 ### Gestión de organizaciones y proyectos
 
