@@ -56,7 +56,7 @@
           "project-types"
         ],
         "summary": "Get Project Types",
-        "description": "Get a paginated list of project types. Superuser only.\n\nArgs:\n    current_superuser (User): The current superuser.\n    pagination (PaginationParams): The pagination parameters.\n    session (SessionDep): The database session.\n\nReturns:\n    PaginatedResponse[ProjectTypePublic]: The paginated list of project types.",
+        "description": "Get a paginated list of project types.\n\nArgs:\n    current_user (User): The current authenticated user.\n    pagination (PaginationParams): The pagination parameters.\n    session (SessionDep): The database session.\n\nReturns:\n    PaginatedResponse[ProjectTypePublic]: The paginated list of project types.",
         "operationId": "project-types-get_project_types",
         "security": [
           {
@@ -118,7 +118,7 @@
           "project-types"
         ],
         "summary": "Get Project Type",
-        "description": "Get a project type by ID. Superuser only.\n\nArgs:\n    project_type_id (UUID): The project type ID.\n    current_superuser (User): The current superuser.\n    session (SessionDep): The database session.\n\nReturns:\n    ProjectTypePublic: The project type.\n\nRaises:\n    HTTPException: 404 if the project type does not exist.",
+        "description": "Get a project type by ID.\n\nArgs:\n    project_type_id (UUID): The project type ID.\n    current_user (User): The current authenticated user.\n    session (SessionDep): The database session.\n\nReturns:\n    ProjectTypePublic: The project type.\n\nRaises:\n    HTTPException: 404 if the project type does not exist.",
         "operationId": "project-types-get_project_type",
         "security": [
           {
@@ -309,7 +309,7 @@
           "roles"
         ],
         "summary": "Get Roles",
-        "description": "Get a paginated list of roles. Superuser only.\n\nArgs:\n    current_superuser (User): The current superuser.\n    pagination (PaginationParams): The pagination parameters.\n    session (SessionDep): The database session.\n\nReturns:\n    PaginatedResponse[RolePublic]: The paginated list of roles.",
+        "description": "Get a paginated list of roles.\n\nArgs:\n    current_user (User): The current authenticated user.\n    pagination (PaginationParams): The pagination parameters.\n    session (SessionDep): The database session.\n\nReturns:\n    PaginatedResponse[RolePublic]: The paginated list of roles.",
         "operationId": "roles-get_roles",
         "security": [
           {
@@ -371,7 +371,7 @@
           "roles"
         ],
         "summary": "Get Role",
-        "description": "Get a role by ID. Superuser only.\n\nArgs:\n    role_id (UUID): The role ID.\n    current_superuser (User): The current superuser.\n    session (SessionDep): The database session.\n\nReturns:\n    RolePublic: The role.\n\nRaises:\n    HTTPException: 404 if the role does not exist.",
+        "description": "Get a role by ID.\n\nArgs:\n    role_id (UUID): The role ID.\n    current_user (User): The current authenticated user.\n    session (SessionDep): The database session.\n\nReturns:\n    RolePublic: The role.\n\nRaises:\n    HTTPException: 404 if the role does not exist.",
         "operationId": "roles-get_role",
         "security": [
           {

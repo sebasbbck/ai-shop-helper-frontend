@@ -31,10 +31,10 @@ export const ProjectTypesCreateProjectTypeBody = zod.object({
 }).describe('Schema for creating a new project type.')
 
 /**
- * Get a paginated list of project types. Superuser only.
+ * Get a paginated list of project types.
 
 Args:
-    current_superuser (User): The current superuser.
+    current_user (User): The current authenticated user.
     pagination (PaginationParams): The pagination parameters.
     session (SessionDep): The database session.
 
@@ -58,11 +58,11 @@ export const ProjectTypesGetProjectTypesQueryParams = zod.object({
 export const ProjectTypesGetProjectTypesResponse = zod.unknown()
 
 /**
- * Get a project type by ID. Superuser only.
+ * Get a project type by ID.
 
 Args:
     project_type_id (UUID): The project type ID.
-    current_superuser (User): The current superuser.
+    current_user (User): The current authenticated user.
     session (SessionDep): The database session.
 
 Returns:

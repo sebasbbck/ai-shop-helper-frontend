@@ -36,10 +36,10 @@ export const RolesCreateRoleBody = zod.object({
 }).describe('Schema for creating a new role.')
 
 /**
- * Get a paginated list of roles. Superuser only.
+ * Get a paginated list of roles.
 
 Args:
-    current_superuser (User): The current superuser.
+    current_user (User): The current authenticated user.
     pagination (PaginationParams): The pagination parameters.
     session (SessionDep): The database session.
 
@@ -63,11 +63,11 @@ export const RolesGetRolesQueryParams = zod.object({
 export const RolesGetRolesResponse = zod.unknown()
 
 /**
- * Get a role by ID. Superuser only.
+ * Get a role by ID.
 
 Args:
     role_id (UUID): The role ID.
-    current_superuser (User): The current superuser.
+    current_user (User): The current authenticated user.
     session (SessionDep): The database session.
 
 Returns:

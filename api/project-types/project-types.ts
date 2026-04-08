@@ -116,10 +116,10 @@ export const useCreateProjectType = <TError = ErrorType<HTTPValidationError>,
       return useMutation(getCreateProjectTypeMutationOptions(options), queryClient);
     }
     /**
- * Get a paginated list of project types. Superuser only.
+ * Get a paginated list of project types.
 
 Args:
-    current_superuser (User): The current superuser.
+    current_user (User): The current authenticated user.
     pagination (PaginationParams): The pagination parameters.
     session (SessionDep): The database session.
 
@@ -216,11 +216,11 @@ export function useGetProjectTypes<TData = Awaited<ReturnType<typeof getProjectT
 
 
 /**
- * Get a project type by ID. Superuser only.
+ * Get a project type by ID.
 
 Args:
     project_type_id (UUID): The project type ID.
-    current_superuser (User): The current superuser.
+    current_user (User): The current authenticated user.
     session (SessionDep): The database session.
 
 Returns:

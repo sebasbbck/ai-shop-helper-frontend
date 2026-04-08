@@ -116,10 +116,10 @@ export const useCreateRole = <TError = ErrorType<HTTPValidationError>,
       return useMutation(getCreateRoleMutationOptions(options), queryClient);
     }
     /**
- * Get a paginated list of roles. Superuser only.
+ * Get a paginated list of roles.
 
 Args:
-    current_superuser (User): The current superuser.
+    current_user (User): The current authenticated user.
     pagination (PaginationParams): The pagination parameters.
     session (SessionDep): The database session.
 
@@ -216,11 +216,11 @@ export function useGetRoles<TData = Awaited<ReturnType<typeof getRoles>>, TError
 
 
 /**
- * Get a role by ID. Superuser only.
+ * Get a role by ID.
 
 Args:
     role_id (UUID): The role ID.
-    current_superuser (User): The current superuser.
+    current_user (User): The current authenticated user.
     session (SessionDep): The database session.
 
 Returns:
