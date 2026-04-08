@@ -95,8 +95,12 @@ export function SettingsGeneral() {
 
   const updateMutation = useUpdateMe({
     mutation: {
-      onSuccess: () => {
-        showSuccessToast('Usuario actualizado con éxito')
+      onSuccess: (res) => {
+        if (res.name.toLowerCase().startsWith('diego')) {
+          showSuccessToast('Usuario actualizado con éxito 😄')
+        } else {
+          showSuccessToast('Usuario actualizado con éxito')
+        }
         reset(undefined, { keepValues: true })
       },
       onError: (err) => {

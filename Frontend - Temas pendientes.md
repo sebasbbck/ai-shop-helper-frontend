@@ -2,7 +2,7 @@
 
 - **Autor:** Diego José Pérez Vargas
 - **Proyecto:** AI Shop Helper
-- **Fecha:** 7 de abril de 2026
+- **Fecha:** 8 de abril de 2026
 
 ## Tabla de contenidos
 
@@ -19,8 +19,12 @@
     - 3.7. [Notificaciones](#notificaciones)
     - 3.8. [Gestión de organizaciones y proyectos](#gestión-de-organizaciones-y-proyectos)
     - 3.9. [Pantallas de admin](#pantallas-de-admin)
+    - 3.10. [Internacionalización](#internacionalización)
+      - 3.10.1. [Mensajes de error](#mensajes-de-error)
 4. [Consideraciones para continuar con el desarrollo](#consideraciones-para-continuar-con-el-desarrollo)
     - 4.1. [Entorno](#entorno)
+    - 4.2. [Ejecución](#ejecución)
+    - 4.3. [Precommit](#precommit)
 
 ## Contexto
 
@@ -266,12 +270,51 @@ La implementación de la pantalla de organizaciones está basada en la original 
 
 Aunque no son estrictamente necesarias para sacar la aplicación, simplifican el acceso a la base de datos. No deberían ser muy complejas. Las nuevas pantallas de admin que vayan a listar datos como proyectos, organizaciones o flujos se pueden crear a partir de las que ya existen, como la de usuarios. Solo hay que cambiar las llamadas a la API y los datos que se introducen y envían en los formularios de creación y edición, si se van a añadir.
 
+### Internacionalización
+
+Algunas de las nuevas cadenas de texto añadidas a la aplicación durante la migración no han sido internacionalizadas. Para saber cómo añadir sus traducciones, consulta la documentación del proyecto full stack. Ahí aparece en detalle el proceso. Sin embargo, hay algunas diferencias respecto a cómo trabajábamos antes con las traducciones:
+
+- **Rutas**: no es necesario incluir el prefijo `$lang` en los enlaces, ni poner las rutas con internacionalización en un directorio `$lang`.
+- **Configuración**: para añadir nuevos idiomas o quitar otros, modifica la lista de locales en `next-i18next.config.js` y `next.config.ts`.
+
+Otro aspecto que tener en cuenta es que, al tener más idiomas, es necesario validar más traducciones, ofrecer soporte en ellos e, idealmente, hacer marketing en cada uno de ellos. Por tanto, tal vez habría que considerar deshabilitar temporalmente las traducciones a francés, alemán y portugués. Estas traducciones se hicieron a máquina, así que se podría pedir traducciones a los futuros becarios que vengan de Erasmus.
+
+#### Mensajes de error
+
+Hay claves en los archivos de internacionalización para mensajes de error del backend. En el proyecto full stack, el backend utilizó estos códigos de error como mensajes, que luego pasaban al `handleError` del frontend para mostrar un toast de error con el mensaje traducido correspondiente a la clave recibida. Sin embargo, esto no está en el proyecto actual y vale la pena reimplementarlo. Para ver cómo funciona, mira `src/hooks/useHandleError.ts`.
+
 ## Consideraciones para continuar con el desarrollo
 
 ### Entorno
 
 - **Orval**: Para generar el código de cliente a partir de la versión más reciente de la API, ejecuta `./pull-openapi.sh`. **Importante:** esto requiere configurar la CLI de AWS con tu usuario.
 
-- **Precommit**: Antes de hacer commit, si no se añade `--no-verify` al comando, se ejecuta una rutina de precommit que se encuentra en `.pre-commit-config.yaml`. Primero ejecuta `./pull-openapi.sh`, luego comprueba la sintaxis de los archivos YAML y JSON y acaba ejecutando Prettier en los archivos modificados para que los archivos cumplan las reglas de estilo definidas en `.prettierrc`. Si aparece un aviso, que suele ocurrir cuando ha habido cambios en la API o cuando Prettier ha modificado archivos, habrá que stagear los archivos de nuevo para poder hacer el commit.
-
 - **Stripe**: Para poder realizar pagos de prueba de Stripe, necesitarás claves del panel de control de Stripe. Asegúrate de que estas claves tengan `_test_` en ellas en el entorno de desarrollo y que **nunca** se despliegue la aplicación con claves de prueba o con claves privadas fuera del archivo `.env`.
+
+### Ejecución
+
+Hay tres maneras de ejecutar el frontend:
+
+- **`bun dev`**: en modo desarrollo, con recarga en caliente. Si `bun` no está instalado, prueba `npx bun dev`.
+- **Con `docker-compose.dev.yml`**: en modo desarrollo, con recarga en caliente.
+- **Con `docker-compose.yml`**: en modo producción, sin recarga en caliente.
+
+El modo desarrollo carga las pantallas más lento que el de producción debido a que no están guardadas de antemano en el servidor. El icono de Next.js que aparece en una de las esquinas es una herramienta de desarrollo que solo viene activada en el modo de desarrollo. Si estorba, se puede desactivar añadiendo `devIndicators: false` a `next.config.js`.
+
+### Precommit
+
+Antes de hacer commit, si no se añade `--no-verify` al comando, se lanza una rutina de precommit que se encuentra en `.pre-commit-config.yaml`. Primero ejecuta `./pull-openapi.sh`, luego comprueba la sintaxis de los archivos YAML y JSON y acaba ejecutando Prettier en los archivos modificados para que cumplan las reglas de estilo definidas en `.prettierrc`. Si aparece un aviso, que suele ocurrir cuando ha habido cambios en la API o cuando Prettier ha modificado archivos, habrá que stagear los archivos de nuevo para poder hacer el commit.
+
+**NOTA:** Si ha habido una actualización de la API antes de hacer commit de una funcionalidad nueva y esta actualización afecta a los cambios recientes, revisa el funcionamiento del frontend con los cambios antes de continuar con el commit.
+
+### Errores comunes
+
+Si la aplicación dockerizada da un error parecido a este:
+
+```h
+Failed to load external module next-i18next-72a9335eea5cea01: ResolveMessage: Cannot find package 'next-i18next-72a9335eea5cea01' from '/app/.next/dev/server/chunks/ssr/[root-of-the-server]__22ec9fe0._.js'
+```
+
+Borra el directorio `.next` y ejecuta el contenedor de nuevo. Esto ocurre al levantar contenedor de desarrollo tras haber levantado y apagado el de producción.
+
+Al construir una imagen de Docker tras instalar o desinstalar paquetes, es posible que `bun` falle por un _segmentation fault_. Al intentarlo de nuevo, los paquetes se deberían actualizar sin problemas.
