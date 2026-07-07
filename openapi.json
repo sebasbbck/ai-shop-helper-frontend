@@ -1902,6 +1902,341 @@
         }
       }
     },
+    "/orgs/{org_id}/billing/balance": {
+      "get": {
+        "tags": [
+          "billing"
+        ],
+        "summary": "Get Balance",
+        "description": "Return the credit balance for an organisation.",
+        "operationId": "billing-get_balance",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "org_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Org Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BalanceResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orgs/{org_id}/billing/ledger": {
+      "get": {
+        "tags": [
+          "billing"
+        ],
+        "summary": "Get Ledger",
+        "description": "Return paginated credit-ledger entries for an organisation, newest first.",
+        "operationId": "billing-get_ledger",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "org_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Org Id"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_LedgerEntryPublic_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orgs/{org_id}/billing/checkout": {
+      "post": {
+        "tags": [
+          "billing"
+        ],
+        "summary": "Create Checkout",
+        "description": "Create a Stripe Checkout session for the requested plan.",
+        "operationId": "billing-create_checkout",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "org_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Org Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckoutCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UrlResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orgs/{org_id}/billing/checkout/confirm": {
+      "post": {
+        "tags": [
+          "billing"
+        ],
+        "summary": "Confirm Checkout",
+        "description": "Confirm a completed Stripe Checkout session and grant the purchased credits.",
+        "operationId": "billing-confirm_checkout",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "org_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Org Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckoutConfirm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BalanceResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orgs/{org_id}/billing/portal": {
+      "post": {
+        "tags": [
+          "billing"
+        ],
+        "summary": "Create Portal",
+        "description": "Create a Stripe Billing Portal session for the organisation.",
+        "operationId": "billing-create_portal",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "org_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Org Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UrlResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billing/webhook": {
+      "post": {
+        "tags": [
+          "billing"
+        ],
+        "summary": "Stripe Webhook",
+        "description": "Receive and process Stripe webhook events (signature-verified, no auth).",
+        "operationId": "billing-stripe_webhook",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billing/catalog": {
+      "get": {
+        "tags": [
+          "billing"
+        ],
+        "summary": "Get Catalog",
+        "description": "Return the billing catalog.",
+        "operationId": "billing-get_catalog",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/auth/register": {
       "post": {
         "tags": [
@@ -2329,6 +2664,241 @@
         }
       }
     },
+    "/connections/wordpress/{project_id}/start": {
+      "post": {
+        "tags": [
+          "connections"
+        ],
+        "summary": "Start Wordpress Connection",
+        "description": "Initiate a WordPress connection for a project.\n\nCreates a short-lived handshake token, then returns a redirect URL that opens\nthe AiShopHelper plugin page on the user's WordPress admin with the token and\ncallback URL pre-filled.\n\nArgs:\n    project_id (UUID): The project to connect WordPress to.\n    body (WordpressStartBody): Contains the WordPress site_url.\n    current_user (User): The authenticated user (must be org member).\n    session (SessionDep): The database session.\n\nReturns:\n    WordpressStartResponse: JSON with redirect_url for the frontend to navigate to.\n\nRaises:\n    HTTPException: 404 if the project does not exist.\n    HTTPException: 403 if the user is not a member of the project's org.",
+        "operationId": "connections-start_wordpress_connection",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WordpressStartBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WordpressStartResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connections/wordpress/callback": {
+      "get": {
+        "tags": [
+          "connections"
+        ],
+        "summary": "Wordpress Callback",
+        "description": "Handle the browser redirect from the WordPress plugin after the user approves.\n\nValidates the handshake token, stores the encrypted app password, deletes the\ntoken, then redirects the browser to the configured success or failure page.\n\nThis endpoint is reached by a browser redirect \u2014 no Authorization header is sent.\nThe handshake token is the only authentication mechanism.\n\nArgs:\n    session (SessionDep): The database session.\n    token (str): The short-lived handshake token generated by the start endpoint.\n    app_password (str): The WordPress application password created by the plugin.\n    site_url (str): The WordPress site root URL echoed back by the plugin.\n    user (str): The WordPress username that created the app password.\n\nReturns:\n    RedirectResponse: Redirects to WP_SUCCESS_FRONTEND_URL or WP_ERROR_FRONTEND_URL.",
+        "operationId": "connections-wordpress_callback",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          },
+          {
+            "name": "app_password",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "App Password"
+            }
+          },
+          {
+            "name": "site_url",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Site Url"
+            }
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connections/wordpress/{project_id}": {
+      "get": {
+        "tags": [
+          "connections"
+        ],
+        "summary": "Get Wordpress Status",
+        "description": "Return the WordPress connection status for a project.\n\nArgs:\n    project_id (UUID): The project to check.\n    current_user (User): The authenticated user (must be org member).\n    session (SessionDep): The database session.\n\nReturns:\n    WordpressStatusResponse: Connected flag plus site_url and username (never the password).\n\nRaises:\n    HTTPException: 404 if the project does not exist.\n    HTTPException: 403 if the user is not a member of the project's org.",
+        "operationId": "connections-get_wordpress_status",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WordpressStatusResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connections/wordpress/{project_id}/proxy": {
+      "post": {
+        "tags": [
+          "connections"
+        ],
+        "summary": "Wordpress N8N Proxy",
+        "description": "Forward a blog-writer workflow call to n8n, injecting the WordPress auth token server-side.\n\nArgs:\n    project_id (UUID): The project whose WordPress connection provides credentials.\n    body (WordpressProxyBody): workflow name (titles|generate) + arbitrary payload dict.\n    current_user (User): The authenticated user (must be org member).\n    session (SessionDep): The database session.\n\nReturns:\n    WordpressProxyResponse: status_code plus parsed JSON data or raw text on non-JSON responses.\n\nRaises:\n    HTTPException: 409 if no WordPress connection exists for the project.\n    HTTPException: 400 if the requested workflow name is not recognised.\n    HTTPException: 404/403 if project not found or user not a member.",
+        "operationId": "connections-wordpress_n8n_proxy",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WordpressProxyBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WordpressProxyResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/n8n-test/start": {
       "post": {
         "tags": [
@@ -2688,6 +3258,30 @@
         "title": "AgentUpdate",
         "description": "Schema for updating an agent."
       },
+      "BalanceResponse": {
+        "properties": {
+          "subscription_credits": {
+            "type": "integer",
+            "title": "Subscription Credits"
+          },
+          "purchased_credits": {
+            "type": "integer",
+            "title": "Purchased Credits"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          }
+        },
+        "type": "object",
+        "required": [
+          "subscription_credits",
+          "purchased_credits",
+          "total"
+        ],
+        "title": "BalanceResponse",
+        "description": "Credit balance for an organisation."
+      },
       "Body_auth-login": {
         "properties": {
           "grant_type": {
@@ -2747,6 +3341,94 @@
         ],
         "title": "Body_auth-login"
       },
+      "CatalogResponse": {
+        "properties": {
+          "free_credits": {
+            "type": "integer",
+            "title": "Free Credits"
+          },
+          "plans": {
+            "items": {
+              "$ref": "#/components/schemas/CreditPlanPublic"
+            },
+            "type": "array",
+            "title": "Plans"
+          },
+          "topup": {
+            "$ref": "#/components/schemas/TopupConfigPublic"
+          }
+        },
+        "type": "object",
+        "required": [
+          "free_credits",
+          "plans",
+          "topup"
+        ],
+        "title": "CatalogResponse",
+        "description": "Full billing catalog response."
+      },
+      "CheckoutConfirm": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "session_id"
+        ],
+        "title": "CheckoutConfirm",
+        "description": "Request body for confirming a completed Stripe Checkout session."
+      },
+      "CheckoutCreate": {
+        "properties": {
+          "plan_key": {
+            "type": "string",
+            "title": "Plan Key"
+          }
+        },
+        "type": "object",
+        "required": [
+          "plan_key"
+        ],
+        "title": "CheckoutCreate",
+        "description": "Request body for initiating a Stripe Checkout session."
+      },
+      "CreditPlanPublic": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "credits": {
+            "type": "integer",
+            "title": "Credits"
+          },
+          "unit_amount": {
+            "type": "integer",
+            "title": "Unit Amount"
+          },
+          "currency": {
+            "type": "string",
+            "title": "Currency"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "name",
+          "credits",
+          "unit_amount",
+          "currency"
+        ],
+        "title": "CreditPlanPublic",
+        "description": "Public catalogue entry for a subscription plan."
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -2759,6 +3441,47 @@
         },
         "type": "object",
         "title": "HTTPValidationError"
+      },
+      "LedgerEntryPublic": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "amount": {
+            "type": "integer",
+            "title": "Amount"
+          },
+          "bucket": {
+            "type": "string",
+            "title": "Bucket"
+          },
+          "balance_after": {
+            "type": "integer",
+            "title": "Balance After"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "amount",
+          "bucket",
+          "balance_after",
+          "reason",
+          "created_at"
+        ],
+        "title": "LedgerEntryPublic",
+        "description": "Public view of a single credit-ledger row."
       },
       "OrgCreate": {
         "properties": {
@@ -2787,9 +3510,13 @@
             "type": "string",
             "title": "Name"
           },
-          "credits": {
+          "subscription_credits": {
             "type": "integer",
-            "title": "Credits"
+            "title": "Subscription Credits"
+          },
+          "purchased_credits": {
+            "type": "integer",
+            "title": "Purchased Credits"
           },
           "created_at": {
             "type": "string",
@@ -2816,7 +3543,8 @@
         "required": [
           "id",
           "name",
-          "credits",
+          "subscription_credits",
+          "purchased_credits",
           "created_at",
           "updated_at",
           "created_by",
@@ -2839,18 +3567,6 @@
               }
             ],
             "title": "Name"
-          },
-          "credits": {
-            "anyOf": [
-              {
-                "type": "integer",
-                "minimum": 0.0
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Credits"
           }
         },
         "type": "object",
@@ -2956,10 +3672,74 @@
         "title": "OrgUserUpdate",
         "description": "Schema for updating a member's role."
       },
+      "OrgWithProjects": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "subscription_credits": {
+            "type": "integer",
+            "title": "Subscription Credits"
+          },
+          "purchased_credits": {
+            "type": "integer",
+            "title": "Purchased Credits"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          },
+          "created_by": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Created By"
+          },
+          "updated_by": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Updated By"
+          },
+          "projects": {
+            "items": {
+              "$ref": "#/components/schemas/ProjectPublic"
+            },
+            "type": "array",
+            "title": "Projects",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "subscription_credits",
+          "purchased_credits",
+          "created_at",
+          "updated_at",
+          "created_by",
+          "updated_by"
+        ],
+        "title": "OrgWithProjects",
+        "description": "Schema for returning organization with nested projects."
+      },
       "PaginatedResponse_AgentProjectTypePublic_": {
         "properties": {
           "items": {
-            "items": {},
+            "items": {
+              "$ref": "#/components/schemas/AgentProjectTypePublic"
+            },
             "type": "array",
             "title": "Items"
           },
@@ -2988,7 +3768,9 @@
       "PaginatedResponse_AgentPublic_": {
         "properties": {
           "items": {
-            "items": {},
+            "items": {
+              "$ref": "#/components/schemas/AgentPublic"
+            },
             "type": "array",
             "title": "Items"
           },
@@ -3014,10 +3796,43 @@
         ],
         "title": "PaginatedResponse[AgentPublic]"
       },
+      "PaginatedResponse_LedgerEntryPublic_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/LedgerEntryPublic"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "offset",
+          "limit"
+        ],
+        "title": "PaginatedResponse[LedgerEntryPublic]"
+      },
       "PaginatedResponse_OrgUserPublic_": {
         "properties": {
           "items": {
-            "items": {},
+            "items": {
+              "$ref": "#/components/schemas/OrgUserPublic"
+            },
             "type": "array",
             "title": "Items"
           },
@@ -3046,7 +3861,9 @@
       "PaginatedResponse_OrgWithProjects_": {
         "properties": {
           "items": {
-            "items": {},
+            "items": {
+              "$ref": "#/components/schemas/OrgWithProjects"
+            },
             "type": "array",
             "title": "Items"
           },
@@ -3075,7 +3892,9 @@
       "PaginatedResponse_ProjectPublic_": {
         "properties": {
           "items": {
-            "items": {},
+            "items": {
+              "$ref": "#/components/schemas/ProjectPublic"
+            },
             "type": "array",
             "title": "Items"
           },
@@ -3104,7 +3923,9 @@
       "PaginatedResponse_ProjectTypePublic_": {
         "properties": {
           "items": {
-            "items": {},
+            "items": {
+              "$ref": "#/components/schemas/ProjectTypePublic"
+            },
             "type": "array",
             "title": "Items"
           },
@@ -3133,7 +3954,9 @@
       "PaginatedResponse_RolePublic_": {
         "properties": {
           "items": {
-            "items": {},
+            "items": {
+              "$ref": "#/components/schemas/RolePublic"
+            },
             "type": "array",
             "title": "Items"
           },
@@ -3162,7 +3985,9 @@
       "PaginatedResponse_UserPublic_": {
         "properties": {
           "items": {
-            "items": {},
+            "items": {
+              "$ref": "#/components/schemas/UserPublic"
+            },
             "type": "array",
             "title": "Items"
           },
@@ -3542,6 +4367,49 @@
         "title": "Token",
         "description": "Schema for the access token response."
       },
+      "TopupConfigPublic": {
+        "properties": {
+          "currency": {
+            "type": "string",
+            "title": "Currency"
+          },
+          "min_amount": {
+            "type": "integer",
+            "title": "Min Amount"
+          },
+          "max_amount": {
+            "type": "integer",
+            "title": "Max Amount"
+          },
+          "cents_per_credit": {
+            "type": "integer",
+            "title": "Cents Per Credit"
+          }
+        },
+        "type": "object",
+        "required": [
+          "currency",
+          "min_amount",
+          "max_amount",
+          "cents_per_credit"
+        ],
+        "title": "TopupConfigPublic",
+        "description": "Public configuration for the credit top-up product."
+      },
+      "UrlResponse": {
+        "properties": {
+          "url": {
+            "type": "string",
+            "title": "Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "title": "UrlResponse",
+        "description": "Response carrying a redirect URL."
+      },
       "UserAdminUpdate": {
         "properties": {
           "email": {
@@ -3770,6 +4638,129 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "WordpressProxyBody": {
+        "properties": {
+          "workflow": {
+            "type": "string",
+            "title": "Workflow"
+          },
+          "payload": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Payload"
+          }
+        },
+        "type": "object",
+        "required": [
+          "workflow",
+          "payload"
+        ],
+        "title": "WordpressProxyBody",
+        "description": "Request body for the n8n proxy endpoint."
+      },
+      "WordpressProxyResponse": {
+        "properties": {
+          "status_code": {
+            "type": "integer",
+            "title": "Status Code"
+          },
+          "data": {
+            "title": "Data"
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Raw"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status_code"
+        ],
+        "title": "WordpressProxyResponse",
+        "description": "Response envelope from the n8n proxy."
+      },
+      "WordpressStartBody": {
+        "properties": {
+          "site_url": {
+            "type": "string",
+            "title": "Site Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "site_url"
+        ],
+        "title": "WordpressStartBody",
+        "description": "Request body for initiating a WordPress connection."
+      },
+      "WordpressStartResponse": {
+        "properties": {
+          "redirect_url": {
+            "type": "string",
+            "title": "Redirect Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "redirect_url"
+        ],
+        "title": "WordpressStartResponse",
+        "description": "Response containing the redirect URL to send the browser to."
+      },
+      "WordpressStatusResponse": {
+        "properties": {
+          "connected": {
+            "type": "boolean",
+            "title": "Connected"
+          },
+          "site_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Site Url"
+          },
+          "username": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Username"
+          }
+        },
+        "type": "object",
+        "required": [
+          "connected"
+        ],
+        "title": "WordpressStatusResponse",
+        "description": "Connection status for a project \u2014 never includes the password."
       }
     },
     "securitySchemes": {
@@ -3784,5 +4775,10 @@
         }
       }
     }
-  }
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ]
 }
