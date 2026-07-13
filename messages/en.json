@@ -60,7 +60,11 @@
       "submitting": "Signing in…",
       "noAccount": "No account?",
       "createOne": "Create one",
-      "registered": "Account created — please sign in"
+      "registered": "Account created. Check your email to verify it before signing in.",
+      "emailNotVerified": "Verify your email before signing in. Check your inbox.",
+      "resend": "Resend verification",
+      "resendSent": "If your account needs verification, we've sent a new link.",
+      "forgotPassword": "Forgot password?"
     },
     "register": {
       "heading": "Create account",
@@ -70,6 +74,32 @@
       "submitting": "Creating…",
       "haveAccount": "Already have an account?",
       "signIn": "Sign in"
+    },
+    "verifyEmail": {
+      "heading": "Verify your email",
+      "verifying": "Verifying your email…",
+      "success": "Your email has been verified. You can now sign in.",
+      "error": "This verification link is invalid or has expired.",
+      "goToLogin": "Go to sign in"
+    },
+    "recoverPassword": {
+      "heading": "Forgot your password?",
+      "description": "Enter your email and we'll send you a link to reset your password.",
+      "submitButton": "Send reset link",
+      "submitting": "Sending…",
+      "sent": "If an account exists for that email, we've sent a reset link.",
+      "goToLogin": "Back to sign in"
+    },
+    "resetPassword": {
+      "heading": "Reset your password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "submitButton": "Set new password",
+      "submitting": "Saving…",
+      "success": "Your password has been reset. You can now sign in.",
+      "error": "This reset link is invalid or has expired.",
+      "mismatch": "Passwords do not match",
+      "goToLogin": "Go to sign in"
     }
   },
   "Settings": {

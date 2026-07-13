@@ -60,7 +60,11 @@
       "submitting": "Iniciando sesión…",
       "noAccount": "¿No tienes cuenta?",
       "createOne": "Créala aquí",
-      "registered": "Cuenta creada — inicia sesión para continuar"
+      "registered": "Cuenta creada. Verifica tu correo antes de iniciar sesión.",
+      "emailNotVerified": "Verifica tu correo antes de iniciar sesión. Revisa tu bandeja de entrada.",
+      "resend": "Reenviar verificación",
+      "resendSent": "Si tu cuenta necesita verificación, hemos enviado un nuevo enlace.",
+      "forgotPassword": "¿Olvidaste tu contraseña?"
     },
     "register": {
       "heading": "Crear cuenta",
@@ -70,6 +74,32 @@
       "submitting": "Creando…",
       "haveAccount": "¿Ya tienes cuenta?",
       "signIn": "Inicia sesión"
+    },
+    "verifyEmail": {
+      "heading": "Verifica tu correo",
+      "verifying": "Verificando tu correo…",
+      "success": "Tu correo ha sido verificado. Ya puedes iniciar sesión.",
+      "error": "Este enlace de verificación no es válido o ha expirado.",
+      "goToLogin": "Ir a iniciar sesión"
+    },
+    "recoverPassword": {
+      "heading": "¿Olvidaste tu contraseña?",
+      "description": "Introduce tu correo y te enviaremos un enlace para restablecer tu contraseña.",
+      "submitButton": "Enviar enlace",
+      "submitting": "Enviando…",
+      "sent": "Si existe una cuenta para ese correo, hemos enviado un enlace de restablecimiento.",
+      "goToLogin": "Volver a iniciar sesión"
+    },
+    "resetPassword": {
+      "heading": "Restablecer contraseña",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "submitButton": "Establecer nueva contraseña",
+      "submitting": "Guardando…",
+      "success": "Tu contraseña ha sido restablecida. Ya puedes iniciar sesión.",
+      "error": "Este enlace de restablecimiento no es válido o ha expirado.",
+      "mismatch": "Las contraseñas no coinciden",
+      "goToLogin": "Ir a iniciar sesión"
     }
   },
   "Settings": {

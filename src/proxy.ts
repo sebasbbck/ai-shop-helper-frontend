@@ -4,6 +4,8 @@ const PUBLIC_ROUTES = [
   "/login",
   "/register",
   "/recover-password",
+  "/verify-email",
+  "/reset-password",
   "/connection",
   "/billing/return",
 ];

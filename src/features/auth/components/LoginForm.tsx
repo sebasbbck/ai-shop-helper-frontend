@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,13 +15,19 @@ import MuiLink from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useAuthLogin } from "@/api/endpoints/auth/auth";
+import { useAuthLogin, useAuthResendVerification } from "@/api/endpoints/auth/auth";
 import { setAccessToken } from "@/lib/api/token-store";
 
 type FormValues = {
   email: string;
   password: string;
 };
+
+function isEmailNotVerified(err: unknown): boolean {
+  if (typeof err !== "object" || err === null) return false;
+  const response = (err as { response?: { status?: number; data?: { detail?: unknown } } }).response;
+  return response?.status === 403 && response?.data?.detail === "email_not_verified";
+}
 
 export default function LoginForm() {
   const t = useTranslations("Auth");
@@ -29,6 +36,10 @@ export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const justRegistered = searchParams.get("registered") === "1";
+
+  const [needsVerification, setNeedsVerification] = useState(false);
+  const [submittedEmail, setSubmittedEmail] = useState("");
+  const [resendDone, setResendDone] = useState(false);
 
   const schema = z.object({
     email: z.string().email(tValidation("emailInvalid")),
@@ -46,11 +57,26 @@ export default function LoginForm() {
         setAccessToken(token.access_token);
         router.push("/");
       },
+      onError: (err: unknown) => {
+        if (isEmailNotVerified(err)) {
+          setNeedsVerification(true);
+        }
+      },
     },
   });
 
-  const onSubmit = (values: FormValues) =>
+  const resend = useAuthResendVerification({
+    mutation: {
+      onSuccess: () => setResendDone(true),
+    },
+  });
+
+  const onSubmit = (values: FormValues) => {
+    setNeedsVerification(false);
+    setResendDone(false);
+    setSubmittedEmail(values.email);
     login.mutate({ data: { username: values.email, password: values.password } });
+  };
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -61,8 +87,27 @@ export default function LoginForm() {
         {justRegistered && (
           <Alert severity="success">{t("signIn.registered")}</Alert>
         )}
-        {login.isError && (
+        {login.isError && !needsVerification && (
           <Alert severity="error">{t("signIn.invalidCredentials")}</Alert>
+        )}
+        {needsVerification && (
+          <Alert
+            severity="info"
+            action={
+              resendDone ? undefined : (
+                <Button
+                  color="inherit"
+                  size="small"
+                  disabled={resend.isPending}
+                  onClick={() => resend.mutate({ data: { email: submittedEmail } })}
+                >
+                  {t("signIn.resend")}
+                </Button>
+              )
+            }
+          >
+            {resendDone ? t("signIn.resendSent") : t("signIn.emailNotVerified")}
+          </Alert>
         )}
         <Controller
           name="email"
@@ -94,6 +139,11 @@ export default function LoginForm() {
             />
           )}
         />
+        <Typography variant="body2" sx={{ textAlign: "right" }}>
+          <MuiLink component={Link} href="/recover-password">
+            {t("signIn.forgotPassword")}
+          </MuiLink>
+        </Typography>
         <Button
           type="submit"
           variant="contained"
