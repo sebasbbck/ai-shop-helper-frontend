@@ -96,6 +96,7 @@ export default function LoginForm() {
         />
         <Button
           type="submit"
+          name="submit"
           variant="contained"
           size="large"
           disabled={login.isPending}
