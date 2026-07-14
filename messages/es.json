@@ -1,27 +1,18 @@
 {
   "AgentRun": {
-    "businessLabel": "Sobre tu negocio",
-    "businessPlaceholder": "p. ej. Tienda online de bolsos de cuero artesanales — especializada en regalos personalizados",
-    "audienceLabel": "Público objetivo",
-    "audiencePlaceholder": "p. ej. Mujeres de 25 a 45 años que buscan regalos únicos para ocasiones especiales",
-    "imageMethodLabel": "Método de imágenes",
-    "imageMethod": {
-      "stock": "Fotos de stock",
-      "ia_images": "Imágenes generadas por IA",
-      "upload_images": "Subir imágenes"
-    },
-    "generateTitles": "Generar títulos",
-    "selectTitle": "Elige un título para tu publicación",
-    "generateBlog": "Generar artículo",
-    "generating": "Generando…",
+    "projectConfigHeading": "Configuración del proyecto",
+    "configSaved": "Configuración guardada",
+    "runAgent": "Ejecutar agente",
+    "generating": "Ejecutando…",
+    "submitting": "Enviando…",
+    "continueRun": "Continuar",
+    "awaitingInputHeading": "Se requiere información",
+    "runSuccess": "Completado con éxito",
     "viewPost": "Ver artículo",
     "runAgain": "Volver a ejecutar",
     "runError": "Algo salió mal",
     "retry": "Intentar de nuevo",
-    "noTitlesReturned": "No se devolvieron títulos — inténtalo de nuevo",
-    "connectFirst": "WordPress no conectado",
-    "connectFirstBody": "Conecta tu sitio de WordPress en los ajustes del proyecto antes de ejecutar este agente.",
-    "connectLink": "Ir a los ajustes del proyecto",
+    "creditsRefunded": "Los créditos han sido reembolsados.",
     "executionsHeading": "Ejecuciones anteriores",
     "noExecutions": "Aún no hay ejecuciones",
     "notFoundHeading": "Agente no encontrado",
@@ -29,6 +20,12 @@
     "notAvailableHeading": "Ejecución aún no disponible",
     "notAvailableBody": "Este agente no tiene un flujo de trabajo conectado todavía.",
     "insufficientCredits": "Créditos insuficientes. Recarga tu saldo para ejecutar este agente."
+  },
+  "AgentInputs": {
+    "business": { "label": "Sobre tu negocio" },
+    "audience": { "label": "Público objetivo" },
+    "chosen_title": { "label": "Elige un título" },
+    "image_method": { "label": "Método de imágenes" }
   },
   "Agents": {
     "blogWriter": {

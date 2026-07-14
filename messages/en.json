@@ -1,27 +1,18 @@
 {
   "AgentRun": {
-    "businessLabel": "About your business",
-    "businessPlaceholder": "e.g. Online shop selling handmade leather bags — specialise in personalised gifts",
-    "audienceLabel": "Target audience",
-    "audiencePlaceholder": "e.g. Women 25–45 looking for unique gifts for special occasions",
-    "imageMethodLabel": "Image method",
-    "imageMethod": {
-      "stock": "Stock photos",
-      "ia_images": "AI-generated images",
-      "upload_images": "Upload images"
-    },
-    "generateTitles": "Generate titles",
-    "selectTitle": "Choose a title for your post",
-    "generateBlog": "Generate blog post",
-    "generating": "Generating…",
+    "projectConfigHeading": "Project configuration",
+    "configSaved": "Configuration saved",
+    "runAgent": "Run agent",
+    "generating": "Running…",
+    "submitting": "Submitting…",
+    "continueRun": "Continue",
+    "awaitingInputHeading": "Input required",
+    "runSuccess": "Completed successfully",
     "viewPost": "View post",
     "runAgain": "Run again",
     "runError": "Something went wrong",
     "retry": "Try again",
-    "noTitlesReturned": "No titles were returned — please try again",
-    "connectFirst": "WordPress not connected",
-    "connectFirstBody": "Connect your WordPress site in project settings before running this agent.",
-    "connectLink": "Go to project settings",
+    "creditsRefunded": "Credits have been refunded.",
     "executionsHeading": "Previous runs",
     "noExecutions": "No runs yet",
     "notFoundHeading": "Agent not found",
@@ -29,6 +20,12 @@
     "notAvailableHeading": "Execution not available yet",
     "notAvailableBody": "This agent does not have a live workflow connected yet.",
     "insufficientCredits": "Not enough credits. Top up your balance to run this agent."
+  },
+  "AgentInputs": {
+    "business": { "label": "About your business" },
+    "audience": { "label": "Target audience" },
+    "chosen_title": { "label": "Choose a title" },
+    "image_method": { "label": "Image method" }
   },
   "Agents": {
     "blogWriter": {
