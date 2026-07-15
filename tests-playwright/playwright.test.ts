@@ -24,7 +24,7 @@ test('should login in the app', async ({ page }) => {
   await page.getByRole('textbox', { name: 'password' }).press('Enter');
   
   //Checks if the new page should contain an h4 with "programa_de_testeo"
-  await expect(page.locator('h4')).toContainText('programa_de_testeo')
+  await expect(page.locator('h4')).toContainText('Code_Eater_Productions')
   
 })
 

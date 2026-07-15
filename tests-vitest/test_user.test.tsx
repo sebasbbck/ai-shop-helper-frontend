@@ -1,8 +1,59 @@
-import { expect, test } from 'vitest'
+import { expect, test, it } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import LoginForm from "@/features/auth/components/LoginForm"
 import LoginPage from '../src/app/(auth)/login/page'
 import { Form } from 'react-hook-form'
+import { vi } from 'vitest'
+
+import { useState } from "react";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import theme from "@/theme";
+import {NextIntlClientProvider} from 'next-intl';
+
+
+
+// The ./example.js module will be replaced with
+// the result of a factory function, and the
+// original ./example.js module will never be called
+
+
+
+vi.mock('LoginForm', () => {
+
+
+
+  return {
+
+    answer() {
+
+     render(
+
+    <NextIntlClientProvider locale="en" >
+      
+      <LoginForm/>
+    </NextIntlClientProvider>
+
+  );
+
+ 
+ test('tests the heading', () => {
+expect(screen.getByRole('heading', { level: 1, name: 'Iniciar sesión' })).toBeDefined();
+})
+ 
+
+    },
+
+    variable: 'mock',
+
+  }
+
+
+  
+})
+
 
 
 interface User {
@@ -76,6 +127,61 @@ test('Page', () => {
   expect(screen.getByRole('heading', { level: 1, name: 'Home' })).toBeDefined()
     
 })
+
+
+
+
+it('renders', () => {
+  render(
+    <NextIntlClientProvider locale="en" >
+      
+      <LoginForm/>
+    </NextIntlClientProvider>
+  );
+
+  expect(screen.getByRole('heading', { level: 1, name: 'Home' })).toBeDefined()
+});
+
+
+
+
+
+
+
+
+
+vi.mock('LoginForm', () => {
+
+  return {
+
+    answer() {
+
+     render(
+
+    <NextIntlClientProvider locale="en" >
+      
+      <LoginForm/>
+    </NextIntlClientProvider>
+
+  );
+
+ expect(screen.getByRole('heading', { level: 1, name: 'Home' })).toBeDefined();
+
+    },
+
+    variable: 'mock',
+
+  }
+
+
+
+  
+})
+
+
+
+
+
 
 
 */

@@ -43,6 +43,7 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
 
+    
     {
        name: 'Microsoft Edge',
        use: { ...devices['Desktop Edge'], channel: 'msedge' },
@@ -56,7 +57,8 @@ export default defineConfig({
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
     },
-
+    
+    
 
 
     /* Test against mobile viewports. */
