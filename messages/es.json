@@ -19,13 +19,19 @@
     "notFoundBody": "Este agente no existe o no está disponible para el proyecto actual.",
     "notAvailableHeading": "Ejecución aún no disponible",
     "notAvailableBody": "Este agente no tiene un flujo de trabajo conectado todavía.",
-    "insufficientCredits": "Créditos insuficientes. Recarga tu saldo para ejecutar este agente."
+    "insufficientCredits": "Créditos insuficientes. Recarga tu saldo para ejecutar este agente.",
+    "connectionRequired": "Conecta tu sitio WordPress antes de ejecutar este agente.",
+    "missingConfig": "Completa la configuración obligatoria del proyecto antes de ejecutar.",
+    "missingContext": "Completa el contexto del proyecto en los ajustes del proyecto antes de ejecutar."
   },
   "AgentInputs": {
-    "business": { "label": "Sobre tu negocio" },
-    "audience": { "label": "Público objetivo" },
     "chosen_title": { "label": "Elige un título" },
     "image_method": { "label": "Método de imágenes" }
+  },
+  "ProjectContext": {
+    "heading": "Contexto del proyecto",
+    "business": { "label": "Sobre tu negocio" },
+    "audience": { "label": "Público objetivo" }
   },
   "Agents": {
     "blogWriter": {

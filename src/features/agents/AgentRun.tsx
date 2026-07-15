@@ -20,7 +20,6 @@ import type { AgentInputSchema } from "@/api/model/agentInputSchema";
 import type { AgentStepSchema } from "@/api/model/agentStepSchema";
 import { useActiveContext } from "@/features/shell/ActiveContext";
 import SchemaInputField from "@/features/agents/SchemaInputField";
-import ProjectConfigSection from "@/features/agents/ProjectConfigSection";
 import RunProgress from "@/features/agents/RunProgress";
 import RunHistory from "@/features/agents/RunHistory";
 
@@ -28,18 +27,25 @@ interface Props {
   agentId: string;
 }
 
-function isInsufficientCredits(err: unknown): boolean {
-  const e = err as { response?: { status?: number }; status?: number };
-  return e?.response?.status === 402 || e?.status === 402;
+type RunErrorKind = "credits" | "connection" | "missing" | "context" | "general";
+
+function parseRunError(err: unknown): RunErrorKind {
+  const e = err as {
+    response?: { status?: number; data?: { detail?: string } };
+    status?: number;
+  };
+  const httpStatus = e?.response?.status ?? e?.status;
+  const detail = e?.response?.data?.detail ?? "";
+  if (httpStatus === 402) return "credits";
+  if (httpStatus === 409 && detail === "connection_required") return "connection";
+  if (httpStatus === 409 && detail.startsWith("missing_context:")) return "context";
+  if (httpStatus === 422 && detail.startsWith("missing_inputs:")) return "missing";
+  return "general";
 }
 
 function firstStepRunInputs(schema: AgentStepSchema[]): AgentInputSchema[] {
   if (schema.length === 0) return [];
   return schema[0].inputs.filter((i) => i.scope === InputScope.run);
-}
-
-function allProjectInputs(schema: AgentStepSchema[]): AgentInputSchema[] {
-  return schema.flatMap((s) => s.inputs).filter((i) => i.scope === InputScope.project);
 }
 
 type RunFormValues = Record<string, string>;
@@ -53,8 +59,7 @@ interface RunFormProps {
 
 function RunForm({ agentId, projectId, schema, onRunStarted }: RunFormProps) {
   const t = useTranslations("AgentRun");
-  const [creditsError, setCreditsError] = useState(false);
-  const [generalError, setGeneralError] = useState(false);
+  const [runError, setRunError] = useState<RunErrorKind | null>(null);
 
   const runInputs = firstStepRunInputs(schema);
 
@@ -65,22 +70,23 @@ function RunForm({ agentId, projectId, schema, onRunStarted }: RunFormProps) {
   const createRun = useAgentRunsCreateRun();
 
   const onSubmit = (values: RunFormValues) => {
-    setCreditsError(false);
-    setGeneralError(false);
+    setRunError(null);
     const run_inputs = runInputs.length > 0 ? values : undefined;
     createRun.mutate(
       { projectId, agentId, data: { run_inputs } },
       {
         onSuccess: (run) => onRunStarted(run.id),
-        onError: (err) => {
-          if (isInsufficientCredits(err)) {
-            setCreditsError(true);
-          } else {
-            setGeneralError(true);
-          }
-        },
+        onError: (err) => setRunError(parseRunError(err)),
       },
     );
+  };
+
+  const runErrorMessage: Record<RunErrorKind, string> = {
+    credits: t("insufficientCredits"),
+    connection: t("connectionRequired"),
+    missing: t("missingConfig"),
+    context: t("missingContext"),
+    general: t("runError"),
   };
 
   return (
@@ -99,11 +105,10 @@ function RunForm({ agentId, projectId, schema, onRunStarted }: RunFormProps) {
         />
       ))}
 
-      {creditsError && (
-        <Alert severity="warning">{t("insufficientCredits")}</Alert>
-      )}
-      {generalError && (
-        <Alert severity="error">{t("runError")}</Alert>
+      {runError && (
+        <Alert severity={runError === "general" ? "error" : "warning"}>
+          {runErrorMessage[runError]}
+        </Alert>
       )}
 
       <Box>
@@ -166,14 +171,8 @@ export default function AgentRun({ agentId }: Props) {
     );
   }
 
-  const projectInputs = allProjectInputs(schema.steps);
-
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-      {projectInputs.length > 0 && (
-        <ProjectConfigSection projectId={projectId} inputs={projectInputs} />
-      )}
-
       {activeRunId ? (
         <RunProgress
           runId={activeRunId}

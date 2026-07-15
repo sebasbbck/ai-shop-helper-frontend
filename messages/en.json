@@ -19,13 +19,19 @@
     "notFoundBody": "This agent does not exist or is not available for your current project.",
     "notAvailableHeading": "Execution not available yet",
     "notAvailableBody": "This agent does not have a live workflow connected yet.",
-    "insufficientCredits": "Not enough credits. Top up your balance to run this agent."
+    "insufficientCredits": "Not enough credits. Top up your balance to run this agent.",
+    "connectionRequired": "Connect your WordPress site before running this agent.",
+    "missingConfig": "Complete the required project configuration above before running.",
+    "missingContext": "Complete the project context in project settings before running."
   },
   "AgentInputs": {
-    "business": { "label": "About your business" },
-    "audience": { "label": "Target audience" },
     "chosen_title": { "label": "Choose a title" },
     "image_method": { "label": "Image method" }
+  },
+  "ProjectContext": {
+    "heading": "Project context",
+    "business": { "label": "About your business" },
+    "audience": { "label": "Target audience" }
   },
   "Agents": {
     "blogWriter": {
