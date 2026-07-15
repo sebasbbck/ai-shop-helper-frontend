@@ -1,51 +1,22 @@
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
-
-// https://vitejs.dev/config/
 export default defineConfig({
   test: {
     environment: "jsdom",
-   "exclude": ["**/node_modules/**", "**/dist/**", "**/e2e/**",'**/*.{test,spec}.ts'],
-    
-
+    globals: true,
+    setupFiles: ["./vitest.setup.ts"],
+    include: ["tests-vitest/**/*.{test,spec}.{ts,tsx}"],
+    exclude: ["**/node_modules/**", "**/dist/**", "tests-playwright/**"],
     server: {
       deps: {
-        // https://github.com/vercel/next.js/issues/77200
-        inline: ['next-intl']
-      }
-    }
-
-
-  },
-  
-    resolve: {
-    alias: {
-     '@/': new URL('./src/', import.meta.url).pathname, 
+        inline: ["next-intl"],
+      },
     },
   },
-   
-  
-});
-
-
-
-/*
-
-
-    server: {
-      deps: {
-        // https://github.com/vercel/next.js/issues/77200
-        inline: ['next-intl']
-      }
-    }
-
   resolve: {
     alias: {
-     '@/': new URL('./src/', import.meta.url).pathname, 
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
-
-
-
-
-*/
+});
