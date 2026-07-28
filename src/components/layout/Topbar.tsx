@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import MenuIcon from "@mui/icons-material/Menu";
 import LocaleSwitcher from "@/features/i18n/LocaleSwitcher";
+import NotificationsMenu from "@/features/notifications/NotificationsMenu";
 import UserMenu from "./UserMenu";
 
 interface TopbarProps {
@@ -38,6 +39,7 @@ export default function Topbar({ onMobileMenuToggle }: TopbarProps) {
 
         <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
           <LocaleSwitcher />
+          <NotificationsMenu />
           <UserMenu />
         </Box>
       </Toolbar>
