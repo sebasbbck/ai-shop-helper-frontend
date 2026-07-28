@@ -1,166 +1,101 @@
-import { useMutation } from '@tanstack/react-query'
-import { type SubmitHandler, useForm } from 'react-hook-form'
+"use client";
 
-import Button from '@mui/material/Button'
-import useCustomToast from '../../../hooks/useCustomToast'
-// import { handleError } from "@/utils"
-import Box from '@mui/material/Box'
-import { FormHead } from './FormHead'
-import { useState } from 'react'
-import Alert from '@mui/material/Alert'
-import { Form, Field } from '../../../components/hook-form'
-import { schemaUtils } from '../../../components/hook-form/schema-utils'
-import * as z from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import useHandleError from '../../../hooks/useHandleError'
-import { useTranslation } from 'next-i18next'
-import CircularProgress from '@mui/material/CircularProgress'
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import MuiLink from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { useAuthForgotPassword } from "@/api/endpoints/auth/auth";
 
-interface FormData {
-  email: string
-}
+type FormValues = {
+  email: string;
+};
 
 export default function RecoverPasswordForm() {
-  const [errorMessage] = useState<string | null>(null)
-  const { showSuccessToast, showErrorToast } = useCustomToast()
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const handleError = useHandleError()
-  const { t } = useTranslation()
-  const { reset } = useForm<FormData>()
+  const t = useTranslations("Auth");
+  const tCommon = useTranslations("Common");
+  const tValidation = useTranslations("Validation");
 
-  const RecoverPasswordSchema = z.object({
-    email: schemaUtils.email(),
-  })
+  const schema = z.object({
+    email: z.string().email(tValidation("emailInvalid")),
+  });
 
-  /*
-  const recoverPassword = async (data: FormData) => {
-    await LoginService.recoverPassword({
-      email: data.email,
-    })
-  }
+  const { control, handleSubmit } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: { email: "" },
+  });
 
-  const mutation = useMutation({
-    mutationFn: recoverPassword,
-    onSuccess: () => {
-      showSuccessToast(t("translation:recover_password.success"))
-      reset()
-    },
-    onError: (err) => {
-      // console.log(err)
-      // TODO: DEMO
-      handleError(err)
-    },
-  })
+  const forgot = useAuthForgotPassword();
 
-  const isSubmitting = mutation.isPending
-  */
+  const onSubmit = (values: FormValues) =>
+    forgot.mutate({ data: { email: values.email } });
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    showErrorToast(
-      'Reestablecer la contraseña no es posible en esta versión de prueba. Si necesitas obtener una nueva contraseña, contacta con Multiplicalia. Disculpa las molestias.',
-    )
-  }
-
-  const methods = useForm({
-    resolver: zodResolver(RecoverPasswordSchema),
-    defaultValues: {
-      email: '',
-    },
-  })
-
-  const renderForm = () => (
-    <>
-      <Box
-        sx={{
-          display: 'flex',
-          gap: { xs: 3, sm: 2 },
-          flexDirection: { xs: 'column', sm: 'row' },
-          pb: 2,
-        }}
-      >
-        <Field.Text
-          name="email"
-          label={t('translation:forms.email')}
-          slotProps={{ inputLabel: { shrink: true } }}
-        />
+  if (forgot.isSuccess) {
+    return (
+      <Box>
+        <Stack spacing={2.5}>
+          <Typography variant="h5" component="h1" sx={{ fontWeight: 600 }}>
+            {t("recoverPassword.heading")}
+          </Typography>
+          <Alert severity="success">{t("recoverPassword.sent")}</Alert>
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            <MuiLink component={Link} href="/login">
+              {t("recoverPassword.goToLogin")}
+            </MuiLink>
+          </Typography>
+        </Stack>
       </Box>
-
-      <Button
-        fullWidth
-        color="inherit"
-        size="large"
-        type="submit"
-        variant="contained"
-        disabled={isSubmitting}
-      >
-        {isSubmitting && (
-          <CircularProgress size={20} color="inherit" sx={{ mr: 1 }} />
-        )}
-        {isSubmitting
-          ? t('translation:onboarding.processing')
-          : t('translation:recover_password.send')}
-      </Button>
-    </>
-  )
+    );
+  }
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        display: 'flex',
-        flex: '1 1 auto',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        height: 'calc(100vh - var(--layout-header-desktop-height))',
-      }}
-    >
-      <Box
-        sx={{
-          position: 'relative',
-          padding: '2rem',
-          flex: '1 1 auto',
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <img
-          style={{ borderRadius: 12, width: 420 }}
-          src="/assets/images/herramienta-ia-marketing-equipo-login.webp"
-          alt="Los cuatro agentes de AI Shop Helper"
-        />
-      </Box>
-
-      <Box
-        sx={{
-          width: '50%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'left',
-          padding: '2rem',
-        }}
-      >
-        <Box sx={{ width: '100%', maxWidth: '420px' }}>
-          <FormHead
-            title={t('translation:recover_password.title')}
-            description={t('translation:recover_password.instructions')}
-            sx={{ textAlign: { xs: 'center', md: 'left' } }}
-          />
-
-          {!!errorMessage && (
-            <Alert severity="error" sx={{ mb: 3 }}>
-              {errorMessage}
-            </Alert>
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Stack spacing={2.5}>
+        <Typography variant="h5" component="h1" sx={{ fontWeight: 600 }}>
+          {t("recoverPassword.heading")}
+        </Typography>
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          {t("recoverPassword.description")}
+        </Typography>
+        <Controller
+          name="email"
+          control={control}
+          render={({ field, fieldState }) => (
+            <TextField
+              {...field}
+              label={tCommon("email")}
+              type="email"
+              autoComplete="email"
+              error={!!fieldState.error}
+              helperText={fieldState.error?.message}
+              fullWidth
+            />
           )}
-
-          <Form methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
-            {renderForm()}
-          </Form>
-        </Box>
-      </Box>
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          size="large"
+          disabled={forgot.isPending}
+          fullWidth
+        >
+          {forgot.isPending
+            ? t("recoverPassword.submitting")
+            : t("recoverPassword.submitButton")}
+        </Button>
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          <MuiLink component={Link} href="/login">
+            {t("recoverPassword.goToLogin")}
+          </MuiLink>
+        </Typography>
+      </Stack>
     </Box>
-  )
+  );
 }

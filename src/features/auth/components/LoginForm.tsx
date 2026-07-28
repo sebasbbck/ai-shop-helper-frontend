@@ -1,246 +1,165 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import Alert from '@mui/material/Alert'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-// import Divider from "@mui/material/Divider"
-import IconButton from '@mui/material/IconButton'
-import InputAdornment from '@mui/material/InputAdornment'
-import Link from '@mui/material/Link'
-// import Typography from "@mui/material/Typography"
-import {
-  createFileRoute,
-  redirect,
-  useNavigate,
-  useParams,
-} from '@tanstack/react-router'
-import { useBoolean } from 'minimal-shared/hooks'
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import * as z from 'zod'
-import { FormHead } from './FormHead'
-// import { FormSocials } from "./FormSocials"
-// import { signInWithPassword } from "@/auth/context/jwt"
-// import { UsersService } from "@/client"
-import { Field, Form, schemaUtils } from '../../../components/hook-form'
-import { Iconify } from '../../../components/iconify'
-// import { getErrorMessage } from "@/utils"
-// import useCustomToast from "@/hooks/useCustomToast"
-import { useTranslation } from 'next-i18next'
-// import { SimpleLayout } from "@/layouts/simple"
-import CircularProgress from '@mui/material/CircularProgress'
-import { useRouter } from 'next/router'
-import NextLink from 'next/link'
-import { getErrorMessage } from '../../../hooks/useHandleError'
-import { setAccessToken } from '../../../../api/mutator/custom-instance'
+"use client";
 
-// SignInSchema moved into the field-level validation via schemaUtils where needed
+import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import MuiLink from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { useAuthLogin, useAuthResendVerification } from "@/api/endpoints/auth/auth";
+import { setAccessToken } from "@/lib/api/token-store";
+
+type FormValues = {
+  email: string;
+  password: string;
+};
+
+function isEmailNotVerified(err: unknown): boolean {
+  if (typeof err !== "object" || err === null) return false;
+  const response = (err as { response?: { status?: number; data?: { detail?: unknown } } }).response;
+  return response?.status === 403 && response?.data?.detail === "email_not_verified";
+}
 
 export default function LoginForm() {
-  const router = useRouter()
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
-  const showPassword = useBoolean()
-  // const { showInfoToast } = useCustomToast()
-  const { t } = useTranslation()
-  // const params = useParams({ from: '/$lang' })
+  const t = useTranslations("Auth");
+  const tCommon = useTranslations("Common");
+  const tValidation = useTranslations("Validation");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const justRegistered = searchParams.get("registered") === "1";
 
-  const defaultValues = {
-    username: '', // usuario@example.com
-    password: '', // multiplicalia
-  }
+  const [needsVerification, setNeedsVerification] = useState(false);
+  const [submittedEmail, setSubmittedEmail] = useState("");
+  const [resendDone, setResendDone] = useState(false);
 
-  const SignInSchema = z.object({
-    username: z.email(),
-    password: z
-      .string()
-      .min(8, { message: t('translation:forms.password_minimum_characters') }),
-  })
+  const schema = z.object({
+    email: z.string().email(tValidation("emailInvalid")),
+    password: z.string().min(1, tValidation("required")),
+  });
 
-  const methods = useForm({
-    resolver: zodResolver(SignInSchema),
-    defaultValues,
-  })
+  const { control, handleSubmit } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: { email: "", password: "" },
+  });
 
-  const onSubmit = async (formData: any) => {
-    try {
-      setIsSubmitting(true)
+  const login = useAuthLogin({
+    mutation: {
+      onSuccess: (token) => {
+        setAccessToken(token.access_token);
+        router.push("/");
+      },
+      onError: (err: unknown) => {
+        if (isEmailNotVerified(err)) {
+          setNeedsVerification(true);
+        }
+      },
+    },
+  });
 
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({
-          username: formData.username,
-          password: formData.password,
-        }),
-      })
+  const resend = useAuthResendVerification({
+    mutation: {
+      onSuccess: () => setResendDone(true),
+    },
+  });
 
-      if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.detail || 'Login failed')
-      }
-
-      const data = await response.json()
-      setAccessToken(data.access_token)
-
-      router.replace('/')
-    } catch (err) {
-      console.error(err)
-      setErrorMessage(getErrorMessage(err, t))
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
-  const renderForm = () => (
-    <Box sx={{ gap: 3, display: 'flex', flexDirection: 'column' }}>
-      <Field.Text
-        name="username"
-        label={t('translation:forms.email')}
-        slotProps={{ inputLabel: { shrink: true } }}
-      />
-
-      <Box sx={{ gap: 1.5, display: 'flex', flexDirection: 'column' }}>
-        <Link
-          component={NextLink}
-          href={'/recover-password'}
-          variant="subtitle2"
-          sx={{ alignSelf: 'flex-end' }}
-        >
-          {t('translation:login.forgot_password')}
-        </Link>
-        <Field.Text
-          name="password"
-          label={t('translation:forms.password')}
-          placeholder=""
-          type={showPassword.value ? 'text' : 'password'}
-          slotProps={{
-            inputLabel: { shrink: true },
-            input: {
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={showPassword.onToggle} edge="end">
-                    <Iconify
-                      icon={
-                        showPassword.value
-                          ? 'solar:eye-bold'
-                          : 'solar:eye-closed-bold'
-                      }
-                    />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            },
-          }}
-        />
-      </Box>
-
-      <Button
-        fullWidth
-        color="inherit"
-        size="large"
-        type="submit"
-        variant="contained"
-        disabled={isSubmitting}
-      >
-        {isSubmitting && (
-          <CircularProgress size={20} color="inherit" sx={{ mr: 1 }} />
-        )}
-        {isSubmitting
-          ? t('translation:onboarding.processing')
-          : t('translation:login.login')}
-      </Button>
-
-      {/*
-      <Divider>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          {t("login.alternative_login")}
-        </Typography>
-      </Divider>
-
-      <FormSocials sx={undefined} signInWithGoogle={() => showInfoToast(t("toasts.coming_soon"), null)} signInWithFacebook={() => showInfoToast(t("toasts.coming_soon"), null)} signInWithTwitter={undefined} />
-      */}
-    </Box>
-  )
+  const onSubmit = (values: FormValues) => {
+    setNeedsVerification(false);
+    setResendDone(false);
+    setSubmittedEmail(values.email);
+    login.mutate({ data: { username: values.email, password: values.password } });
+  };
 
   return (
-    <>
-      <Box
-        sx={{
-          width: '100%',
-          display: 'flex',
-          flex: '1 1 auto',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'row',
-          height: 'calc(100vh - var(--layout-header-desktop-height))',
-        }}
-      >
-        <Box
-          sx={{
-            position: 'relative',
-            padding: '2rem',
-            flex: '1 1 auto',
-            overflow: 'hidden',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <img
-            style={{ borderRadius: 12, width: 420 }}
-            src="/assets/images/herramienta-ia-marketing-equipo-login.webp"
-            alt="Los cuatro agentes de AI Shop Helper"
-          />
-        </Box>
-        <Box
-          sx={{
-            width: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'left',
-            padding: '2rem',
-          }}
-        >
-          <Box sx={{ width: '100%', maxWidth: '420px' }}>
-            <FormHead
-              title={t('translation:login.title')}
-              description={
-                <>
-                  {t('translation:login.no_account')}
-                  <Link
-                    component={NextLink}
-                    href={'/signup'}
-                    variant="subtitle2"
-                  >
-                    {t('translation:login.signup_link')}
-                  </Link>
-                </>
-              }
-              sx={{ textAlign: { xs: 'center', md: 'left' } }}
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Stack spacing={2.5}>
+        <Typography variant="h5" component="h1" sx={{ fontWeight: 600 }}>
+          {t("signIn.heading")}
+        </Typography>
+        {justRegistered && (
+          <Alert severity="success">{t("signIn.registered")}</Alert>
+        )}
+        {login.isError && !needsVerification && (
+          <Alert severity="error">{t("signIn.invalidCredentials")}</Alert>
+        )}
+        {needsVerification && (
+          <Alert
+            severity="info"
+            action={
+              resendDone ? undefined : (
+                <Button
+                  color="inherit"
+                  size="small"
+                  disabled={resend.isPending}
+                  onClick={() => resend.mutate({ data: { email: submittedEmail } })}
+                >
+                  {t("signIn.resend")}
+                </Button>
+              )
+            }
+          >
+            {resendDone ? t("signIn.resendSent") : t("signIn.emailNotVerified")}
+          </Alert>
+        )}
+        <Controller
+          name="email"
+          control={control}
+          render={({ field, fieldState }) => (
+            <TextField
+              {...field}
+              label={tCommon("email")}
+              type="email"
+              autoComplete="email"
+              error={!!fieldState.error}
+              helperText={fieldState.error?.message}
+              fullWidth
             />
-
-            {/*
-            <Alert severity="info" sx={{ mb: 3 }}>
-              Prueba a usar <strong>{defaultValues.email}</strong>
-              {" con la contraseña "}
-              <strong>{defaultValues.password}</strong>
-            </Alert>
-            */}
-
-            {!!errorMessage && (
-              <Alert severity="error" sx={{ mb: 3 }}>
-                {errorMessage}
-              </Alert>
-            )}
-
-            <Form methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
-              {renderForm()}
-            </Form>
-          </Box>
-        </Box>
-      </Box>
-    </>
-  )
+          )}
+        />
+        <Controller
+          name="password"
+          control={control}
+          render={({ field, fieldState }) => (
+            <TextField
+              {...field}
+              label={tCommon("password")}
+              type="password"
+              autoComplete="current-password"
+              error={!!fieldState.error}
+              helperText={fieldState.error?.message}
+              fullWidth
+            />
+          )}
+        />
+        <Typography variant="body2" sx={{ textAlign: "right" }}>
+          <MuiLink component={Link} href="/recover-password">
+            {t("signIn.forgotPassword")}
+          </MuiLink>
+        </Typography>
+        <Button
+          type="submit"
+          variant="contained"
+          size="large"
+          disabled={login.isPending}
+          fullWidth
+        >
+          {login.isPending ? t("signIn.submitting") : t("signIn.submitButton")}
+        </Button>
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          {t("signIn.noAccount")}{" "}
+          <MuiLink component={Link} href="/register">
+            {t("signIn.createOne")}
+          </MuiLink>
+        </Typography>
+      </Stack>
+    </Box>
+  );
 }

@@ -1,48 +1,51 @@
 {
+  "name": "ai-shop-helper-frontend",
+  "version": "0.1.0",
   "private": true,
-  "version": "0.0.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "generate-client": "orval --config ./orval.config.ts",
-    "fix:prettier": "npm run lint:prettier -- --write",
-    "lint:prettier": "prettier --config .prettierrc --check"
+    "start": "next start",
+    "lint": "eslint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "generate-client": "orval --config ./orval.config.ts"
   },
   "dependencies": {
+    "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@fontsource-variable/dm-sans": "^5.2.8",
-    "@fontsource-variable/inter": "^5.2.8",
-    "@fontsource/barlow": "^5.2.8",
-    "@hookform/resolvers": "^5.2.2",
-    "@iconify/react": "^6.0.2",
-    "@mui/material": "^7.3.8",
-    "@mui/stylis-plugin-rtl": "^7.3.8",
-    "@mui/x-data-grid": "^8.27.1",
-    "@mui/x-date-pickers": "^8.27.2",
-    "@tanstack/react-query": "^5.90.21",
-    "@tanstack/react-router": "^1.161.1",
-    "@types/js-cookie": "^3.0.6",
-    "axios": "^1.13.5",
-    "dayjs": "^1.11.19",
-    "framer-motion": "^12.35.1",
-    "jose": "^6.2.1",
-    "minimal-shared": "^1.1.5",
-    "next": "latest",
-    "next-i18next": "^15.4.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-dropzone": "^15.0.0",
-    "react-hook-form": "^7.71.2",
-    "react-phone-number-input": "^3.4.16",
-    "simplebar-react": "^3.3.2"
+    "@hookform/resolvers": "^5.4.0",
+    "@mui/icons-material": "^9.1.1",
+    "@mui/material": "^9.1.2",
+    "@mui/material-nextjs": "^9.1.1",
+    "@tanstack/react-query": "^5.101.2",
+    "axios": "^1.18.1",
+    "next": "16.2.9",
+    "next-intl": "^4.13.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-hook-form": "^7.80.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@types/node": "25.2.3",
-    "@types/react": "19.2.14",
-    "js-cookie": "^3.0.5",
-    "orval": "^8.4.1",
-    "prettier": "^3.8.1",
-    "typescript": "5.9.3"
-  }
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "ajv": "^8.20.0",
+    "babel-plugin-react-compiler": "1.0.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "orval": "^8.19.0",
+    "prettier": "^3.9.1",
+    "typescript": "^5"
+  },
+  "ignoreScripts": [
+    "sharp",
+    "unrs-resolver"
+  ],
+  "trustedDependencies": [
+    "sharp",
+    "unrs-resolver"
+  ]
 }

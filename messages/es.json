@@ -1,0 +1,244 @@
+{
+  "AgentRun": {
+    "projectConfigHeading": "Configuración del proyecto",
+    "configSaved": "Configuración guardada",
+    "runAgent": "Ejecutar agente",
+    "generating": "Ejecutando…",
+    "submitting": "Enviando…",
+    "continueRun": "Continuar",
+    "awaitingInputHeading": "Se requiere información",
+    "runSuccess": "Completado con éxito",
+    "viewPost": "Ver artículo",
+    "runAgain": "Volver a ejecutar",
+    "runError": "Algo salió mal",
+    "retry": "Intentar de nuevo",
+    "creditsRefunded": "Los créditos han sido reembolsados.",
+    "executionsHeading": "Ejecuciones anteriores",
+    "noExecutions": "Aún no hay ejecuciones",
+    "notFoundHeading": "Agente no encontrado",
+    "notFoundBody": "Este agente no existe o no está disponible para el proyecto actual.",
+    "notAvailableHeading": "Ejecución aún no disponible",
+    "notAvailableBody": "Este agente no tiene un flujo de trabajo conectado todavía.",
+    "insufficientCredits": "Créditos insuficientes. Recarga tu saldo para ejecutar este agente.",
+    "connectionRequired": "Conecta tu sitio WordPress antes de ejecutar este agente.",
+    "missingConfig": "Completa la configuración obligatoria del proyecto antes de ejecutar.",
+    "missingContext": "Completa el contexto del proyecto en los ajustes del proyecto antes de ejecutar."
+  },
+  "AgentInputs": {
+    "chosen_title": { "label": "Elige un título" },
+    "image_method": { "label": "Método de imágenes" }
+  },
+  "ProjectContext": {
+    "heading": "Contexto del proyecto",
+    "business": { "label": "Sobre tu negocio" },
+    "audience": { "label": "Público objetivo" }
+  },
+  "Agents": {
+    "blogWriter": {
+      "name": "Redactor de blog",
+      "description": "Genera artículos de blog con SEO para tu tienda."
+    }
+  },
+  "Common": {
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "cancel": "Cancelar",
+    "save": "Guardar cambios",
+    "saving": "Guardando…",
+    "create": "Crear",
+    "creating": "Creando…"
+  },
+  "Validation": {
+    "nameRequired": "El nombre es obligatorio",
+    "emailInvalid": "Correo electrónico inválido",
+    "passwordMin": "Mínimo 8 caracteres",
+    "required": "Obligatorio"
+  },
+  "Auth": {
+    "signIn": {
+      "heading": "Iniciar sesión",
+      "invalidCredentials": "Credenciales incorrectas",
+      "submitButton": "Iniciar sesión",
+      "submitting": "Iniciando sesión…",
+      "noAccount": "¿No tienes cuenta?",
+      "createOne": "Créala aquí",
+      "registered": "Cuenta creada. Verifica tu correo antes de iniciar sesión.",
+      "emailNotVerified": "Verifica tu correo antes de iniciar sesión. Revisa tu bandeja de entrada.",
+      "resend": "Reenviar verificación",
+      "resendSent": "Si tu cuenta necesita verificación, hemos enviado un nuevo enlace.",
+      "forgotPassword": "¿Olvidaste tu contraseña?"
+    },
+    "register": {
+      "heading": "Crear cuenta",
+      "emailTaken": "El correo ya está registrado",
+      "createError": "No se pudo crear la cuenta",
+      "submitButton": "Crear cuenta",
+      "submitting": "Creando…",
+      "haveAccount": "¿Ya tienes cuenta?",
+      "signIn": "Inicia sesión"
+    },
+    "verifyEmail": {
+      "heading": "Verifica tu correo",
+      "verifying": "Verificando tu correo…",
+      "success": "Tu correo ha sido verificado. Ya puedes iniciar sesión.",
+      "error": "Este enlace de verificación no es válido o ha expirado.",
+      "goToLogin": "Ir a iniciar sesión"
+    },
+    "recoverPassword": {
+      "heading": "¿Olvidaste tu contraseña?",
+      "description": "Introduce tu correo y te enviaremos un enlace para restablecer tu contraseña.",
+      "submitButton": "Enviar enlace",
+      "submitting": "Enviando…",
+      "sent": "Si existe una cuenta para ese correo, hemos enviado un enlace de restablecimiento.",
+      "goToLogin": "Volver a iniciar sesión"
+    },
+    "resetPassword": {
+      "heading": "Restablecer contraseña",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "submitButton": "Establecer nueva contraseña",
+      "submitting": "Guardando…",
+      "success": "Tu contraseña ha sido restablecida. Ya puedes iniciar sesión.",
+      "error": "Este enlace de restablecimiento no es válido o ha expirado.",
+      "mismatch": "Las contraseñas no coinciden",
+      "goToLogin": "Ir a iniciar sesión"
+    }
+  },
+  "Settings": {
+    "heading": "Configuración",
+    "profileUpdated": "Perfil actualizado",
+    "saveError": "No se pudieron guardar los cambios",
+    "languageSection": "Idioma"
+  },
+  "Orgs": {
+    "heading": "Organizaciones",
+    "newOrg": "Nueva organización",
+    "noOrgs": "Aún no hay organizaciones.",
+    "orgInfo": "{credits} créditos · {projects} proyectos",
+    "dialog": {
+      "title": "Nueva organización",
+      "submit": "Crear",
+      "submitting": "Creando…"
+    }
+  },
+  "Home": {
+    "heading": "AI Shop Helper",
+    "signedInAs": "Sesión iniciada como {email}",
+    "signOut": "Cerrar sesión"
+  },
+  "LocaleSwitcher": {
+    "label": "Idioma"
+  },
+  "Bootstrap": {
+    "stepOf": "Paso {step} de {total}",
+    "orgHeading": "Crea tu organización",
+    "projectHeading": "Crea tu primer proyecto",
+    "projectTypeLabel": "Tipo de proyecto",
+    "continueButton": "Continuar",
+    "finishButton": "Empezar",
+    "createOrgError": "No se pudo crear la organización",
+    "createProjectError": "No se pudo crear el proyecto"
+  },
+  "Org": {
+    "newProject": "Nuevo proyecto",
+    "projectCount": "{count, plural, one {# proyecto} other {# proyectos}}",
+    "noProjectsHeading": "Aún no hay proyectos",
+    "noProjectsBody": "Crea tu primer proyecto para empezar a usar agentes.",
+    "settingsHeading": "Ajustes de la organización",
+    "saveError": "No se pudieron guardar los cambios",
+    "saved": "Cambios guardados",
+    "openProject": "Abrir"
+  },
+  "Project": {
+    "settingsHeading": "Ajustes del proyecto",
+    "saveError": "No se pudieron guardar los cambios",
+    "saved": "Cambios guardados",
+    "agentCount": "{count, plural, one {# agente} other {# agentes}}",
+    "openAgent": "Abrir",
+    "noAgentsHeading": "Sin agentes disponibles",
+    "noAgentsBody": "Aún no hay agentes configurados para este tipo de proyecto.",
+    "noProjectHeading": "Ningún proyecto seleccionado",
+    "noProjectBody": "Selecciona un proyecto en la barra lateral para ver sus agentes."
+  },
+  "Connection": {
+    "wpSection": "Conexión con WordPress",
+    "connected": "Conectado",
+    "notConnected": "Sin conectar",
+    "siteLabel": "URL del sitio",
+    "userLabel": "Usuario de WordPress",
+    "connectButton": "Conectar WordPress",
+    "connecting": "Redirigiendo…",
+    "reconnectButton": "Reconectar",
+    "siteUrlLabel": "URL del sitio WordPress",
+    "siteUrlPlaceholder": "https://tu-tienda.com",
+    "pluginHelp": "Instala y activa este plugin en tu sitio WordPress y luego conéctalo abajo.",
+    "downloadPlugin": "Descargar plugin",
+    "loadError": "No se pudo cargar el estado de conexión",
+    "startError": "No se pudo iniciar la conexión con WordPress",
+    "redirecting": "Volviendo a ajustes…",
+    "successHeading": "WordPress conectado",
+    "successBody": "Tu sitio de WordPress se ha conectado correctamente.",
+    "failureHeading": "Error de conexión",
+    "failureBody": "Algo salió mal al conectar tu sitio de WordPress.",
+    "backToProject": "Volver a los ajustes del proyecto"
+  },
+  "Shell": {
+    "wordmark": "AI Shop Helper",
+    "newOrg": "Nueva organización",
+    "newProject": "Nuevo proyecto",
+    "orgSection": "Organización",
+    "projectSection": "Proyecto",
+    "settings": "Ajustes",
+    "settingsItem": "Ajustes",
+    "billing": "Facturación",
+    "agents": "Agentes",
+    "logout": "Cerrar sesión",
+    "noOrgs": "Sin organizaciones",
+    "noProjects": "Sin proyectos",
+    "switchOrg": "Cambiar organización",
+    "switchProject": "Cambiar proyecto",
+    "createOrgError": "No se pudo crear la organización",
+    "createProjectError": "No se pudo crear el proyecto",
+    "projectType": "Tipo de proyecto",
+    "pages": {
+      "orgDashboard": "Panel de organización",
+      "orgSettings": "Ajustes de organización",
+      "projectDashboard": "Panel de proyecto",
+      "projectSettings": "Ajustes",
+      "agents": "Agente"
+    }
+  },
+  "Billing": {
+    "heading": "Facturación",
+    "balanceTitle": "Saldo de créditos",
+    "subscriptionCredits": "Suscripción",
+    "purchasedCredits": "Comprados",
+    "total": "Total",
+    "credits": "créditos",
+    "freeNote": "Las cuentas nuevas empiezan con {credits} créditos gratuitos",
+    "plansTitle": "Planes de suscripción",
+    "subscribe": "Suscribirse",
+    "perMonth": "mes",
+    "topupTitle": "Comprar créditos",
+    "topupHelper": "≈ {credits} créditos",
+    "buyCredits": "Comprar créditos",
+    "manageBilling": "Gestionar facturación",
+    "ledgerTitle": "Transacciones recientes",
+    "ledgerEmpty": "Aún no hay transacciones",
+    "date": "Fecha",
+    "reason": "Descripción",
+    "bucket": "Tipo",
+    "amount": "Importe",
+    "reasonPurchase": "Compra",
+    "reasonSubscriptionCycle": "Renovación de suscripción",
+    "reasonAgentRun": "Ejecución de agente",
+    "reasonSignupBonus": "Bono de bienvenida",
+    "reasonExpiry": "Vencimiento",
+    "reasonRefund": "Reembolso",
+    "reasonAdjustment": "Ajuste",
+    "confirmSuccess": "Pago completado — los créditos han sido añadidos a tu cuenta.",
+    "confirmPending": "Estamos confirmando tu pago. Los créditos se añadirán en breve.",
+    "finishing": "Finalizando…"
+  }
+}

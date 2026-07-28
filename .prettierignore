@@ -1,13 +1,4 @@
-build/*
-dist/*
-public/*
-**/out/*
-**/.next/*
-**/node_modules/*
-
-yarn.lock
-package-lock.json
-jsconfig.json
+.next/
+bun.lock
 openapi.json
-
-api/*
+src/api/

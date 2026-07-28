@@ -1,0 +1,244 @@
+{
+  "AgentRun": {
+    "projectConfigHeading": "Project configuration",
+    "configSaved": "Configuration saved",
+    "runAgent": "Run agent",
+    "generating": "Running…",
+    "submitting": "Submitting…",
+    "continueRun": "Continue",
+    "awaitingInputHeading": "Input required",
+    "runSuccess": "Completed successfully",
+    "viewPost": "View post",
+    "runAgain": "Run again",
+    "runError": "Something went wrong",
+    "retry": "Try again",
+    "creditsRefunded": "Credits have been refunded.",
+    "executionsHeading": "Previous runs",
+    "noExecutions": "No runs yet",
+    "notFoundHeading": "Agent not found",
+    "notFoundBody": "This agent does not exist or is not available for your current project.",
+    "notAvailableHeading": "Execution not available yet",
+    "notAvailableBody": "This agent does not have a live workflow connected yet.",
+    "insufficientCredits": "Not enough credits. Top up your balance to run this agent.",
+    "connectionRequired": "Connect your WordPress site before running this agent.",
+    "missingConfig": "Complete the required project configuration above before running.",
+    "missingContext": "Complete the project context in project settings before running."
+  },
+  "AgentInputs": {
+    "chosen_title": { "label": "Choose a title" },
+    "image_method": { "label": "Image method" }
+  },
+  "ProjectContext": {
+    "heading": "Project context",
+    "business": { "label": "About your business" },
+    "audience": { "label": "Target audience" }
+  },
+  "Agents": {
+    "blogWriter": {
+      "name": "Blog Writer",
+      "description": "Generate SEO blog posts for your store."
+    }
+  },
+  "Common": {
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "cancel": "Cancel",
+    "save": "Save changes",
+    "saving": "Saving…",
+    "create": "Create",
+    "creating": "Creating…"
+  },
+  "Validation": {
+    "nameRequired": "Name is required",
+    "emailInvalid": "Invalid email",
+    "passwordMin": "At least 8 characters",
+    "required": "Required"
+  },
+  "Auth": {
+    "signIn": {
+      "heading": "Sign in",
+      "invalidCredentials": "Invalid credentials",
+      "submitButton": "Sign in",
+      "submitting": "Signing in…",
+      "noAccount": "No account?",
+      "createOne": "Create one",
+      "registered": "Account created. Check your email to verify it before signing in.",
+      "emailNotVerified": "Verify your email before signing in. Check your inbox.",
+      "resend": "Resend verification",
+      "resendSent": "If your account needs verification, we've sent a new link.",
+      "forgotPassword": "Forgot password?"
+    },
+    "register": {
+      "heading": "Create account",
+      "emailTaken": "Email already registered",
+      "createError": "Could not create account",
+      "submitButton": "Create account",
+      "submitting": "Creating…",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in"
+    },
+    "verifyEmail": {
+      "heading": "Verify your email",
+      "verifying": "Verifying your email…",
+      "success": "Your email has been verified. You can now sign in.",
+      "error": "This verification link is invalid or has expired.",
+      "goToLogin": "Go to sign in"
+    },
+    "recoverPassword": {
+      "heading": "Forgot your password?",
+      "description": "Enter your email and we'll send you a link to reset your password.",
+      "submitButton": "Send reset link",
+      "submitting": "Sending…",
+      "sent": "If an account exists for that email, we've sent a reset link.",
+      "goToLogin": "Back to sign in"
+    },
+    "resetPassword": {
+      "heading": "Reset your password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "submitButton": "Set new password",
+      "submitting": "Saving…",
+      "success": "Your password has been reset. You can now sign in.",
+      "error": "This reset link is invalid or has expired.",
+      "mismatch": "Passwords do not match",
+      "goToLogin": "Go to sign in"
+    }
+  },
+  "Settings": {
+    "heading": "Settings",
+    "profileUpdated": "Profile updated",
+    "saveError": "Could not save changes",
+    "languageSection": "Language"
+  },
+  "Orgs": {
+    "heading": "Organizations",
+    "newOrg": "New organization",
+    "noOrgs": "No organizations yet.",
+    "orgInfo": "{credits} credits · {projects} projects",
+    "dialog": {
+      "title": "New organization",
+      "submit": "Create",
+      "submitting": "Creating…"
+    }
+  },
+  "Home": {
+    "heading": "AI Shop Helper",
+    "signedInAs": "Signed in as {email}",
+    "signOut": "Sign out"
+  },
+  "LocaleSwitcher": {
+    "label": "Language"
+  },
+  "Bootstrap": {
+    "stepOf": "Step {step} of {total}",
+    "orgHeading": "Create your organization",
+    "projectHeading": "Create your first project",
+    "projectTypeLabel": "Project type",
+    "continueButton": "Continue",
+    "finishButton": "Get started",
+    "createOrgError": "Could not create organization",
+    "createProjectError": "Could not create project"
+  },
+  "Org": {
+    "newProject": "New project",
+    "projectCount": "{count, plural, one {# project} other {# projects}}",
+    "noProjectsHeading": "No projects yet",
+    "noProjectsBody": "Create your first project to start using agents.",
+    "settingsHeading": "Organization settings",
+    "saveError": "Could not save changes",
+    "saved": "Changes saved",
+    "openProject": "Open"
+  },
+  "Project": {
+    "settingsHeading": "Project settings",
+    "saveError": "Could not save changes",
+    "saved": "Changes saved",
+    "agentCount": "{count, plural, one {# agent} other {# agents}}",
+    "openAgent": "Open",
+    "noAgentsHeading": "No agents available",
+    "noAgentsBody": "No agents have been configured for this project type yet.",
+    "noProjectHeading": "No project selected",
+    "noProjectBody": "Select a project from the sidebar to view its agents."
+  },
+  "Connection": {
+    "wpSection": "WordPress connection",
+    "connected": "Connected",
+    "notConnected": "Not connected",
+    "siteLabel": "Site URL",
+    "userLabel": "WordPress user",
+    "connectButton": "Connect WordPress",
+    "connecting": "Redirecting…",
+    "reconnectButton": "Reconnect",
+    "siteUrlLabel": "WordPress site URL",
+    "siteUrlPlaceholder": "https://your-store.com",
+    "pluginHelp": "Install and activate this plugin on your WordPress site, then connect below.",
+    "downloadPlugin": "Download plugin",
+    "loadError": "Could not load connection status",
+    "startError": "Could not start WordPress connection",
+    "redirecting": "Taking you back to settings…",
+    "successHeading": "WordPress connected",
+    "successBody": "Your WordPress site has been connected successfully.",
+    "failureHeading": "Connection failed",
+    "failureBody": "Something went wrong while connecting your WordPress site.",
+    "backToProject": "Back to project settings"
+  },
+  "Shell": {
+    "wordmark": "AI Shop Helper",
+    "newOrg": "New organization",
+    "newProject": "New project",
+    "orgSection": "Organization",
+    "projectSection": "Project",
+    "settings": "Settings",
+    "settingsItem": "Settings",
+    "billing": "Billing",
+    "agents": "Agents",
+    "logout": "Log out",
+    "noOrgs": "No organizations",
+    "noProjects": "No projects",
+    "switchOrg": "Switch organization",
+    "switchProject": "Switch project",
+    "createOrgError": "Could not create organization",
+    "createProjectError": "Could not create project",
+    "projectType": "Project type",
+    "pages": {
+      "orgDashboard": "Organization dashboard",
+      "orgSettings": "Organization settings",
+      "projectDashboard": "Project dashboard",
+      "projectSettings": "Settings",
+      "agents": "Agent"
+    }
+  },
+  "Billing": {
+    "heading": "Billing",
+    "balanceTitle": "Credit balance",
+    "subscriptionCredits": "Subscription",
+    "purchasedCredits": "Purchased",
+    "total": "Total",
+    "credits": "credits",
+    "freeNote": "New accounts start with {credits} free credits",
+    "plansTitle": "Subscription plans",
+    "subscribe": "Subscribe",
+    "perMonth": "mo",
+    "topupTitle": "Buy credits",
+    "topupHelper": "≈ {credits} credits",
+    "buyCredits": "Buy credits",
+    "manageBilling": "Manage billing",
+    "ledgerTitle": "Recent transactions",
+    "ledgerEmpty": "No transactions yet",
+    "date": "Date",
+    "reason": "Description",
+    "bucket": "Type",
+    "amount": "Amount",
+    "reasonPurchase": "Purchase",
+    "reasonSubscriptionCycle": "Subscription renewal",
+    "reasonAgentRun": "Agent run",
+    "reasonSignupBonus": "Welcome bonus",
+    "reasonExpiry": "Expiry",
+    "reasonRefund": "Refund",
+    "reasonAdjustment": "Adjustment",
+    "confirmSuccess": "Payment complete — credits have been added to your account.",
+    "confirmPending": "We're confirming your payment. Credits will be added shortly.",
+    "finishing": "Finishing up…"
+  }
+}
