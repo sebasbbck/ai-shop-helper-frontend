@@ -23,7 +23,7 @@ test('should login in the app', async ({ page }) => {
   //Presses "Enter" in order to send the data
   await page.getByRole('textbox', { name: 'password' }).press('Enter');
   
-  //Checks if the new page should contain an h4 with "Code_Eater_Productions"
+  //Checks if the new page should contain an h4 with "programa_de_testeo"
   await expect(page.locator('h4')).toContainText('Code_Eater_Productions')
   
 })
