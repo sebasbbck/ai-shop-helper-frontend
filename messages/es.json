@@ -237,6 +237,10 @@
     "reasonExpiry": "Vencimiento",
     "reasonRefund": "Reembolso",
     "reasonAdjustment": "Ajuste",
+    "reasonIdeas": "Ideas",
+    "reasonArticle": "Artículo",
+    "reasonImage": "Imagen",
+    "reasonWpUpload": "Subida a WordPress",
     "confirmSuccess": "Pago completado — los créditos han sido añadidos a tu cuenta.",
     "confirmPending": "Estamos confirmando tu pago. Los créditos se añadirán en breve.",
     "finishing": "Finalizando…"
