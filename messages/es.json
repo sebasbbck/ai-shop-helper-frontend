@@ -172,6 +172,20 @@
     "noProjectHeading": "Ningún proyecto seleccionado",
     "noProjectBody": "Selecciona un proyecto en la barra lateral para ver sus agentes."
   },
+  "Notifications": {
+    "ariaLabel": "Notificaciones",
+    "heading": "Notificaciones",
+    "empty": "No tienes notificaciones",
+    "managePreferences": "Gestionar preferencias",
+    "preferencesHeading": "Preferencias de notificaciones",
+    "loadError": "No se pudieron cargar las preferencias",
+    "updateError": "No se pudo actualizar la preferencia",
+    "types": {
+      "execution_finished": "Ejecución de agente finalizada",
+      "service_change": "Cambios en el servicio",
+      "user_status_change": "Cambios en tu cuenta"
+    }
+  },
   "Connection": {
     "wpSection": "Conexión con WordPress",
     "connected": "Conectado",

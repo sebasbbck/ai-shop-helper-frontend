@@ -172,6 +172,20 @@
     "noProjectHeading": "No project selected",
     "noProjectBody": "Select a project from the sidebar to view its agents."
   },
+  "Notifications": {
+    "ariaLabel": "Notifications",
+    "heading": "Notifications",
+    "empty": "You have no notifications",
+    "managePreferences": "Manage preferences",
+    "preferencesHeading": "Notification preferences",
+    "loadError": "Could not load preferences",
+    "updateError": "Could not update preference",
+    "types": {
+      "execution_finished": "Agent run finished",
+      "service_change": "Service changes",
+      "user_status_change": "Account status changes"
+    }
+  },
   "Connection": {
     "wpSection": "WordPress connection",
     "connected": "Connected",
