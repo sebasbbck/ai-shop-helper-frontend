@@ -56,6 +56,16 @@
     "required": "Required"
   },
   "Auth": {
+    "continueWithGoogle": "Continue with Google",
+    "connectingGoogle": "Redirecting…",
+    "googleError": "Could not sign in with Google",
+    "orDivider": "or",
+    "loginSuccessHeading": "Signed in",
+    "loginSuccessBody": "Taking you to the app.",
+    "loginFailureHeading": "Could not sign in",
+    "loginFailureBody": "Something went wrong signing in with Google. Please try again.",
+    "backToLogin": "Back to sign in",
+    "redirecting": "Redirecting…",
     "signIn": {
       "heading": "Sign in",
       "invalidCredentials": "Invalid credentials",

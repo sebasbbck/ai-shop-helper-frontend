@@ -56,6 +56,16 @@
     "required": "Obligatorio"
   },
   "Auth": {
+    "continueWithGoogle": "Continuar con Google",
+    "connectingGoogle": "Redirigiendo…",
+    "googleError": "No se pudo iniciar sesión con Google",
+    "orDivider": "o",
+    "loginSuccessHeading": "Sesión iniciada",
+    "loginSuccessBody": "Te estamos redirigiendo a la aplicación.",
+    "loginFailureHeading": "No se pudo iniciar sesión",
+    "loginFailureBody": "Ha ocurrido un problema al iniciar sesión con Google. Inténtalo de nuevo.",
+    "backToLogin": "Volver a iniciar sesión",
+    "redirecting": "Redirigiendo…",
     "signIn": {
       "heading": "Iniciar sesión",
       "invalidCredentials": "Credenciales incorrectas",

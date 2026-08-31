@@ -9,12 +9,14 @@ import { useTranslations } from "next-intl";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 import MuiLink from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useAuthRegister } from "@/api/endpoints/auth/auth";
 import { useReferralsGetReferrerInfo } from "@/api/endpoints/referrals/referrals";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 type FormValues = {
   name: string;
@@ -129,6 +131,12 @@ export default function RegisterForm() {
             ? t("register.submitting")
             : t("register.submitButton")}
         </Button>
+        <Divider>
+          <Typography variant="body2" color="text.secondary">
+            {t("orDivider")}
+          </Typography>
+        </Divider>
+        <GoogleLoginButton />
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
           {t("register.haveAccount")}{" "}
           <MuiLink component={Link} href="/login">
