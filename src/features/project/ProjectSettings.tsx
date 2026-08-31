@@ -23,6 +23,7 @@ import { useProjectTypesGetProjectTypes } from "@/api/endpoints/project-types/pr
 import { getOrgsGetMyOrgsQueryKey } from "@/api/endpoints/orgs/orgs";
 import { useActiveContext } from "@/features/shell/ActiveContext";
 import WordpressConnectionSection from "@/features/project/WordpressConnectionSection";
+import ProjectContextSection from "@/features/project/ProjectContextSection";
 
 const schema = z.object({
   name: z.string().min(1),
@@ -43,7 +44,6 @@ export default function ProjectSettings() {
   const projectTypes = typesData?.items ?? [];
 
   const {
-    register,
     handleSubmit,
     control,
     reset,
@@ -65,7 +65,7 @@ export default function ProjectSettings() {
         project_type_id: activeProject.project_type_id,
       });
     }
-  }, [activeProject, reset]);
+  }, [activeProject?.id, reset]);
 
   const updateProject = useProjectsUpdateProject({
     mutation: {
@@ -108,13 +108,19 @@ export default function ProjectSettings() {
         )}
 
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
-          <TextField
-            label={tc("name")}
-            fullWidth
-            size="small"
-            error={Boolean(errors.name)}
-            helperText={errors.name ? tv("nameRequired") : undefined}
-            {...register("name")}
+          <Controller
+            name="name"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label={tc("name")}
+                fullWidth
+                size="small"
+                error={Boolean(errors.name)}
+                helperText={errors.name ? tv("nameRequired") : undefined}
+              />
+            )}
           />
 
           <Controller
@@ -152,6 +158,10 @@ export default function ProjectSettings() {
           </Button>
         </Box>
       </form>
+
+      {activeProjectId && (
+        <ProjectContextSection projectId={activeProjectId} />
+      )}
 
       {activeProjectId && (
         <WordpressConnectionSection projectId={activeProjectId} />

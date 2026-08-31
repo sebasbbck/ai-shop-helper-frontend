@@ -1,34 +1,37 @@
 {
   "AgentRun": {
-    "businessLabel": "Sobre tu negocio",
-    "businessPlaceholder": "p. ej. Tienda online de bolsos de cuero artesanales — especializada en regalos personalizados",
-    "audienceLabel": "Público objetivo",
-    "audiencePlaceholder": "p. ej. Mujeres de 25 a 45 años que buscan regalos únicos para ocasiones especiales",
-    "imageMethodLabel": "Método de imágenes",
-    "imageMethod": {
-      "stock": "Fotos de stock",
-      "ia_images": "Imágenes generadas por IA",
-      "upload_images": "Subir imágenes"
-    },
-    "generateTitles": "Generar títulos",
-    "selectTitle": "Elige un título para tu publicación",
-    "generateBlog": "Generar artículo",
-    "generating": "Generando…",
+    "projectConfigHeading": "Configuración del proyecto",
+    "configSaved": "Configuración guardada",
+    "runAgent": "Ejecutar agente",
+    "generating": "Ejecutando…",
+    "submitting": "Enviando…",
+    "continueRun": "Continuar",
+    "awaitingInputHeading": "Se requiere información",
+    "runSuccess": "Completado con éxito",
     "viewPost": "Ver artículo",
     "runAgain": "Volver a ejecutar",
     "runError": "Algo salió mal",
     "retry": "Intentar de nuevo",
-    "noTitlesReturned": "No se devolvieron títulos — inténtalo de nuevo",
-    "connectFirst": "WordPress no conectado",
-    "connectFirstBody": "Conecta tu sitio de WordPress en los ajustes del proyecto antes de ejecutar este agente.",
-    "connectLink": "Ir a los ajustes del proyecto",
+    "creditsRefunded": "Los créditos han sido reembolsados.",
     "executionsHeading": "Ejecuciones anteriores",
     "noExecutions": "Aún no hay ejecuciones",
     "notFoundHeading": "Agente no encontrado",
     "notFoundBody": "Este agente no existe o no está disponible para el proyecto actual.",
     "notAvailableHeading": "Ejecución aún no disponible",
     "notAvailableBody": "Este agente no tiene un flujo de trabajo conectado todavía.",
-    "insufficientCredits": "Créditos insuficientes. Recarga tu saldo para ejecutar este agente."
+    "insufficientCredits": "Créditos insuficientes. Recarga tu saldo para ejecutar este agente.",
+    "connectionRequired": "Conecta tu sitio WordPress antes de ejecutar este agente.",
+    "missingConfig": "Completa la configuración obligatoria del proyecto antes de ejecutar.",
+    "missingContext": "Completa el contexto del proyecto en los ajustes del proyecto antes de ejecutar."
+  },
+  "AgentInputs": {
+    "chosen_title": { "label": "Elige un título" },
+    "image_method": { "label": "Método de imágenes" }
+  },
+  "ProjectContext": {
+    "heading": "Contexto del proyecto",
+    "business": { "label": "Sobre tu negocio" },
+    "audience": { "label": "Público objetivo" }
   },
   "Agents": {
     "blogWriter": {
@@ -53,6 +56,16 @@
     "required": "Obligatorio"
   },
   "Auth": {
+    "continueWithGoogle": "Continuar con Google",
+    "connectingGoogle": "Redirigiendo…",
+    "googleError": "No se pudo iniciar sesión con Google",
+    "orDivider": "o",
+    "loginSuccessHeading": "Sesión iniciada",
+    "loginSuccessBody": "Te estamos redirigiendo a la aplicación.",
+    "loginFailureHeading": "No se pudo iniciar sesión",
+    "loginFailureBody": "Ha ocurrido un problema al iniciar sesión con Google. Inténtalo de nuevo.",
+    "backToLogin": "Volver a iniciar sesión",
+    "redirecting": "Redirigiendo…",
     "signIn": {
       "heading": "Iniciar sesión",
       "invalidCredentials": "Credenciales incorrectas",
@@ -60,7 +73,11 @@
       "submitting": "Iniciando sesión…",
       "noAccount": "¿No tienes cuenta?",
       "createOne": "Créala aquí",
-      "registered": "Cuenta creada — inicia sesión para continuar"
+      "registered": "Cuenta creada. Verifica tu correo antes de iniciar sesión.",
+      "emailNotVerified": "Verifica tu correo antes de iniciar sesión. Revisa tu bandeja de entrada.",
+      "resend": "Reenviar verificación",
+      "resendSent": "Si tu cuenta necesita verificación, hemos enviado un nuevo enlace.",
+      "forgotPassword": "¿Olvidaste tu contraseña?"
     },
     "register": {
       "heading": "Crear cuenta",
@@ -69,7 +86,34 @@
       "submitButton": "Crear cuenta",
       "submitting": "Creando…",
       "haveAccount": "¿Ya tienes cuenta?",
-      "signIn": "Inicia sesión"
+      "signIn": "Inicia sesión",
+      "invitedBy": "Invitado por {org}. Haz una compra y tu organización gana {credits} créditos."
+    },
+    "verifyEmail": {
+      "heading": "Verifica tu correo",
+      "verifying": "Verificando tu correo…",
+      "success": "Tu correo ha sido verificado. Ya puedes iniciar sesión.",
+      "error": "Este enlace de verificación no es válido o ha expirado.",
+      "goToLogin": "Ir a iniciar sesión"
+    },
+    "recoverPassword": {
+      "heading": "¿Olvidaste tu contraseña?",
+      "description": "Introduce tu correo y te enviaremos un enlace para restablecer tu contraseña.",
+      "submitButton": "Enviar enlace",
+      "submitting": "Enviando…",
+      "sent": "Si existe una cuenta para ese correo, hemos enviado un enlace de restablecimiento.",
+      "goToLogin": "Volver a iniciar sesión"
+    },
+    "resetPassword": {
+      "heading": "Restablecer contraseña",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "submitButton": "Establecer nueva contraseña",
+      "submitting": "Guardando…",
+      "success": "Tu contraseña ha sido restablecida. Ya puedes iniciar sesión.",
+      "error": "Este enlace de restablecimiento no es válido o ha expirado.",
+      "mismatch": "Las contraseñas no coinciden",
+      "goToLogin": "Ir a iniciar sesión"
     }
   },
   "Settings": {
@@ -128,6 +172,20 @@
     "noProjectHeading": "Ningún proyecto seleccionado",
     "noProjectBody": "Selecciona un proyecto en la barra lateral para ver sus agentes."
   },
+  "Notifications": {
+    "ariaLabel": "Notificaciones",
+    "heading": "Notificaciones",
+    "empty": "No tienes notificaciones",
+    "managePreferences": "Gestionar preferencias",
+    "preferencesHeading": "Preferencias de notificaciones",
+    "loadError": "No se pudieron cargar las preferencias",
+    "updateError": "No se pudo actualizar la preferencia",
+    "types": {
+      "execution_finished": "Ejecución de agente finalizada",
+      "service_change": "Cambios en el servicio",
+      "user_status_change": "Cambios en tu cuenta"
+    }
+  },
   "Connection": {
     "wpSection": "Conexión con WordPress",
     "connected": "Conectado",
@@ -159,6 +217,7 @@
     "settings": "Ajustes",
     "settingsItem": "Ajustes",
     "billing": "Facturación",
+    "referrals": "Referidos",
     "agents": "Agentes",
     "logout": "Cerrar sesión",
     "noOrgs": "Sin organizaciones",
@@ -204,8 +263,29 @@
     "reasonExpiry": "Vencimiento",
     "reasonRefund": "Reembolso",
     "reasonAdjustment": "Ajuste",
+    "reasonIdeas": "Ideas",
+    "reasonArticle": "Artículo",
+    "reasonImage": "Imagen",
+    "reasonWpUpload": "Subida a WordPress",
     "confirmSuccess": "Pago completado — los créditos han sido añadidos a tu cuenta.",
     "confirmPending": "Estamos confirmando tu pago. Los créditos se añadirán en breve.",
     "finishing": "Finalizando…"
+  },
+  "Referrals": {
+    "heading": "Referidos",
+    "subheading": "Invita a otros negocios. Cuando hagan su primera compra, ambos ganáis créditos.",
+    "rewardTitle": "Comparte tu enlace",
+    "rewardDescription": "Ganas {referrer} créditos y ellos ganan {referee} créditos cuando su organización haga su primera compra.",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "monthlyProgress": "{count} de {cap} recompensas ganadas este mes.",
+    "tableTitle": "Tus referidos",
+    "tableEmpty": "Aún no hay referidos. Comparte tu enlace para empezar.",
+    "colDate": "Fecha",
+    "colStatus": "Estado",
+    "colReward": "Recompensa",
+    "statusPending": "Pendiente",
+    "statusRewarded": "Recompensado",
+    "statusCapped": "Límite alcanzado"
   }
 }

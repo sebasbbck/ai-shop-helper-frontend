@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useQueryClient } from "@tanstack/react-query";
@@ -28,7 +28,7 @@ export default function OrgSettings() {
   const { activeOrg, activeOrgId } = useActiveContext();
 
   const {
-    register,
+    control,
     handleSubmit,
     reset,
     formState: { errors, isSubmitSuccessful },
@@ -43,7 +43,7 @@ export default function OrgSettings() {
     if (activeOrg) {
       reset({ name: activeOrg.name });
     }
-  }, [activeOrg, reset]);
+  }, [activeOrg?.id, reset]);
 
   const updateOrg = useOrgsUpdateOrg({
     mutation: {
@@ -81,13 +81,19 @@ export default function OrgSettings() {
           </Alert>
         )}
 
-        <TextField
-          label={tc("name")}
-          fullWidth
-          size="small"
-          error={Boolean(errors.name)}
-          helperText={errors.name ? tv("nameRequired") : undefined}
-          {...register("name")}
+        <Controller
+          name="name"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label={tc("name")}
+              fullWidth
+              size="small"
+              error={Boolean(errors.name)}
+              helperText={errors.name ? tv("nameRequired") : undefined}
+            />
+          )}
         />
 
         <Box sx={{ mt: 3 }}>

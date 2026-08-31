@@ -1,34 +1,37 @@
 {
   "AgentRun": {
-    "businessLabel": "About your business",
-    "businessPlaceholder": "e.g. Online shop selling handmade leather bags — specialise in personalised gifts",
-    "audienceLabel": "Target audience",
-    "audiencePlaceholder": "e.g. Women 25–45 looking for unique gifts for special occasions",
-    "imageMethodLabel": "Image method",
-    "imageMethod": {
-      "stock": "Stock photos",
-      "ia_images": "AI-generated images",
-      "upload_images": "Upload images"
-    },
-    "generateTitles": "Generate titles",
-    "selectTitle": "Choose a title for your post",
-    "generateBlog": "Generate blog post",
-    "generating": "Generating…",
+    "projectConfigHeading": "Project configuration",
+    "configSaved": "Configuration saved",
+    "runAgent": "Run agent",
+    "generating": "Running…",
+    "submitting": "Submitting…",
+    "continueRun": "Continue",
+    "awaitingInputHeading": "Input required",
+    "runSuccess": "Completed successfully",
     "viewPost": "View post",
     "runAgain": "Run again",
     "runError": "Something went wrong",
     "retry": "Try again",
-    "noTitlesReturned": "No titles were returned — please try again",
-    "connectFirst": "WordPress not connected",
-    "connectFirstBody": "Connect your WordPress site in project settings before running this agent.",
-    "connectLink": "Go to project settings",
+    "creditsRefunded": "Credits have been refunded.",
     "executionsHeading": "Previous runs",
     "noExecutions": "No runs yet",
     "notFoundHeading": "Agent not found",
     "notFoundBody": "This agent does not exist or is not available for your current project.",
     "notAvailableHeading": "Execution not available yet",
     "notAvailableBody": "This agent does not have a live workflow connected yet.",
-    "insufficientCredits": "Not enough credits. Top up your balance to run this agent."
+    "insufficientCredits": "Not enough credits. Top up your balance to run this agent.",
+    "connectionRequired": "Connect your WordPress site before running this agent.",
+    "missingConfig": "Complete the required project configuration above before running.",
+    "missingContext": "Complete the project context in project settings before running."
+  },
+  "AgentInputs": {
+    "chosen_title": { "label": "Choose a title" },
+    "image_method": { "label": "Image method" }
+  },
+  "ProjectContext": {
+    "heading": "Project context",
+    "business": { "label": "About your business" },
+    "audience": { "label": "Target audience" }
   },
   "Agents": {
     "blogWriter": {
@@ -53,6 +56,16 @@
     "required": "Required"
   },
   "Auth": {
+    "continueWithGoogle": "Continue with Google",
+    "connectingGoogle": "Redirecting…",
+    "googleError": "Could not sign in with Google",
+    "orDivider": "or",
+    "loginSuccessHeading": "Signed in",
+    "loginSuccessBody": "Taking you to the app.",
+    "loginFailureHeading": "Could not sign in",
+    "loginFailureBody": "Something went wrong signing in with Google. Please try again.",
+    "backToLogin": "Back to sign in",
+    "redirecting": "Redirecting…",
     "signIn": {
       "heading": "Sign in",
       "invalidCredentials": "Invalid credentials",
@@ -60,7 +73,11 @@
       "submitting": "Signing in…",
       "noAccount": "No account?",
       "createOne": "Create one",
-      "registered": "Account created — please sign in"
+      "registered": "Account created. Check your email to verify it before signing in.",
+      "emailNotVerified": "Verify your email before signing in. Check your inbox.",
+      "resend": "Resend verification",
+      "resendSent": "If your account needs verification, we've sent a new link.",
+      "forgotPassword": "Forgot password?"
     },
     "register": {
       "heading": "Create account",
@@ -69,7 +86,34 @@
       "submitButton": "Create account",
       "submitting": "Creating…",
       "haveAccount": "Already have an account?",
-      "signIn": "Sign in"
+      "signIn": "Sign in",
+      "invitedBy": "Invited by {org}. Make a purchase and your organization earns {credits} credits."
+    },
+    "verifyEmail": {
+      "heading": "Verify your email",
+      "verifying": "Verifying your email…",
+      "success": "Your email has been verified. You can now sign in.",
+      "error": "This verification link is invalid or has expired.",
+      "goToLogin": "Go to sign in"
+    },
+    "recoverPassword": {
+      "heading": "Forgot your password?",
+      "description": "Enter your email and we'll send you a link to reset your password.",
+      "submitButton": "Send reset link",
+      "submitting": "Sending…",
+      "sent": "If an account exists for that email, we've sent a reset link.",
+      "goToLogin": "Back to sign in"
+    },
+    "resetPassword": {
+      "heading": "Reset your password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "submitButton": "Set new password",
+      "submitting": "Saving…",
+      "success": "Your password has been reset. You can now sign in.",
+      "error": "This reset link is invalid or has expired.",
+      "mismatch": "Passwords do not match",
+      "goToLogin": "Go to sign in"
     }
   },
   "Settings": {
@@ -128,6 +172,20 @@
     "noProjectHeading": "No project selected",
     "noProjectBody": "Select a project from the sidebar to view its agents."
   },
+  "Notifications": {
+    "ariaLabel": "Notifications",
+    "heading": "Notifications",
+    "empty": "You have no notifications",
+    "managePreferences": "Manage preferences",
+    "preferencesHeading": "Notification preferences",
+    "loadError": "Could not load preferences",
+    "updateError": "Could not update preference",
+    "types": {
+      "execution_finished": "Agent run finished",
+      "service_change": "Service changes",
+      "user_status_change": "Account status changes"
+    }
+  },
   "Connection": {
     "wpSection": "WordPress connection",
     "connected": "Connected",
@@ -159,6 +217,7 @@
     "settings": "Settings",
     "settingsItem": "Settings",
     "billing": "Billing",
+    "referrals": "Referrals",
     "agents": "Agents",
     "logout": "Log out",
     "noOrgs": "No organizations",
@@ -204,8 +263,29 @@
     "reasonExpiry": "Expiry",
     "reasonRefund": "Refund",
     "reasonAdjustment": "Adjustment",
+    "reasonIdeas": "Ideas",
+    "reasonArticle": "Article",
+    "reasonImage": "Image",
+    "reasonWpUpload": "WordPress upload",
     "confirmSuccess": "Payment complete — credits have been added to your account.",
     "confirmPending": "We're confirming your payment. Credits will be added shortly.",
     "finishing": "Finishing up…"
+  },
+  "Referrals": {
+    "heading": "Referrals",
+    "subheading": "Invite other businesses. When they make their first purchase, you both earn credits.",
+    "rewardTitle": "Share your link",
+    "rewardDescription": "You earn {referrer} credits and they earn {referee} credits once their organization makes its first purchase.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "monthlyProgress": "{count} of {cap} rewards earned this month.",
+    "tableTitle": "Your referrals",
+    "tableEmpty": "No referrals yet. Share your link to get started.",
+    "colDate": "Date",
+    "colStatus": "Status",
+    "colReward": "Reward",
+    "statusPending": "Pending",
+    "statusRewarded": "Rewarded",
+    "statusCapped": "Capped"
   }
 }
