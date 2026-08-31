@@ -16,18 +16,15 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
+    env:
+      ENVIRONMENT: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
     steps:
       - name: 📦 Checkout code
         uses: actions/checkout@v4
 
-      - name: 🌍 Set environment variables
+      - name: 🌍 Set resource names
         run: |
-          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
-            ENVIRONMENT=prod
-          else
-            ENVIRONMENT=dev
-          fi
-          echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
           echo "ECR_REPOSITORY=${ENVIRONMENT}-ai-shop-helper-frontend-ecr" >> $GITHUB_ENV
           echo "ECS_CLUSTER=${ENVIRONMENT}-ai-shop-helper-cluster" >> $GITHUB_ENV
           echo "ECS_SERVICE=${ENVIRONMENT}-ai-shop-helper-frontend" >> $GITHUB_ENV
