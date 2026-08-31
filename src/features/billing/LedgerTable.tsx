@@ -33,6 +33,14 @@ function reasonLabel(reason: string, t: BillingT): string {
       return t("reasonRefund");
     case "adjustment":
       return t("reasonAdjustment");
+    case "ideas":
+      return t("reasonIdeas");
+    case "article":
+      return t("reasonArticle");
+    case "image":
+      return t("reasonImage");
+    case "wp_upload":
+      return t("reasonWpUpload");
     default:
       return reason;
   }

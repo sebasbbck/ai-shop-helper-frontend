@@ -86,7 +86,8 @@
       "submitButton": "Create account",
       "submitting": "Creating…",
       "haveAccount": "Already have an account?",
-      "signIn": "Sign in"
+      "signIn": "Sign in",
+      "invitedBy": "Invited by {org}. Make a purchase and your organization earns {credits} credits."
     },
     "verifyEmail": {
       "heading": "Verify your email",
@@ -202,6 +203,7 @@
     "settings": "Settings",
     "settingsItem": "Settings",
     "billing": "Billing",
+    "referrals": "Referrals",
     "agents": "Agents",
     "logout": "Log out",
     "noOrgs": "No organizations",
@@ -247,8 +249,29 @@
     "reasonExpiry": "Expiry",
     "reasonRefund": "Refund",
     "reasonAdjustment": "Adjustment",
+    "reasonIdeas": "Ideas",
+    "reasonArticle": "Article",
+    "reasonImage": "Image",
+    "reasonWpUpload": "WordPress upload",
     "confirmSuccess": "Payment complete — credits have been added to your account.",
     "confirmPending": "We're confirming your payment. Credits will be added shortly.",
     "finishing": "Finishing up…"
+  },
+  "Referrals": {
+    "heading": "Referrals",
+    "subheading": "Invite other businesses. When they make their first purchase, you both earn credits.",
+    "rewardTitle": "Share your link",
+    "rewardDescription": "You earn {referrer} credits and they earn {referee} credits once their organization makes its first purchase.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "monthlyProgress": "{count} of {cap} rewards earned this month.",
+    "tableTitle": "Your referrals",
+    "tableEmpty": "No referrals yet. Share your link to get started.",
+    "colDate": "Date",
+    "colStatus": "Status",
+    "colReward": "Reward",
+    "statusPending": "Pending",
+    "statusRewarded": "Rewarded",
+    "statusCapped": "Capped"
   }
 }

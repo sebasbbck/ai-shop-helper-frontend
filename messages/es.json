@@ -86,7 +86,8 @@
       "submitButton": "Crear cuenta",
       "submitting": "Creando…",
       "haveAccount": "¿Ya tienes cuenta?",
-      "signIn": "Inicia sesión"
+      "signIn": "Inicia sesión",
+      "invitedBy": "Invitado por {org}. Haz una compra y tu organización gana {credits} créditos."
     },
     "verifyEmail": {
       "heading": "Verifica tu correo",
@@ -202,6 +203,7 @@
     "settings": "Ajustes",
     "settingsItem": "Ajustes",
     "billing": "Facturación",
+    "referrals": "Referidos",
     "agents": "Agentes",
     "logout": "Cerrar sesión",
     "noOrgs": "Sin organizaciones",
@@ -247,8 +249,29 @@
     "reasonExpiry": "Vencimiento",
     "reasonRefund": "Reembolso",
     "reasonAdjustment": "Ajuste",
+    "reasonIdeas": "Ideas",
+    "reasonArticle": "Artículo",
+    "reasonImage": "Imagen",
+    "reasonWpUpload": "Subida a WordPress",
     "confirmSuccess": "Pago completado — los créditos han sido añadidos a tu cuenta.",
     "confirmPending": "Estamos confirmando tu pago. Los créditos se añadirán en breve.",
     "finishing": "Finalizando…"
+  },
+  "Referrals": {
+    "heading": "Referidos",
+    "subheading": "Invita a otros negocios. Cuando hagan su primera compra, ambos ganáis créditos.",
+    "rewardTitle": "Comparte tu enlace",
+    "rewardDescription": "Ganas {referrer} créditos y ellos ganan {referee} créditos cuando su organización haga su primera compra.",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "monthlyProgress": "{count} de {cap} recompensas ganadas este mes.",
+    "tableTitle": "Tus referidos",
+    "tableEmpty": "Aún no hay referidos. Comparte tu enlace para empezar.",
+    "colDate": "Fecha",
+    "colStatus": "Estado",
+    "colReward": "Recompensa",
+    "statusPending": "Pendiente",
+    "statusRewarded": "Recompensado",
+    "statusCapped": "Límite alcanzado"
   }
 }
