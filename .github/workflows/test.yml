@@ -1,0 +1,38 @@
+name: Tests
+
+on:
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: oven-sh/setup-bun@v2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Install gate tooling
+        run: pip install pre-commit diff-cover
+
+      - name: Generate API client
+        run: bun run generate-client
+
+      - name: Pre-commit checks
+        run: pre-commit run --from-ref origin/${{ github.base_ref }} --to-ref HEAD
+
+      - name: Unit tests + coverage
+        run: bun run test:coverage
+
+      - name: Patch coverage (new/changed lines)
+        run: diff-cover coverage/cobertura-coverage.xml --compare-branch=origin/${{ github.base_ref }} --fail-under=80

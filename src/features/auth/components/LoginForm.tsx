@@ -159,7 +159,6 @@ export default function LoginForm() {
         </Typography>
         <Button
           type="submit"
-          name="submit"
           variant="contained"
           size="large"
           disabled={login.isPending}
