@@ -1,12 +1,22 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext } from "react";
 import type { ReactNode } from "react";
 import { useOrgsGetMyOrgs } from "@/api/endpoints/orgs/orgs";
 import type { OrgWithProjects, ProjectPublic } from "@/api/model";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const LS_ORG_KEY = "active_org_id";
 const LS_PROJECT_MAP_KEY = "active_project_by_org";
+
+function parseProjectMap(raw: string | null): Record<string, string> {
+  if (!raw) return {};
+  try {
+    return JSON.parse(raw) as Record<string, string>;
+  } catch {
+    return {};
+  }
+}
 
 interface ActiveContextValue {
   orgs: OrgWithProjects[];
@@ -28,88 +38,39 @@ export function ActiveContextProvider({ children }: { children: ReactNode }) {
   const { data, isLoading } = useOrgsGetMyOrgs();
   const orgs = data?.items ?? [];
 
-  const [activeOrgId, setActiveOrgIdState] = useState<string | null>(null);
-  const [activeProjectId, setActiveProjectIdState] = useState<string | null>(null);
-  const [initialized, setInitialized] = useState(false);
-  const [pendingOrgId, setPendingOrgId] = useState<string | null>(null);
-  const [pendingProjectId, setPendingProjectId] = useState<string | null>(null);
+  const [storedOrgId, setStoredOrgId] = useLocalStorage(LS_ORG_KEY);
+  const [projectMapRaw, setProjectMapRaw] = useLocalStorage(LS_PROJECT_MAP_KEY);
+  const projectMap = parseProjectMap(projectMapRaw);
 
-  useEffect(() => {
-    if (isLoading || initialized) return;
-    if (orgs.length === 0) {
-      setInitialized(true);
-      return;
-    }
+  const activeOrg =
+    orgs.length > 0
+      ? (orgs.find((o) => o.id === storedOrgId) ?? orgs[0])
+      : undefined;
+  const activeOrgId = activeOrg?.id ?? null;
 
-    const storedOrgId = localStorage.getItem(LS_ORG_KEY);
-    const projectMapRaw = localStorage.getItem(LS_PROJECT_MAP_KEY);
-    const projectMap: Record<string, string> = projectMapRaw
-      ? (JSON.parse(projectMapRaw) as Record<string, string>)
-      : {};
-
-    const validOrg = orgs.find((o) => o.id === storedOrgId) ?? orgs[0];
-    const orgId = validOrg.id;
-    const orgProjects = validOrg.projects ?? [];
-    const validProject =
-      orgProjects.find((p) => p.id === projectMap[orgId]) ?? orgProjects[0];
-
-    setActiveOrgIdState(orgId);
-    setActiveProjectIdState(validProject?.id ?? null);
-    setInitialized(true);
-  }, [orgs, isLoading, initialized]);
-
-  useEffect(() => {
-    if (!pendingOrgId) return;
-    const org = orgs.find((o) => o.id === pendingOrgId);
-    if (!org) return;
-    const orgProjects = org.projects ?? [];
-    const project = pendingProjectId
-      ? (orgProjects.find((p) => p.id === pendingProjectId) ?? orgProjects[0])
-      : orgProjects[0];
-    localStorage.setItem(LS_ORG_KEY, pendingOrgId);
-    setActiveOrgIdState(pendingOrgId);
-    setActiveProjectIdState(project?.id ?? null);
-    setPendingOrgId(null);
-    setPendingProjectId(null);
-  }, [orgs, pendingOrgId, pendingProjectId]);
+  const orgProjects = activeOrg?.projects ?? [];
+  const activeProject = activeOrgId
+    ? (orgProjects.find((p) => p.id === projectMap[activeOrgId]) ??
+      orgProjects[0])
+    : undefined;
+  const activeProjectId = activeProject?.id ?? null;
+  const activeProjectTypeId = activeProject?.project_type_id ?? null;
 
   const setActiveOrg = (id: string) => {
-    const org = orgs.find((o) => o.id === id);
-    if (!org) return;
-
-    const projectMapRaw = localStorage.getItem(LS_PROJECT_MAP_KEY);
-    const projectMap: Record<string, string> = projectMapRaw
-      ? (JSON.parse(projectMapRaw) as Record<string, string>)
-      : {};
-
-    const orgProjects = org.projects ?? [];
-    const project =
-      orgProjects.find((p) => p.id === projectMap[id]) ?? orgProjects[0];
-
-    localStorage.setItem(LS_ORG_KEY, id);
-    setActiveOrgIdState(id);
-    setActiveProjectIdState(project?.id ?? null);
+    if (orgs.some((o) => o.id === id)) setStoredOrgId(id);
   };
 
   const setActiveProject = (id: string) => {
     if (!activeOrgId) return;
-    const projectMapRaw = localStorage.getItem(LS_PROJECT_MAP_KEY);
-    const projectMap: Record<string, string> = projectMapRaw
-      ? (JSON.parse(projectMapRaw) as Record<string, string>)
-      : {};
-    const newMap = { ...projectMap, [activeOrgId]: id };
-    localStorage.setItem(LS_PROJECT_MAP_KEY, JSON.stringify(newMap));
-    setActiveProjectIdState(id);
+    setProjectMapRaw(JSON.stringify({ ...projectMap, [activeOrgId]: id }));
   };
 
   const selectAfterCreate = (orgId: string, projectId?: string) => {
-    setPendingOrgId(orgId);
-    if (projectId) setPendingProjectId(projectId);
+    setStoredOrgId(orgId);
+    if (projectId) {
+      setProjectMapRaw(JSON.stringify({ ...projectMap, [orgId]: projectId }));
+    }
   };
-
-  const activeOrg = orgs.find((o) => o.id === activeOrgId);
-  const activeProject = activeOrg?.projects?.find((p) => p.id === activeProjectId);
-  const activeProjectTypeId = activeProject?.project_type_id ?? null;
 
   return (
     <ActiveContext.Provider
@@ -134,6 +95,9 @@ export function ActiveContextProvider({ children }: { children: ReactNode }) {
 
 export function useActiveContext(): ActiveContextValue {
   const ctx = useContext(ActiveContext);
-  if (!ctx) throw new Error("useActiveContext must be used within ActiveContextProvider");
+  if (!ctx)
+    throw new Error(
+      "useActiveContext must be used within ActiveContextProvider",
+    );
   return ctx;
 }

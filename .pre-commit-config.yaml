@@ -1,0 +1,29 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-added-large-files
+      - id: check-json
+      - id: check-yaml
+      - id: no-commit-to-branch
+  - repo: local
+    hooks:
+      - id: prettier
+        name: formatter
+        entry: bunx prettier --write --ignore-unknown
+        language: system
+        types_or: [ts, tsx, javascript, jsx, json, css, markdown, yaml]
+      - id: eslint
+        name: linter
+        entry: bunx eslint --fix
+        language: system
+        types_or: [ts, tsx]
+      - id: tsc
+        name: typing-checker
+        entry: bunx tsc --noEmit
+        language: system
+        types_or: [ts, tsx]
+        pass_filenames: false
+        require_serial: true

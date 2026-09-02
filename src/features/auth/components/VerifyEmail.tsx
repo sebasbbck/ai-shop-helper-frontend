@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -17,21 +17,17 @@ export default function VerifyEmail() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const called = useRef(false);
-  const [noToken, setNoToken] = useState(false);
 
   const verify = useAuthVerifyEmail();
   const { mutate } = verify;
 
   useEffect(() => {
-    if (called.current) return;
+    if (called.current || !token) return;
     called.current = true;
-    if (token) {
-      mutate({ data: { token } });
-    } else {
-      setNoToken(true);
-    }
+    mutate({ data: { token } });
   }, [token, mutate]);
 
+  const noToken = !token;
   const isSuccess = verify.isSuccess;
   const isError = verify.isError || noToken;
   const isVerifying = !isSuccess && !isError;
@@ -53,9 +49,7 @@ export default function VerifyEmail() {
         {isSuccess && (
           <Alert severity="success">{t("verifyEmail.success")}</Alert>
         )}
-        {isError && (
-          <Alert severity="error">{t("verifyEmail.error")}</Alert>
-        )}
+        {isError && <Alert severity="error">{t("verifyEmail.error")}</Alert>}
         {(isSuccess || isError) && (
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
             <MuiLink component={Link} href="/login">

@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { ReactNode } from "react";
 import Box from "@mui/material/Box";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 
@@ -13,20 +14,12 @@ interface AppShellProps {
 }
 
 export default function AppShell({ children }: AppShellProps) {
-  const [collapsed, setCollapsed] = useState(false);
+  const [storedCollapsed, setStoredCollapsed] = useLocalStorage(SIDEBAR_KEY);
+  const collapsed = storedCollapsed === "true";
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  useEffect(() => {
-    const stored = localStorage.getItem(SIDEBAR_KEY);
-    if (stored !== null) {
-      setCollapsed(stored === "true");
-    }
-  }, []);
-
   const handleToggleCollapse = () => {
-    const next = !collapsed;
-    setCollapsed(next);
-    localStorage.setItem(SIDEBAR_KEY, String(next));
+    setStoredCollapsed(String(!collapsed));
   };
 
   return (
