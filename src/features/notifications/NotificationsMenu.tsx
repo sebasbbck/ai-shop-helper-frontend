@@ -25,6 +25,48 @@ import type { NotificationPublic } from "@/api/model/notificationPublic";
 const UNREAD_COUNT_POLL_MS = 20000;
 const RECENT_PARAMS = { limit: 10 };
 
+type Translator = ReturnType<typeof useTranslations<"Notifications">>;
+
+/**
+ * Builds the localized title/body for a notification from its `type` + `payload`
+ * (the backend sends no text, see CLAUDE.md's notifications section). Falls back
+ * to the type label alone if the payload's `reason` doesn't match a known message.
+ */
+function notificationText(
+  t: Translator,
+  notification: NotificationPublic,
+): { title: string; body: string } {
+  const payload = (notification.payload ?? {}) as Record<string, unknown>;
+  const reason =
+    typeof payload.reason === "string" ? payload.reason : undefined;
+  const base = `messages.${notification.type}.${reason}`;
+
+  if (!reason || !t.has(`${base}.title`)) {
+    return {
+      title: t.has(`types.${notification.type}`)
+        ? t(`types.${notification.type}`)
+        : notification.type,
+      body: "",
+    };
+  }
+
+  const connectionType =
+    typeof payload.connection_type === "string" ? payload.connection_type : "";
+
+  return {
+    title: t(`${base}.title`),
+    body: t(`${base}.body`, {
+      credits: typeof payload.credits === "number" ? payload.credits : 0,
+      plan: typeof payload.plan === "string" ? payload.plan : "",
+      project:
+        typeof payload.project_name === "string" ? payload.project_name : "",
+      service: t.has(`connectionTypes.${connectionType}`)
+        ? t(`connectionTypes.${connectionType}`)
+        : connectionType,
+    }),
+  };
+}
+
 export default function NotificationsMenu() {
   const t = useTranslations("Notifications");
   const locale = useLocale();
@@ -110,51 +152,58 @@ export default function NotificationsMenu() {
           </Box>
         )}
 
-        {notifications.map((notification) => (
-          <MenuItem
-            key={notification.id}
-            onClick={() => handleItemClick(notification)}
-            sx={{
-              whiteSpace: "normal",
-              alignItems: "flex-start",
-              gap: 1,
-              py: 1.25,
-              bgcolor: notification.read_at ? undefined : "action.hover",
-            }}
-          >
-            <Box
+        {notifications.map((notification) => {
+          const { title, body } = notificationText(t, notification);
+          return (
+            <MenuItem
+              key={notification.id}
+              onClick={() => handleItemClick(notification)}
               sx={{
-                width: 8,
-                height: 8,
-                borderRadius: "50%",
-                bgcolor: notification.read_at ? "transparent" : "primary.main",
-                mt: 0.75,
-                flexShrink: 0,
+                whiteSpace: "normal",
+                alignItems: "flex-start",
+                gap: 1,
+                py: 1.25,
+                bgcolor: notification.read_at ? undefined : "action.hover",
               }}
-            />
-            <Box sx={{ minWidth: 0 }}>
-              <Typography
-                variant="body2"
-                sx={{ fontWeight: notification.read_at ? 400 : 600 }}
-              >
-                {notification.title}
-              </Typography>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ overflowWrap: "break-word" }}
-              >
-                {notification.body}
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                {new Date(notification.created_at).toLocaleString(locale, {
-                  dateStyle: "medium",
-                  timeStyle: "short",
-                })}
-              </Typography>
-            </Box>
-          </MenuItem>
-        ))}
+            >
+              <Box
+                sx={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: "50%",
+                  bgcolor: notification.read_at
+                    ? "transparent"
+                    : "primary.main",
+                  mt: 0.75,
+                  flexShrink: 0,
+                }}
+              />
+              <Box sx={{ minWidth: 0 }}>
+                <Typography
+                  variant="body2"
+                  sx={{ fontWeight: notification.read_at ? 400 : 600 }}
+                >
+                  {title}
+                </Typography>
+                {body && (
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ overflowWrap: "break-word" }}
+                  >
+                    {body}
+                  </Typography>
+                )}
+                <Typography variant="caption" color="text.secondary">
+                  {new Date(notification.created_at).toLocaleString(locale, {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  })}
+                </Typography>
+              </Box>
+            </MenuItem>
+          );
+        })}
 
         <Divider />
         <MenuItem

@@ -184,6 +184,56 @@
       "execution_finished": "Ejecución de agente finalizada",
       "service_change": "Cambios en el servicio",
       "user_status_change": "Cambios en tu cuenta"
+    },
+    "connectionTypes": {
+      "wordpress": "WordPress",
+      "google": "Google"
+    },
+    "messages": {
+      "execution_finished": {
+        "success": {
+          "title": "Ejecución completada",
+          "body": "El agente ha terminado de ejecutarse correctamente."
+        },
+        "failed": {
+          "title": "Ejecución fallida",
+          "body": "La ejecución del agente ha fallado."
+        }
+      },
+      "billing": {
+        "credits_granted_topup": {
+          "title": "Créditos añadidos",
+          "body": "Se han añadido {credits} créditos a tu organización tras la compra."
+        },
+        "credits_granted_subscription": {
+          "title": "Créditos añadidos",
+          "body": "Se han añadido {credits} créditos a tu organización (plan {plan})."
+        },
+        "payment_failed": {
+          "title": "Pago fallido",
+          "body": "No hemos podido procesar el pago de tu suscripción. Actualiza tu método de pago para evitar interrupciones del servicio."
+        },
+        "subscription_canceled": {
+          "title": "Suscripción cancelada",
+          "body": "Tu suscripción ha sido cancelada."
+        }
+      },
+      "service_change": {
+        "connection_established": {
+          "title": "Nueva conexión establecida",
+          "body": "El proyecto \"{project}\" se ha conectado correctamente con {service}."
+        }
+      },
+      "user_status_change": {
+        "activated": {
+          "title": "Cuenta activada",
+          "body": "Tu cuenta ha sido reactivada."
+        },
+        "deactivated": {
+          "title": "Cuenta desactivada",
+          "body": "Tu cuenta ha sido desactivada. Contacta con soporte si crees que es un error."
+        }
+      }
     }
   },
   "Connection": {

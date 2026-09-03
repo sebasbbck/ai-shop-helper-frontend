@@ -184,6 +184,56 @@
       "execution_finished": "Agent run finished",
       "service_change": "Service changes",
       "user_status_change": "Account status changes"
+    },
+    "connectionTypes": {
+      "wordpress": "WordPress",
+      "google": "Google"
+    },
+    "messages": {
+      "execution_finished": {
+        "success": {
+          "title": "Run completed",
+          "body": "The agent has finished running successfully."
+        },
+        "failed": {
+          "title": "Run failed",
+          "body": "The agent run has failed."
+        }
+      },
+      "billing": {
+        "credits_granted_topup": {
+          "title": "Credits added",
+          "body": "{credits} credits have been added to your organization after your purchase."
+        },
+        "credits_granted_subscription": {
+          "title": "Credits added",
+          "body": "{credits} credits have been added to your organization ({plan} plan)."
+        },
+        "payment_failed": {
+          "title": "Payment failed",
+          "body": "We couldn't process your subscription payment. Update your payment method to avoid service interruptions."
+        },
+        "subscription_canceled": {
+          "title": "Subscription canceled",
+          "body": "Your subscription has been canceled."
+        }
+      },
+      "service_change": {
+        "connection_established": {
+          "title": "New connection established",
+          "body": "Project \"{project}\" has been successfully connected to {service}."
+        }
+      },
+      "user_status_change": {
+        "activated": {
+          "title": "Account activated",
+          "body": "Your account has been reactivated."
+        },
+        "deactivated": {
+          "title": "Account deactivated",
+          "body": "Your account has been deactivated. Contact support if you think this is a mistake."
+        }
+      }
     }
   },
   "Connection": {
