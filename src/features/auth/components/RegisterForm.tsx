@@ -3,17 +3,20 @@
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 import MuiLink from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useAuthRegister } from "@/api/endpoints/auth/auth";
+import { useReferralsGetReferrerInfo } from "@/api/endpoints/referrals/referrals";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 type FormValues = {
   name: string;
@@ -26,6 +29,12 @@ export default function RegisterForm() {
   const tCommon = useTranslations("Common");
   const tValidation = useTranslations("Validation");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const referralCode = searchParams.get("ref") ?? undefined;
+
+  const { data: referrer } = useReferralsGetReferrerInfo(referralCode ?? "", {
+    query: { enabled: !!referralCode },
+  });
 
   const schema = z.object({
     name: z.string().min(1, tValidation("nameRequired")),
@@ -49,7 +58,8 @@ export default function RegisterForm() {
       ? t("register.emailTaken")
       : t("register.createError");
 
-  const onSubmit = (values: FormValues) => register.mutate({ data: values });
+  const onSubmit = (values: FormValues) =>
+    register.mutate({ data: { ...values, referral_code: referralCode } });
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -57,6 +67,14 @@ export default function RegisterForm() {
         <Typography variant="h5" component="h1" sx={{ fontWeight: 600 }}>
           {t("register.heading")}
         </Typography>
+        {referrer && (
+          <Alert severity="success">
+            {t("register.invitedBy", {
+              org: referrer.org_name,
+              credits: referrer.referee_credits,
+            })}
+          </Alert>
+        )}
         {register.isError && <Alert severity="error">{errorMessage}</Alert>}
         <Controller
           name="name"
@@ -113,6 +131,12 @@ export default function RegisterForm() {
             ? t("register.submitting")
             : t("register.submitButton")}
         </Button>
+        <Divider>
+          <Typography variant="body2" color="text.secondary">
+            {t("orDivider")}
+          </Typography>
+        </Divider>
+        <GoogleLoginButton />
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
           {t("register.haveAccount")}{" "}
           <MuiLink component={Link} href="/login">
