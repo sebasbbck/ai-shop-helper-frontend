@@ -37,7 +37,8 @@ function notificationText(
   notification: NotificationPublic,
 ): { title: string; body: string } {
   const payload = (notification.payload ?? {}) as Record<string, unknown>;
-  const reason = typeof payload.reason === "string" ? payload.reason : undefined;
+  const reason =
+    typeof payload.reason === "string" ? payload.reason : undefined;
   const base = `messages.${notification.type}.${reason}`;
 
   if (!reason || !t.has(`${base}.title`)) {
@@ -57,7 +58,8 @@ function notificationText(
     body: t(`${base}.body`, {
       credits: typeof payload.credits === "number" ? payload.credits : 0,
       plan: typeof payload.plan === "string" ? payload.plan : "",
-      project: typeof payload.project_name === "string" ? payload.project_name : "",
+      project:
+        typeof payload.project_name === "string" ? payload.project_name : "",
       service: t.has(`connectionTypes.${connectionType}`)
         ? t(`connectionTypes.${connectionType}`)
         : connectionType,
@@ -169,7 +171,9 @@ export default function NotificationsMenu() {
                   width: 8,
                   height: 8,
                   borderRadius: "50%",
-                  bgcolor: notification.read_at ? "transparent" : "primary.main",
+                  bgcolor: notification.read_at
+                    ? "transparent"
+                    : "primary.main",
                   mt: 0.75,
                   flexShrink: 0,
                 }}
