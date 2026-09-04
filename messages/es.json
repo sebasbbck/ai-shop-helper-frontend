@@ -252,11 +252,18 @@
     "loadError": "No se pudo cargar el estado de conexión",
     "startError": "No se pudo iniciar la conexión con WordPress",
     "redirecting": "Volviendo a ajustes…",
-    "successHeading": "WordPress conectado",
-    "successBody": "Tu sitio de WordPress se ha conectado correctamente.",
+    "successHeading": "Conexión establecida",
+    "successBody": "Tu proyecto se ha conectado correctamente.",
     "failureHeading": "Error de conexión",
-    "failureBody": "Algo salió mal al conectar tu sitio de WordPress.",
-    "backToProject": "Volver a los ajustes del proyecto"
+    "failureBody": "Algo salió mal al establecer la conexión.",
+    "backToProject": "Volver a los ajustes del proyecto",
+    "googleSection": "Conexión con Google",
+    "googleHelp": "Conecta tu cuenta de Google para acceder a los datos de Google Analytics (GA4) y Search Console de tu proyecto.",
+    "emailLabel": "Cuenta de Google",
+    "connectGoogleButton": "Conectar con Google",
+    "reconnectGoogleButton": "Reconectar",
+    "googleStartError": "No se pudo iniciar la conexión con Google",
+    "otherConnectionActive": "Este proyecto ya tiene una conexión de {type} activa. Solo se puede tener una conexión a la vez."
   },
   "Shell": {
     "wordmark": "AI Shop Helper",

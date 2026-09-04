@@ -16,13 +16,16 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import {
-  useProjectsUpdateProject,
-} from "@/api/endpoints/projects/projects";
+import { useProjectsUpdateProject } from "@/api/endpoints/projects/projects";
 import { useProjectTypesGetProjectTypes } from "@/api/endpoints/project-types/project-types";
 import { getOrgsGetMyOrgsQueryKey } from "@/api/endpoints/orgs/orgs";
+import {
+  useConnectionsGetWordpressStatus,
+  useConnectionsGetGoogleConnectionStatus,
+} from "@/api/endpoints/connections/connections";
 import { useActiveContext } from "@/features/shell/ActiveContext";
 import WordpressConnectionSection from "@/features/project/WordpressConnectionSection";
+import GoogleConnectionSection from "@/features/project/GoogleConnectionSection";
 import ProjectContextSection from "@/features/project/ProjectContextSection";
 
 const schema = z.object({
@@ -42,6 +45,17 @@ export default function ProjectSettings() {
 
   const { data: typesData } = useProjectTypesGetProjectTypes({});
   const projectTypes = typesData?.items ?? [];
+
+  const { data: wpStatus } = useConnectionsGetWordpressStatus(
+    activeProjectId ?? "",
+    { query: { enabled: !!activeProjectId } },
+  );
+  const { data: googleStatus } = useConnectionsGetGoogleConnectionStatus(
+    activeProjectId ?? "",
+    { query: { enabled: !!activeProjectId } },
+  );
+  const wpConnected = wpStatus?.connected === true;
+  const googleConnected = googleStatus?.connected === true;
 
   const {
     handleSubmit,
@@ -90,7 +104,10 @@ export default function ProjectSettings() {
 
   return (
     <Box sx={{ maxWidth: 480 }}>
-      <Typography variant="h4" sx={{ fontWeight: 700, letterSpacing: -0.5, mb: 5 }}>
+      <Typography
+        variant="h4"
+        sx={{ fontWeight: 700, letterSpacing: -0.5, mb: 5 }}
+      >
         {t("settingsHeading")}
       </Typography>
 
@@ -159,13 +176,33 @@ export default function ProjectSettings() {
         </Box>
       </form>
 
-      {activeProjectId && (
-        <ProjectContextSection projectId={activeProjectId} />
-      )}
+      {activeProjectId && <ProjectContextSection projectId={activeProjectId} />}
 
-      {activeProjectId && (
-        <WordpressConnectionSection projectId={activeProjectId} />
-      )}
+      {activeProjectId &&
+        (!googleConnected ? (
+          <WordpressConnectionSection projectId={activeProjectId} />
+        ) : (
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ mt: 5, display: "block" }}
+          >
+            {t("otherConnectionActive", { type: "Google" })}
+          </Typography>
+        ))}
+
+      {activeProjectId &&
+        (!wpConnected ? (
+          <GoogleConnectionSection projectId={activeProjectId} />
+        ) : (
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ mt: 3, display: "block" }}
+          >
+            {t("otherConnectionActive", { type: "WordPress" })}
+          </Typography>
+        ))}
     </Box>
   );
 }
