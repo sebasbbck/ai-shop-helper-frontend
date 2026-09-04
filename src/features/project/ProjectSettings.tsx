@@ -40,6 +40,7 @@ export default function ProjectSettings() {
   const ts = useTranslations("Shell");
   const tc = useTranslations("Common");
   const tv = useTranslations("Validation");
+  const tconn = useTranslations("Connection");
   const qc = useQueryClient();
   const { activeProject, activeProjectId, activeOrgId } = useActiveContext();
 
@@ -187,7 +188,7 @@ export default function ProjectSettings() {
             color="text.secondary"
             sx={{ mt: 5, display: "block" }}
           >
-            {t("otherConnectionActive", { type: "Google" })}
+            {tconn("otherConnectionActive", { type: "Google" })}
           </Typography>
         ))}
 
@@ -200,7 +201,7 @@ export default function ProjectSettings() {
             color="text.secondary"
             sx={{ mt: 3, display: "block" }}
           >
-            {t("otherConnectionActive", { type: "WordPress" })}
+            {tconn("otherConnectionActive", { type: "WordPress" })}
           </Typography>
         ))}
     </Box>
