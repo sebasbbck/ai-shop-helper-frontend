@@ -12,7 +12,11 @@ vi.mock("@/features/shell/ActiveContext", () => ({
   useActiveContext: () => ({
     activeOrgId: "org-1",
     activeProjectId: "project-1",
-    activeProject: { id: "project-1", name: "My Project", project_type_id: "pt-1" },
+    activeProject: {
+      id: "project-1",
+      name: "My Project",
+      project_type_id: "pt-1",
+    },
   }),
 }));
 

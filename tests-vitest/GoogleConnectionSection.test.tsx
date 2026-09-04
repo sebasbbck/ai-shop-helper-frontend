@@ -73,7 +73,9 @@ describe("GoogleConnectionSection", () => {
     });
 
     renderWithProviders(<GoogleConnectionSection projectId="project-1" />);
-    fireEvent.click(screen.getByRole("button", { name: /Connect with Google/i }));
+    fireEvent.click(
+      screen.getByRole("button", { name: /Connect with Google/i }),
+    );
 
     await waitFor(() =>
       expect(window.location.href).toBe(
@@ -87,7 +89,9 @@ describe("GoogleConnectionSection", () => {
     h.startGoogleConnection.mockRejectedValue(new Error("network error"));
 
     renderWithProviders(<GoogleConnectionSection projectId="project-1" />);
-    fireEvent.click(screen.getByRole("button", { name: /Connect with Google/i }));
+    fireEvent.click(
+      screen.getByRole("button", { name: /Connect with Google/i }),
+    );
 
     expect(
       await screen.findByText("Could not start Google connection"),
