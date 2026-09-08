@@ -267,6 +267,7 @@
     "settings": "Ajustes",
     "settingsItem": "Ajustes",
     "admin": "Administración",
+    "manageMembers": "Miembros",
     "billing": "Facturación",
     "referrals": "Referidos",
     "agents": "Agentes",
@@ -358,6 +359,17 @@
     "copied": "Copiado",
     "emptyTitle": "No se encontraron usuarios",
     "loadError": "No se pudieron cargar los usuarios",
+    "rowsPerPage": "Filas por página",
+    "rangeLabel": "{from}–{to} de {count}"
+  },
+  "OrgAdmin": {
+    "heading": "Miembros",
+    "columnName": "Nombre",
+    "columnEmail": "Correo",
+    "columnRole": "Rol",
+    "columnJoined": "Se unió",
+    "loadError": "No se pudieron cargar los miembros",
+    "empty": "No se encontraron miembros",
     "rowsPerPage": "Filas por página",
     "rangeLabel": "{from}–{to} de {count}"
   }
