@@ -160,7 +160,7 @@ export default function UsersAdmin() {
                     <TableCell>
                       <Chip
                         label={
-                          user.is_superuser ? t("roleAdmin") : t("roleUser")
+                          user.is_superuser ? t("roleSuperuser") : t("roleUser")
                         }
                         size="small"
                         variant="outlined"

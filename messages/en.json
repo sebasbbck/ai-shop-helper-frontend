@@ -350,7 +350,7 @@
     "columnRole": "Role",
     "columnStatus": "Status",
     "columnCreated": "Created",
-    "roleAdmin": "Admin",
+    "roleSuperuser": "Superuser",
     "roleUser": "User",
     "statusActive": "Active",
     "statusInactive": "Inactive",
