@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
-import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
@@ -15,52 +14,49 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import ContentCopyIcon from "@mui/icons-material/ContentCopyOutlined";
-import { useUsersGetUsers } from "@/api/endpoints/users/users";
+import { useOrgMembersGetOrgMembers } from "@/api/endpoints/org-members/org-members";
+import { useActiveContext } from "@/features/shell/ActiveContext";
 
 const ROWS_PER_PAGE_OPTIONS = [25, 50, 100] as const;
-const COLUMN_COUNT = 5;
+const COLUMN_COUNT = 4;
+const OWNER_LEVEL = 0;
 
-export default function UsersAdmin() {
-  const t = useTranslations("Admin");
+export default function OrgMembers() {
+  const t = useTranslations("OrgAdmin");
   const locale = useLocale();
+  const { activeOrgId, activeOrg } = useActiveContext();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(
     ROWS_PER_PAGE_OPTIONS[0],
   );
-  const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
 
-  const { data, isLoading, isError, isPlaceholderData } = useUsersGetUsers(
-    { offset: page * rowsPerPage, limit: rowsPerPage },
-    { query: { placeholderData: (prev) => prev } },
-  );
+  const { data, isLoading, isError, isPlaceholderData } =
+    useOrgMembersGetOrgMembers(
+      activeOrgId ?? "",
+      { offset: page * rowsPerPage, limit: rowsPerPage },
+      {
+        query: {
+          enabled: Boolean(activeOrgId),
+          placeholderData: (prev) => prev,
+        },
+      },
+    );
 
-  const users = data?.items ?? [];
+  const members = data?.items ?? [];
   const total = data?.total ?? 0;
-
   const dateFormatter = new Intl.DateTimeFormat(locale, {
     dateStyle: "medium",
   });
-  const timeFormatter = new Intl.DateTimeFormat(locale, {
-    dateStyle: "long",
-    timeStyle: "short",
-  });
-
-  const copyEmail = async (email: string) => {
-    await navigator.clipboard.writeText(email);
-    setCopiedEmail(email);
-  };
 
   return (
     <Stack spacing={3}>
       <Box>
         <Typography variant="h4" sx={{ fontWeight: 700, letterSpacing: -0.5 }}>
-          {t("usersHeading")}
+          {t("heading")}
         </Typography>
         <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
-          {t("userCount", { count: total })}
+          {activeOrg?.name ?? ""}
         </Typography>
       </Box>
 
@@ -81,8 +77,7 @@ export default function UsersAdmin() {
                 <TableCell>{t("columnName")}</TableCell>
                 <TableCell>{t("columnEmail")}</TableCell>
                 <TableCell>{t("columnRole")}</TableCell>
-                <TableCell>{t("columnStatus")}</TableCell>
-                <TableCell align="right">{t("columnCreated")}</TableCell>
+                <TableCell align="right">{t("columnJoined")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody
@@ -93,7 +88,7 @@ export default function UsersAdmin() {
               }}
             >
               {isLoading ? (
-                Array.from({ length: 8 }).map((_, index) => (
+                Array.from({ length: 6 }).map((_, index) => (
                   <TableRow key={index}>
                     {Array.from({ length: COLUMN_COUNT }).map((__, cell) => (
                       <TableCell key={cell}>
@@ -114,91 +109,46 @@ export default function UsersAdmin() {
                     {t("loadError")}
                   </TableCell>
                 </TableRow>
-              ) : users.length === 0 ? (
+              ) : members.length === 0 ? (
                 <TableRow>
                   <TableCell
                     colSpan={COLUMN_COUNT}
                     sx={{ py: 8, textAlign: "center", color: "text.secondary" }}
                   >
-                    {t("emptyTitle")}
+                    {t("empty")}
                   </TableCell>
                 </TableRow>
               ) : (
-                users.map((user) => (
-                  <TableRow key={user.id} hover>
-                    <TableCell sx={{ fontWeight: 500 }}>{user.name}</TableCell>
+                members.map((member) => (
+                  <TableRow key={member.id} hover>
+                    <TableCell sx={{ fontWeight: 500 }}>
+                      {member.user.name}
+                    </TableCell>
                     <TableCell sx={{ color: "text.secondary" }}>
                       <Box
-                        sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
+                        component="span"
+                        sx={{ fontFamily: "monospace", fontSize: "0.8125rem" }}
                       >
-                        <Box
-                          component="span"
-                          sx={{
-                            fontFamily: "monospace",
-                            fontSize: "0.8125rem",
-                          }}
-                        >
-                          {user.email}
-                        </Box>
-                        <Tooltip
-                          title={
-                            copiedEmail === user.email
-                              ? t("copied")
-                              : t("copyEmail")
-                          }
-                        >
-                          <IconButton
-                            size="small"
-                            onClick={() => copyEmail(user.email)}
-                            sx={{ opacity: 0.5, "&:hover": { opacity: 1 } }}
-                          >
-                            <ContentCopyIcon sx={{ fontSize: 15 }} />
-                          </IconButton>
-                        </Tooltip>
+                        {member.user.email}
                       </Box>
                     </TableCell>
                     <TableCell>
                       <Chip
-                        label={
-                          user.is_superuser ? t("roleSuperuser") : t("roleUser")
-                        }
+                        label={member.role.name}
                         size="small"
                         variant="outlined"
-                        color={user.is_superuser ? "primary" : "default"}
+                        color={
+                          member.role.access_level === OWNER_LEVEL
+                            ? "primary"
+                            : "default"
+                        }
                       />
-                    </TableCell>
-                    <TableCell>
-                      <Box
-                        sx={{ display: "flex", alignItems: "center", gap: 1 }}
-                      >
-                        <Box
-                          sx={{
-                            width: 8,
-                            height: 8,
-                            borderRadius: "50%",
-                            bgcolor: user.is_active
-                              ? "success.main"
-                              : "text.disabled",
-                          }}
-                        />
-                        <Typography variant="body2">
-                          {user.is_active
-                            ? t("statusActive")
-                            : t("statusInactive")}
-                        </Typography>
-                      </Box>
                     </TableCell>
                     <TableCell
                       align="right"
                       sx={{ color: "text.secondary", whiteSpace: "nowrap" }}
                     >
-                      <Tooltip
-                        title={timeFormatter.format(new Date(user.created_at))}
-                      >
-                        <span>
-                          {dateFormatter.format(new Date(user.created_at))}
-                        </span>
-                      </Tooltip>
+                      {dateFormatter.format(new Date(member.created_at))}
                     </TableCell>
                   </TableRow>
                 ))
