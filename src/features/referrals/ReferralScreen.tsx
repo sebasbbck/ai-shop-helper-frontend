@@ -22,7 +22,17 @@ export default function ReferralScreen() {
   if (!activeOrgId) return null;
 
   return (
-    <Box sx={{ maxWidth: 800, mx: "auto", px: 2, py: 4 }}>
+    <Box sx={{ 
+      maxWidth: 800, 
+      mx: "auto", 
+      px: 2, 
+      py: 4 ,
+      borderRadius: 3,
+      bgcolor: "background.paper",
+      border: "1px solid",
+      borderColor: "divider",
+      
+      }}>
       <Typography
         variant="h4"
         sx={{ fontWeight: 700, letterSpacing: -0.5, mb: 1 }}

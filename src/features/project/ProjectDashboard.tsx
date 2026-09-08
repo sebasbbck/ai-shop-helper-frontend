@@ -61,7 +61,16 @@ export default function ProjectDashboard() {
   }
 
   return (
-    <Box>
+    <Box
+    sx={{
+          borderRadius: 3,
+          mt:3,
+          mb:3,
+          p:3,
+          bgcolor: "background.paper",
+          
+        }}
+    >
       <Box sx={{ mb: 5 }}>
         <Box sx={{ display: "flex", alignItems: "baseline", gap: 1.5 }}>
           <Typography variant="h4" sx={{ fontWeight: 700, letterSpacing: -0.5 }}>

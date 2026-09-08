@@ -33,9 +33,19 @@ export default function OrgDashboard() {
   };
 
   return (
-    <Box>
+    <Box
+    sx={{
+          borderRadius: 3,
+          mt:3,
+          mb:3,
+          p:3,
+          bgcolor: "background.paper",
+          
+        }}
+    >
       <Box
         sx={{
+          
           display: "flex",
           alignItems: "baseline",
           justifyContent: "space-between",
