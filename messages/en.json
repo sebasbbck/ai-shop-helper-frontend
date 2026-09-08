@@ -142,12 +142,11 @@
     "label": "Language"
   },
   "Bootstrap": {
-    "stepOf": "Step {step} of {total}",
-    "orgHeading": "Create your organization",
-    "projectHeading": "Create your first project",
+    "heading": "Create your organization and first project",
+    "orgNameLabel": "Organization name",
+    "projectNameLabel": "Project name",
     "projectTypeLabel": "Project type",
     "continueButton": "Continue",
-    "finishButton": "Get started",
     "createOrgError": "Could not create organization",
     "createProjectError": "Could not create project"
   },
@@ -288,6 +287,8 @@
   },
   "Billing": {
     "heading": "Billing",
+    "onboardingBanner": "Your organization is ready. Pick a plan now, or continue and do it later.",
+    "onboardingContinue": "Continue",
     "balanceTitle": "Credit balance",
     "subscriptionCredits": "Subscription",
     "purchasedCredits": "Purchased",
