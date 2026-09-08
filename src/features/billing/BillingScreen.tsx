@@ -6,6 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import {
   getBillingGetBalanceQueryKey,
@@ -31,13 +32,18 @@ export default function BillingScreen() {
   const confirmedRef = useRef(false);
 
   const sessionId = searchParams.get("session_id");
+  const isOnboarding = searchParams.get("onboarding") === "1";
 
   const { mutate: confirmMutate } = useBillingConfirmCheckout({
     mutation: {
       onSuccess: async (_, variables) => {
         const { orgId } = variables;
-        await qc.invalidateQueries({ queryKey: getBillingGetBalanceQueryKey(orgId) });
-        await qc.invalidateQueries({ queryKey: getBillingGetLedgerQueryKey(orgId) });
+        await qc.invalidateQueries({
+          queryKey: getBillingGetBalanceQueryKey(orgId),
+        });
+        await qc.invalidateQueries({
+          queryKey: getBillingGetLedgerQueryKey(orgId),
+        });
         setConfirmState("success");
         router.replace("/billing");
       },
@@ -58,9 +64,30 @@ export default function BillingScreen() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: "auto", px: 2, py: 4 }}>
-      <Typography variant="h4" sx={{ fontWeight: 700, letterSpacing: -0.5, mb: 5 }}>
+      <Typography
+        variant="h4"
+        sx={{ fontWeight: 700, letterSpacing: -0.5, mb: 5 }}
+      >
         {t("heading")}
       </Typography>
+
+      {isOnboarding && (
+        <Alert
+          severity="info"
+          sx={{ mb: 3, alignItems: "center" }}
+          action={
+            <Button
+              color="inherit"
+              size="small"
+              onClick={() => router.push("/org")}
+            >
+              {t("onboardingContinue")}
+            </Button>
+          }
+        >
+          {t("onboardingBanner")}
+        </Alert>
+      )}
 
       {confirmState === "success" && (
         <Alert
