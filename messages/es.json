@@ -56,6 +56,16 @@
     "required": "Obligatorio"
   },
   "Auth": {
+    "continueWithGoogle": "Continuar con Google",
+    "connectingGoogle": "Redirigiendo…",
+    "googleError": "No se pudo iniciar sesión con Google",
+    "orDivider": "o",
+    "loginSuccessHeading": "Sesión iniciada",
+    "loginSuccessBody": "Te estamos redirigiendo a la aplicación.",
+    "loginFailureHeading": "No se pudo iniciar sesión",
+    "loginFailureBody": "Ha ocurrido un problema al iniciar sesión con Google. Inténtalo de nuevo.",
+    "backToLogin": "Volver a iniciar sesión",
+    "redirecting": "Redirigiendo…",
     "signIn": {
       "heading": "Iniciar sesión",
       "invalidCredentials": "Credenciales incorrectas",
@@ -76,7 +86,8 @@
       "submitButton": "Crear cuenta",
       "submitting": "Creando…",
       "haveAccount": "¿Ya tienes cuenta?",
-      "signIn": "Inicia sesión"
+      "signIn": "Inicia sesión",
+      "invitedBy": "Invitado por {org}. Haz una compra y tu organización gana {credits} créditos."
     },
     "verifyEmail": {
       "heading": "Verifica tu correo",
@@ -161,6 +172,70 @@
     "noProjectHeading": "Ningún proyecto seleccionado",
     "noProjectBody": "Selecciona un proyecto en la barra lateral para ver sus agentes."
   },
+  "Notifications": {
+    "ariaLabel": "Notificaciones",
+    "heading": "Notificaciones",
+    "empty": "No tienes notificaciones",
+    "managePreferences": "Gestionar preferencias",
+    "preferencesHeading": "Preferencias de notificaciones",
+    "loadError": "No se pudieron cargar las preferencias",
+    "updateError": "No se pudo actualizar la preferencia",
+    "types": {
+      "execution_finished": "Ejecución de agente finalizada",
+      "service_change": "Cambios en el servicio",
+      "user_status_change": "Cambios en tu cuenta"
+    },
+    "connectionTypes": {
+      "wordpress": "WordPress",
+      "google": "Google"
+    },
+    "messages": {
+      "execution_finished": {
+        "success": {
+          "title": "Ejecución completada",
+          "body": "El agente ha terminado de ejecutarse correctamente."
+        },
+        "failed": {
+          "title": "Ejecución fallida",
+          "body": "La ejecución del agente ha fallado."
+        }
+      },
+      "billing": {
+        "credits_granted_topup": {
+          "title": "Créditos añadidos",
+          "body": "Se han añadido {credits} créditos a tu organización tras la compra."
+        },
+        "credits_granted_subscription": {
+          "title": "Créditos añadidos",
+          "body": "Se han añadido {credits} créditos a tu organización (plan {plan})."
+        },
+        "payment_failed": {
+          "title": "Pago fallido",
+          "body": "No hemos podido procesar el pago de tu suscripción. Actualiza tu método de pago para evitar interrupciones del servicio."
+        },
+        "subscription_canceled": {
+          "title": "Suscripción cancelada",
+          "body": "Tu suscripción ha sido cancelada."
+        }
+      },
+      "service_change": {
+        "connection_established": {
+          "title": "Nueva conexión establecida",
+          "body": "El proyecto \"{project}\" se ha conectado correctamente con {service}."
+        }
+      },
+      "user_status_change": {
+        "activated": {
+          "title": "Cuenta activada",
+          "body": "Tu cuenta ha sido reactivada."
+        },
+        "deactivated": {
+          "title": "Cuenta desactivada",
+          "body": "Tu cuenta ha sido desactivada. Contacta con soporte si crees que es un error."
+        }
+      }
+    }
+  },
   "Connection": {
     "wpSection": "Conexión con WordPress",
     "connected": "Conectado",
@@ -191,7 +266,9 @@
     "projectSection": "Proyecto",
     "settings": "Ajustes",
     "settingsItem": "Ajustes",
+    "admin": "Administración",
     "billing": "Facturación",
+    "referrals": "Referidos",
     "agents": "Agentes",
     "logout": "Cerrar sesión",
     "noOrgs": "Sin organizaciones",
@@ -244,5 +321,44 @@
     "confirmSuccess": "Pago completado — los créditos han sido añadidos a tu cuenta.",
     "confirmPending": "Estamos confirmando tu pago. Los créditos se añadirán en breve.",
     "finishing": "Finalizando…"
+  },
+  "Referrals": {
+    "heading": "Referidos",
+    "subheading": "Invita a otros negocios. Cuando hagan su primera compra, ambos ganáis créditos.",
+    "rewardTitle": "Comparte tu enlace",
+    "rewardDescription": "Ganas {referrer} créditos y ellos ganan {referee} créditos cuando su organización haga su primera compra.",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "monthlyProgress": "{count} de {cap} recompensas ganadas este mes.",
+    "tableTitle": "Tus referidos",
+    "tableEmpty": "Aún no hay referidos. Comparte tu enlace para empezar.",
+    "colDate": "Fecha",
+    "colStatus": "Estado",
+    "colReward": "Recompensa",
+    "statusPending": "Pendiente",
+    "statusRewarded": "Recompensado",
+    "statusCapped": "Límite alcanzado"
+  },
+  "Admin": {
+    "wordmark": "AI Shop Helper",
+    "badge": "Admin",
+    "backToApp": "Volver a la app",
+    "usersHeading": "Usuarios",
+    "userCount": "{count, plural, =0 {Sin usuarios} one {# usuario en total} other {# usuarios en total}}",
+    "columnName": "Nombre",
+    "columnEmail": "Correo",
+    "columnRole": "Rol",
+    "columnStatus": "Estado",
+    "columnCreated": "Creado",
+    "roleAdmin": "Administrador",
+    "roleUser": "Usuario",
+    "statusActive": "Activo",
+    "statusInactive": "Inactivo",
+    "copyEmail": "Copiar correo",
+    "copied": "Copiado",
+    "emptyTitle": "No se encontraron usuarios",
+    "loadError": "No se pudieron cargar los usuarios",
+    "rowsPerPage": "Filas por página",
+    "rangeLabel": "{from}–{to} de {count}"
   }
 }

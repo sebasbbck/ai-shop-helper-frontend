@@ -21,6 +21,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
+import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useActiveContext } from "@/features/shell/ActiveContext";
 import CreateOrgDialog from "./CreateOrgDialog";
@@ -56,6 +57,7 @@ export default function OrgSwitcher({ collapsed }: OrgSwitcherProps) {
   const orgInitials = activeOrg ? initials(activeOrg.name) : "?";
   const settingsActive = pathname === "/org/settings";
   const billingActive = pathname === "/billing";
+  const referralsActive = pathname === "/referrals";
 
   const switcherMenu = (
     <Menu
@@ -68,7 +70,14 @@ export default function OrgSwitcher({ collapsed }: OrgSwitcherProps) {
     >
       {orgs.map((org) => (
         <MenuItem key={org.id} onClick={() => handleSelectOrg(org.id)}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, width: "100%" }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1.5,
+              width: "100%",
+            }}
+          >
             <Avatar
               sx={{
                 width: 22,
@@ -116,7 +125,11 @@ export default function OrgSwitcher({ collapsed }: OrgSwitcherProps) {
             }}
           >
             <ListItemIcon
-              sx={{ minWidth: 0, color: "text.secondary", "& svg": { fontSize: 20 } }}
+              sx={{
+                minWidth: 0,
+                color: "text.secondary",
+                "& svg": { fontSize: 20 },
+              }}
             >
               <BusinessIcon />
             </ListItemIcon>
@@ -176,8 +189,38 @@ export default function OrgSwitcher({ collapsed }: OrgSwitcherProps) {
             </ListItemIcon>
           </ListItemButton>
         </Tooltip>
+        <Tooltip title={t("referrals")} placement="right" arrow>
+          <ListItemButton
+            selected={referralsActive}
+            onClick={() => router.push("/referrals")}
+            sx={{
+              minHeight: 40,
+              px: 0,
+              justifyContent: "center",
+              mx: 0.5,
+              "&.Mui-selected": {
+                bgcolor: "primary.lighter",
+                "& .MuiListItemIcon-root": { color: "primary.dark" },
+                "&:hover": { bgcolor: "primary.lighter" },
+              },
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                color: referralsActive ? "primary.dark" : "text.secondary",
+                "& svg": { fontSize: 20 },
+              }}
+            >
+              <CardGiftcardOutlinedIcon />
+            </ListItemIcon>
+          </ListItemButton>
+        </Tooltip>
         {switcherMenu}
-        <CreateOrgDialog open={createDialogOpen} onClose={() => setCreateDialogOpen(false)} />
+        <CreateOrgDialog
+          open={createDialogOpen}
+          onClose={() => setCreateDialogOpen(false)}
+        />
       </Box>
     );
   }
@@ -274,7 +317,10 @@ export default function OrgSwitcher({ collapsed }: OrgSwitcherProps) {
             <ListItemText
               primary={t("settings")}
               slotProps={{
-                primary: { variant: "body2", sx: { fontWeight: settingsActive ? 600 : 400 } },
+                primary: {
+                  variant: "body2",
+                  sx: { fontWeight: settingsActive ? 600 : 400 },
+                },
               }}
             />
           </ListItemButton>
@@ -307,7 +353,46 @@ export default function OrgSwitcher({ collapsed }: OrgSwitcherProps) {
             <ListItemText
               primary={t("billing")}
               slotProps={{
-                primary: { variant: "body2", sx: { fontWeight: billingActive ? 600 : 400 } },
+                primary: {
+                  variant: "body2",
+                  sx: { fontWeight: billingActive ? 600 : 400 },
+                },
+              }}
+            />
+          </ListItemButton>
+          <ListItemButton
+            selected={referralsActive}
+            onClick={() => router.push("/referrals")}
+            sx={{
+              minHeight: 36,
+              borderRadius: 1,
+              px: 1.5,
+              mx: 0.5,
+              "&.Mui-selected": {
+                bgcolor: "primary.lighter",
+                color: "primary.dark",
+                "& .MuiListItemIcon-root": { color: "primary.dark" },
+                "&:hover": { bgcolor: "primary.lighter" },
+              },
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: 1.5,
+                color: referralsActive ? "primary.dark" : "text.secondary",
+                "& svg": { fontSize: 20 },
+              }}
+            >
+              <CardGiftcardOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={t("referrals")}
+              slotProps={{
+                primary: {
+                  variant: "body2",
+                  sx: { fontWeight: referralsActive ? 600 : 400 },
+                },
               }}
             />
           </ListItemButton>
@@ -315,7 +400,10 @@ export default function OrgSwitcher({ collapsed }: OrgSwitcherProps) {
       </Collapse>
 
       {switcherMenu}
-      <CreateOrgDialog open={createDialogOpen} onClose={() => setCreateDialogOpen(false)} />
+      <CreateOrgDialog
+        open={createDialogOpen}
+        onClose={() => setCreateDialogOpen(false)}
+      />
     </Box>
   );
 }

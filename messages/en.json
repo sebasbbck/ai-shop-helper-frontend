@@ -56,6 +56,16 @@
     "required": "Required"
   },
   "Auth": {
+    "continueWithGoogle": "Continue with Google",
+    "connectingGoogle": "Redirecting…",
+    "googleError": "Could not sign in with Google",
+    "orDivider": "or",
+    "loginSuccessHeading": "Signed in",
+    "loginSuccessBody": "Taking you to the app.",
+    "loginFailureHeading": "Could not sign in",
+    "loginFailureBody": "Something went wrong signing in with Google. Please try again.",
+    "backToLogin": "Back to sign in",
+    "redirecting": "Redirecting…",
     "signIn": {
       "heading": "Sign in",
       "invalidCredentials": "Invalid credentials",
@@ -76,7 +86,8 @@
       "submitButton": "Create account",
       "submitting": "Creating…",
       "haveAccount": "Already have an account?",
-      "signIn": "Sign in"
+      "signIn": "Sign in",
+      "invitedBy": "Invited by {org}. Make a purchase and your organization earns {credits} credits."
     },
     "verifyEmail": {
       "heading": "Verify your email",
@@ -161,6 +172,70 @@
     "noProjectHeading": "No project selected",
     "noProjectBody": "Select a project from the sidebar to view its agents."
   },
+  "Notifications": {
+    "ariaLabel": "Notifications",
+    "heading": "Notifications",
+    "empty": "You have no notifications",
+    "managePreferences": "Manage preferences",
+    "preferencesHeading": "Notification preferences",
+    "loadError": "Could not load preferences",
+    "updateError": "Could not update preference",
+    "types": {
+      "execution_finished": "Agent run finished",
+      "service_change": "Service changes",
+      "user_status_change": "Account status changes"
+    },
+    "connectionTypes": {
+      "wordpress": "WordPress",
+      "google": "Google"
+    },
+    "messages": {
+      "execution_finished": {
+        "success": {
+          "title": "Run completed",
+          "body": "The agent has finished running successfully."
+        },
+        "failed": {
+          "title": "Run failed",
+          "body": "The agent run has failed."
+        }
+      },
+      "billing": {
+        "credits_granted_topup": {
+          "title": "Credits added",
+          "body": "{credits} credits have been added to your organization after your purchase."
+        },
+        "credits_granted_subscription": {
+          "title": "Credits added",
+          "body": "{credits} credits have been added to your organization ({plan} plan)."
+        },
+        "payment_failed": {
+          "title": "Payment failed",
+          "body": "We couldn't process your subscription payment. Update your payment method to avoid service interruptions."
+        },
+        "subscription_canceled": {
+          "title": "Subscription canceled",
+          "body": "Your subscription has been canceled."
+        }
+      },
+      "service_change": {
+        "connection_established": {
+          "title": "New connection established",
+          "body": "Project \"{project}\" has been successfully connected to {service}."
+        }
+      },
+      "user_status_change": {
+        "activated": {
+          "title": "Account activated",
+          "body": "Your account has been reactivated."
+        },
+        "deactivated": {
+          "title": "Account deactivated",
+          "body": "Your account has been deactivated. Contact support if you think this is a mistake."
+        }
+      }
+    }
+  },
   "Connection": {
     "wpSection": "WordPress connection",
     "connected": "Connected",
@@ -191,7 +266,9 @@
     "projectSection": "Project",
     "settings": "Settings",
     "settingsItem": "Settings",
+    "admin": "Admin",
     "billing": "Billing",
+    "referrals": "Referrals",
     "agents": "Agents",
     "logout": "Log out",
     "noOrgs": "No organizations",
@@ -244,5 +321,44 @@
     "confirmSuccess": "Payment complete — credits have been added to your account.",
     "confirmPending": "We're confirming your payment. Credits will be added shortly.",
     "finishing": "Finishing up…"
+  },
+  "Referrals": {
+    "heading": "Referrals",
+    "subheading": "Invite other businesses. When they make their first purchase, you both earn credits.",
+    "rewardTitle": "Share your link",
+    "rewardDescription": "You earn {referrer} credits and they earn {referee} credits once their organization makes its first purchase.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "monthlyProgress": "{count} of {cap} rewards earned this month.",
+    "tableTitle": "Your referrals",
+    "tableEmpty": "No referrals yet. Share your link to get started.",
+    "colDate": "Date",
+    "colStatus": "Status",
+    "colReward": "Reward",
+    "statusPending": "Pending",
+    "statusRewarded": "Rewarded",
+    "statusCapped": "Capped"
+  },
+  "Admin": {
+    "wordmark": "AI Shop Helper",
+    "badge": "Admin",
+    "backToApp": "Back to app",
+    "usersHeading": "Users",
+    "userCount": "{count, plural, =0 {No users} one {# user total} other {# users total}}",
+    "columnName": "Name",
+    "columnEmail": "Email",
+    "columnRole": "Role",
+    "columnStatus": "Status",
+    "columnCreated": "Created",
+    "roleAdmin": "Admin",
+    "roleUser": "User",
+    "statusActive": "Active",
+    "statusInactive": "Inactive",
+    "copyEmail": "Copy email",
+    "copied": "Copied",
+    "emptyTitle": "No users found",
+    "loadError": "Could not load users",
+    "rowsPerPage": "Rows per page",
+    "rangeLabel": "{from}–{to} of {count}"
   }
 }

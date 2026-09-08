@@ -11,12 +11,17 @@ import { useTranslations } from "next-intl";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 import MuiLink from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useAuthLogin, useAuthResendVerification } from "@/api/endpoints/auth/auth";
+import {
+  useAuthLogin,
+  useAuthResendVerification,
+} from "@/api/endpoints/auth/auth";
 import { setAccessToken } from "@/lib/api/token-store";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 type FormValues = {
   email: string;
@@ -25,8 +30,12 @@ type FormValues = {
 
 function isEmailNotVerified(err: unknown): boolean {
   if (typeof err !== "object" || err === null) return false;
-  const response = (err as { response?: { status?: number; data?: { detail?: unknown } } }).response;
-  return response?.status === 403 && response?.data?.detail === "email_not_verified";
+  const response = (
+    err as { response?: { status?: number; data?: { detail?: unknown } } }
+  ).response;
+  return (
+    response?.status === 403 && response?.data?.detail === "email_not_verified"
+  );
 }
 
 export default function LoginForm() {
@@ -75,7 +84,9 @@ export default function LoginForm() {
     setNeedsVerification(false);
     setResendDone(false);
     setSubmittedEmail(values.email);
-    login.mutate({ data: { username: values.email, password: values.password } });
+    login.mutate({
+      data: { username: values.email, password: values.password },
+    });
   };
 
   return (
@@ -99,7 +110,9 @@ export default function LoginForm() {
                   color="inherit"
                   size="small"
                   disabled={resend.isPending}
-                  onClick={() => resend.mutate({ data: { email: submittedEmail } })}
+                  onClick={() =>
+                    resend.mutate({ data: { email: submittedEmail } })
+                  }
                 >
                   {t("signIn.resend")}
                 </Button>
@@ -153,6 +166,12 @@ export default function LoginForm() {
         >
           {login.isPending ? t("signIn.submitting") : t("signIn.submitButton")}
         </Button>
+        <Divider>
+          <Typography variant="body2" color="text.secondary">
+            {t("orDivider")}
+          </Typography>
+        </Divider>
+        <GoogleLoginButton />
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
           {t("signIn.noAccount")}{" "}
           <MuiLink component={Link} href="/register">

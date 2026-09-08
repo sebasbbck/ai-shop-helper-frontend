@@ -11,6 +11,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useAuthLogout } from "@/api/endpoints/auth/auth";
@@ -82,6 +83,20 @@ export default function UserMenu() {
             </Typography>
           )}
         </ListItem>
+
+        {user?.is_superuser && (
+          <MenuItem
+            onClick={() => {
+              router.push("/admin");
+              setAnchorEl(null);
+            }}
+          >
+            <ListItemIcon>
+              <AdminPanelSettingsIcon fontSize="small" />
+            </ListItemIcon>
+            <Typography variant="body2">{t("admin")}</Typography>
+          </MenuItem>
+        )}
 
         <MenuItem
           onClick={() => {

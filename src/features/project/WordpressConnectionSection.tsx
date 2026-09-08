@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
@@ -125,7 +125,14 @@ export default function WordpressConnectionSection({ projectId }: Props) {
       </Box>
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, maxWidth: 400 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            maxWidth: 400,
+          }}
+        >
           <TextField
             label={t("siteUrlLabel")}
             placeholder={t("siteUrlPlaceholder")}
