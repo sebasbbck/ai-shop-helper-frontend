@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -43,7 +43,7 @@ export default function BootstrapWizard() {
 
   // An org created on a previous, partially-failed submit (project step errored):
   // retried submits reuse it instead of creating a duplicate organization.
-  const createdOrgId = useRef<string | null>(null);
+  const [createdOrgId, setCreatedOrgId] = useState<string | null>(null);
 
   const { data: typesData } = useProjectTypesGetProjectTypes();
   const projectTypes = typesData?.items ?? [];
@@ -85,15 +85,15 @@ export default function BootstrapWizard() {
   };
 
   const onSubmit = (values: FormValues) => {
-    if (createdOrgId.current) {
-      createProjectForOrg(createdOrgId.current, values);
+    if (createdOrgId) {
+      createProjectForOrg(createdOrgId, values);
       return;
     }
     createOrg.mutate(
       { data: { name: values.orgName } },
       {
         onSuccess: (org) => {
-          createdOrgId.current = org.id;
+          setCreatedOrgId(org.id);
           createProjectForOrg(org.id, values);
         },
         onError: () => {
