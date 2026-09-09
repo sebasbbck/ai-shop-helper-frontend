@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, type ComponentType } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -16,13 +16,13 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import {
-  useProjectsUpdateProject,
-} from "@/api/endpoints/projects/projects";
+import { useProjectsUpdateProject } from "@/api/endpoints/projects/projects";
 import { useProjectTypesGetProjectTypes } from "@/api/endpoints/project-types/project-types";
 import { getOrgsGetMyOrgsQueryKey } from "@/api/endpoints/orgs/orgs";
+import { useConnectionsGetAvailableConnections } from "@/api/endpoints/connections/connections";
 import { useActiveContext } from "@/features/shell/ActiveContext";
 import WordpressConnectionSection from "@/features/project/WordpressConnectionSection";
+import GoogleConnectionSection from "@/features/project/GoogleConnectionSection";
 import ProjectContextSection from "@/features/project/ProjectContextSection";
 
 const schema = z.object({
@@ -31,6 +31,14 @@ const schema = z.object({
 });
 
 type FormValues = z.infer<typeof schema>;
+
+const CONNECTION_SECTIONS: Record<
+  string,
+  ComponentType<{ projectId: string }>
+> = {
+  wordpress: WordpressConnectionSection,
+  google: GoogleConnectionSection,
+};
 
 export default function ProjectSettings() {
   const t = useTranslations("Project");
@@ -42,6 +50,11 @@ export default function ProjectSettings() {
 
   const { data: typesData } = useProjectTypesGetProjectTypes({});
   const projectTypes = typesData?.items ?? [];
+
+  const { data: availableConnections } = useConnectionsGetAvailableConnections(
+    activeProjectId ?? "",
+    { query: { enabled: !!activeProjectId } },
+  );
 
   const {
     handleSubmit,
@@ -90,7 +103,10 @@ export default function ProjectSettings() {
 
   return (
     <Box sx={{ maxWidth: 480 }}>
-      <Typography variant="h4" sx={{ fontWeight: 700, letterSpacing: -0.5, mb: 5 }}>
+      <Typography
+        variant="h4"
+        sx={{ fontWeight: 700, letterSpacing: -0.5, mb: 5 }}
+      >
         {t("settingsHeading")}
       </Typography>
 
@@ -159,13 +175,18 @@ export default function ProjectSettings() {
         </Box>
       </form>
 
-      {activeProjectId && (
-        <ProjectContextSection projectId={activeProjectId} />
-      )}
+      {activeProjectId && <ProjectContextSection projectId={activeProjectId} />}
 
-      {activeProjectId && (
-        <WordpressConnectionSection projectId={activeProjectId} />
-      )}
+      {activeProjectId &&
+        availableConnections?.map((connection) => {
+          const Section = CONNECTION_SECTIONS[connection.connection_type];
+          return Section ? (
+            <Section
+              key={connection.connection_type}
+              projectId={activeProjectId}
+            />
+          ) : null;
+        })}
     </Box>
   );
 }
