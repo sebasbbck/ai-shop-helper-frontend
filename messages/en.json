@@ -273,6 +273,8 @@
     "projectSection": "Project",
     "settings": "Settings",
     "settingsItem": "Settings",
+    "admin": "Admin",
+    "manageMembers": "Members",
     "billing": "Billing",
     "referrals": "Referrals",
     "agents": "Agents",
@@ -344,5 +346,38 @@
     "statusPending": "Pending",
     "statusRewarded": "Rewarded",
     "statusCapped": "Capped"
+  },
+  "Admin": {
+    "wordmark": "AI Shop Helper",
+    "badge": "Admin",
+    "backToApp": "Back to app",
+    "usersHeading": "Users",
+    "userCount": "{count, plural, =0 {No users} one {# user total} other {# users total}}",
+    "columnName": "Name",
+    "columnEmail": "Email",
+    "columnRole": "Role",
+    "columnStatus": "Status",
+    "columnCreated": "Created",
+    "roleSuperuser": "Superuser",
+    "roleUser": "User",
+    "statusActive": "Active",
+    "statusInactive": "Inactive",
+    "copyEmail": "Copy email",
+    "copied": "Copied",
+    "emptyTitle": "No users found",
+    "loadError": "Could not load users",
+    "rowsPerPage": "Rows per page",
+    "rangeLabel": "{from}–{to} of {count}"
+  },
+  "OrgAdmin": {
+    "heading": "Members",
+    "columnName": "Name",
+    "columnEmail": "Email",
+    "columnRole": "Role",
+    "columnJoined": "Joined",
+    "loadError": "Could not load members",
+    "empty": "No members found",
+    "rowsPerPage": "Rows per page",
+    "rangeLabel": "{from}–{to} of {count}"
   }
 }

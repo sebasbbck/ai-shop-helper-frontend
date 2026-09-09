@@ -273,6 +273,8 @@
     "projectSection": "Proyecto",
     "settings": "Ajustes",
     "settingsItem": "Ajustes",
+    "admin": "Administración",
+    "manageMembers": "Miembros",
     "billing": "Facturación",
     "referrals": "Referidos",
     "agents": "Agentes",
@@ -344,5 +346,38 @@
     "statusPending": "Pendiente",
     "statusRewarded": "Recompensado",
     "statusCapped": "Límite alcanzado"
+  },
+  "Admin": {
+    "wordmark": "AI Shop Helper",
+    "badge": "Admin",
+    "backToApp": "Volver a la app",
+    "usersHeading": "Usuarios",
+    "userCount": "{count, plural, =0 {Sin usuarios} one {# usuario en total} other {# usuarios en total}}",
+    "columnName": "Nombre",
+    "columnEmail": "Correo",
+    "columnRole": "Rol",
+    "columnStatus": "Estado",
+    "columnCreated": "Creado",
+    "roleSuperuser": "Superusuario",
+    "roleUser": "Usuario",
+    "statusActive": "Activo",
+    "statusInactive": "Inactivo",
+    "copyEmail": "Copiar correo",
+    "copied": "Copiado",
+    "emptyTitle": "No se encontraron usuarios",
+    "loadError": "No se pudieron cargar los usuarios",
+    "rowsPerPage": "Filas por página",
+    "rangeLabel": "{from}–{to} de {count}"
+  },
+  "OrgAdmin": {
+    "heading": "Miembros",
+    "columnName": "Nombre",
+    "columnEmail": "Correo",
+    "columnRole": "Rol",
+    "columnJoined": "Se unió",
+    "loadError": "No se pudieron cargar los miembros",
+    "empty": "No se encontraron miembros",
+    "rowsPerPage": "Filas por página",
+    "rangeLabel": "{from}–{to} de {count}"
   }
 }
