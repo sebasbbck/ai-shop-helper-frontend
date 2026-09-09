@@ -262,8 +262,7 @@
     "emailLabel": "Google account",
     "connectGoogleButton": "Connect with Google",
     "reconnectGoogleButton": "Reconnect",
-    "googleStartError": "Could not start Google connection",
-    "otherConnectionActive": "This project already has an active {type} connection. Only one connection can be active at a time."
+    "googleStartError": "Could not start Google connection"
   },
   "Shell": {
     "wordmark": "AI Shop Helper",

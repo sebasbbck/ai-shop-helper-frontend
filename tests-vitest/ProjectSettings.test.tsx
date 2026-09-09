@@ -4,8 +4,7 @@ import { renderWithProviders } from "./test-utils";
 import ProjectSettings from "@/features/project/ProjectSettings";
 
 const h = vi.hoisted(() => ({
-  wpConnected: false,
-  googleConnected: false,
+  available: [] as { connection_type: string; connected: boolean }[],
 }));
 
 vi.mock("@/features/shell/ActiveContext", () => ({
@@ -33,12 +32,7 @@ vi.mock("@/api/endpoints/orgs/orgs", () => ({
 }));
 
 vi.mock("@/api/endpoints/connections/connections", () => ({
-  useConnectionsGetWordpressStatus: () => ({
-    data: { connected: h.wpConnected },
-  }),
-  useConnectionsGetGoogleConnectionStatus: () => ({
-    data: { connected: h.googleConnected },
-  }),
+  useConnectionsGetAvailableConnections: () => ({ data: h.available }),
 }));
 
 vi.mock("@/features/project/ProjectContextSection", () => ({
@@ -55,42 +49,57 @@ vi.mock("@/features/project/GoogleConnectionSection", () => ({
 
 describe("ProjectSettings connection sections", () => {
   beforeEach(() => {
-    h.wpConnected = false;
-    h.googleConnected = false;
+    h.available = [];
   });
 
-  test("shows both connection sections when neither is connected", () => {
+  test("renders a section for each relevant connection type", () => {
+    h.available = [
+      { connection_type: "wordpress", connected: false },
+      { connection_type: "google", connected: false },
+    ];
+
     renderWithProviders(<ProjectSettings />);
 
     expect(screen.getByTestId("wordpress-section")).toBeInTheDocument();
     expect(screen.getByTestId("google-section")).toBeInTheDocument();
   });
 
-  test("hides the Google section and explains why when WordPress is connected", () => {
-    h.wpConnected = true;
+  test("both connection types coexist even when connected (no exclusivity)", () => {
+    h.available = [
+      { connection_type: "wordpress", connected: true },
+      { connection_type: "google", connected: true },
+    ];
+
+    renderWithProviders(<ProjectSettings />);
+
+    expect(screen.getByTestId("wordpress-section")).toBeInTheDocument();
+    expect(screen.getByTestId("google-section")).toBeInTheDocument();
+  });
+
+  test("renders only the relevant types", () => {
+    h.available = [{ connection_type: "wordpress", connected: false }];
 
     renderWithProviders(<ProjectSettings />);
 
     expect(screen.getByTestId("wordpress-section")).toBeInTheDocument();
     expect(screen.queryByTestId("google-section")).not.toBeInTheDocument();
-    expect(
-      screen.getByText(
-        "This project already has an active WordPress connection. Only one connection can be active at a time.",
-      ),
-    ).toBeInTheDocument();
   });
 
-  test("hides the WordPress section and explains why when Google is connected", () => {
-    h.googleConnected = true;
+  test("renders no connection sections when none are relevant", () => {
+    h.available = [];
 
     renderWithProviders(<ProjectSettings />);
 
-    expect(screen.getByTestId("google-section")).toBeInTheDocument();
     expect(screen.queryByTestId("wordpress-section")).not.toBeInTheDocument();
-    expect(
-      screen.getByText(
-        "This project already has an active Google connection. Only one connection can be active at a time.",
-      ),
-    ).toBeInTheDocument();
+    expect(screen.queryByTestId("google-section")).not.toBeInTheDocument();
+  });
+
+  test("ignores connection types without a section component", () => {
+    h.available = [{ connection_type: "notifuse", connected: false }];
+
+    renderWithProviders(<ProjectSettings />);
+
+    expect(screen.queryByTestId("wordpress-section")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("google-section")).not.toBeInTheDocument();
   });
 });

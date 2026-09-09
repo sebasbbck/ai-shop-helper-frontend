@@ -262,8 +262,7 @@
     "emailLabel": "Cuenta de Google",
     "connectGoogleButton": "Conectar con Google",
     "reconnectGoogleButton": "Reconectar",
-    "googleStartError": "No se pudo iniciar la conexión con Google",
-    "otherConnectionActive": "Este proyecto ya tiene una conexión de {type} activa. Solo se puede tener una conexión a la vez."
+    "googleStartError": "No se pudo iniciar la conexión con Google"
   },
   "Shell": {
     "wordmark": "AI Shop Helper",

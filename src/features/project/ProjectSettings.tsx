@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, type ComponentType } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -19,10 +19,7 @@ import Typography from "@mui/material/Typography";
 import { useProjectsUpdateProject } from "@/api/endpoints/projects/projects";
 import { useProjectTypesGetProjectTypes } from "@/api/endpoints/project-types/project-types";
 import { getOrgsGetMyOrgsQueryKey } from "@/api/endpoints/orgs/orgs";
-import {
-  useConnectionsGetWordpressStatus,
-  useConnectionsGetGoogleConnectionStatus,
-} from "@/api/endpoints/connections/connections";
+import { useConnectionsGetAvailableConnections } from "@/api/endpoints/connections/connections";
 import { useActiveContext } from "@/features/shell/ActiveContext";
 import WordpressConnectionSection from "@/features/project/WordpressConnectionSection";
 import GoogleConnectionSection from "@/features/project/GoogleConnectionSection";
@@ -35,28 +32,29 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
+const CONNECTION_SECTIONS: Record<
+  string,
+  ComponentType<{ projectId: string }>
+> = {
+  wordpress: WordpressConnectionSection,
+  google: GoogleConnectionSection,
+};
+
 export default function ProjectSettings() {
   const t = useTranslations("Project");
   const ts = useTranslations("Shell");
   const tc = useTranslations("Common");
   const tv = useTranslations("Validation");
-  const tconn = useTranslations("Connection");
   const qc = useQueryClient();
   const { activeProject, activeProjectId, activeOrgId } = useActiveContext();
 
   const { data: typesData } = useProjectTypesGetProjectTypes({});
   const projectTypes = typesData?.items ?? [];
 
-  const { data: wpStatus } = useConnectionsGetWordpressStatus(
+  const { data: availableConnections } = useConnectionsGetAvailableConnections(
     activeProjectId ?? "",
     { query: { enabled: !!activeProjectId } },
   );
-  const { data: googleStatus } = useConnectionsGetGoogleConnectionStatus(
-    activeProjectId ?? "",
-    { query: { enabled: !!activeProjectId } },
-  );
-  const wpConnected = wpStatus?.connected === true;
-  const googleConnected = googleStatus?.connected === true;
 
   const {
     handleSubmit,
@@ -180,30 +178,15 @@ export default function ProjectSettings() {
       {activeProjectId && <ProjectContextSection projectId={activeProjectId} />}
 
       {activeProjectId &&
-        (!googleConnected ? (
-          <WordpressConnectionSection projectId={activeProjectId} />
-        ) : (
-          <Typography
-            variant="caption"
-            color="text.secondary"
-            sx={{ mt: 5, display: "block" }}
-          >
-            {tconn("otherConnectionActive", { type: "Google" })}
-          </Typography>
-        ))}
-
-      {activeProjectId &&
-        (!wpConnected ? (
-          <GoogleConnectionSection projectId={activeProjectId} />
-        ) : (
-          <Typography
-            variant="caption"
-            color="text.secondary"
-            sx={{ mt: 3, display: "block" }}
-          >
-            {tconn("otherConnectionActive", { type: "WordPress" })}
-          </Typography>
-        ))}
+        availableConnections?.map((connection) => {
+          const Section = CONNECTION_SECTIONS[connection.connection_type];
+          return Section ? (
+            <Section
+              key={connection.connection_type}
+              projectId={activeProjectId}
+            />
+          ) : null;
+        })}
     </Box>
   );
 }
