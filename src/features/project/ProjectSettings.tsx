@@ -89,7 +89,16 @@ export default function ProjectSettings() {
   };
 
   return (
-    <Box sx={{ maxWidth: 480 }}>
+    <Box sx={{ 
+      //maxWidth: 480,
+      p: 3,
+      borderRadius: 3,
+      border: "1px solid",
+      borderColor: "divider",
+      bgcolor: "background.paper",
+      height: "100%",
+      width: "100%",
+      }}>
       <Typography variant="h4" sx={{ fontWeight: 700, letterSpacing: -0.5, mb: 5 }}>
         {t("settingsHeading")}
       </Typography>

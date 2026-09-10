@@ -44,7 +44,7 @@ export default function AppShell({ children }: AppShellProps) {
           component="main"
           sx={{
             flexGrow: 1,
-            bgcolor: "background.default",
+            bgcolor: "#D6E2FC",
             p: { xs: 2, md: 3 },
           }}
         >

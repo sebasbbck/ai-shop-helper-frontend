@@ -33,10 +33,11 @@ export default function ProjectCard({
         width: "100%",
         display: "flex",
         flexDirection: "column",
-        alignItems: "stretch",
-        justifyContent: "flex-start",
+        alignItems: "center",
+        alignSelf: "center",
+        justifyContent: "center",
         gap: 2,
-        textAlign: "left",
+        textAlign: "center",
         transition: "box-shadow 200ms ease, border-color 200ms ease",
         "&:hover": {
           boxShadow: "0 4px 16px 0 rgba(0,0,0,.08)",
@@ -55,7 +56,7 @@ export default function ProjectCard({
           label={typeName}
           size="small"
           variant="outlined"
-          sx={{ fontSize: "0.7rem", height: 22 }}
+          sx={{ fontSize: "0.7rem", height: 22 ,}}
         />
       </Box>
 

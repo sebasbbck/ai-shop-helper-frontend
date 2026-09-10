@@ -108,6 +108,7 @@ export default function NotificationsMenu() {
 
   return (
     <>
+    
       <IconButton
         size="small"
         onClick={(e) => setAnchorEl(e.currentTarget)}
