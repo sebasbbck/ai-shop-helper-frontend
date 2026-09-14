@@ -19,7 +19,7 @@ export default function Topbar({ onMobileMenuToggle }: TopbarProps) {
       position="sticky"
       elevation={0}
       sx={{
-        bgcolor: "#D6E2FC",
+        bgcolor: "background.hawkesBlue",
         color: "text.primary",
       }}
     >

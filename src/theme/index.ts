@@ -26,10 +26,12 @@ const theme = createTheme({
       dark: "#0E4BC0",
       darker: "#08307F",
       contrastText: "#FFFFFF",
+      
     },
     background: {
       default: "#F8F9FA",
       paper: "#FFFFFF",
+      hawkesBlue: "#D6E2FC",
     },
   },
   shape: {
