@@ -27,10 +27,17 @@ const theme = createTheme({
       darker: "#08307F",
       contrastText: "#FFFFFF",
     },
+    secondary: {
+      lighter: "#ebebeb",
+      light: "#D6E2FC",
+      main: "#1352c7",
+      dark: "#09378d",
+      darker: "#08307F",
+      contrastText: "#FFFFFF",
+    },
     background: {
       default: "#F8F9FA",
       paper: "#FFFFFF",
-      hawkesBlue: "#D6E2FC",
     },
   },
   shape: {
