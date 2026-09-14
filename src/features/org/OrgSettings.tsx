@@ -68,7 +68,6 @@ export default function OrgSettings() {
   return (
     <Box
       sx={{
-        //maxWidth: 480
         p: 3,
         borderRadius: 3,
         border: "1px solid",

@@ -30,6 +30,7 @@ const theme = createTheme({
     background: {
       default: "#F8F9FA",
       paper: "#FFFFFF",
+      hawkesBlue: "#D6E2FC",
     },
   },
   shape: {
