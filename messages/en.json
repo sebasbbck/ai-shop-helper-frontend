@@ -251,11 +251,17 @@
     "loadError": "Could not load connection status",
     "startError": "Could not start WordPress connection",
     "redirecting": "Taking you back to settings…",
-    "successHeading": "WordPress connected",
-    "successBody": "Your WordPress site has been connected successfully.",
+    "successHeading": "Connection established",
+    "successBody": "Your project has been connected successfully.",
     "failureHeading": "Connection failed",
-    "failureBody": "Something went wrong while connecting your WordPress site.",
-    "backToProject": "Back to project settings"
+    "failureBody": "Something went wrong while establishing the connection.",
+    "backToProject": "Back to project settings",
+    "googleSection": "Google connection",
+    "googleHelp": "Connect your Google account to access your project's Google Analytics (GA4) and Search Console data.",
+    "emailLabel": "Google account",
+    "connectGoogleButton": "Connect with Google",
+    "reconnectGoogleButton": "Reconnect",
+    "googleStartError": "Could not start Google connection"
   },
   "Shell": {
     "wordmark": "AI Shop Helper",
@@ -266,6 +272,7 @@
     "settings": "Settings",
     "settingsItem": "Settings",
     "admin": "Admin",
+    "manageMembers": "Members",
     "billing": "Billing",
     "referrals": "Referrals",
     "agents": "Agents",
@@ -351,7 +358,7 @@
     "columnRole": "Role",
     "columnStatus": "Status",
     "columnCreated": "Created",
-    "roleAdmin": "Admin",
+    "roleSuperuser": "Superuser",
     "roleUser": "User",
     "statusActive": "Active",
     "statusInactive": "Inactive",
@@ -359,6 +366,17 @@
     "copied": "Copied",
     "emptyTitle": "No users found",
     "loadError": "Could not load users",
+    "rowsPerPage": "Rows per page",
+    "rangeLabel": "{from}–{to} of {count}"
+  },
+  "OrgAdmin": {
+    "heading": "Members",
+    "columnName": "Name",
+    "columnEmail": "Email",
+    "columnRole": "Role",
+    "columnJoined": "Joined",
+    "loadError": "Could not load members",
+    "empty": "No members found",
     "rowsPerPage": "Rows per page",
     "rangeLabel": "{from}–{to} of {count}"
   }

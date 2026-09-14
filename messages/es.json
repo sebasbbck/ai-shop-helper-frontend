@@ -251,11 +251,17 @@
     "loadError": "No se pudo cargar el estado de conexión",
     "startError": "No se pudo iniciar la conexión con WordPress",
     "redirecting": "Volviendo a ajustes…",
-    "successHeading": "WordPress conectado",
-    "successBody": "Tu sitio de WordPress se ha conectado correctamente.",
+    "successHeading": "Conexión establecida",
+    "successBody": "Tu proyecto se ha conectado correctamente.",
     "failureHeading": "Error de conexión",
-    "failureBody": "Algo salió mal al conectar tu sitio de WordPress.",
-    "backToProject": "Volver a los ajustes del proyecto"
+    "failureBody": "Algo salió mal al establecer la conexión.",
+    "backToProject": "Volver a los ajustes del proyecto",
+    "googleSection": "Conexión con Google",
+    "googleHelp": "Conecta tu cuenta de Google para acceder a los datos de Google Analytics (GA4) y Search Console de tu proyecto.",
+    "emailLabel": "Cuenta de Google",
+    "connectGoogleButton": "Conectar con Google",
+    "reconnectGoogleButton": "Reconectar",
+    "googleStartError": "No se pudo iniciar la conexión con Google"
   },
   "Shell": {
     "wordmark": "AI Shop Helper",
@@ -266,6 +272,7 @@
     "settings": "Ajustes",
     "settingsItem": "Ajustes",
     "admin": "Administración",
+    "manageMembers": "Miembros",
     "billing": "Facturación",
     "referrals": "Referidos",
     "agents": "Agentes",
@@ -351,7 +358,7 @@
     "columnRole": "Rol",
     "columnStatus": "Estado",
     "columnCreated": "Creado",
-    "roleAdmin": "Administrador",
+    "roleSuperuser": "Superusuario",
     "roleUser": "Usuario",
     "statusActive": "Activo",
     "statusInactive": "Inactivo",
@@ -359,6 +366,17 @@
     "copied": "Copiado",
     "emptyTitle": "No se encontraron usuarios",
     "loadError": "No se pudieron cargar los usuarios",
+    "rowsPerPage": "Filas por página",
+    "rangeLabel": "{from}–{to} de {count}"
+  },
+  "OrgAdmin": {
+    "heading": "Miembros",
+    "columnName": "Nombre",
+    "columnEmail": "Correo",
+    "columnRole": "Rol",
+    "columnJoined": "Se unió",
+    "loadError": "No se pudieron cargar los miembros",
+    "empty": "No se encontraron miembros",
     "rowsPerPage": "Filas por página",
     "rangeLabel": "{from}–{to} de {count}"
   }

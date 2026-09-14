@@ -108,7 +108,7 @@ describe("UsersAdmin", () => {
 
     expect(screen.getByText("Ada Lovelace")).toBeInTheDocument();
     expect(screen.getByText("bob@example.com")).toBeInTheDocument();
-    expect(screen.getByText("Admin")).toBeInTheDocument();
+    expect(screen.getByText("Superuser")).toBeInTheDocument();
     expect(screen.getByText("User")).toBeInTheDocument();
     expect(screen.getByText("Active")).toBeInTheDocument();
     expect(screen.getByText("Inactive")).toBeInTheDocument();

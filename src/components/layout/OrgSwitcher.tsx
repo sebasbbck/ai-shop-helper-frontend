@@ -22,8 +22,10 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
+import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useActiveContext } from "@/features/shell/ActiveContext";
+import { useActiveOrgRole } from "@/features/org-admin/useActiveOrgRole";
 import CreateOrgDialog from "./CreateOrgDialog";
 
 function initials(name: string): string {
@@ -54,8 +56,11 @@ export default function OrgSwitcher({ collapsed }: OrgSwitcherProps) {
     setAnchorEl(null);
   };
 
+  const { isOrgAdmin } = useActiveOrgRole();
+
   const orgInitials = activeOrg ? initials(activeOrg.name) : "?";
   const settingsActive = pathname === "/org/settings";
+  const membersActive = pathname === "/org/admin";
   const billingActive = pathname === "/billing";
   const referralsActive = pathname === "/referrals";
 
@@ -135,6 +140,35 @@ export default function OrgSwitcher({ collapsed }: OrgSwitcherProps) {
             </ListItemIcon>
           </ListItemButton>
         </Tooltip>
+        {isOrgAdmin && (
+          <Tooltip title={t("manageMembers")} placement="right" arrow>
+            <ListItemButton
+              selected={membersActive}
+              onClick={() => router.push("/org/admin")}
+              sx={{
+                minHeight: 40,
+                px: 0,
+                justifyContent: "center",
+                mx: 0.5,
+                "&.Mui-selected": {
+                  bgcolor: "primary.lighter",
+                  "& .MuiListItemIcon-root": { color: "primary.dark" },
+                  "&:hover": { bgcolor: "primary.lighter" },
+                },
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  color: membersActive ? "primary.dark" : "text.secondary",
+                  "& svg": { fontSize: 20 },
+                }}
+              >
+                <GroupsOutlinedIcon />
+              </ListItemIcon>
+            </ListItemButton>
+          </Tooltip>
+        )}
         <Tooltip title={t("settings")} placement="right" arrow>
           <ListItemButton
             selected={settingsActive}
@@ -288,6 +322,44 @@ export default function OrgSwitcher({ collapsed }: OrgSwitcherProps) {
 
       <Collapse in={sectionOpen} unmountOnExit>
         <List dense disablePadding sx={{ pl: 1, pt: 0.25, pb: 0.5 }}>
+          {isOrgAdmin && (
+            <ListItemButton
+              selected={membersActive}
+              onClick={() => router.push("/org/admin")}
+              sx={{
+                minHeight: 36,
+                borderRadius: 1,
+                px: 1.5,
+                mx: 0.5,
+                "&.Mui-selected": {
+                  bgcolor: "primary.lighter",
+                  color: "primary.dark",
+                  "& .MuiListItemIcon-root": { color: "primary.dark" },
+                  "&:hover": { bgcolor: "primary.lighter" },
+                },
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: 1.5,
+                  color: membersActive ? "primary.dark" : "text.secondary",
+                  "& svg": { fontSize: 20 },
+                }}
+              >
+                <GroupsOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={t("manageMembers")}
+                slotProps={{
+                  primary: {
+                    variant: "body2",
+                    sx: { fontWeight: membersActive ? 600 : 400 },
+                  },
+                }}
+              />
+            </ListItemButton>
+          )}
           <ListItemButton
             selected={settingsActive}
             onClick={() => router.push("/org/settings")}
