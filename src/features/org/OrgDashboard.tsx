@@ -34,18 +34,16 @@ export default function OrgDashboard() {
 
   return (
     <Box
-    sx={{
-          borderRadius: 3,
-          mt:3,
-          mb:3,
-          p:3,
-          bgcolor: "background.paper",
-          
-        }}
+      sx={{
+        borderRadius: 3,
+        mt: 3,
+        mb: 3,
+        p: 3,
+        bgcolor: "background.paper",
+      }}
     >
       <Box
         sx={{
-          
           display: "flex",
           alignItems: "baseline",
           justifyContent: "space-between",
@@ -53,7 +51,10 @@ export default function OrgDashboard() {
         }}
       >
         <Box>
-          <Typography variant="h4" sx={{ fontWeight: 700, letterSpacing: -0.5 }}>
+          <Typography
+            variant="h4"
+            sx={{ fontWeight: 700, letterSpacing: -0.5 }}
+          >
             {activeOrg?.name}
           </Typography>
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
@@ -100,7 +101,10 @@ export default function OrgDashboard() {
             <Grid key={project.id} size={{ xs: 12, sm: 6, md: 4 }}>
               <ProjectCard
                 name={project.name}
-                typeName={typeMap.get(project.project_type_id) ?? project.project_type_id}
+                typeName={
+                  typeMap.get(project.project_type_id) ??
+                  project.project_type_id
+                }
                 onOpen={() => handleOpen(project.id)}
               />
             </Grid>
@@ -108,7 +112,10 @@ export default function OrgDashboard() {
         </Grid>
       )}
 
-      <CreateProjectDialog open={createOpen} onClose={() => setCreateOpen(false)} />
+      <CreateProjectDialog
+        open={createOpen}
+        onClose={() => setCreateOpen(false)}
+      />
     </Box>
   );
 }

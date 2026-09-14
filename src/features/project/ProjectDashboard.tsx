@@ -17,7 +17,11 @@ export default function ProjectDashboard() {
   const t = useTranslations("Project");
   const agentLabel = useAgentLabel();
   const router = useRouter();
-  const { activeProject, activeProjectTypeId, isLoading: contextLoading } = useActiveContext();
+  const {
+    activeProject,
+    activeProjectTypeId,
+    isLoading: contextLoading,
+  } = useActiveContext();
 
   const { data: typesData } = useProjectTypesGetProjectTypes(
     {},
@@ -26,7 +30,9 @@ export default function ProjectDashboard() {
   const typeMap = new Map(
     (typesData?.items ?? []).map((pt) => [pt.id, pt.name]),
   );
-  const typeName = activeProjectTypeId ? (typeMap.get(activeProjectTypeId) ?? null) : null;
+  const typeName = activeProjectTypeId
+    ? (typeMap.get(activeProjectTypeId) ?? null)
+    : null;
 
   const { data: agentsData, isLoading: agentsLoading } = useAgentsGetAgents(
     { project_type_id: activeProjectTypeId ?? undefined },
@@ -49,7 +55,9 @@ export default function ProjectDashboard() {
           bgcolor: "action.hover",
         }}
       >
-        <SmartToyOutlinedIcon sx={{ fontSize: 48, color: "text.disabled", mb: 2 }} />
+        <SmartToyOutlinedIcon
+          sx={{ fontSize: 48, color: "text.disabled", mb: 2 }}
+        />
         <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
           {t("noProjectHeading")}
         </Typography>
@@ -62,24 +70,30 @@ export default function ProjectDashboard() {
 
   return (
     <Box
-    sx={{
-          borderRadius: 3,
-          mt:3,
-          mb:3,
-          p:3,
-          bgcolor: "background.paper",
-          
-        }}
+      sx={{
+        borderRadius: 3,
+        mt: 3,
+        mb: 3,
+        p: 3,
+        bgcolor: "background.paper",
+      }}
     >
       <Box sx={{ mb: 5 }}>
         <Box sx={{ display: "flex", alignItems: "baseline", gap: 1.5 }}>
-          <Typography variant="h4" sx={{ fontWeight: 700, letterSpacing: -0.5 }}>
+          <Typography
+            variant="h4"
+            sx={{ fontWeight: 700, letterSpacing: -0.5 }}
+          >
             {activeProject.name}
           </Typography>
           {typeName && (
             <Typography
               variant="body2"
-              sx={{ color: "text.secondary", fontWeight: 500, whiteSpace: "nowrap" }}
+              sx={{
+                color: "text.secondary",
+                fontWeight: 500,
+                whiteSpace: "nowrap",
+              }}
             >
               {typeName}
             </Typography>
@@ -94,7 +108,11 @@ export default function ProjectDashboard() {
         <Grid container spacing={2.5}>
           {Array.from({ length: 3 }).map((_, i) => (
             <Grid key={i} size={{ xs: 12, sm: 6, md: 4 }}>
-              <Skeleton variant="rounded" height={180} sx={{ borderRadius: 3 }} />
+              <Skeleton
+                variant="rounded"
+                height={180}
+                sx={{ borderRadius: 3 }}
+              />
             </Grid>
           ))}
         </Grid>
@@ -108,7 +126,9 @@ export default function ProjectDashboard() {
             bgcolor: "action.hover",
           }}
         >
-          <SmartToyOutlinedIcon sx={{ fontSize: 40, color: "text.disabled", mb: 2 }} />
+          <SmartToyOutlinedIcon
+            sx={{ fontSize: 40, color: "text.disabled", mb: 2 }}
+          />
           <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
             {t("noAgentsHeading")}
           </Typography>

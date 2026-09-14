@@ -63,18 +63,19 @@ export default function BillingScreen() {
   if (!activeOrgId) return null;
 
   return (
-    <Box sx={{ 
-      maxWidth: 800, 
-      mx: "auto", 
-      px: 2, py: 4 ,
-      bgcolor: "background.paper",
-      p: 3,
-      borderRadius: 3,
-      border: "1px solid",
-      borderColor: "divider",
-      
-      
-      }}>
+    <Box
+      sx={{
+        maxWidth: 800,
+        mx: "auto",
+        px: 2,
+        py: 4,
+        bgcolor: "background.paper",
+        p: 3,
+        borderRadius: 3,
+        border: "1px solid",
+        borderColor: "divider",
+      }}
+    >
       <Typography
         variant="h4"
         sx={{ fontWeight: 700, letterSpacing: -0.5, mb: 5 }}

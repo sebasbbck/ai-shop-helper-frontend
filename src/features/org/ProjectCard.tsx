@@ -56,7 +56,7 @@ export default function ProjectCard({
           label={typeName}
           size="small"
           variant="outlined"
-          sx={{ fontSize: "0.7rem", height: 22 ,}}
+          sx={{ fontSize: "0.7rem", height: 22 }}
         />
       </Box>
 
