@@ -1,12 +1,13 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { fireEvent, screen } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
+import { makeRouter } from "./mocks/router";
 import AdminShell from "@/features/admin/AdminShell";
 
 const h = vi.hoisted(() => ({ push: vi.fn() }));
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: h.push, replace: vi.fn(), prefetch: vi.fn() }),
+  useRouter: () => makeRouter({ push: h.push }),
 }));
 
 vi.mock("@/features/i18n/LocaleSwitcher", () => ({

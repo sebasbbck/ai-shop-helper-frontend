@@ -1,10 +1,11 @@
 import { describe, expect, test, vi } from "vitest";
 import { fireEvent, screen } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
+import { makeRouter } from "./mocks/router";
 import RegisterForm from "@/features/auth/components/RegisterForm";
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: vi.fn(), replace: vi.fn(), prefetch: vi.fn() }),
+  useRouter: () => makeRouter(),
   useSearchParams: () => new URLSearchParams(),
 }));
 

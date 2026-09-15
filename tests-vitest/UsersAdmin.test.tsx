@@ -1,18 +1,13 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { fireEvent, screen } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
+import { makeListQueryState, type ListQueryState } from "./mocks/query-state";
+import { makeUser } from "./mocks/entities";
 import UsersAdmin from "@/features/admin/UsersAdmin";
 import type { UserPublic } from "@/api/model/userPublic";
 
-type UsersQueryState = {
-  data?: { items: UserPublic[]; total: number };
-  isLoading: boolean;
-  isError: boolean;
-  isPlaceholderData: boolean;
-};
-
 const h = vi.hoisted(() => ({
-  state: {} as UsersQueryState,
+  state: {} as ListQueryState<UserPublic>,
   getUsers: vi.fn(),
 }));
 
@@ -23,32 +18,14 @@ vi.mock("@/api/endpoints/users/users", () => ({
   },
 }));
 
-function makeUser(overrides: Partial<UserPublic>): UserPublic {
-  return {
-    id: "u1",
-    name: "Ada Lovelace",
-    email: "ada@example.com",
-    is_active: true,
-    is_superuser: false,
-    created_at: "2026-01-15T10:00:00Z",
-    updated_at: "2026-01-15T10:00:00Z",
-    ...overrides,
-  };
-}
-
 beforeEach(() => {
   h.getUsers.mockClear();
-  h.state = { isLoading: false, isError: false, isPlaceholderData: false };
+  h.state = makeListQueryState();
 });
 
 describe("UsersAdmin", () => {
   test("requests the first page on mount", () => {
-    h.state = {
-      data: { items: [], total: 0 },
-      isLoading: false,
-      isError: false,
-      isPlaceholderData: false,
-    };
+    h.state = makeListQueryState({ data: { items: [], total: 0 } });
 
     renderWithProviders(<UsersAdmin />);
 
@@ -59,12 +36,7 @@ describe("UsersAdmin", () => {
   });
 
   test("shows the empty state when there are no users", () => {
-    h.state = {
-      data: { items: [], total: 0 },
-      isLoading: false,
-      isError: false,
-      isPlaceholderData: false,
-    };
+    h.state = makeListQueryState({ data: { items: [], total: 0 } });
 
     renderWithProviders(<UsersAdmin />);
 
@@ -72,12 +44,7 @@ describe("UsersAdmin", () => {
   });
 
   test("shows the error state when the query fails", () => {
-    h.state = {
-      data: undefined,
-      isLoading: false,
-      isError: true,
-      isPlaceholderData: false,
-    };
+    h.state = makeListQueryState({ isError: true });
 
     renderWithProviders(<UsersAdmin />);
 
@@ -85,7 +52,7 @@ describe("UsersAdmin", () => {
   });
 
   test("renders users with role and status", () => {
-    h.state = {
+    h.state = makeListQueryState({
       data: {
         items: [
           makeUser({ id: "u1", name: "Ada Lovelace", is_superuser: true }),
@@ -99,10 +66,7 @@ describe("UsersAdmin", () => {
         ],
         total: 2,
       },
-      isLoading: false,
-      isError: false,
-      isPlaceholderData: false,
-    };
+    });
 
     renderWithProviders(<UsersAdmin />);
 
@@ -117,12 +81,9 @@ describe("UsersAdmin", () => {
   test("copies an email to the clipboard", async () => {
     const writeText = vi.fn().mockResolvedValue(undefined);
     Object.assign(navigator, { clipboard: { writeText } });
-    h.state = {
+    h.state = makeListQueryState({
       data: { items: [makeUser({ email: "ada@example.com" })], total: 1 },
-      isLoading: false,
-      isError: false,
-      isPlaceholderData: false,
-    };
+    });
 
     renderWithProviders(<UsersAdmin />);
     fireEvent.click(screen.getByRole("button", { name: "Copy email" }));
@@ -131,12 +92,9 @@ describe("UsersAdmin", () => {
   });
 
   test("advances the offset when paging forward", () => {
-    h.state = {
+    h.state = makeListQueryState({
       data: { items: [makeUser({})], total: 60 },
-      isLoading: false,
-      isError: false,
-      isPlaceholderData: false,
-    };
+    });
 
     renderWithProviders(<UsersAdmin />);
     fireEvent.click(screen.getByRole("button", { name: "Go to next page" }));
@@ -148,12 +106,7 @@ describe("UsersAdmin", () => {
   });
 
   test("shows skeleton rows while loading", () => {
-    h.state = {
-      data: undefined,
-      isLoading: true,
-      isError: false,
-      isPlaceholderData: false,
-    };
+    h.state = makeListQueryState({ isLoading: true });
 
     const { container } = renderWithProviders(<UsersAdmin />);
 
