@@ -1,26 +1,20 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { fireEvent, screen } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
+import { makeActiveContext } from "./mocks/active-context";
+import { makeListQueryState, type ListQueryState } from "./mocks/query-state";
+import { makeMember } from "./mocks/entities";
 import OrgMembers from "@/features/org-admin/OrgMembers";
 import type { OrgMemberPublic } from "@/api/model/orgMemberPublic";
 
-type MembersState = {
-  data?: { items: OrgMemberPublic[]; total: number };
-  isLoading: boolean;
-  isError: boolean;
-  isPlaceholderData: boolean;
-};
-
 const h = vi.hoisted(() => ({
-  state: {} as MembersState,
+  state: {} as ListQueryState<OrgMemberPublic>,
   getMembers: vi.fn(),
 }));
 
 vi.mock("@/features/shell/ActiveContext", () => ({
-  useActiveContext: () => ({
-    activeOrgId: "org1",
-    activeOrg: { name: "Acme" },
-  }),
+  useActiveContext: () =>
+    makeActiveContext({ activeOrgId: "org1", activeOrg: { name: "Acme" } }),
 }));
 
 vi.mock("@/api/endpoints/org-members/org-members", () => ({
@@ -34,31 +28,14 @@ vi.mock("@/api/endpoints/org-members/org-members", () => ({
   },
 }));
 
-function makeMember(overrides: Partial<OrgMemberPublic> = {}): OrgMemberPublic {
-  return {
-    id: "m1",
-    org_id: "org1",
-    user: { id: "u1", name: "Ada Lovelace", email: "ada@example.com" },
-    role: { id: "r1", name: "Member", access_level: 20 },
-    created_at: "2026-01-15T10:00:00Z",
-    updated_at: "2026-01-15T10:00:00Z",
-    ...overrides,
-  };
-}
-
 beforeEach(() => {
   h.getMembers.mockClear();
-  h.state = { isLoading: false, isError: false, isPlaceholderData: false };
+  h.state = makeListQueryState();
 });
 
 describe("OrgMembers", () => {
   test("requests the active org's first page", () => {
-    h.state = {
-      data: { items: [], total: 0 },
-      isLoading: false,
-      isError: false,
-      isPlaceholderData: false,
-    };
+    h.state = makeListQueryState({ data: { items: [], total: 0 } });
     renderWithProviders(<OrgMembers />);
     expect(h.getMembers).toHaveBeenCalledWith(
       "org1",
@@ -68,29 +45,19 @@ describe("OrgMembers", () => {
   });
 
   test("shows the empty state", () => {
-    h.state = {
-      data: { items: [], total: 0 },
-      isLoading: false,
-      isError: false,
-      isPlaceholderData: false,
-    };
+    h.state = makeListQueryState({ data: { items: [], total: 0 } });
     renderWithProviders(<OrgMembers />);
     expect(screen.getByText("No members found")).toBeInTheDocument();
   });
 
   test("shows the error state", () => {
-    h.state = {
-      data: undefined,
-      isLoading: false,
-      isError: true,
-      isPlaceholderData: false,
-    };
+    h.state = makeListQueryState({ isError: true });
     renderWithProviders(<OrgMembers />);
     expect(screen.getByText("Could not load members")).toBeInTheDocument();
   });
 
   test("renders members with nested user and role", () => {
-    h.state = {
+    h.state = makeListQueryState({
       data: {
         items: [
           makeMember({ role: { id: "r0", name: "Owner", access_level: 0 } }),
@@ -101,10 +68,7 @@ describe("OrgMembers", () => {
         ],
         total: 2,
       },
-      isLoading: false,
-      isError: false,
-      isPlaceholderData: false,
-    };
+    });
     renderWithProviders(<OrgMembers />);
     expect(screen.getByText("Ada Lovelace")).toBeInTheDocument();
     expect(screen.getByText("bob@example.com")).toBeInTheDocument();
@@ -113,12 +77,9 @@ describe("OrgMembers", () => {
   });
 
   test("advances the offset when paging", () => {
-    h.state = {
+    h.state = makeListQueryState({
       data: { items: [makeMember()], total: 60 },
-      isLoading: false,
-      isError: false,
-      isPlaceholderData: false,
-    };
+    });
     renderWithProviders(<OrgMembers />);
     fireEvent.click(screen.getByRole("button", { name: "Go to next page" }));
     expect(h.getMembers).toHaveBeenLastCalledWith(
@@ -129,12 +90,7 @@ describe("OrgMembers", () => {
   });
 
   test("shows skeletons while loading", () => {
-    h.state = {
-      data: undefined,
-      isLoading: true,
-      isError: false,
-      isPlaceholderData: false,
-    };
+    h.state = makeListQueryState({ isLoading: true });
     const { container } = renderWithProviders(<OrgMembers />);
     expect(
       container.querySelectorAll(".MuiSkeleton-root").length,

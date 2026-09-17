@@ -1,6 +1,8 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { fireEvent, screen } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
+import { makeRouter } from "./mocks/router";
+import { makeNotification } from "./mocks/entities";
 import NotificationsMenu from "@/features/notifications/NotificationsMenu";
 import type { NotificationPublic } from "@/api/model/notificationPublic";
 
@@ -13,7 +15,7 @@ const h = vi.hoisted(() => ({
 }));
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: h.push, replace: vi.fn(), prefetch: vi.fn() }),
+  useRouter: () => makeRouter({ push: h.push }),
 }));
 
 vi.mock("@/api/endpoints/notifications/notifications", () => ({
@@ -28,19 +30,6 @@ vi.mock("@/api/endpoints/notifications/notifications", () => ({
   }),
   useNotificationsMarkNotificationRead: () => ({ mutate: h.mutate }),
 }));
-
-function makeNotification(
-  overrides: Partial<NotificationPublic>,
-): NotificationPublic {
-  return {
-    id: "n1",
-    type: "execution_finished",
-    payload: {},
-    read_at: null,
-    created_at: "2026-09-03T10:00:00Z",
-    ...overrides,
-  };
-}
 
 function openMenu() {
   fireEvent.click(screen.getByRole("button", { name: "Notifications" }));

@@ -1,6 +1,8 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { fireEvent, screen } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
+import { makeRouter } from "./mocks/router";
+import { makeActiveContext } from "./mocks/active-context";
 import OrgSwitcher from "@/components/layout/OrgSwitcher";
 
 const h = vi.hoisted(() => ({
@@ -9,17 +11,17 @@ const h = vi.hoisted(() => ({
 }));
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: h.push, replace: vi.fn(), prefetch: vi.fn() }),
+  useRouter: () => makeRouter({ push: h.push }),
   usePathname: () => "/org",
 }));
 
 vi.mock("@/features/shell/ActiveContext", () => ({
-  useActiveContext: () => ({
-    orgs: [{ id: "org1", name: "Acme" }],
-    activeOrg: { id: "org1", name: "Acme" },
-    activeOrgId: "org1",
-    setActiveOrg: vi.fn(),
-  }),
+  useActiveContext: () =>
+    makeActiveContext({
+      orgs: [{ id: "org1", name: "Acme" }],
+      activeOrg: { id: "org1", name: "Acme" },
+      activeOrgId: "org1",
+    }),
 }));
 
 vi.mock("@/features/org-admin/useActiveOrgRole", () => ({

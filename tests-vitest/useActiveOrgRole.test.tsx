@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { screen } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
+import { makeActiveContext } from "./mocks/active-context";
 import { useActiveOrgRole } from "@/features/org-admin/useActiveOrgRole";
 
 const h = vi.hoisted(() => ({
@@ -12,7 +13,7 @@ const h = vi.hoisted(() => ({
 }));
 
 vi.mock("@/features/shell/ActiveContext", () => ({
-  useActiveContext: () => ({ activeOrgId: h.activeOrgId }),
+  useActiveContext: () => makeActiveContext({ activeOrgId: h.activeOrgId }),
 }));
 
 vi.mock("@/api/endpoints/users/users", () => ({

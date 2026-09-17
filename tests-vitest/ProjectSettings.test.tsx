@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { screen } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
+import { makeActiveContext } from "./mocks/active-context";
 import ProjectSettings from "@/features/project/ProjectSettings";
 
 const h = vi.hoisted(() => ({
@@ -8,15 +9,16 @@ const h = vi.hoisted(() => ({
 }));
 
 vi.mock("@/features/shell/ActiveContext", () => ({
-  useActiveContext: () => ({
-    activeOrgId: "org-1",
-    activeProjectId: "project-1",
-    activeProject: {
-      id: "project-1",
-      name: "My Project",
-      project_type_id: "pt-1",
-    },
-  }),
+  useActiveContext: () =>
+    makeActiveContext({
+      activeOrgId: "org-1",
+      activeProjectId: "project-1",
+      activeProject: {
+        id: "project-1",
+        name: "My Project",
+        project_type_id: "pt-1",
+      },
+    }),
 }));
 
 vi.mock("@/api/endpoints/projects/projects", () => ({
