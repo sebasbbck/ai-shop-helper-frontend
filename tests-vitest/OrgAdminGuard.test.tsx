@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { screen } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
+import { makeRouter } from "./mocks/router";
 import OrgAdminGuard from "@/features/org-admin/OrgAdminGuard";
 
 const h = vi.hoisted(() => ({
@@ -9,7 +10,7 @@ const h = vi.hoisted(() => ({
 }));
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ replace: h.replace, push: vi.fn(), prefetch: vi.fn() }),
+  useRouter: () => makeRouter({ replace: h.replace }),
 }));
 
 vi.mock("@/features/org-admin/useActiveOrgRole", () => ({

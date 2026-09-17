@@ -1,6 +1,8 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { fireEvent, screen } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
+import { makeRouter } from "./mocks/router";
+import { makeUser } from "./mocks/entities";
 import UserMenu from "@/components/layout/UserMenu";
 import type { UserPublic } from "@/api/model/userPublic";
 
@@ -11,7 +13,7 @@ const h = vi.hoisted(() => ({
 }));
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: h.push, replace: vi.fn(), prefetch: vi.fn() }),
+  useRouter: () => makeRouter({ push: h.push }),
 }));
 
 vi.mock("@/api/endpoints/users/users", () => ({
@@ -23,19 +25,6 @@ vi.mock("@/api/endpoints/auth/auth", () => ({
 }));
 
 vi.mock("@/lib/api/token-store", () => ({ setAccessToken: vi.fn() }));
-
-function makeUser(overrides: Partial<UserPublic>): UserPublic {
-  return {
-    id: "u1",
-    name: "Ada Lovelace",
-    email: "ada@example.com",
-    is_active: true,
-    is_superuser: false,
-    created_at: "2026-01-15T10:00:00Z",
-    updated_at: "2026-01-15T10:00:00Z",
-    ...overrides,
-  };
-}
 
 function openMenu() {
   fireEvent.click(screen.getByRole("button", { name: "User menu" }));
