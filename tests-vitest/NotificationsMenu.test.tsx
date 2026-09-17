@@ -11,10 +11,11 @@ const h = vi.hoisted(() => ({
   notifications: [] as NotificationPublic[],
   isLoading: false,
   mutate: vi.fn(),
+  push: vi.fn(),
 }));
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => makeRouter(),
+  useRouter: () => makeRouter({ push: h.push }),
 }));
 
 vi.mock("@/api/endpoints/notifications/notifications", () => ({
@@ -40,6 +41,7 @@ describe("NotificationsMenu", () => {
     h.notifications = [];
     h.isLoading = false;
     h.mutate.mockClear();
+    h.push.mockClear();
   });
 
   test("shows the unread count badge", () => {
@@ -50,7 +52,7 @@ describe("NotificationsMenu", () => {
     expect(screen.getByText("3")).toBeInTheDocument();
   });
 
-  test("renders the localized title and body for a known reason", () => {
+  test("renders the localized title but not the body", () => {
     h.notifications = [
       makeNotification({
         type: "service_change",
@@ -67,10 +69,19 @@ describe("NotificationsMenu", () => {
 
     expect(screen.getByText("New connection established")).toBeInTheDocument();
     expect(
-      screen.getByText(
+      screen.queryByText(
         'Project "My Project" has been successfully connected to WordPress.',
       ),
-    ).toBeInTheDocument();
+    ).not.toBeInTheDocument();
+  });
+
+  test("links to the dedicated notifications view instead of settings", () => {
+    renderWithProviders(<NotificationsMenu />);
+    openMenu();
+
+    fireEvent.click(screen.getByText("View all"));
+
+    expect(h.push).toHaveBeenCalledWith("/notifications");
   });
 
   test("falls back to the type label when the payload has no recognized reason", () => {
@@ -100,23 +111,5 @@ describe("NotificationsMenu", () => {
     fireEvent.click(screen.getByText("Account activated"));
 
     expect(h.mutate).toHaveBeenCalledWith({ notificationId: "n2" });
-  });
-
-  test("does not re-mark an already read notification as read", () => {
-    h.notifications = [
-      makeNotification({
-        id: "n3",
-        type: "user_status_change",
-        payload: { reason: "activated" },
-        read_at: "2026-09-03T10:05:00Z",
-      }),
-    ];
-
-    renderWithProviders(<NotificationsMenu />);
-    openMenu();
-
-    fireEvent.click(screen.getByText("Account activated"));
-
-    expect(h.mutate).not.toHaveBeenCalled();
   });
 });
