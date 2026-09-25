@@ -17,8 +17,6 @@ const h = vi.hoisted(() => ({
 }));
 
 vi.mock("next/navigation", () => {
-  // Next keeps the router identity stable across renders; a fresh object per
-  // call would re-run the effects of AuthGate, which depend on `router`.
   let router: ReturnType<typeof makeRouter> | undefined;
   return { useRouter: () => (router ??= makeRouter({ replace: h.replace })) };
 });
@@ -34,7 +32,6 @@ vi.mock("@/api/endpoints/users/users", () => ({
   },
 }));
 
-/** A promise whose resolution this test controls. */
 function deferred<T>() {
   let resolve!: (value: T) => void;
   const promise = new Promise<T>((r) => {
@@ -111,7 +108,6 @@ describe("AuthGate", () => {
 
     await waitFor(() => expect(h.replace).toHaveBeenCalledWith("/login"));
     expect(h.replace).toHaveBeenCalledTimes(1);
-    // The gate stays unready, so the query is never enabled.
     expect(queryEnabled()).toBe(false);
     expect(content()).not.toBeInTheDocument();
   });
@@ -135,7 +131,6 @@ describe("AuthGate", () => {
       token.resolve("token-123");
     });
 
-    // The cleanup flag stops both the state update and the redirect.
     expect(h.replace).not.toHaveBeenCalled();
   });
 

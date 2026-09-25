@@ -37,13 +37,10 @@ const h = vi.hoisted(() => ({
 }));
 
 vi.mock("next/navigation", () => {
-  // Next keeps the router identity stable across renders.
   let router: ReturnType<typeof makeRouter> | undefined;
   return { useRouter: () => (router ??= makeRouter({ push: h.push })) };
 });
 
-// Only useTranslations is replaced; NextIntlClientProvider and the rest of the
-// module are kept so the app's own providers keep working.
 vi.mock("next-intl", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next-intl")>()),
   useTranslations: () => (key: string) => key,
@@ -55,7 +52,6 @@ vi.mock("@tanstack/react-query", async (importOriginal) => ({
 }));
 
 vi.mock("@/api/endpoints/projects/projects", () => ({
-  // The options object is captured so the tests can drive onSuccess / onError.
   useProjectsCreateProject: (options: unknown) => {
     h.mutationOptions = options;
     return { mutate: h.createProject, isPending: h.isPending };
@@ -100,7 +96,6 @@ const mutationOptions = () => h.mutationOptions as MutationOptions;
 const typesQueryEnabled = () =>
   (h.typesArgs?.[1] as { query: { enabled: boolean } }).query.enabled;
 
-/** Picks a project type from the MUI select. */
 function selectType(name: string) {
   fireEvent.mouseDown(typeSelect());
   fireEvent.click(
@@ -108,7 +103,6 @@ function selectType(name: string) {
   );
 }
 
-/** Fills both fields and submits. */
 async function fillAndSubmit(name = "Shop", type = "Blog") {
   fireEvent.change(nameField(), { target: { value: name } });
   selectType(type);
@@ -129,7 +123,6 @@ beforeEach(() => {
   onClose.mockClear();
 });
 
-// The dialog and the select menu are portalled onto document.body.
 afterEach(cleanup);
 
 describe("CreateProjectDialog", () => {
@@ -211,7 +204,6 @@ describe("CreateProjectDialog", () => {
     selectType("Blog");
     submitForm();
 
-    // The submit button is disabled too, but the guard must hold on its own.
     await waitFor(() =>
       expect(screen.queryByText("nameRequired")).not.toBeInTheDocument(),
     );

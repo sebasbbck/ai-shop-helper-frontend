@@ -24,8 +24,6 @@ vi.mock("next/link", () => ({
   ),
 }));
 
-// Only useTranslations is replaced; NextIntlClientProvider and the rest of the
-// module are kept so the app's own providers keep working.
 vi.mock("next-intl", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next-intl")>()),
   useTranslations: () => (key: string) => key,

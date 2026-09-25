@@ -11,8 +11,6 @@ import GoogleLoginButton from "@/features/auth/components/GoogleLoginButton";
 
 const h = vi.hoisted(() => ({ googleLoginWithGoogle: vi.fn() }));
 
-// Only useTranslations is replaced; NextIntlClientProvider and the rest of the
-// module are kept so the app's own providers keep working.
 vi.mock("next-intl", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next-intl")>()),
   useTranslations: () => (key: string) => key,
@@ -22,7 +20,6 @@ vi.mock("@/api/endpoints/google/google", () => ({
   googleLoginWithGoogle: h.googleLoginWithGoogle,
 }));
 
-/** A promise whose resolution this test controls. */
 function deferred<T>() {
   let resolve!: (value: T) => void;
   let reject!: (reason?: unknown) => void;
@@ -38,8 +35,6 @@ const alert = () => screen.queryByRole("alert");
 
 beforeEach(() => {
   h.googleLoginWithGoogle.mockReset();
-  // window.location is read-only in jsdom, so it is swapped for a plain object
-  // whose href assignment the test can observe.
   vi.stubGlobal("location", { href: "http://localhost/login" });
 });
 
@@ -99,7 +94,6 @@ describe("GoogleLoginButton", () => {
 
     fireEvent.click(button());
 
-    // The redirect is under way, so the button must not invite a second click.
     await waitFor(() =>
       expect(window.location.href).toBe("https://accounts.google.com"),
     );

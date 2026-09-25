@@ -87,14 +87,11 @@ describe("AdminGuard", () => {
     h.user = member;
     renderGuard();
 
-    // The redirect is asynchronous, so the guard must render the spinner
-    // instead of the protected content in the meantime.
     expect(content()).not.toBeInTheDocument();
     expect(spinner()).toBeInTheDocument();
   });
 
   test("shows a spinner and stays put when there is no user at all", () => {
-    // e.g. the request failed: not loading, no data, nothing to redirect on.
     renderGuard();
 
     expect(spinner()).toBeInTheDocument();

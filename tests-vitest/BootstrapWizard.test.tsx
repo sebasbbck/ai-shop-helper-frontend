@@ -41,13 +41,10 @@ const h = vi.hoisted(() => ({
 }));
 
 vi.mock("next/navigation", () => {
-  // Next keeps the router identity stable across renders.
   let router: ReturnType<typeof makeRouter> | undefined;
   return { useRouter: () => (router ??= makeRouter({ push: h.push })) };
 });
 
-// Only useTranslations is replaced; NextIntlClientProvider and the rest of the
-// module are kept so the app's own providers keep working.
 vi.mock("next-intl", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next-intl")>()),
   useTranslations: () => (key: string) => key,
@@ -58,7 +55,6 @@ vi.mock("@tanstack/react-query", async (importOriginal) => ({
   useQueryClient: () => ({ invalidateQueries: h.invalidateQueries }),
 }));
 
-// Both mutation hooks capture their options so the tests can drive the callbacks.
 vi.mock("@/api/endpoints/orgs/orgs", () => ({
   useOrgsCreateOrg: (options: unknown) => {
     h.orgOptions = options;
@@ -94,7 +90,6 @@ const projectOptions = () => h.projectOptions as ProjectMutationOptions;
 const typesQueryEnabled = () =>
   (h.typesArgs?.[1] as { query: { enabled: boolean } }).query.enabled;
 
-/** Completes step 1 and lands on step 2 with `orgId` created. */
 async function reachProjectStep(orgId = "org-1") {
   fireEvent.change(nameField(), { target: { value: "Acme" } });
   submitForm();
@@ -105,7 +100,6 @@ async function reachProjectStep(orgId = "org-1") {
   await screen.findByText("projectHeading");
 }
 
-/** Picks a project type from the MUI select. */
 function selectProjectType(name: string) {
   fireEvent.mouseDown(screen.getByRole("combobox"));
   fireEvent.click(
@@ -127,7 +121,6 @@ beforeEach(() => {
   h.typesData = { items: types };
 });
 
-// The select menu is portalled onto document.body.
 afterEach(cleanup);
 
 describe("BootstrapWizard, org step", () => {
@@ -202,8 +195,6 @@ describe("BootstrapWizard, project step", () => {
     expect(screen.queryByText("orgHeading")).not.toBeInTheDocument();
     expect(submitButton()).toHaveTextContent("finishButton");
     expect(screen.getByRole("combobox")).toBeInTheDocument();
-    // The label is not tied to the select with an id, so it can only be found
-    // as text; see the note in the summary.
     expect(screen.getAllByText("projectTypeLabel").length).toBeGreaterThan(0);
   });
 
@@ -266,7 +257,7 @@ describe("BootstrapWizard, project step", () => {
 
   test("does not create a project when the org id went missing", async () => {
     renderWithProviders(<BootstrapWizard />);
-    await reachProjectStep(""); // onSuccess handed back an org without a usable id
+    await reachProjectStep("");
 
     fireEvent.change(nameField(), { target: { value: "Shop" } });
     selectProjectType("Blog");
@@ -283,7 +274,6 @@ describe("BootstrapWizard, project step", () => {
     await reachProjectStep();
     h.projectIsPending = true;
 
-    // Re-render through a state change so the new pending flag is picked up.
     fireEvent.change(nameField(), { target: { value: "Shop" } });
     submitForm();
 

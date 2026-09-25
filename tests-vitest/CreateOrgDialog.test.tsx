@@ -44,7 +44,6 @@ vi.mock("@tanstack/react-query", async (importOriginal) => ({
 }));
 
 vi.mock("@/api/endpoints/orgs/orgs", () => ({
-  // The options object is captured so the tests can drive onSuccess / onError.
   useOrgsCreateOrg: (options: unknown) => {
     h.options = options;
     return { mutate: h.mutate, isPending: h.isPending };

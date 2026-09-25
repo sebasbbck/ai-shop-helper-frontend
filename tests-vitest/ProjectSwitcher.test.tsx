@@ -31,8 +31,6 @@ vi.mock("next/navigation", () => ({
   usePathname: () => h.pathname,
 }));
 
-// Only useTranslations is replaced; NextIntlClientProvider and the rest of the
-// module are kept so the app's own providers keep working.
 vi.mock("next-intl", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next-intl")>()),
   useTranslations: () => (key: string) => key,
@@ -70,7 +68,6 @@ function renderSwitcher(
   return renderWithProviders(<ProjectSwitcher collapsed={false} {...props} />);
 }
 
-// Expanded: the avatar button is the first button; collapsed: the folder button is.
 const switcherButton = () => screen.getAllByRole("button")[0];
 const sectionToggle = () =>
   (
@@ -94,7 +91,6 @@ beforeEach(() => {
   h.activeProjectId = alpha.id;
 });
 
-// The menu and the tooltips are portalled onto document.body.
 afterEach(cleanup);
 
 describe("ProjectSwitcher, expanded", () => {
@@ -119,8 +115,6 @@ describe("ProjectSwitcher, expanded", () => {
   });
 
   test("ignores empty words when building the initials", () => {
-    // "Gamma  Delta" splits into ["Gamma", "", "Delta"]: the empty word has no
-    // first character and must not blow up or add a letter.
     h.activeProject = { id: "p3", name: "Gamma  Delta" };
     renderSwitcher();
 
@@ -165,7 +159,6 @@ describe("ProjectSwitcher, expanded", () => {
     fireEvent.click(sectionToggle());
 
     expect(screen.getByTestId("ExpandMoreIcon")).toBeInTheDocument();
-    // unmountOnExit: the nested list is removed once the collapse transition ends.
     await waitForElementToBeRemoved(() =>
       screen.queryByRole("button", { name: "settings" }),
     );
@@ -211,7 +204,7 @@ describe("ProjectSwitcher, project menu", () => {
 
     openSwitcherMenu();
 
-    expect(within(menu()).getAllByRole("menuitem")).toHaveLength(3); // 2 projects + new
+    expect(within(menu()).getAllByRole("menuitem")).toHaveLength(3);
     expect(
       within(menuItem(/Alpha Project/)).getByTestId("CheckIcon"),
     ).toBeInTheDocument();
@@ -239,7 +232,7 @@ describe("ProjectSwitcher, project menu", () => {
     openSwitcherMenu();
 
     expect(within(menu()).getByText("noProjects")).toBeInTheDocument();
-    expect(within(menu()).getAllByRole("menuitem")).toHaveLength(2); // empty state + new
+    expect(within(menu()).getAllByRole("menuitem")).toHaveLength(2);
   });
 
   test("shows an empty state when there is no active org at all", () => {

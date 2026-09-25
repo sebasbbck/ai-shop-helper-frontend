@@ -30,8 +30,6 @@ vi.mock("next/navigation", () => ({
   usePathname: () => h.pathname,
 }));
 
-// Only useTranslations is replaced; NextIntlClientProvider and the rest of the
-// module are kept so the app's own providers keep working.
 vi.mock("next-intl", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next-intl")>()),
   useTranslations: () => (key: string) => key,
@@ -48,8 +46,6 @@ vi.mock("@/features/shell/ActiveContext", () => ({
   useActiveContext: () => ({ activeProjectTypeId: h.activeProjectTypeId }),
 }));
 
-// The label hook has its own translation logic; here it is the identity so the
-// assertions stay about the list itself.
 vi.mock("@/features/agents/use-agent-label", () => ({
   useAgentLabel: () => (name: string) => ({ name, description: "" }),
 }));
@@ -76,7 +72,6 @@ beforeEach(() => {
   h.agentsData = { items: agents };
 });
 
-// The menu and the tooltips are portalled onto document.body.
 afterEach(cleanup);
 
 describe("AgentsNavList, the agents query", () => {
@@ -112,7 +107,6 @@ describe("AgentsNavList, expanded", () => {
 
     expect(header()).toBeInTheDocument();
     expect(screen.getByTestId("ExpandMoreIcon")).toBeInTheDocument();
-    // unmountOnExit: no agent entries while the section is closed.
     expect(
       screen.queryByRole("button", { name: "Blog Writer" }),
     ).not.toBeInTheDocument();
@@ -141,7 +135,6 @@ describe("AgentsNavList, expanded", () => {
     h.pathname = "/agents/a1";
     renderList();
 
-    // Open on an agent route: the agent entry carries the highlight, not the header.
     expect(header()).not.toHaveClass("Mui-selected");
 
     fireEvent.click(header());

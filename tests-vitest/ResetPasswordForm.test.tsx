@@ -30,8 +30,6 @@ vi.mock("next/link", () => ({
   ),
 }));
 
-// Only useTranslations is replaced; NextIntlClientProvider and the rest of the
-// module are kept so the app's own providers keep working.
 vi.mock("next-intl", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next-intl")>()),
   useTranslations: () => (key: string) => key,
@@ -57,7 +55,6 @@ const submitButton = () =>
 const loginLink = () =>
   screen.getByRole("link", { name: "resetPassword.goToLogin" });
 
-/** Fills both fields and submits. */
 function submitPasswords(password: string, confirm = password) {
   fireEvent.change(passwordField(), { target: { value: password } });
   fireEvent.change(confirmField(), { target: { value: confirm } });
@@ -152,7 +149,6 @@ describe("ResetPasswordForm, with a token", () => {
       }),
     );
     expect(h.reset).toHaveBeenCalledTimes(1);
-    // The confirmation is only checked locally, never sent.
     expect(h.reset).not.toHaveBeenCalledWith(
       expect.objectContaining({
         data: expect.objectContaining({ confirm: expect.anything() }),
@@ -188,7 +184,6 @@ describe("ResetPasswordForm, with a token", () => {
     renderWithProviders(<ResetPasswordForm />);
 
     expect(screen.getByRole("alert")).toHaveTextContent("resetPassword.error");
-    // The form stays usable so the user can try again.
     expect(passwordField()).toBeInTheDocument();
     expect(submitButton()).toBeEnabled();
   });
@@ -214,7 +209,6 @@ describe("ResetPasswordForm, after the reset", () => {
     h.isSuccess = true;
     renderWithProviders(<ResetPasswordForm />);
 
-    // The token check comes first, so it wins over the success view.
     expect(screen.getByRole("alert")).toHaveTextContent("resetPassword.error");
   });
 });
