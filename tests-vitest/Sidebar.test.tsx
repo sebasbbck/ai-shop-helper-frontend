@@ -3,8 +3,10 @@ import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { cleanup, fireEvent, screen, within } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
 import Sidebar from "@/components/layout/Sidebar";
-import { SIDEBAR_MINI, SIDEBAR_WIDTH } from "@/components/layout/shell-constants";
-
+import {
+  SIDEBAR_MINI,
+  SIDEBAR_WIDTH,
+} from "@/components/layout/shell-constants";
 
 vi.mock("@/components/layout/SidebarContent", () => ({
   default: ({
@@ -37,9 +39,10 @@ function renderSidebar(props: Partial<ComponentProps<typeof Sidebar>> = {}) {
   );
 }
 
-
-const mobileDrawer = () => document.querySelector<HTMLElement>(".MuiDrawer-modal");
-const desktopDrawer = () => document.querySelector<HTMLElement>(".MuiDrawer-docked");
+const mobileDrawer = () =>
+  document.querySelector<HTMLElement>(".MuiDrawer-modal");
+const desktopDrawer = () =>
+  document.querySelector<HTMLElement>(".MuiDrawer-docked");
 const paperOf = (drawer: HTMLElement | null) =>
   drawer!.querySelector<HTMLElement>(".MuiDrawer-paper")!;
 const contentOf = (drawer: HTMLElement | null) =>
@@ -102,23 +105,40 @@ describe("Sidebar", () => {
   test("never collapses the content of the mobile drawer", () => {
     renderSidebar({ collapsed: true, mobileOpen: true });
 
-    expect(contentOf(mobileDrawer())).toHaveAttribute("data-collapsed", "false");
+    expect(contentOf(mobileDrawer())).toHaveAttribute(
+      "data-collapsed",
+      "false",
+    );
   });
 
   test("renders the desktop drawer at full width when expanded", () => {
     renderSidebar({ collapsed: false });
 
-    expect(contentOf(desktopDrawer())).toHaveAttribute("data-collapsed", "false");
-    expect(paperOf(desktopDrawer())).toHaveStyle({ width: `${SIDEBAR_WIDTH}px` });
-    expect(desktopDrawer()!.parentElement).toHaveStyle({ width: `${SIDEBAR_WIDTH}px` });
+    expect(contentOf(desktopDrawer())).toHaveAttribute(
+      "data-collapsed",
+      "false",
+    );
+    expect(paperOf(desktopDrawer())).toHaveStyle({
+      width: `${SIDEBAR_WIDTH}px`,
+    });
+    expect(desktopDrawer()!.parentElement).toHaveStyle({
+      width: `${SIDEBAR_WIDTH}px`,
+    });
   });
 
   test("renders the desktop drawer at mini width when collapsed", () => {
     renderSidebar({ collapsed: true });
 
-    expect(contentOf(desktopDrawer())).toHaveAttribute("data-collapsed", "true");
-    expect(paperOf(desktopDrawer())).toHaveStyle({ width: `${SIDEBAR_MINI}px` });
-    expect(desktopDrawer()!.parentElement).toHaveStyle({ width: `${SIDEBAR_MINI}px` });
+    expect(contentOf(desktopDrawer())).toHaveAttribute(
+      "data-collapsed",
+      "true",
+    );
+    expect(paperOf(desktopDrawer())).toHaveStyle({
+      width: `${SIDEBAR_MINI}px`,
+    });
+    expect(desktopDrawer()!.parentElement).toHaveStyle({
+      width: `${SIDEBAR_MINI}px`,
+    });
   });
 
   test("forwards onToggleCollapse from both drawers", () => {

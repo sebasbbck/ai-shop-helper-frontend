@@ -1,6 +1,12 @@
 import type { ComponentProps } from "react";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { act, cleanup, fireEvent, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  cleanup,
+  fireEvent,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
 import { makeRouter } from "./mocks/router";
 import CreateOrgDialog from "@/components/layout/CreateOrgDialog";
@@ -52,12 +58,17 @@ vi.mock("@/features/shell/ActiveContext", () => ({
 
 const onClose = vi.fn();
 
-function renderDialog(props: Partial<ComponentProps<typeof CreateOrgDialog>> = {}) {
-  return renderWithProviders(<CreateOrgDialog open onClose={onClose} {...props} />);
+function renderDialog(
+  props: Partial<ComponentProps<typeof CreateOrgDialog>> = {},
+) {
+  return renderWithProviders(
+    <CreateOrgDialog open onClose={onClose} {...props} />,
+  );
 }
 
 const nameField = () => screen.getByLabelText("name") as HTMLInputElement;
-const submitButton = () => screen.getByRole("button", { name: /create|creating/ });
+const submitButton = () =>
+  screen.getByRole("button", { name: /create|creating/ });
 const cancelButton = () => screen.getByRole("button", { name: "cancel" });
 const mutationOptions = () => h.options as MutationOptions;
 
@@ -144,7 +155,9 @@ describe("CreateOrgDialog", () => {
       await mutationOptions().mutation.onSuccess({ id: "org-1" });
     });
 
-    expect(h.invalidateQueries).toHaveBeenCalledWith({ queryKey: ["orgs", "my"] });
+    expect(h.invalidateQueries).toHaveBeenCalledWith({
+      queryKey: ["orgs", "my"],
+    });
     expect(h.selectAfterCreate).toHaveBeenCalledWith("org-1");
     expect(h.push).toHaveBeenCalledWith("/org");
     expect(onClose).toHaveBeenCalledTimes(1);

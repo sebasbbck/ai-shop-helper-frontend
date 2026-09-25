@@ -10,7 +10,14 @@ const h = vi.hoisted(() => ({
 }));
 
 vi.mock("next/link", () => ({
-  default: ({ href, children, ...rest }: { href: string; children: React.ReactNode }) => (
+  default: ({
+    href,
+    children,
+    ...rest
+  }: {
+    href: string;
+    children: React.ReactNode;
+  }) => (
     <a href={href} {...rest}>
       {children}
     </a>
@@ -37,7 +44,8 @@ const submitButton = () =>
   screen.getByRole("button", {
     name: /recoverPassword\.submitButton|recoverPassword\.submitting/,
   });
-const loginLink = () => screen.getByRole("link", { name: "recoverPassword.goToLogin" });
+const loginLink = () =>
+  screen.getByRole("link", { name: "recoverPassword.goToLogin" });
 
 beforeEach(() => {
   h.forgot.mockClear();
@@ -87,7 +95,9 @@ describe("RecoverPasswordForm, request", () => {
     fireEvent.submit(submitButton().closest("form")!);
 
     await waitFor(() =>
-      expect(h.forgot).toHaveBeenCalledWith({ data: { email: "user@example.com" } }),
+      expect(h.forgot).toHaveBeenCalledWith({
+        data: { email: "user@example.com" },
+      }),
     );
     expect(h.forgot).toHaveBeenCalledTimes(1);
   });
@@ -124,7 +134,9 @@ describe("RecoverPasswordForm, sent", () => {
     expect(screen.getByRole("alert")).toHaveTextContent("recoverPassword.sent");
     expect(screen.queryByLabelText("email")).not.toBeInTheDocument();
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
-    expect(screen.queryByText("recoverPassword.description")).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("recoverPassword.description"),
+    ).not.toBeInTheDocument();
   });
 
   test("still offers the way back to the login page", () => {

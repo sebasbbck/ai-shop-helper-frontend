@@ -1,6 +1,13 @@
 import type { ComponentProps } from "react";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { act, cleanup, fireEvent, screen, waitFor, within } from "@testing-library/react";
+import {
+  act,
+  cleanup,
+  fireEvent,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
 import { makeRouter } from "./mocks/router";
 import CreateProjectDialog from "@/components/layout/CreateProjectDialog";
@@ -75,13 +82,18 @@ vi.mock("@/features/shell/ActiveContext", () => ({
 
 const onClose = vi.fn();
 
-function renderDialog(props: Partial<ComponentProps<typeof CreateProjectDialog>> = {}) {
-  return renderWithProviders(<CreateProjectDialog open onClose={onClose} {...props} />);
+function renderDialog(
+  props: Partial<ComponentProps<typeof CreateProjectDialog>> = {},
+) {
+  return renderWithProviders(
+    <CreateProjectDialog open onClose={onClose} {...props} />,
+  );
 }
 
 const nameField = () => screen.getByLabelText("name") as HTMLInputElement;
 const typeSelect = () => screen.getByRole("combobox");
-const submitButton = () => screen.getByRole("button", { name: /create|creating/ });
+const submitButton = () =>
+  screen.getByRole("button", { name: /create|creating/ });
 const cancelButton = () => screen.getByRole("button", { name: "cancel" });
 const submitForm = () => fireEvent.submit(submitButton().closest("form")!);
 const mutationOptions = () => h.mutationOptions as MutationOptions;
@@ -91,7 +103,9 @@ const typesQueryEnabled = () =>
 /** Picks a project type from the MUI select. */
 function selectType(name: string) {
   fireEvent.mouseDown(typeSelect());
-  fireEvent.click(within(screen.getByRole("listbox")).getByRole("option", { name }));
+  fireEvent.click(
+    within(screen.getByRole("listbox")).getByRole("option", { name }),
+  );
 }
 
 /** Fills both fields and submits. */
@@ -151,7 +165,10 @@ describe("CreateProjectDialog", () => {
     fireEvent.mouseDown(typeSelect());
 
     const options = within(screen.getByRole("listbox")).getAllByRole("option");
-    expect(options.map((option) => option.textContent)).toEqual(["E-commerce", "Blog"]);
+    expect(options.map((option) => option.textContent)).toEqual([
+      "E-commerce",
+      "Blog",
+    ]);
   });
 
   test("offers nothing while the types are still loading", () => {
@@ -160,7 +177,9 @@ describe("CreateProjectDialog", () => {
 
     fireEvent.mouseDown(typeSelect());
 
-    expect(within(screen.getByRole("listbox")).queryAllByRole("option")).toHaveLength(0);
+    expect(
+      within(screen.getByRole("listbox")).queryAllByRole("option"),
+    ).toHaveLength(0);
   });
 
   test("rejects an empty name and an unchosen type", async () => {
@@ -193,7 +212,9 @@ describe("CreateProjectDialog", () => {
     submitForm();
 
     // The submit button is disabled too, but the guard must hold on its own.
-    await waitFor(() => expect(screen.queryByText("nameRequired")).not.toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.queryByText("nameRequired")).not.toBeInTheDocument(),
+    );
     expect(h.createProject).not.toHaveBeenCalled();
   });
 
@@ -220,7 +241,9 @@ describe("CreateProjectDialog", () => {
       await mutationOptions().mutation.onSuccess({ id: "proj-9" });
     });
 
-    expect(h.invalidateQueries).toHaveBeenCalledWith({ queryKey: ["orgs", "my"] });
+    expect(h.invalidateQueries).toHaveBeenCalledWith({
+      queryKey: ["orgs", "my"],
+    });
     expect(h.selectAfterCreate).toHaveBeenCalledWith("org-1", "proj-9");
     expect(h.push).toHaveBeenCalledWith("/project");
     expect(onClose).toHaveBeenCalledTimes(1);
@@ -235,7 +258,9 @@ describe("CreateProjectDialog", () => {
       mutationOptions().mutation.onError();
     });
 
-    expect(await screen.findByRole("alert")).toHaveTextContent("createProjectError");
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "createProjectError",
+    );
     expect(onClose).not.toHaveBeenCalled();
     expect(nameField().value).toBe("Shop");
   });

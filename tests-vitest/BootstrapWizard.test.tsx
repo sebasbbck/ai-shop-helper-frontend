@@ -1,5 +1,12 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { act, cleanup, fireEvent, screen, waitFor, within } from "@testing-library/react";
+import {
+  act,
+  cleanup,
+  fireEvent,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
 import { makeRouter } from "./mocks/router";
 import BootstrapWizard from "@/features/shell/BootstrapWizard";
@@ -79,7 +86,8 @@ vi.mock("@/features/shell/ActiveContext", () => ({
 }));
 
 const nameField = () => screen.getByLabelText("name") as HTMLInputElement;
-const submitButton = () => screen.getByRole("button", { name: /continueButton|finishButton|creating/ });
+const submitButton = () =>
+  screen.getByRole("button", { name: /continueButton|finishButton|creating/ });
 const submitForm = () => fireEvent.submit(submitButton().closest("form")!);
 const orgOptions = () => h.orgOptions as OrgMutationOptions;
 const projectOptions = () => h.projectOptions as ProjectMutationOptions;
@@ -100,7 +108,9 @@ async function reachProjectStep(orgId = "org-1") {
 /** Picks a project type from the MUI select. */
 function selectProjectType(name: string) {
   fireEvent.mouseDown(screen.getByRole("combobox"));
-  fireEvent.click(within(screen.getByRole("listbox")).getByRole("option", { name }));
+  fireEvent.click(
+    within(screen.getByRole("listbox")).getByRole("option", { name }),
+  );
 }
 
 beforeEach(() => {
@@ -153,7 +163,9 @@ describe("BootstrapWizard, org step", () => {
     fireEvent.change(nameField(), { target: { value: "Acme" } });
     submitForm();
 
-    await waitFor(() => expect(h.createOrg).toHaveBeenCalledWith({ data: { name: "Acme" } }));
+    await waitFor(() =>
+      expect(h.createOrg).toHaveBeenCalledWith({ data: { name: "Acme" } }),
+    );
   });
 
   test("disables the button while the org is being created", () => {
@@ -174,7 +186,9 @@ describe("BootstrapWizard, org step", () => {
       orgOptions().mutation.onError();
     });
 
-    expect(await screen.findByRole("alert")).toHaveTextContent("createOrgError");
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "createOrgError",
+    );
     expect(screen.getByText("orgHeading")).toBeInTheDocument();
   });
 });
@@ -218,7 +232,9 @@ describe("BootstrapWizard, project step", () => {
 
     fireEvent.mouseDown(screen.getByRole("combobox"));
 
-    expect(within(screen.getByRole("listbox")).queryAllByRole("option")).toHaveLength(0);
+    expect(
+      within(screen.getByRole("listbox")).queryAllByRole("option"),
+    ).toHaveLength(0);
   });
 
   test("rejects an empty project name and an unchosen type", async () => {
@@ -256,7 +272,9 @@ describe("BootstrapWizard, project step", () => {
     selectProjectType("Blog");
     submitForm();
 
-    await waitFor(() => expect(screen.queryByText("nameRequired")).not.toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.queryByText("nameRequired")).not.toBeInTheDocument(),
+    );
     expect(h.createProject).not.toHaveBeenCalled();
   });
 
@@ -285,7 +303,9 @@ describe("BootstrapWizard, project step", () => {
       await projectOptions().mutation.onSuccess({ id: "proj-9" });
     });
 
-    expect(h.invalidateQueries).toHaveBeenCalledWith({ queryKey: ["orgs", "my"] });
+    expect(h.invalidateQueries).toHaveBeenCalledWith({
+      queryKey: ["orgs", "my"],
+    });
     expect(h.selectAfterCreate).toHaveBeenCalledWith("org-7", "proj-9");
     expect(h.push).toHaveBeenCalledWith("/project");
   });
@@ -302,7 +322,9 @@ describe("BootstrapWizard, project step", () => {
       projectOptions().mutation.onError();
     });
 
-    expect(await screen.findByRole("alert")).toHaveTextContent("createProjectError");
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "createProjectError",
+    );
     expect(screen.getByText("projectHeading")).toBeInTheDocument();
     expect(h.push).not.toHaveBeenCalled();
   });

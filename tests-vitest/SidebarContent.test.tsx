@@ -5,9 +5,15 @@ import { renderWithProviders } from "./test-utils";
 import SidebarContent from "@/components/layout/SidebarContent";
 
 vi.mock("next/image", () => ({
-  default: ({ src, alt, style }: { src: string; alt: string; style?: object }) => (
-    <img data-testid="logo" src={src} alt={alt} style={style} />
-  ),
+  default: ({
+    src,
+    alt,
+    style,
+  }: {
+    src: string;
+    alt: string;
+    style?: object;
+  }) => <img data-testid="logo" src={src} alt={alt} style={style} />,
 }));
 
 vi.mock("@/components/layout/OrgSwitcher", () => ({
@@ -28,7 +34,11 @@ function renderSidebarContent(
   props: Partial<ComponentProps<typeof SidebarContent>> = {},
 ) {
   return renderWithProviders(
-    <SidebarContent collapsed={false} onToggleCollapse={onToggleCollapse} {...props} />,
+    <SidebarContent
+      collapsed={false}
+      onToggleCollapse={onToggleCollapse}
+      {...props}
+    />,
   );
 }
 
@@ -53,7 +63,10 @@ describe("SidebarContent", () => {
   test("renders the cropped logo when collapsed", () => {
     renderSidebarContent({ collapsed: true });
 
-    expect(logo()).toHaveAttribute("src", "/ai-shop-helper-logo-recortado.webp");
+    expect(logo()).toHaveAttribute(
+      "src",
+      "/ai-shop-helper-logo-recortado.webp",
+    );
     expect(logo()).toHaveAccessibleName("AI Shop Helper");
     expect(logo()).toHaveStyle({ height: "28px", width: "auto" });
   });
@@ -81,15 +94,27 @@ describe("SidebarContent", () => {
   test("renders both switchers and passes collapsed=false down", () => {
     renderSidebarContent({ collapsed: false });
 
-    expect(screen.getByTestId("org-switcher")).toHaveAttribute("data-collapsed", "false");
-    expect(screen.getByTestId("project-switcher")).toHaveAttribute("data-collapsed", "false");
+    expect(screen.getByTestId("org-switcher")).toHaveAttribute(
+      "data-collapsed",
+      "false",
+    );
+    expect(screen.getByTestId("project-switcher")).toHaveAttribute(
+      "data-collapsed",
+      "false",
+    );
   });
 
   test("passes collapsed=true down to both switchers", () => {
     renderSidebarContent({ collapsed: true });
 
-    expect(screen.getByTestId("org-switcher")).toHaveAttribute("data-collapsed", "true");
-    expect(screen.getByTestId("project-switcher")).toHaveAttribute("data-collapsed", "true");
+    expect(screen.getByTestId("org-switcher")).toHaveAttribute(
+      "data-collapsed",
+      "true",
+    );
+    expect(screen.getByTestId("project-switcher")).toHaveAttribute(
+      "data-collapsed",
+      "true",
+    );
   });
 
   test("stacks the header, the switchers and a spacer in a scrollable column", () => {

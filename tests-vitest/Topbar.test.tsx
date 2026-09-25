@@ -4,7 +4,6 @@ import { cleanup, fireEvent, screen, within } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
 import Topbar from "@/components/layout/Topbar";
 
-
 vi.mock("@/features/i18n/LocaleSwitcher", () => ({
   default: () => <div data-testid="locale-switcher" />,
 }));

@@ -21,7 +21,8 @@ const h = vi.hoisted(() => ({
   pathname: "/project",
   activeProjectTypeId: "pt1" as string | null,
   agentsArgs: undefined as unknown[] | undefined,
-  agentsData: undefined as { items: { id: string; name: string }[] } | undefined,
+  agentsData: undefined as
+    { items: { id: string; name: string }[] } | undefined,
 }));
 
 vi.mock("next/navigation", () => ({
@@ -58,10 +59,12 @@ function renderList(props: Partial<ComponentProps<typeof AgentsNavList>> = {}) {
 }
 
 const header = () => screen.getByRole("button", { name: "agents" });
-const iconButton = () => screen.getByTestId("SmartToyIcon").closest(".MuiListItemButton-root")!;
+const iconButton = () =>
+  screen.getByTestId("SmartToyIcon").closest(".MuiListItemButton-root")!;
 const menu = () => screen.getByRole("menu");
 const agentButton = (name: string) => screen.getByRole("button", { name });
-const queryParams = () => h.agentsArgs?.[0] as { project_type_id: string | null };
+const queryParams = () =>
+  h.agentsArgs?.[0] as { project_type_id: string | null };
 const queryEnabled = () =>
   (h.agentsArgs?.[1] as { query: { enabled: boolean } }).query.enabled;
 
@@ -97,7 +100,9 @@ describe("AgentsNavList, the agents query", () => {
     h.pathname = "/agents/a1";
     renderList();
 
-    expect(screen.queryByRole("button", { name: "Blog Writer" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Blog Writer" }),
+    ).not.toBeInTheDocument();
   });
 });
 
@@ -108,7 +113,9 @@ describe("AgentsNavList, expanded", () => {
     expect(header()).toBeInTheDocument();
     expect(screen.getByTestId("ExpandMoreIcon")).toBeInTheDocument();
     // unmountOnExit: no agent entries while the section is closed.
-    expect(screen.queryByRole("button", { name: "Blog Writer" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Blog Writer" }),
+    ).not.toBeInTheDocument();
   });
 
   test("opens the section and navigates to the project when the header is clicked", () => {
@@ -164,7 +171,9 @@ describe("AgentsNavList, expanded", () => {
     renderList();
 
     expect(agentButton("Product Describer")).toHaveClass("Mui-selected");
-    expect(screen.getByText("Product Describer")).toHaveStyle({ fontWeight: "600" });
+    expect(screen.getByText("Product Describer")).toHaveStyle({
+      fontWeight: "600",
+    });
     expect(agentButton("Blog Writer")).not.toHaveClass("Mui-selected");
     expect(screen.getByText("Blog Writer")).toHaveStyle({ fontWeight: "400" });
   });
@@ -239,7 +248,9 @@ describe("AgentsNavList, collapsed", () => {
     renderList({ collapsed: true });
     fireEvent.click(iconButton());
 
-    fireEvent.click(within(menu()).getByRole("menuitem", { name: "Product Describer" }));
+    fireEvent.click(
+      within(menu()).getByRole("menuitem", { name: "Product Describer" }),
+    );
 
     expect(h.push).toHaveBeenCalledWith("/agents/a2");
     expect(screen.queryByRole("menu")).not.toBeInTheDocument();

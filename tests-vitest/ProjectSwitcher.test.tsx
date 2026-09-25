@@ -20,7 +20,8 @@ const h = vi.hoisted(() => ({
   push: vi.fn(),
   pathname: "/project",
   setActiveProject: vi.fn(),
-  activeOrg: undefined as { projects?: { id: string; name: string }[] } | undefined,
+  activeOrg: undefined as
+    { projects?: { id: string; name: string }[] } | undefined,
   activeProject: undefined as { id: string; name: string } | undefined,
   activeProjectId: undefined as string | undefined,
 }));
@@ -63,17 +64,22 @@ vi.mock("@/components/layout/CreateProjectDialog", () => ({
     ) : null,
 }));
 
-function renderSwitcher(props: Partial<ComponentProps<typeof ProjectSwitcher>> = {}) {
+function renderSwitcher(
+  props: Partial<ComponentProps<typeof ProjectSwitcher>> = {},
+) {
   return renderWithProviders(<ProjectSwitcher collapsed={false} {...props} />);
 }
 
 // Expanded: the avatar button is the first button; collapsed: the folder button is.
 const switcherButton = () => screen.getAllByRole("button")[0];
 const sectionToggle = () =>
-  (screen.queryByTestId("ExpandLessIcon") ?? screen.getByTestId("ExpandMoreIcon"))
-    .closest("button")!;
+  (
+    screen.queryByTestId("ExpandLessIcon") ??
+    screen.getByTestId("ExpandMoreIcon")
+  ).closest("button")!;
 const menu = () => screen.getByRole("menu");
-const menuItem = (name: string) => within(menu()).getByRole("menuitem", { name });
+const menuItem = (name: string | RegExp) =>
+  within(menu()).getByRole("menuitem", { name });
 
 function openSwitcherMenu() {
   fireEvent.click(switcherButton());
@@ -97,8 +103,13 @@ describe("ProjectSwitcher, expanded", () => {
 
     expect(screen.getByText("projectSection")).toBeInTheDocument();
     expect(screen.getByText("Alpha Project")).toBeInTheDocument();
-    expect(screen.getByTestId("agents-nav-list")).toHaveAttribute("data-collapsed", "false");
-    expect(screen.getByRole("button", { name: "settings" })).toBeInTheDocument();
+    expect(screen.getByTestId("agents-nav-list")).toHaveAttribute(
+      "data-collapsed",
+      "false",
+    );
+    expect(
+      screen.getByRole("button", { name: "settings" }),
+    ).toBeInTheDocument();
   });
 
   test("shows the initials of the active project in the avatar", () => {
@@ -130,7 +141,9 @@ describe("ProjectSwitcher, expanded", () => {
     renderSwitcher();
 
     expect(screen.getByText("noProjects")).toBeInTheDocument();
-    expect(within(switcherButton()).getByTestId("FolderIcon")).toBeInTheDocument();
+    expect(
+      within(switcherButton()).getByTestId("FolderIcon"),
+    ).toBeInTheDocument();
   });
 
   test("does not navigate when the placeholder label is clicked", () => {
@@ -145,17 +158,23 @@ describe("ProjectSwitcher, expanded", () => {
   test("collapses and expands the section", async () => {
     renderSwitcher();
 
-    expect(screen.getByRole("button", { name: "settings" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "settings" }),
+    ).toBeInTheDocument();
 
     fireEvent.click(sectionToggle());
 
     expect(screen.getByTestId("ExpandMoreIcon")).toBeInTheDocument();
     // unmountOnExit: the nested list is removed once the collapse transition ends.
-    await waitForElementToBeRemoved(() => screen.queryByRole("button", { name: "settings" }));
+    await waitForElementToBeRemoved(() =>
+      screen.queryByRole("button", { name: "settings" }),
+    );
 
     fireEvent.click(sectionToggle());
 
-    expect(screen.getByRole("button", { name: "settings" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "settings" }),
+    ).toBeInTheDocument();
     expect(screen.getByTestId("ExpandLessIcon")).toBeInTheDocument();
   });
 
@@ -179,7 +198,9 @@ describe("ProjectSwitcher, expanded", () => {
   test("does not highlight the settings entry on another route", () => {
     renderSwitcher();
 
-    expect(screen.getByRole("button", { name: "settings" })).not.toHaveClass("Mui-selected");
+    expect(screen.getByRole("button", { name: "settings" })).not.toHaveClass(
+      "Mui-selected",
+    );
     expect(screen.getByText("settings")).toHaveStyle({ fontWeight: "400" });
   });
 });
@@ -191,8 +212,12 @@ describe("ProjectSwitcher, project menu", () => {
     openSwitcherMenu();
 
     expect(within(menu()).getAllByRole("menuitem")).toHaveLength(3); // 2 projects + new
-    expect(within(menuItem(/Alpha Project/)).getByTestId("CheckIcon")).toBeInTheDocument();
-    expect(within(menuItem(/Beta/)).queryByTestId("CheckIcon")).not.toBeInTheDocument();
+    expect(
+      within(menuItem(/Alpha Project/)).getByTestId("CheckIcon"),
+    ).toBeInTheDocument();
+    expect(
+      within(menuItem(/Beta/)).queryByTestId("CheckIcon"),
+    ).not.toBeInTheDocument();
   });
 
   test("selects another project, navigates and closes the menu", () => {
@@ -231,7 +256,9 @@ describe("ProjectSwitcher, project menu", () => {
     renderSwitcher();
     openSwitcherMenu();
 
-    expect(screen.queryByTestId("create-project-dialog")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("create-project-dialog"),
+    ).not.toBeInTheDocument();
 
     fireEvent.click(menuItem(/newProject/));
 
@@ -240,7 +267,9 @@ describe("ProjectSwitcher, project menu", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "close dialog" }));
 
-    expect(screen.queryByTestId("create-project-dialog")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("create-project-dialog"),
+    ).not.toBeInTheDocument();
   });
 
   test("closes the menu when dismissed", () => {
@@ -259,7 +288,10 @@ describe("ProjectSwitcher, collapsed", () => {
 
     expect(screen.queryByText("projectSection")).not.toBeInTheDocument();
     expect(screen.queryByText("Alpha Project")).not.toBeInTheDocument();
-    expect(screen.getByTestId("agents-nav-list")).toHaveAttribute("data-collapsed", "true");
+    expect(screen.getByTestId("agents-nav-list")).toHaveAttribute(
+      "data-collapsed",
+      "true",
+    );
     expect(screen.getByTestId("FolderIcon")).toBeInTheDocument();
     expect(screen.getByTestId("SettingsIcon")).toBeInTheDocument();
   });
@@ -275,7 +307,9 @@ describe("ProjectSwitcher, collapsed", () => {
   test("navigates to the project settings", () => {
     renderSwitcher({ collapsed: true });
 
-    fireEvent.click(screen.getByTestId("SettingsIcon").closest("div")!.parentElement!);
+    fireEvent.click(
+      screen.getByTestId("SettingsIcon").closest("div")!.parentElement!,
+    );
 
     expect(h.push).toHaveBeenCalledWith("/project/settings");
   });
@@ -284,9 +318,9 @@ describe("ProjectSwitcher, collapsed", () => {
     h.pathname = "/project/settings";
     renderSwitcher({ collapsed: true });
 
-    expect(screen.getByTestId("SettingsIcon").closest(".MuiListItemButton-root")).toHaveClass(
-      "Mui-selected",
-    );
+    expect(
+      screen.getByTestId("SettingsIcon").closest(".MuiListItemButton-root"),
+    ).toHaveClass("Mui-selected");
   });
 
   test("shows the switch-project tooltip", async () => {
@@ -294,7 +328,9 @@ describe("ProjectSwitcher, collapsed", () => {
 
     fireEvent.mouseOver(switcherButton());
 
-    expect(await screen.findByRole("tooltip")).toHaveTextContent("switchProject");
+    expect(await screen.findByRole("tooltip")).toHaveTextContent(
+      "switchProject",
+    );
   });
 
   test("opens the create dialog from the menu and closes it again", () => {
@@ -307,6 +343,8 @@ describe("ProjectSwitcher, collapsed", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "close dialog" }));
 
-    expect(screen.queryByTestId("create-project-dialog")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("create-project-dialog"),
+    ).not.toBeInTheDocument();
   });
 });

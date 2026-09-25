@@ -16,7 +16,14 @@ vi.mock("next/navigation", () => ({
 }));
 
 vi.mock("next/link", () => ({
-  default: ({ href, children, ...rest }: { href: string; children: React.ReactNode }) => (
+  default: ({
+    href,
+    children,
+    ...rest
+  }: {
+    href: string;
+    children: React.ReactNode;
+  }) => (
     <a href={href} {...rest}>
       {children}
     </a>
@@ -47,7 +54,8 @@ const submitButton = () =>
   screen.getByRole("button", {
     name: /resetPassword\.submitButton|resetPassword\.submitting/,
   });
-const loginLink = () => screen.getByRole("link", { name: "resetPassword.goToLogin" });
+const loginLink = () =>
+  screen.getByRole("link", { name: "resetPassword.goToLogin" });
 
 /** Fills both fields and submits. */
 function submitPasswords(password: string, confirm = password) {
@@ -75,7 +83,9 @@ describe("ResetPasswordForm, without a token", () => {
       screen.getByRole("heading", { name: "resetPassword.heading" }),
     ).toBeInTheDocument();
     expect(screen.getByRole("alert")).toHaveTextContent("resetPassword.error");
-    expect(screen.queryByLabelText("resetPassword.newPassword")).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText("resetPassword.newPassword"),
+    ).not.toBeInTheDocument();
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
     expect(loginLink()).toHaveAttribute("href", "/login");
   });
@@ -85,7 +95,9 @@ describe("ResetPasswordForm, without a token", () => {
     renderWithProviders(<ResetPasswordForm />);
 
     expect(screen.getByRole("alert")).toHaveTextContent("resetPassword.error");
-    expect(screen.queryByLabelText("resetPassword.newPassword")).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText("resetPassword.newPassword"),
+    ).not.toBeInTheDocument();
   });
 });
 
@@ -123,7 +135,9 @@ describe("ResetPasswordForm, with a token", () => {
 
     submitPasswords("longenough123", "longenough124");
 
-    expect(await screen.findByText("resetPassword.mismatch")).toBeInTheDocument();
+    expect(
+      await screen.findByText("resetPassword.mismatch"),
+    ).toBeInTheDocument();
     expect(h.reset).not.toHaveBeenCalled();
   });
 
@@ -140,19 +154,25 @@ describe("ResetPasswordForm, with a token", () => {
     expect(h.reset).toHaveBeenCalledTimes(1);
     // The confirmation is only checked locally, never sent.
     expect(h.reset).not.toHaveBeenCalledWith(
-      expect.objectContaining({ data: expect.objectContaining({ confirm: expect.anything() }) }),
+      expect.objectContaining({
+        data: expect.objectContaining({ confirm: expect.anything() }),
+      }),
     );
   });
 
   test("clears the mismatch error once the passwords agree", async () => {
     renderWithProviders(<ResetPasswordForm />);
     submitPasswords("longenough123", "longenough124");
-    expect(await screen.findByText("resetPassword.mismatch")).toBeInTheDocument();
+    expect(
+      await screen.findByText("resetPassword.mismatch"),
+    ).toBeInTheDocument();
 
     submitPasswords("longenough123");
 
     await waitFor(() => expect(h.reset).toHaveBeenCalled());
-    expect(screen.queryByText("resetPassword.mismatch")).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("resetPassword.mismatch"),
+    ).not.toBeInTheDocument();
   });
 
   test("disables the button while the reset is in flight", () => {
@@ -179,8 +199,12 @@ describe("ResetPasswordForm, after the reset", () => {
     h.isSuccess = true;
     renderWithProviders(<ResetPasswordForm />);
 
-    expect(screen.getByRole("alert")).toHaveTextContent("resetPassword.success");
-    expect(screen.queryByLabelText("resetPassword.newPassword")).not.toBeInTheDocument();
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "resetPassword.success",
+    );
+    expect(
+      screen.queryByLabelText("resetPassword.newPassword"),
+    ).not.toBeInTheDocument();
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
     expect(loginLink()).toHaveAttribute("href", "/login");
   });

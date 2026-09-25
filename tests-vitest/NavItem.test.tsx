@@ -83,7 +83,10 @@ describe("NavItem", () => {
 
     expect(screen.queryByText("Nav Item")).not.toBeInTheDocument();
     expect(screen.getByTestId("nav-icon")).toBeInTheDocument();
-    expect(button()).toHaveStyle({ justifyContent: "center", paddingLeft: "0px" });
+    expect(button()).toHaveStyle({
+      justifyContent: "center",
+      paddingLeft: "0px",
+    });
   });
 
   test("shows the label in a tooltip when collapsed", async () => {

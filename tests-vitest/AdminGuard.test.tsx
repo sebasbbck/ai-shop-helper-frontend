@@ -6,12 +6,21 @@ import AdminGuard from "@/features/auth/components/AdminGuard";
 
 type User = { id: string; email: string; is_superuser: boolean };
 
-const admin: User = { id: "u1", email: "admin@example.com", is_superuser: true };
-const member: User = { id: "u2", email: "member@example.com", is_superuser: false };
+const admin: User = {
+  id: "u1",
+  email: "admin@example.com",
+  is_superuser: true,
+};
+const member: User = {
+  id: "u2",
+  email: "member@example.com",
+  is_superuser: false,
+};
 
 const h = vi.hoisted(() => ({
   replace: vi.fn(),
-  user: undefined as { id: string; email: string; is_superuser: boolean } | undefined,
+  user: undefined as
+    { id: string; email: string; is_superuser: boolean } | undefined,
   isLoading: false,
   queryOptions: undefined as unknown,
 }));

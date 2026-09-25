@@ -1,5 +1,11 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { act, cleanup, fireEvent, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  cleanup,
+  fireEvent,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
 import GoogleLoginButton from "@/features/auth/components/GoogleLoginButton";
 
@@ -63,7 +69,9 @@ describe("GoogleLoginButton", () => {
     expect(button()).toHaveTextContent("connectingGoogle");
 
     await act(async () => {
-      pending.resolve({ auth_url: "https://accounts.google.com/o/oauth2/auth" });
+      pending.resolve({
+        auth_url: "https://accounts.google.com/o/oauth2/auth",
+      });
     });
   });
 
@@ -84,13 +92,17 @@ describe("GoogleLoginButton", () => {
   });
 
   test("keeps the button disabled after a successful request", async () => {
-    h.googleLoginWithGoogle.mockResolvedValue({ auth_url: "https://accounts.google.com" });
+    h.googleLoginWithGoogle.mockResolvedValue({
+      auth_url: "https://accounts.google.com",
+    });
     renderWithProviders(<GoogleLoginButton />);
 
     fireEvent.click(button());
 
     // The redirect is under way, so the button must not invite a second click.
-    await waitFor(() => expect(window.location.href).toBe("https://accounts.google.com"));
+    await waitFor(() =>
+      expect(window.location.href).toBe("https://accounts.google.com"),
+    );
     expect(button()).toBeDisabled();
     expect(alert()).not.toBeInTheDocument();
   });
@@ -118,7 +130,9 @@ describe("GoogleLoginButton", () => {
 
   test("clears the previous error when the user tries again", async () => {
     h.googleLoginWithGoogle.mockRejectedValueOnce(new Error("network down"));
-    h.googleLoginWithGoogle.mockResolvedValueOnce({ auth_url: "https://accounts.google.com" });
+    h.googleLoginWithGoogle.mockResolvedValueOnce({
+      auth_url: "https://accounts.google.com",
+    });
     renderWithProviders(<GoogleLoginButton />);
 
     fireEvent.click(button());
