@@ -40,9 +40,12 @@ describe("BillingOverview", () => {
     };
     renderWithProviders(<BillingOverview orgId="org-1" />);
 
-    expect(screen.getByText("1734")).toBeInTheDocument();
+    // The component uses toLocaleString() with the runtime's default locale,
+    // so build the expected text the same way (es-ES: "1734", en-US: "1,734").
+    const fmt = (n: number) => n.toLocaleString();
+    expect(screen.getByText(fmt(1734))).toBeInTheDocument();
     expect(
-      screen.getByText("Subscription: 1234 · Purchased: 500"),
+      screen.getByText(`Subscription: ${fmt(1234)} · Purchased: ${fmt(500)}`),
     ).toBeInTheDocument();
   });
 });
