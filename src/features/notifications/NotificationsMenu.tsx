@@ -21,51 +21,12 @@ import {
   useNotificationsMarkNotificationRead,
 } from "@/api/endpoints/notifications/notifications";
 import type { NotificationPublic } from "@/api/model/notificationPublic";
+import { notificationText } from "./notificationText";
 
 const UNREAD_COUNT_POLL_MS = 20000;
-const RECENT_PARAMS = { limit: 10 };
-
-type Translator = ReturnType<typeof useTranslations<"Notifications">>;
-
-/**
- * Builds the localized title/body for a notification from its `type` + `payload`
- * (the backend sends no text, see CLAUDE.md's notifications section). Falls back
- * to the type label alone if the payload's `reason` doesn't match a known message.
- */
-function notificationText(
-  t: Translator,
-  notification: NotificationPublic,
-): { title: string; body: string } {
-  const payload = (notification.payload ?? {}) as Record<string, unknown>;
-  const reason =
-    typeof payload.reason === "string" ? payload.reason : undefined;
-  const base = `messages.${notification.type}.${reason}`;
-
-  if (!reason || !t.has(`${base}.title`)) {
-    return {
-      title: t.has(`types.${notification.type}`)
-        ? t(`types.${notification.type}`)
-        : notification.type,
-      body: "",
-    };
-  }
-
-  const connectionType =
-    typeof payload.connection_type === "string" ? payload.connection_type : "";
-
-  return {
-    title: t(`${base}.title`),
-    body: t(`${base}.body`, {
-      credits: typeof payload.credits === "number" ? payload.credits : 0,
-      plan: typeof payload.plan === "string" ? payload.plan : "",
-      project:
-        typeof payload.project_name === "string" ? payload.project_name : "",
-      service: t.has(`connectionTypes.${connectionType}`)
-        ? t(`connectionTypes.${connectionType}`)
-        : connectionType,
-    }),
-  };
-}
+// Bell only ever shows the most recent unread — the dedicated /notifications
+// view is where everything else (read history, filters, pagination) lives.
+const RECENT_PARAMS = { limit: 5, unread_only: true };
 
 export default function NotificationsMenu() {
   const t = useTranslations("Notifications");
@@ -75,7 +36,8 @@ export default function NotificationsMenu() {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
 
-  const { data: unreadData } = useNotificationsGetUnreadCount({
+  // No org_id — the bell's badge stays a global count across all orgs.
+  const { data: unreadData } = useNotificationsGetUnreadCount(undefined, {
     query: { refetchInterval: UNREAD_COUNT_POLL_MS },
   });
 
@@ -87,8 +49,10 @@ export default function NotificationsMenu() {
   const markRead = useNotificationsMarkNotificationRead({
     mutation: {
       onSuccess: () => {
+        // Prefix match (no params) so this also refreshes the dedicated
+        // /notifications view's cached queries, not just the bell's own.
         queryClient.invalidateQueries({
-          queryKey: getNotificationsGetNotificationsQueryKey(RECENT_PARAMS),
+          queryKey: getNotificationsGetNotificationsQueryKey(),
         });
         queryClient.invalidateQueries({
           queryKey: getNotificationsGetUnreadCountQueryKey(),
@@ -98,9 +62,7 @@ export default function NotificationsMenu() {
   });
 
   const handleItemClick = (notification: NotificationPublic) => {
-    if (!notification.read_at) {
-      markRead.mutate({ notificationId: notification.id });
-    }
+    markRead.mutate({ notificationId: notification.id });
   };
 
   const unreadCount = unreadData?.unread_count ?? 0;
@@ -153,7 +115,9 @@ export default function NotificationsMenu() {
         )}
 
         {notifications.map((notification) => {
-          const { title, body } = notificationText(t, notification);
+          // Every item here is unread by construction (RECENT_PARAMS filters
+          // unread_only) — title only, no body, see proposal sent to Enrique.
+          const { title } = notificationText(t, notification);
           return (
             <MenuItem
               key={notification.id}
@@ -163,7 +127,7 @@ export default function NotificationsMenu() {
                 alignItems: "flex-start",
                 gap: 1,
                 py: 1.25,
-                bgcolor: notification.read_at ? undefined : "action.hover",
+                bgcolor: "action.hover",
               }}
             >
               <Box
@@ -171,29 +135,15 @@ export default function NotificationsMenu() {
                   width: 8,
                   height: 8,
                   borderRadius: "50%",
-                  bgcolor: notification.read_at
-                    ? "transparent"
-                    : "primary.main",
+                  bgcolor: "primary.main",
                   mt: 0.75,
                   flexShrink: 0,
                 }}
               />
               <Box sx={{ minWidth: 0 }}>
-                <Typography
-                  variant="body2"
-                  sx={{ fontWeight: notification.read_at ? 400 : 600 }}
-                >
+                <Typography variant="body2" sx={{ fontWeight: 600 }}>
                   {title}
                 </Typography>
-                {body && (
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ overflowWrap: "break-word" }}
-                  >
-                    {body}
-                  </Typography>
-                )}
                 <Typography variant="caption" color="text.secondary">
                   {new Date(notification.created_at).toLocaleString(locale, {
                     dateStyle: "medium",
@@ -208,12 +158,12 @@ export default function NotificationsMenu() {
         <Divider />
         <MenuItem
           onClick={() => {
-            router.push("/settings");
+            router.push("/notifications");
             setAnchorEl(null);
           }}
         >
           <Typography variant="body2" color="text.secondary">
-            {t("managePreferences")}
+            {t("viewAll")}
           </Typography>
         </MenuItem>
       </Menu>
