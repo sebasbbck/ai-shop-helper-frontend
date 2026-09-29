@@ -1,11 +1,6 @@
 import type { ComponentProps } from "react";
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import {
-  act,
-  fireEvent,
-  screen,
-  waitFor,
-} from "@testing-library/react";
+import { act, fireEvent, screen, waitFor } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
 import { makeRouter } from "./mocks/router";
 import CreateOrgDialog from "@/components/layout/CreateOrgDialog";

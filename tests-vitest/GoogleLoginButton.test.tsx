@@ -1,10 +1,5 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import {
-  act,
-  fireEvent,
-  screen,
-  waitFor,
-} from "@testing-library/react";
+import { act, fireEvent, screen, waitFor } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
 import GoogleLoginButton from "@/features/auth/components/GoogleLoginButton";
 
