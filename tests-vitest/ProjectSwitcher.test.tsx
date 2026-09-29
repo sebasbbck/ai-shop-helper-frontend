@@ -1,7 +1,6 @@
 import type { ComponentProps } from "react";
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import {
-  cleanup,
   fireEvent,
   screen,
   waitForElementToBeRemoved,

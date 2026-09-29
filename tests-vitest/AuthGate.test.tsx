@@ -1,5 +1,5 @@
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { act, cleanup, screen, waitFor } from "@testing-library/react";
+import { beforeEach, describe, expect, test, vi } from "vitest";
+import { act, screen, waitFor } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
 import { makeRouter } from "./mocks/router";
 import AuthGate from "@/features/auth/components/AuthGate";

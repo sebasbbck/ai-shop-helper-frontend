@@ -139,10 +139,10 @@ Overall, layout follows the usual pattern found inside the tests:
 
 - use of stand-ins that expose their props as data-* attributes.
 
-Inside shell, each test file replaces its neighbours in that chain with mocks, so each piece is checked on its own,
+Inside shell, each test file replaces its neighbours with mocks, so each piece is checked on its own,
 that shapes both what the tests prove and what they miss.
 
-Only the API hook **`useOrgsGetMyOrgs`:** is replaced, and it returns a fixed fixture of two orgs.
+Only the API hook useOrgsGetMyOrgs is replaced, and it returns a fixed fixture of two orgs.
 
 Inside auth, each test cuts the component off from the outside world at a few seams:
 
@@ -154,11 +154,12 @@ Inside auth, each test cuts the component off from the outside world at a few se
 
 - **`next/link (in some files)`:** Replaced with a plain <a>, so href can be asserted without the router context.
 
-As for BootstrapGate,two mocks isolate it,"useActiveContext" and "BootstrapWizard".
+As for BootstrapGate, two mocks isolate it: **`useActiveContext`** and **`BootstrapWizard`**.
 
-And for BootstrapWizard,there is two main helpers:
+And for BootstrapWizard, there are two main helpers:
 
-- **`reachProjectStep(orgId)`:**types a name, submit, wait for createOrg, call onSuccess({ id: orgId }), and waits for projectHeading. The orgId parameter is useful. Tests later checks that tell whether that id is passed through to the project request.
+- **`reachProjectStep(orgId)`:** types a name, submit, wait for createOrg, call onSuccess({ id: orgId }), and waits for projectHeading. The orgId parameter is useful. Later tests check whether that id is passed through to the project request.
+
 - **`selectProjectType(name)`:** handles MUI's Select. It opens on mouseDown, not click. Its options appear in a portal as a listbox, so within(listbox) it finds the option.
 
 **Special Cases:**
@@ -174,8 +175,6 @@ Afterwards, the code below stops a selection saved by one test from leaking into
 ```tsx
 beforeEach(() => localStorage.clear());
 ```
-
-Otherwise a second render would add a second Probe, and getByTestId would throw an exception.
 
 In the case of the pattern "vi.hoisted", Vitest moves every vi.mock(...) call to the top of the file, above the imports.
 
@@ -203,7 +202,7 @@ vi.mock("next-intl", async (importOriginal) => ({
 
 With it in place, the component renders the literal text resetPassword.error, and the test checks for that string.
 
-This is done because the "importOriginal" spread matters. "renderWithProviders" wraps the component in "NextIntlClientProvider", which also comes from next-intl,so doing a plain:
+This is done because the "importOriginal" spread matters. "renderWithProviders" wraps the component in "NextIntlClientProvider", which also comes from next-intl, so doing a plain:
 
 ```tsx
 vi.mock("next-intl", () => ({ useTranslations: ... }))

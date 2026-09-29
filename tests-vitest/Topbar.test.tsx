@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { cleanup, fireEvent, screen, within } from "@testing-library/react";
+import { beforeEach, describe, expect, test, vi } from "vitest";
+import { fireEvent, screen, within } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
 import Topbar from "@/components/layout/Topbar";
 

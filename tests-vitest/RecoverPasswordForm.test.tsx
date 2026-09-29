@@ -1,5 +1,5 @@
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { cleanup, fireEvent, screen, waitFor } from "@testing-library/react";
+import { beforeEach, describe, expect, test, vi } from "vitest";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
 import RecoverPasswordForm from "@/features/auth/components/RecoverPasswordForm";
 
