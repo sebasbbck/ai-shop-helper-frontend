@@ -35,8 +35,6 @@ beforeEach(() => {
   onClick.mockClear();
 });
 
-afterEach(cleanup);
-
 describe("NavItem", () => {
   test("renders the icon and the label when expanded", () => {
     renderNavItem();

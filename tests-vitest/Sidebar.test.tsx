@@ -55,8 +55,6 @@ beforeEach(() => {
   onMobileClose.mockClear();
 });
 
-afterEach(cleanup);
-
 describe("Sidebar", () => {
   test("renders a temporary drawer for mobile and a permanent one for desktop", () => {
     renderSidebar();

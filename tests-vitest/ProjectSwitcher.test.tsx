@@ -91,8 +91,6 @@ beforeEach(() => {
   h.activeProjectId = alpha.id;
 });
 
-afterEach(cleanup);
-
 describe("ProjectSwitcher, expanded", () => {
   test("renders the section header, the active project and the nested lists", () => {
     renderSwitcher();

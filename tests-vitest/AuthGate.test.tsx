@@ -61,8 +61,6 @@ beforeEach(() => {
   h.queryOptions = undefined;
 });
 
-afterEach(cleanup);
-
 describe("AuthGate", () => {
   test("shows a spinner and keeps the query disabled while the token is resolving", () => {
     h.ensureAccessToken.mockReturnValue(deferred<string | null>().promise);

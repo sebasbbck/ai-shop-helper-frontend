@@ -49,8 +49,6 @@ beforeEach(() => {
   onToggleCollapse.mockClear();
 });
 
-afterEach(cleanup);
-
 describe("SidebarContent", () => {
   test("renders the full logo when expanded", () => {
     renderSidebarContent({ collapsed: false });

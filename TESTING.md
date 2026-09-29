@@ -127,9 +127,9 @@ non-obvious cases are:
 
 ### 3.3 Layout, shell and auth
 
-Inside layout,each file tests one layer and replaces the layer below it with a stand-in.
+Inside layout, each file tests one layer and replaces the layer below it with a stand-in.
 
-Overall,layout follows the usual pattern found inside the tests:
+Overall, layout follows the usual pattern found inside the tests:
 
 - uses the vi.hoisted state before rendering.
 
@@ -144,7 +144,26 @@ that shapes both what the tests prove and what they miss.
 
 Only the API hook **`useOrgsGetMyOrgs`:** is replaced, and it returns a fixed fixture of two orgs.
 
-In the case if shell, vi.hoisted can`t be used. Instead the mock factory refers to orgs, an ordinary const declared in the test file. The factory is moved above that declaration. The factory only builds the arrow function () => ({ data: { items: orgs } }), and orgs is read later, when the provider renders. By then the file has finished running and orgs exists.
+Inside auth, each test cuts the component off from the outside world at a few seams:
+
+- **`next/navigation (useRouter, useSearchParams)`:** There is no Next.js app router in jsdom. Mocking it also lets the test assert redirects (replace("/login")) and set URL parameters (?token=…).
+
+- **`API hooks and functions (@/api/endpoints/...)`:** No real network calls. The test decides whether a request is loading, successful or failed.
+
+- **`next-intl (in some files)`:** Replaced with an identity translator (key) => key, so the assertions check translation keys like "resetPassword.error" rather than English parts that may change.
+
+- **`next/link (in some files)`:** Replaced with a plain <a>, so href can be asserted without the router context.
+
+As for BootstrapGate,two mocks isolate it,"useActiveContext" and "BootstrapWizard".
+
+And for BootstrapWizard,there is two main helpers:
+
+- **`reachProjectStep(orgId)`:**types a name, submit, wait for createOrg, call onSuccess({ id: orgId }), and waits for projectHeading. The orgId parameter is useful. Tests later checks that tell whether that id is passed through to the project request.
+- **`selectProjectType(name)`:** handles MUI's Select. It opens on mouseDown, not click. Its options appear in a portal as a listbox, so within(listbox) it finds the option.
+
+**Special Cases:**
+
+In the case of shell, vi.hoisted can't be used. Instead the mock factory refers to orgs, an ordinary const declared in the test file. The factory is moved above that declaration. The factory only builds the arrow function () => ({ data: { items: orgs } }), and orgs is read later, when the provider renders. By then the file has finished running and orgs exists.
 
 If the factory touched orgs directly, the test would crash. This relies on the lazy read, and it's the reason other files use vi.hoisted instead.
 
@@ -156,38 +175,41 @@ Afterwards, the code below stops a selection saved by one test from leaking into
 beforeEach(() => localStorage.clear());
 ```
 
-Consecuently there is no afterEach(cleanup),that only works if cleanup runs automatically, through "globals: true" or a setup file.
-
 Otherwise a second render would add a second Probe, and getByTestId would throw an exception.
-
-Inside auth, each test cuts the component off from the outside world at a few seams:
-
-- **`next/navigation (useRouter, useSearchParams)`:** There is no Next.js app router in jsdom. Mocking it also lets the test assert redirects (replace("/login")) and set URL parameters (?token=…).
-
-- **`API hooks and functions (@/api/endpoints/...)`:** No real network calls. The test decides whether a request is loading, successful or failed.
-
-- **`next-intl (in some files)`:** Replaced with an identity translator (key) => key, so the assertions check translation keys like "resetPassword.error" rather than English parts that may change.
-
-- **`next/link (in some files)`:** Replaced with a plain <a>, so href can be asserted without the router context.
 
 In the case of the pattern "vi.hoisted", Vitest moves every vi.mock(...) call to the top of the file, above the imports.
 
 A mock factory therefore can't use an ordinary variable declared further down, because that variable doesn't exist yet when the factory runs.
 
-vi.hoisted(() => ({...})) creates an object h that is also moved to the top, so the factories can use it.
-
-The mocks read h each time they are called, not when they are created. That lets a test set the scenario before rendering:
-
-```tsx
-h.isSuccess = true; // set the scenario
-renderWithProviders(<RecoverPasswordForm />); // mock hook returns isSuccess: true
-```
-
-beforeEach resets h so no scenario carries over into the next test, afterEach(cleanup) unmounts the rendered tree, the explicit call is needed when Vitest runs without "globals: true", because React Testing Library then can't register its automatic cleanup.
-
 Regarding controllable promises, "deferred()" creates a promise that the test resolves by hand.
 
 This is how the tests freeze a component in its "waiting" state and then decide exactly when the async work finishes.
+
+For translations, "useTranslations" normally returns a function t that looks up a key in the message files for the current locale:
+
+```tsx
+const t = useTranslations("Auth");
+t("resetPassword.error");
+```
+
+The mock sometimes swaps that function for one that returns the key unchanged:
+
+```tsx
+vi.mock("next-intl", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("next-intl")>()),
+  useTranslations: () => (key: string) => key,
+}));
+```
+
+With it in place, the component renders the literal text resetPassword.error, and the test checks for that string.
+
+This is done because the "importOriginal" spread matters. "renderWithProviders" wraps the component in "NextIntlClientProvider", which also comes from next-intl,so doing a plain:
+
+```tsx
+vi.mock("next-intl", () => ({ useTranslations: ... }))
+```
+
+would replace the whole module, "NextIntlClientProvider" would be undefined, and every render would crash. Spreading the real module and overriding only useTranslations keeps the provider working.
 
 ## 4. Coverage and CI
 

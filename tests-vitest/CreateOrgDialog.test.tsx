@@ -31,8 +31,6 @@ vi.mock("next/navigation", () => ({
   useRouter: () => makeRouter({ push: h.push }),
 }));
 
-// Only useTranslations is replaced; NextIntlClientProvider and the rest of the
-// module are kept so the app's own providers keep working.
 vi.mock("next-intl", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next-intl")>()),
   useTranslations: () => (key: string) => key,
@@ -86,8 +84,6 @@ beforeEach(() => {
   h.options = undefined;
   onClose.mockClear();
 });
-
-afterEach(cleanup);
 
 describe("CreateOrgDialog", () => {
   test("renders the form when open", () => {

@@ -69,8 +69,6 @@ beforeEach(() => {
   h.params = new URLSearchParams("token=reset-token");
 });
 
-afterEach(cleanup);
-
 describe("ResetPasswordForm, without a token", () => {
   test("refuses to show the form when the link carries no token", () => {
     h.params = new URLSearchParams();

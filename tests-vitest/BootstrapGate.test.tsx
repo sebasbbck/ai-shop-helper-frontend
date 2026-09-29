@@ -26,8 +26,6 @@ beforeEach(() => {
   h.isEmpty = false;
 });
 
-afterEach(cleanup);
-
 describe("BootstrapGate", () => {
   test("shows a spinner while the context is loading", () => {
     h.isLoading = true;

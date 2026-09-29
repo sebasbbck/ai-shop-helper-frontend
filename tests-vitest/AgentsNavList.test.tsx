@@ -72,8 +72,6 @@ beforeEach(() => {
   h.agentsData = { items: agents };
 });
 
-afterEach(cleanup);
-
 describe("AgentsNavList, the agents query", () => {
   test("asks for the agents of the active project type", () => {
     renderList();

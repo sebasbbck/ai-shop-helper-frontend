@@ -38,11 +38,6 @@ beforeEach(() => {
   vi.stubGlobal("location", { href: "http://localhost/login" });
 });
 
-afterEach(() => {
-  vi.unstubAllGlobals();
-  cleanup();
-});
-
 describe("GoogleLoginButton", () => {
   test("renders an enabled button with the Google icon and no error", () => {
     renderWithProviders(<GoogleLoginButton />);

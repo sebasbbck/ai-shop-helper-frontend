@@ -121,8 +121,6 @@ beforeEach(() => {
   h.typesData = { items: types };
 });
 
-afterEach(cleanup);
-
 describe("BootstrapWizard, org step", () => {
   test("opens on the org step", () => {
     renderWithProviders(<BootstrapWizard />);

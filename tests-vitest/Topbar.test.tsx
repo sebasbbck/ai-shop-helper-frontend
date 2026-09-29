@@ -30,8 +30,6 @@ beforeEach(() => {
   onMobileMenuToggle.mockClear();
 });
 
-afterEach(cleanup);
-
 describe("Topbar", () => {
   test("renders a sticky app bar with a toolbar", () => {
     renderTopbar();

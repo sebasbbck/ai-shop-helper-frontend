@@ -123,8 +123,6 @@ beforeEach(() => {
   onClose.mockClear();
 });
 
-afterEach(cleanup);
-
 describe("CreateProjectDialog", () => {
   test("renders the form when open", () => {
     renderDialog();

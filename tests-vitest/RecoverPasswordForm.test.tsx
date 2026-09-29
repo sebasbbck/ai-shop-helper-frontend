@@ -51,8 +51,6 @@ beforeEach(() => {
   h.isSuccess = false;
 });
 
-afterEach(cleanup);
-
 describe("RecoverPasswordForm, request", () => {
   test("renders the heading, the description, the field and the login link", () => {
     renderWithProviders(<RecoverPasswordForm />);

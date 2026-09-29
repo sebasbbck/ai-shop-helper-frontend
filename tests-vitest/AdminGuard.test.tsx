@@ -54,8 +54,6 @@ beforeEach(() => {
   h.queryOptions = undefined;
 });
 
-afterEach(cleanup);
-
 describe("AdminGuard", () => {
   test("shows a spinner while the current user is loading", () => {
     h.isLoading = true;
