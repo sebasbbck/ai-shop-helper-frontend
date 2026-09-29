@@ -127,7 +127,67 @@ non-obvious cases are:
 
 ### 3.3 Layout, shell and auth
 
-<!-- Adrián: components/layout/, BootstrapGate, BootstrapWizard, AdminGuard, AuthGate, auth forms. -->
+Inside layout,each file tests one layer and replaces the layer below it with a stand-in.
+
+Overall,layout follows the usual pattern found inside the tests:
+
+- uses the vi.hoisted state before rendering.
+
+- uses the identity translator.
+
+- the tests make use of capturing mutation options so a call onSuccess and onError can happen.
+
+- use of stand-ins that expose their props as data-* attributes.
+
+Inside shell, each test file replaces its neighbours in that chain with mocks, so each piece is checked on its own,
+that shapes both what the tests prove and what they miss.
+
+Only the API hook **`useOrgsGetMyOrgs`:** is replaced, and it returns a fixed fixture of two orgs.
+
+In the case if shell, vi.hoisted can`t be used. Instead the mock factory refers to orgs, an ordinary const declared in the test file. The factory is moved above that declaration. The factory only builds the arrow function () => ({ data: { items: orgs } }), and orgs is read later, when the provider renders. By then the file has finished running and orgs exists.
+
+If the factory touched orgs directly, the test would crash. This relies on the lazy read, and it's the reason other files use vi.hoisted instead.
+
+The Probe pattern is also noteworthy, a context can't be tested on its own, so the test uses a tiny consumer component called "Probe". It prints "activeOrgId" and "activeProjectId" as text and turns each action into a button. The test then works the context only through its public API, the same way real consumers do.
+
+Afterwards, the code below stops a selection saved by one test from leaking into the next.
+
+```tsx
+beforeEach(() => localStorage.clear());
+```
+
+Consecuently there is no afterEach(cleanup),that only works if cleanup runs automatically, through "globals: true" or a setup file.
+
+Otherwise a second render would add a second Probe, and getByTestId would throw an exception.
+
+Inside auth, each test cuts the component off from the outside world at a few seams:
+
+- **`next/navigation (useRouter, useSearchParams)`:** There is no Next.js app router in jsdom. Mocking it also lets the test assert redirects (replace("/login")) and set URL parameters (?token=…).
+
+- **`API hooks and functions (@/api/endpoints/...)`:** No real network calls. The test decides whether a request is loading, successful or failed.
+
+- **`next-intl (in some files)`:** Replaced with an identity translator (key) => key, so the assertions check translation keys like "resetPassword.error" rather than English parts that may change.
+
+- **`next/link (in some files)`:** Replaced with a plain <a>, so href can be asserted without the router context.
+
+In the case of the pattern "vi.hoisted", Vitest moves every vi.mock(...) call to the top of the file, above the imports.
+
+A mock factory therefore can't use an ordinary variable declared further down, because that variable doesn't exist yet when the factory runs.
+
+vi.hoisted(() => ({...})) creates an object h that is also moved to the top, so the factories can use it.
+
+The mocks read h each time they are called, not when they are created. That lets a test set the scenario before rendering:
+
+```tsx
+h.isSuccess = true; // set the scenario
+renderWithProviders(<RecoverPasswordForm />); // mock hook returns isSuccess: true
+```
+
+beforeEach resets h so no scenario carries over into the next test, afterEach(cleanup) unmounts the rendered tree, the explicit call is needed when Vitest runs without "globals: true", because React Testing Library then can't register its automatic cleanup.
+
+Regarding controllable promises, "deferred()" creates a promise that the test resolves by hand.
+
+This is how the tests freeze a component in its "waiting" state and then decide exactly when the async work finishes.
 
 ## 4. Coverage and CI
 
