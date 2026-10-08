@@ -11,7 +11,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useOrgsUpdateOrg, getOrgsGetMyOrgsQueryKey } from "@/api/endpoints/orgs/orgs";
+import {
+  useOrgsUpdateOrg,
+  getOrgsGetMyOrgsQueryKey,
+} from "@/api/endpoints/orgs/orgs";
 import { useActiveContext } from "@/features/shell/ActiveContext";
 
 const schema = z.object({
@@ -63,8 +66,21 @@ export default function OrgSettings() {
   };
 
   return (
-    <Box sx={{ maxWidth: 480 }}>
-      <Typography variant="h4" sx={{ fontWeight: 700, letterSpacing: -0.5, mb: 5 }}>
+    <Box
+      sx={{
+        p: 3,
+        borderRadius: 3,
+        border: "1px solid",
+        borderColor: "divider",
+        bgcolor: "background.paper",
+        height: "100%",
+        width: "100%",
+      }}
+    >
+      <Typography
+        variant="h4"
+        sx={{ fontWeight: 700, letterSpacing: -0.5, mb: 5 }}
+      >
         {t("settingsHeading")}
       </Typography>
 
@@ -81,20 +97,22 @@ export default function OrgSettings() {
           </Alert>
         )}
 
-        <Controller
-          name="name"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label={tc("name")}
-              fullWidth
-              size="small"
-              error={Boolean(errors.name)}
-              helperText={errors.name ? tv("nameRequired") : undefined}
-            />
-          )}
-        />
+        <Box sx={{ maxWidth: 480 }}>
+          <Controller
+            name="name"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label={tc("name")}
+                fullWidth
+                size="small"
+                error={Boolean(errors.name)}
+                helperText={errors.name ? tv("nameRequired") : undefined}
+              />
+            )}
+          />
+        </Box>
 
         <Box sx={{ mt: 3 }}>
           <Button

@@ -17,22 +17,21 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useOrgsCreateOrg, getOrgsGetMyOrgsQueryKey } from "@/api/endpoints/orgs/orgs";
+import {
+  useOrgsCreateOrg,
+  getOrgsGetMyOrgsQueryKey,
+} from "@/api/endpoints/orgs/orgs";
 import { useProjectsCreateProject } from "@/api/endpoints/projects/projects";
 import { useProjectTypesGetProjectTypes } from "@/api/endpoints/project-types/project-types";
 import { useActiveContext } from "@/features/shell/ActiveContext";
 
-const orgSchema = z.object({
-  name: z.string().min(1),
-});
-
-const projectSchema = z.object({
-  name: z.string().min(1),
+const schema = z.object({
+  orgName: z.string().min(1),
+  projectName: z.string().min(1),
   project_type_id: z.string().min(1),
 });
 
-type OrgFormValues = z.infer<typeof orgSchema>;
-type ProjectFormValues = z.infer<typeof projectSchema>;
+type FormValues = z.infer<typeof schema>;
 
 export default function BootstrapWizard() {
   const t = useTranslations("Bootstrap");
@@ -42,70 +41,69 @@ export default function BootstrapWizard() {
   const qc = useQueryClient();
   const { selectAfterCreate } = useActiveContext();
 
-  const [step, setStep] = useState<1 | 2>(1);
-  const [newOrgId, setNewOrgId] = useState<string | null>(null);
+  // An org created on a previous, partially-failed submit (project step errored):
+  // retried submits reuse it instead of creating a duplicate organization.
+  const [createdOrgId, setCreatedOrgId] = useState<string | null>(null);
 
-  const { data: typesData } = useProjectTypesGetProjectTypes(
-    {},
-    { query: { enabled: step === 2 } },
-  );
+  const { data: typesData } = useProjectTypesGetProjectTypes();
   const projectTypes = typesData?.items ?? [];
 
   const {
-    register: registerOrg,
-    handleSubmit: handleOrgSubmit,
-    formState: { errors: orgErrors },
-    setError: setOrgError,
-  } = useForm<OrgFormValues>({ resolver: zodResolver(orgSchema) });
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+    setError,
+  } = useForm<FormValues>({ resolver: zodResolver(schema) });
 
-  const {
-    register: registerProject,
-    handleSubmit: handleProjectSubmit,
-    control: projectControl,
-    formState: { errors: projectErrors },
-    setError: setProjectError,
-  } = useForm<ProjectFormValues>({ resolver: zodResolver(projectSchema) });
+  const createOrg = useOrgsCreateOrg();
+  const createProject = useProjectsCreateProject();
 
-  const createOrg = useOrgsCreateOrg({
-    mutation: {
-      onSuccess: (org) => {
-        setNewOrgId(org.id);
-        setStep(2);
-      },
-      onError: () => {
-        setOrgError("root", { message: t("createOrgError") });
-      },
-    },
-  });
-
-  const createProject = useProjectsCreateProject({
-    mutation: {
-      onSuccess: async (project) => {
-        await qc.invalidateQueries({ queryKey: getOrgsGetMyOrgsQueryKey() });
-        selectAfterCreate(newOrgId!, project.id);
-        router.push("/project");
-      },
-      onError: () => {
-        setProjectError("root", { message: t("createProjectError") });
-      },
-    },
-  });
-
-  const onOrgSubmit = (values: OrgFormValues) => {
-    createOrg.mutate({ data: { name: values.name } });
+  const finishOnboarding = async (orgId: string, projectId: string) => {
+    await qc.invalidateQueries({ queryKey: getOrgsGetMyOrgsQueryKey() });
+    selectAfterCreate(orgId, projectId);
+    router.push("/billing?onboarding=1");
   };
 
-  const onProjectSubmit = (values: ProjectFormValues) => {
-    if (!newOrgId) return;
-    createProject.mutate({
-      orgId: newOrgId,
-      data: {
-        org_id: newOrgId,
-        name: values.name,
-        project_type_id: values.project_type_id,
+  const createProjectForOrg = (orgId: string, values: FormValues) => {
+    createProject.mutate(
+      {
+        orgId,
+        data: {
+          org_id: orgId,
+          name: values.projectName,
+          project_type_id: values.project_type_id,
+        },
       },
-    });
+      {
+        onSuccess: (project) => finishOnboarding(orgId, project.id),
+        onError: () => {
+          setError("root", { message: t("createProjectError") });
+        },
+      },
+    );
   };
+
+  const onSubmit = (values: FormValues) => {
+    if (createdOrgId) {
+      createProjectForOrg(createdOrgId, values);
+      return;
+    }
+    createOrg.mutate(
+      { data: { name: values.orgName } },
+      {
+        onSuccess: (org) => {
+          setCreatedOrgId(org.id);
+          createProjectForOrg(org.id, values);
+        },
+        onError: () => {
+          setError("root", { message: t("createOrgError") });
+        },
+      },
+    );
+  };
+
+  const isPending = createOrg.isPending || createProject.isPending;
 
   return (
     <Box
@@ -135,108 +133,77 @@ export default function BootstrapWizard() {
           bgcolor: "background.paper",
           borderRadius: 3,
           p: 4,
-          boxShadow: "0 1px 3px 0 rgba(0,0,0,.08), 0 4px 16px 0 rgba(0,0,0,.06)",
+          boxShadow:
+            "0 1px 3px 0 rgba(0,0,0,.08), 0 4px 16px 0 rgba(0,0,0,.06)",
         }}
       >
-        <Typography
-          variant="caption"
-          sx={{ color: "text.disabled", textTransform: "none", letterSpacing: 0 }}
-        >
-          {t("stepOf", { step, total: 2 })}
-        </Typography>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <Typography variant="h5" sx={{ fontWeight: 600, mt: 0.5, mb: 3 }}>
+            {t("heading")}
+          </Typography>
 
-        {step === 1 ? (
-          <form onSubmit={handleOrgSubmit(onOrgSubmit)} noValidate>
-            <Typography variant="h5" sx={{ fontWeight: 600, mt: 0.5, mb: 3 }}>
-              {t("orgHeading")}
-            </Typography>
+          {errors.root && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {errors.root.message}
+            </Alert>
+          )}
 
-            {orgErrors.root && (
-              <Alert severity="error" sx={{ mb: 2 }}>
-                {orgErrors.root.message}
-              </Alert>
-            )}
-
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <TextField
-              label={tc("name")}
+              label={t("orgNameLabel")}
               fullWidth
               autoFocus
               size="small"
-              error={Boolean(orgErrors.name)}
-              helperText={orgErrors.name ? tv("nameRequired") : undefined}
-              {...registerOrg("name")}
+              error={Boolean(errors.orgName)}
+              helperText={errors.orgName ? tv("nameRequired") : undefined}
+              {...register("orgName")}
             />
 
-            <Button
-              type="submit"
-              variant="contained"
+            <TextField
+              label={t("projectNameLabel")}
               fullWidth
-              disabled={createOrg.isPending}
-              sx={{ mt: 3 }}
-            >
-              {createOrg.isPending ? tc("creating") : t("continueButton")}
-            </Button>
-          </form>
-        ) : (
-          <form onSubmit={handleProjectSubmit(onProjectSubmit)} noValidate>
-            <Typography variant="h5" sx={{ fontWeight: 600, mt: 0.5, mb: 3 }}>
-              {t("projectHeading")}
-            </Typography>
+              size="small"
+              error={Boolean(errors.projectName)}
+              helperText={errors.projectName ? tv("nameRequired") : undefined}
+              {...register("projectName")}
+            />
 
-            {projectErrors.root && (
-              <Alert severity="error" sx={{ mb: 2 }}>
-                {projectErrors.root.message}
-              </Alert>
-            )}
+            <Controller
+              name="project_type_id"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <FormControl
+                  size="small"
+                  fullWidth
+                  error={Boolean(errors.project_type_id)}
+                >
+                  <InputLabel>{t("projectTypeLabel")}</InputLabel>
+                  <Select {...field} label={t("projectTypeLabel")}>
+                    {projectTypes.map((pt) => (
+                      <MenuItem key={pt.id} value={pt.id}>
+                        {pt.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {errors.project_type_id && (
+                    <FormHelperText>{tv("required")}</FormHelperText>
+                  )}
+                </FormControl>
+              )}
+            />
+          </Box>
 
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              <TextField
-                label={tc("name")}
-                fullWidth
-                autoFocus
-                size="small"
-                error={Boolean(projectErrors.name)}
-                helperText={projectErrors.name ? tv("nameRequired") : undefined}
-                {...registerProject("name")}
-              />
-
-              <Controller
-                name="project_type_id"
-                control={projectControl}
-                defaultValue=""
-                render={({ field }) => (
-                  <FormControl
-                    size="small"
-                    fullWidth
-                    error={Boolean(projectErrors.project_type_id)}
-                  >
-                    <InputLabel>{t("projectTypeLabel")}</InputLabel>
-                    <Select {...field} label={t("projectTypeLabel")}>
-                      {projectTypes.map((pt) => (
-                        <MenuItem key={pt.id} value={pt.id}>
-                          {pt.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    {projectErrors.project_type_id && (
-                      <FormHelperText>{tv("required")}</FormHelperText>
-                    )}
-                  </FormControl>
-                )}
-              />
-            </Box>
-
-            <Button
-              type="submit"
-              variant="contained"
-              fullWidth
-              disabled={createProject.isPending}
-              sx={{ mt: 3 }}
-            >
-              {createProject.isPending ? tc("creating") : t("finishButton")}
-            </Button>
-          </form>
-        )}
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            disabled={isPending}
+            sx={{ mt: 3 }}
+          >
+            {isPending ? tc("creating") : t("continueButton")}
+          </Button>
+        </form>
       </Box>
     </Box>
   );

@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import ButtonBase from "@mui/material/ButtonBase";
 import Typography from "@mui/material/Typography";
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -13,10 +13,16 @@ interface AgentCardProps {
   onOpen: () => void;
 }
 
-export default function AgentCard({ name, description, onOpen }: AgentCardProps) {
+export default function AgentCard({
+  name,
+  description,
+  onOpen,
+}: AgentCardProps) {
   const t = useTranslations("Project");
   return (
-    <Box
+    <ButtonBase
+      onClick={onOpen}
+      focusRipple
       sx={{
         p: 3,
         borderRadius: 3,
@@ -24,9 +30,14 @@ export default function AgentCard({ name, description, onOpen }: AgentCardProps)
         borderColor: "divider",
         bgcolor: "background.paper",
         height: "100%",
+        width: "100%",
         display: "flex",
         flexDirection: "column",
+        alignItems: "center",
+        alignSelf: "center",
+        justifyContent: "center",
         gap: 2,
+        textAlign: "center",
         transition: "box-shadow 200ms ease, border-color 200ms ease",
         "&:hover": {
           boxShadow: "0 4px 16px 0 rgba(0,0,0,.08)",
@@ -72,15 +83,19 @@ export default function AgentCard({ name, description, onOpen }: AgentCardProps)
         )}
       </Box>
 
-      <Button
-        variant="text"
-        size="small"
-        endIcon={<ArrowForwardIcon sx={{ fontSize: 16 }} />}
-        onClick={onOpen}
-        sx={{ alignSelf: "flex-start", px: 0, minWidth: 0 }}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 0.5,
+          color: "primary.main",
+          fontSize: "0.8125rem",
+          fontWeight: 500,
+        }}
       >
         {t("openAgent")}
-      </Button>
-    </Box>
+        <ArrowForwardIcon sx={{ fontSize: 16 }} />
+      </Box>
+    </ButtonBase>
   );
 }
