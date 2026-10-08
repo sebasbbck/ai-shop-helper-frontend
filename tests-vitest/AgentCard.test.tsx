@@ -4,6 +4,18 @@ import { renderWithProviders } from "./test-utils";
 import AgentCard from "@/features/project/AgentCard";
 
 describe("AgentCard", () => {
+  test("shows the agent name and description", () => {
+    renderWithProviders(
+      <AgentCard
+        name="Blog Writer"
+        description="Generates SEO blog posts."
+        onOpen={vi.fn()}
+      />,
+    );
+    expect(screen.getByText("Blog Writer")).toBeInTheDocument();
+    expect(screen.getByText("Generates SEO blog posts.")).toBeInTheDocument();
+  });
+
   test("clicking anywhere on the card triggers onOpen", () => {
     const onOpen = vi.fn();
     renderWithProviders(

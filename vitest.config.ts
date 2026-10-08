@@ -22,6 +22,7 @@ export default defineConfig({
         "src/**/*.d.ts",
         "src/app/**/layout.tsx",
         "src/app/**/page.tsx",
+        "src/app/providers.tsx",
         "src/theme/**",
       ],
     },

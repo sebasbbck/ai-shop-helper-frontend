@@ -90,6 +90,16 @@ describe("BootstrapWizard", () => {
     expect(screen.getByRole("combobox")).toBeInTheDocument();
   });
 
+  test("rejects empty fields without creating anything", async () => {
+    renderWithProviders(<BootstrapWizard />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Continue" }));
+
+    expect(await screen.findAllByText("Name is required")).toHaveLength(2);
+    expect(screen.getByText("Required")).toBeInTheDocument();
+    expect(h.createOrgMutate).not.toHaveBeenCalled();
+  });
+
   test("creates the org and project together, then redirects to billing onboarding", async () => {
     renderWithProviders(<BootstrapWizard />);
 

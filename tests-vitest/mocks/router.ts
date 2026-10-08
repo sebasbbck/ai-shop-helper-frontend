@@ -14,12 +14,14 @@ export function makeRouter(
     push: ReturnType<typeof vi.fn>;
     replace: ReturnType<typeof vi.fn>;
     prefetch: ReturnType<typeof vi.fn>;
+    refresh: ReturnType<typeof vi.fn>;
   }> = {},
 ) {
   return {
     push: vi.fn(),
     replace: vi.fn(),
     prefetch: vi.fn(),
+    refresh: vi.fn(),
     ...overrides,
   };
 }
